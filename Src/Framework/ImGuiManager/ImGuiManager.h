@@ -1,16 +1,17 @@
 ﻿#pragma once
-class ImGuiManager
+class ImGuiManager : public KdGameObject
 {
 public:
 	ImGuiManager() = default;
-	~ImGuiManager() = default;
+	~ImGuiManager() override = default;
 
-	void ImGuiUpdate() const;
+	void ImGuiUpdate();
 
-	void Hierarchy() const;
+	void Hierarchy();
 
 	void MainMenuBar() const;
 
 private:
+	std::string m_modelPath = "Asset/";
 
 };

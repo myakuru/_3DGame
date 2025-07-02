@@ -19,6 +19,8 @@ public:
 	HWND GetWindowHandle()		const	{ return m_window.GetWndHandle(); }
 	int GetMouseWheelValue()	const	{ return m_window.GetMouseWheelVal(); }
 
+	KdWindow& GetWindow()				{ return m_window; }
+
 	int GetNowFPS()				const	{ return m_fpsController.m_nowfps; }
 	int GetMaxFPS()				const	{ return m_fpsController.m_maxFps; }
 

@@ -1,5 +1,10 @@
 ﻿#include "KdGameObject.h"
 
+void KdGameObject::Init()
+{
+	ModelLoad(m_path);
+}
+
 void KdGameObject::DrawDebug()
 {
 	// 早期リターン
@@ -73,7 +78,21 @@ nlohmann::json KdGameObject::JsonSave() const
 	std::string className = typeid(*this).name(); // クラス名の所得(this)にすると基底クラスの名前が取得されるので自分自身のポインタを使用
 	
 	json["Name"] = className;
+	json["path"] = m_path;
 
 	return json;
 
+}
+
+bool KdGameObject::ModelLoad(std::string_view _path)
+{
+    if (m_model)
+    {
+		// モデルのロードをフライウェートパターンで行う。
+        m_model = KdAssets::Instance().m_modeldatas.GetData(_path);
+        return true;
+    }
+
+    assert(false && "モデルのロード失敗");
+    return false;  
 }

@@ -19,7 +19,7 @@ public:
 	virtual ~KdGameObject() { Release(); }
 
 	// 生成される全てに共通するパラメータに対する初期化のみ
-	virtual void Init() {}
+	virtual void Init();
 
 	virtual void PreUpdate() {}
 	virtual void Update() {}
@@ -71,9 +71,13 @@ public:
 
 	nlohmann::json JsonSave() const;
 
+	bool ModelLoad(std::string_view _path);
+
 protected:
 
 	void Release() {}
+
+
 
 	// 描画タイプ・何の描画を行うのかを決める / 最適な描画リスト作成用
 	UINT m_drawType = 0;
@@ -98,5 +102,11 @@ protected:
 
 	// jsonでクラスの名前を保存する変数
 	std::string m_className = "Name";
+
+	// モデルのロードパス
+	std::string m_path = "Asset/Models/SkySphere/Sky.gltf";
+
+	// モデルの初期化
+	std::shared_ptr<KdModelData> m_model = std::make_shared<KdModelData>();
 
 };

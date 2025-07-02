@@ -94,6 +94,9 @@
     <Filter Include="Src\Framework\ImGuiManager">
       <UniqueIdentifier>{3cecc1d9-10ab-40ac-800d-799e54011217}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\GameObject\SkySphere">
+      <UniqueIdentifier>{0ba4043a-65dd-4987-9e59-1fa53fe229e3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -285,6 +288,9 @@
     <ClInclude Include="Src\Framework\ImGuiManager\ImGuiManager.h">
       <Filter>Src\Framework\ImGuiManager</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\SkySphere\SkySphere.h">
+      <Filter>Src\Application\GameObject\SkySphere</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -442,6 +448,9 @@
     </ClCompile>
     <ClCompile Include="Src\Framework\ImGuiManager\ImGuiManager.cpp">
       <Filter>Src\Framework\ImGuiManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\SkySphere\SkySphere.cpp">
+      <Filter>Src\Application\GameObject\SkySphere</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

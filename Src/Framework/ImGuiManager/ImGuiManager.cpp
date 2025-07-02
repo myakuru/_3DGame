@@ -3,7 +3,7 @@
 #include"../../Application/Scene/SceneManager.h"
 #include"../../Application/main.h"
 
-void ImGuiManager::ImGuiUpdate() const
+void ImGuiManager::ImGuiUpdate()
 {
 	// 上部のメニューバーを表示
 	MainMenuBar();
@@ -13,7 +13,7 @@ void ImGuiManager::ImGuiUpdate() const
 
 }
 
-void ImGuiManager::Hierarchy() const
+void ImGuiManager::Hierarchy()
 {
 	if (ImGui::Begin("Hierarchy"))
 	{
@@ -22,6 +22,17 @@ void ImGuiManager::Hierarchy() const
 		{
 			JSON_MANAGER.AddJsonObject(name);
 		}
+
+		// ファイルパスからオブジェクトを選択
+		if (ImGui::Button(("LoadPath : %s",m_path.data())))
+		{
+			// ファイルのダイアルログ
+			if (Application::Instance().GetWindow().OpenFileDialog(m_modelPath))
+			{
+				ModelLoad(m_modelPath);
+			}
+		}
+
 	}
 	ImGui::End();
 }
