@@ -288,6 +288,7 @@
     <ClInclude Include="Src\Framework\Effekseer\KdEffekseerManager.h" />
     <ClInclude Include="Src\Framework\GameObject\KdGameObject.h" />
     <ClInclude Include="Src\Framework\GameObject\KdGameObjectFactory.h" />
+    <ClInclude Include="Src\Framework\ImGuiManager\ImGuiManager.h" />
     <ClInclude Include="Src\Framework\Input\KdInput.h" />
     <ClInclude Include="Src\Framework\Json\Json.h" />
     <ClInclude Include="Src\Framework\Math\KdCollider.h" />
@@ -348,6 +349,7 @@
     <ClCompile Include="Src\Framework\Effekseer\KdEffekseerManager.cpp" />
     <ClCompile Include="Src\Framework\GameObject\KdGameObject.cpp" />
     <ClCompile Include="Src\Framework\GameObject\KdGameObjectFactory.cpp" />
+    <ClCompile Include="Src\Framework\ImGuiManager\ImGuiManager.cpp" />
     <ClCompile Include="Src\Framework\Input\KdInput.cpp" />
     <ClCompile Include="Src\Framework\Json\Json.cpp" />
     <ClCompile Include="Src\Framework\Math\KdCollider.cpp" />

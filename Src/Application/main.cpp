@@ -1,5 +1,6 @@
 ﻿#include "main.h"
 #include"../Framework/Json/Json.h"
+#include"../Framework/ImGuiManager/ImGuiManager.h"
 #include "Scene/SceneManager.h"
 
 // ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// /////
@@ -211,6 +212,10 @@ bool Application::Init(int w, int h)
 	// JsonManager初期化
 	//===================================================================
 	m_jsonManager = std::make_shared<JsonManager>();
+	// ===================================================================
+	// ImGuiManager初期化
+	// ===================================================================
+	m_imguiManager = std::make_shared<ImGuiManager>();
 
 	return true;
 }

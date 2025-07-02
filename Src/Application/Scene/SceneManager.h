@@ -23,7 +23,6 @@ public :
 	void DrawSprite();
 	void DrawDebug();
 
-	void ImGuiUpdate();
 	std::string ImSelectClass() const;
 
 	// 次のシーンをセット (次のフレームから切り替わる)
@@ -43,7 +42,7 @@ public :
 
 private :
 
-	// RegiterObjectからオブジェクトを登録する関数
+	// RegisterObjectからオブジェクトを登録する関数
 	void Register() const;
 
 	// シーン切り替え関数
@@ -57,8 +56,6 @@ private :
 	
 	// 次のシーンの種類を保持している変数
 	SceneType m_nextSceneType = m_currentSceneType;
-
-private:
 
 	SceneManager() = default;
 	~SceneManager() = default;

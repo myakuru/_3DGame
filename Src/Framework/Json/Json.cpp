@@ -60,7 +60,7 @@ void JsonManager::JsonSerialize(const nlohmann::json& _json, const std::string& 
 
 	// 開かれてない場合リターン
 	if (!outPut.is_open()) return;
-	outPut << _json.dump(2);		// jsonにフォーマットする(4スペース)
+	outPut << _json.dump(2);	// jsonにフォーマットする(2スペース)
 	outPut.close();
 
 }

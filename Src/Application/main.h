@@ -1,5 +1,6 @@
 ﻿#pragma once
 class JsonManager;
+class ImGuiManager;
 //============================================================
 // アプリケーションクラス
 //	APP.～ でどこからでもアクセス可能
@@ -59,6 +60,7 @@ private:
 	Application() {}
 
 	std::shared_ptr<JsonManager> m_jsonManager;
+	std::shared_ptr<ImGuiManager> m_imguiManager;
 
 public:
 	static Application &Instance(){
@@ -67,7 +69,9 @@ public:
 	}
 
 	std::shared_ptr<JsonManager> GetJsonManager() { return m_jsonManager; }
+	std::shared_ptr<ImGuiManager> GetImGuiManager() { return m_imguiManager; }
 
 };
 
 #define JSON_MANAGER (*Application::Instance().GetJsonManager())
+#define IMGUI_MANAGER (*Application::Instance().GetImGuiManager())

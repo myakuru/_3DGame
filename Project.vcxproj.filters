@@ -91,6 +91,9 @@
     <Filter Include="Src\Framework\Json">
       <UniqueIdentifier>{2efb35e7-5792-43d9-9aca-f51d3d4076bd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Framework\ImGuiManager">
+      <UniqueIdentifier>{3cecc1d9-10ab-40ac-800d-799e54011217}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -279,6 +282,9 @@
     <ClInclude Include="Src\Framework\Json\Json.h">
       <Filter>Src\Framework\Json</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Framework\ImGuiManager\ImGuiManager.h">
+      <Filter>Src\Framework\ImGuiManager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -433,6 +439,9 @@
     </ClCompile>
     <ClCompile Include="Src\Framework\Json\Json.cpp">
       <Filter>Src\Framework\Json</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Framework\ImGuiManager\ImGuiManager.cpp">
+      <Filter>Src\Framework\ImGuiManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

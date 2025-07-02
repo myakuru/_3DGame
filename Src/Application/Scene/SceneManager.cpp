@@ -62,44 +62,20 @@ void SceneManager::DrawDebug()
 	m_currentScene->DrawDebug();
 }
 
-void SceneManager::ImGuiUpdate()
-{
-	if (ImGui::Begin("Hierarchy"))
-	{
-		std::string name = ImSelectClass();
-		if (ImGui::Button("AddObject"))
-		{
-			JSON_MANAGER.AddJsonObject(name);
-		}
-	}
-	ImGui::End();
-
-	if (ImGui::Begin("Save"))
-	{
-		if (ImGui::Button("Savs"))
-		{
-			JSON_MANAGER.AllSave();
-		}
-	}
-	ImGui::End();
-
-}
-
 std::string SceneManager::ImSelectClass() const
 {
 	static std::string name = "KdGameObject";
 	if (ImGui::BeginCombo("##Class", name.data())) // c_str()も、data()も同じように使える
 	{
-		for (auto& it : RegisterObject::GetInstance().GetRegisterObject())
+		for (const auto& [key,value] : RegisterObject::GetInstance().GetRegisterObject())
 		{
-			const char* nowName = it.first.data();
+			const char* nowName = key.data();
 			bool selected = (name == nowName);
-			if (ImGui::Selectable(nowName, selected))
-			{
-				name = nowName;
-			}
-			if (selected)
-			ImGui::SetItemDefaultFocus();
+
+			// 選択されたものとレジスターに登録してある文字列を比較
+			if (ImGui::Selectable(nowName, selected))	name = nowName;
+			// 選択されたら青く光る
+			if (selected) ImGui::SetItemDefaultFocus();
 		}
 		ImGui::EndCombo();
 	}

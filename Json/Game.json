@@ -4,5 +4,11 @@
   },
   {
     "Name": "class TPSCamera"
+  },
+  {
+    "Name": "class KdGameObject"
+  },
+  {
+    "Name": "class KdGameObject"
   }
 ]

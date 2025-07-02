@@ -1,5 +1,5 @@
 ﻿#include"../../Application/main.h"
-#include"../../Application/Scene/SceneManager.h"
+#include"../ImGuiManager/ImGuiManager.h"
 
 #include "KdDebugGUI.h"
 
@@ -63,8 +63,8 @@ void KdDebugGUI::GuiProcess()
 
 	// ログウィンドウ
 	m_uqLog->Draw("Log Window");
-
-	SceneManager::GetInstance().ImGuiUpdate();
+	IMGUI_MANAGER.ImGuiUpdate(); // ImGuiManagerの更新処理を呼び出す
+	
 
 	//=====================================================
 	// ログ出力 ・・・ AddLog("～") で追加
