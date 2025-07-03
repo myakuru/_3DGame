@@ -1,9 +1,15 @@
 ﻿#include "KdGameObject.h"
 #include"../../Application/main.h"
+#include"../../Framework/Json/Json.h"
 
 void KdGameObject::Init()
 {
 	ModelLoad(m_path);
+}
+
+void KdGameObject::DrawLit()
+{
+	KdShaderManager::Instance().m_StandardShader.DrawModel(*m_model,m_mWorld);
 }
 
 void KdGameObject::DrawDebug()
@@ -70,6 +76,9 @@ bool KdGameObject::Intersects(const KdCollider::RayInfo& targetShape, std::list<
 void KdGameObject::JsonInput(const nlohmann::json& _json)
 {
 	if (_json.contains("name")) m_className = _json["name"];
+	if (_json.contains("pos")) m_pos = JSON_MANAGER.JsonToVector(_json["pos"]);
+	if (_json.contains("scale")) m_scale = JSON_MANAGER.JsonToVector(_json["scale"]);
+	if (_json.contains("deg")) m_deg = JSON_MANAGER.JsonToVector(_json["deg"]);
 }
 
 nlohmann::json KdGameObject::JsonSave() const
@@ -80,6 +89,9 @@ nlohmann::json KdGameObject::JsonSave() const
 	
 	json["Name"] = className;
 	json["path"] = m_path;
+	json["pos"] = JSON_MANAGER.VectorToJson(m_pos);
+	json["scale"] = JSON_MANAGER.VectorToJson(m_scale);
+	json["deg"] = JSON_MANAGER.VectorToJson(m_deg);
 
 	return json;
 

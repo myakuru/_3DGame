@@ -20,4 +20,10 @@ public:
 
 	// Jsonから値を取得する(デシリアライズ)
 	nlohmann::json JsonDeserialize(const std::string & _path) const;
+
+	// Jsonからのベクターの値に変換する
+	Math::Vector3 JsonToVector(const nlohmann::json& _json) const;
+
+	// ベクターの値をJsonに変換する
+	nlohmann::json VectorToJson(const Math::Vector3& _vec) const;
 };

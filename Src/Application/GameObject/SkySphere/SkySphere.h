@@ -5,8 +5,6 @@ public:
 	SkySphere() = default;
 	~SkySphere() override = default;
 
-	void DrawUnLit() override;
-
 private:
 
 };

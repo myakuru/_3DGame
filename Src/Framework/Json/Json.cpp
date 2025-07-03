@@ -76,3 +76,23 @@ nlohmann::json JsonManager::JsonDeserialize(const std::string & _path)const
 
 	return json;
 }
+
+Math::Vector3 JsonManager::JsonToVector(const nlohmann::json& _json) const
+{
+	return Math::Vector3
+	{
+		_json["x"],
+		_json["y"],
+		_json["z"]
+	};
+}
+
+nlohmann::json JsonManager::VectorToJson(const Math::Vector3& _vec) const
+{
+	return nlohmann::json
+	{
+		{"x", _vec.x },
+		{"y",_vec.y },
+		{"z", _vec.z}
+	};
+}
