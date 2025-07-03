@@ -23,15 +23,8 @@ void ImGuiManager::Hierarchy()
 			JSON_MANAGER.AddJsonObject(name);
 		}
 
-		// ファイルパスからオブジェクトを選択
-		if (ImGui::Button(("LoadPath : %s",m_path.data())))
-		{
-			// ファイルのダイアルログ
-			if (Application::Instance().GetWindow().OpenFileDialog(m_modelPath))
-			{
-				ModelLoad(m_modelPath);
-			}
-		}
+		// ツリー構造のオブジェクトを表示
+		TreeNode();
 
 	}
 	ImGui::End();
@@ -50,5 +43,40 @@ void ImGuiManager::MainMenuBar() const
 			ImGui::EndMenu();
 		}
 		ImGui::EndMainMenuBar();
+	}
+}
+
+void ImGuiManager::TreeNode() const
+{
+	// ヒエラルキーウィンドウの子ウィンドウを作成
+	if (ImGui::BeginChild("Objects"))
+	{
+		ImGui::Separator();
+		// オブジェクトリストからオブジェクトを取得し、ツリーで表示
+		for (auto& obj : SceneManager::GetInstance().GetObjList())
+		{
+			const auto& objectName = *obj;
+
+			// ここからツリー形式で詳細情報を表示
+			if (std::string className = typeid(objectName).name(); //<- C++17から追加された書き方
+				ImGui::TreeNode(className.data()))
+			{
+				ImGui::SameLine(270);
+
+				// ボタンでオブジェクトを削除できる
+				if (ImGui::SmallButton("Delete"))
+				{
+					obj->SetExpired(true);
+				}
+
+				// 各オブジェクトのプロパティを表示
+				obj->ImGuiInspector();
+
+				//ツリーの終了処理
+				ImGui::TreePop();
+			}
+			ImGui::Separator();
+		}
+		ImGui::EndChild();
 	}
 }

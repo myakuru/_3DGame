@@ -48,6 +48,7 @@ public:
 	const Math::Matrix& GetMatrix() const { return m_mWorld; }
 
 	virtual bool IsExpired() const { return m_isExpired; }
+	virtual void SetExpired(bool isExpired) { m_isExpired = isExpired; }
 
 	virtual bool IsVisible()	const { return false; }
 	virtual bool IsRideable()	const { return false; }
@@ -72,6 +73,8 @@ public:
 	nlohmann::json JsonSave() const;
 
 	bool ModelLoad(std::string_view _path);
+
+	void ImGuiInspector();
 
 protected:
 
@@ -108,5 +111,16 @@ protected:
 
 	// モデルの初期化
 	std::shared_ptr<KdModelData> m_model = std::make_shared<KdModelData>();
+
+	// 位置
+	Math::Vector3 m_pos = Math::Vector3::Zero;
+	// 拡大率
+	Math::Vector3 m_scale = Math::Vector3::One;
+	//Math::Quaternion m_rot = Math::Quaternion::Identity; // 回転
+	// 回転角度（デグリー）
+	Math::Vector3 m_deg = Math::Vector3::Zero;
+
+	// カラー
+	Math::Color m_color = {1,1,1,1};
 
 };

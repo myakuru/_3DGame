@@ -1,4 +1,5 @@
 ﻿#include "KdGameObject.h"
+#include"../../Application/main.h"
 
 void KdGameObject::Init()
 {
@@ -95,4 +96,23 @@ bool KdGameObject::ModelLoad(std::string_view _path)
 
     assert(false && "モデルのロード失敗");
     return false;  
+}
+
+void KdGameObject::ImGuiInspector()
+{
+	// 0.1ずつのステップでドラッグできるようにする
+	ImGui::DragFloat3("pos", &m_pos.x, 0.1f);
+	ImGui::DragFloat3("m_scale", &m_scale.x, 0.1f);
+	ImGui::DragFloat3("m_rot", &m_deg.x, 0.1f);
+
+	if (ImGui::Button(("LoadPath: %s", m_path.data())))
+	{
+		if (Application::Instance().GetWindow().OpenFileDialog(m_path))
+		{
+			m_model = KdAssets::Instance().m_modeldatas.GetData(m_path);
+		}
+	}
+
+	ImGui::ColorEdit4("color", &m_color.x);
+
 }

@@ -4,19 +4,7 @@
     "path": "Asset/Models/SkySphere/Sky.gltf"
   },
   {
-    "Name": "class TPSCamera",
-    "path": "Asset/Models/SkySphere/Sky.gltf"
-  },
-  {
-    "Name": "class KdGameObject",
-    "path": "Asset/Models/SkySphere/Sky.gltf"
-  },
-  {
-    "Name": "class KdGameObject",
-    "path": "Asset/Models/SkySphere/Sky.gltf"
-  },
-  {
     "Name": "class SkySphere",
-    "path": "Asset/Models/SkySphere/Sky.gltf"
+    "path": "Asset\\Models\\SkySphere\\Sky.gltf"
   }
 ]
