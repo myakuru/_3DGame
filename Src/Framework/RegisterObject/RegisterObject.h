@@ -1,5 +1,4 @@
 ﻿#pragma once
-class KdGameObject;
 class RegisterObject
 {
 public:

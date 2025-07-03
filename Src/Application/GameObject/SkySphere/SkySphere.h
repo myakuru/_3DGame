@@ -5,6 +5,4 @@ public:
 	SkySphere() = default;
 	~SkySphere() override = default;
 
-private:
-
 };

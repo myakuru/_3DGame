@@ -49,34 +49,37 @@ void ImGuiManager::MainMenuBar() const
 void ImGuiManager::TreeNode() const
 {
 	// ヒエラルキーウィンドウの子ウィンドウを作成
-	if (ImGui::BeginChild("Objects"))
-	{
-		ImGui::Separator();
-		// オブジェクトリストからオブジェクトを取得し、ツリーで表示
-		for (auto& obj : SceneManager::GetInstance().GetObjList())
-		{
-			const auto& objectName = *obj;
+if (ImGui::BeginChild("Objects"))
+{
+    ImGui::Separator();
+    // オブジェクトリストからオブジェクトを取得し、ツリーで表示
+    for (auto& obj : SceneManager::GetInstance().GetObjList())
+    {
+        const auto& objectName = *obj;
 
-			// ここからツリー形式で詳細情報を表示
-			if (std::string className = typeid(objectName).name(); //<- C++17から追加された書き方
-				ImGui::TreeNode(className.data()))
-			{
-				ImGui::SameLine(270);
+		ImGui::PushID(obj.get());
 
-				// ボタンでオブジェクトを削除できる
-				if (ImGui::SmallButton("Delete"))
-				{
-					obj->SetExpired(true);
-				}
+        // ここからツリー形式で詳細情報を表示
+        if (std::string className = typeid(objectName).name(); //<- C++17から追加された書き方
+            ImGui::TreeNode(className.data())) //className + "##" + std::to_stirng((int)obj->get()) <=こういう書き方もあるよ
+        {
+            ImGui::SameLine(270);
 
-				// 各オブジェクトのプロパティを表示
-				obj->ImGuiInspector();
+            // ボタンでオブジェクトを削除できる
+            if (ImGui::SmallButton("Delete"))
+            {
+                obj->SetExpired(true);
+            }
 
-				//ツリーの終了処理
-				ImGui::TreePop();
-			}
-			ImGui::Separator();
-		}
-		ImGui::EndChild();
-	}
+            // 各オブジェクトのプロパティを表示
+            obj->ImGuiInspector();
+
+            //ツリーの終了処理
+            ImGui::TreePop();
+        }
+        ImGui::Separator();
+		ImGui::PopID();
+    }
+    ImGui::EndChild();
+}
 }

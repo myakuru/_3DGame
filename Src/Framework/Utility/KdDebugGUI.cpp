@@ -30,7 +30,8 @@ void KdDebugGUI::GuiInit()
 	ImGuiIO& io = ImGui::GetIO();
 	ImFontConfig config;
 	config.MergeMode = true;
-	io.Fonts->AddFontDefault();
+	//io.Fonts->AddFontDefault();
+	io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\HGRME.TTC", 15.0f);
 	// 日本語対応
 	io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\msgothic.ttc", 13.0f, &config, glyphRangesJapanese);
 
@@ -63,6 +64,7 @@ void KdDebugGUI::GuiProcess()
 
 	// ログウィンドウ
 	m_uqLog->Draw("Log Window");
+
 	IMGUI_MANAGER.ImGuiUpdate(); // ImGuiManagerの更新処理を呼び出す
 	
 

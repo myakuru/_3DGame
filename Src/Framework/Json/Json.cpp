@@ -13,7 +13,6 @@ void JsonManager::JsonToObj() const
 		// ゲームオブジェクトに追加
 		AddJsonObject(it["Name"], it);
 	}
-
 }
 
 void JsonManager::AllSave() const
@@ -23,7 +22,9 @@ void JsonManager::AllSave() const
 	
 	for (auto& it : SceneManager::GetInstance().GetObjList())
 	{
-		json.push_back(it->JsonSave());
+		nlohmann::json jsonObj;
+		it->JsonSave(jsonObj);
+		json.push_back(jsonObj);
 	}
 
 	std::string nowScene = SceneManager::GetInstance().GetCurrentScene()->GetSceneName();
@@ -33,6 +34,7 @@ void JsonManager::AllSave() const
 
 std::shared_ptr<KdGameObject> JsonManager::AddJsonObject(const std::string& _className, const nlohmann::json& _json) const
 {
+
 	// 一発検索して、インスタンスを生成させる
 	if (auto found = RegisterObject::GetInstance().GetRegisterObject().find(_className);
 		found != RegisterObject::GetInstance().GetRegisterObject().end())
@@ -67,7 +69,7 @@ void JsonManager::JsonSerialize(const nlohmann::json& _json, const std::string& 
 
 nlohmann::json JsonManager::JsonDeserialize(const std::string & _path)const
 {
-	std::ifstream input((_path + ".json").c_str());
+	std::ifstream input((_path + ".json").data());
 	nlohmann::json json;
 
 	if (!input.is_open())return json;

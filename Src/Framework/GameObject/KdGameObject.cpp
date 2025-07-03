@@ -9,7 +9,11 @@ void KdGameObject::Init()
 
 void KdGameObject::DrawLit()
 {
-	KdShaderManager::Instance().m_StandardShader.DrawModel(*m_model,m_mWorld);
+}
+
+void KdGameObject::DrawUnLit()
+{
+	KdShaderManager::Instance().m_StandardShader.DrawModel(*m_model, m_mWorld);
 }
 
 void KdGameObject::DrawDebug()
@@ -75,26 +79,21 @@ bool KdGameObject::Intersects(const KdCollider::RayInfo& targetShape, std::list<
 
 void KdGameObject::JsonInput(const nlohmann::json& _json)
 {
-	if (_json.contains("name")) m_className = _json["name"];
+	if (_json.contains("path")) m_path = _json["path"];
 	if (_json.contains("pos")) m_pos = JSON_MANAGER.JsonToVector(_json["pos"]);
 	if (_json.contains("scale")) m_scale = JSON_MANAGER.JsonToVector(_json["scale"]);
 	if (_json.contains("deg")) m_deg = JSON_MANAGER.JsonToVector(_json["deg"]);
 }
 
-nlohmann::json KdGameObject::JsonSave() const
+void KdGameObject::JsonSave(nlohmann::json& _json) const
 {
-	nlohmann::json json;
-
 	std::string className = typeid(*this).name(); // クラス名の所得(this)にすると基底クラスの名前が取得されるので自分自身のポインタを使用
 	
-	json["Name"] = className;
-	json["path"] = m_path;
-	json["pos"] = JSON_MANAGER.VectorToJson(m_pos);
-	json["scale"] = JSON_MANAGER.VectorToJson(m_scale);
-	json["deg"] = JSON_MANAGER.VectorToJson(m_deg);
-
-	return json;
-
+	_json["Name"] = className;
+	_json["path"] = m_path;
+	_json["pos"] = JSON_MANAGER.VectorToJson(m_pos);
+	_json["scale"] = JSON_MANAGER.VectorToJson(m_scale);
+	_json["deg"] = JSON_MANAGER.VectorToJson(m_deg);
 }
 
 bool KdGameObject::ModelLoad(std::string_view _path)
@@ -107,7 +106,7 @@ bool KdGameObject::ModelLoad(std::string_view _path)
     }
 
     assert(false && "モデルのロード失敗");
-    return false;  
+    return false;
 }
 
 void KdGameObject::ImGuiInspector()

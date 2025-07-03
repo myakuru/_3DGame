@@ -38,7 +38,7 @@ public:
 	virtual void GenerateDepthMapFromLight() {}
 	virtual void PreDraw() {}
 	virtual void DrawLit();
-	virtual void DrawUnLit() {}
+	virtual void DrawUnLit();
 	virtual void DrawEffect() {}
 	virtual void DrawBright() {}
 	virtual void DrawSprite() {}
@@ -79,7 +79,7 @@ public:
 	// 自分で追加
 	void JsonInput(const nlohmann::json& _json);
 
-	nlohmann::json JsonSave() const;
+	void JsonSave(nlohmann::json&_json) const;
 
 	bool ModelLoad(std::string_view _path);
 
