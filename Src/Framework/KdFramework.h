@@ -67,7 +67,7 @@
 #include "Shader/KdShaderManager.h"
 
 // デバッグ機能
-#include "Utility/Debug/KdDebugWireFrame.h"
+#include "Utility/KdDebugWireFrame.h"
 #include "Utility/KdDebugGUI.h"
 
 // ゲームオブジェクト関連

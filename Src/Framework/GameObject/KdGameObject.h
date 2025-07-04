@@ -37,8 +37,8 @@ public:
 	// それぞれの状況で描画する関数
 	virtual void GenerateDepthMapFromLight() {}
 	virtual void PreDraw() {}
-	virtual void DrawLit();
-	virtual void DrawUnLit();
+	virtual void DrawLit() {}
+	virtual void DrawUnLit() {}
 	virtual void DrawEffect() {}
 	virtual void DrawBright() {}
 	virtual void DrawSprite() {}
@@ -122,6 +122,8 @@ protected:
 
 	// モデルの初期化
 	std::shared_ptr<KdModelData> m_model = std::make_shared<KdModelData>();
+	// ポリゴンの初期化
+	std::shared_ptr<KdSquarePolygon> m_polygon = std::make_shared<KdSquarePolygon>();
 	// 2Dテクスチャの初期化
 	std::shared_ptr <KdTexture> m_texture = std::make_shared<KdTexture>();
 

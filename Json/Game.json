@@ -1,23 +1,16 @@
 [
   {
-    "Name": "class SkySphere",
+    "Name": "class TPSCamera",
     "deg": {
       "x": 0.0,
       "y": 0.0,
       "z": 0.0
     },
-    "drawFlags": {
-      "DrawBright": false,
-      "DrawLit": false,
-      "DrawSprite": false,
-      "DrawUnLit": true,
-      "GenerateDepthMapFromLight": false
-    },
     "path": "Asset/Models/SkySphere/Sky.gltf",
     "pos": {
       "x": 0.0,
       "y": 0.0,
-      "z": 118.30000305175781
+      "z": 0.0
     },
     "scale": {
       "x": 1.0,
@@ -26,13 +19,21 @@
     }
   },
   {
-    "Name": "class TPSCamera",
+    "Name": "class NormalUI",
     "deg": {
       "x": 0.0,
       "y": 0.0,
       "z": 0.0
     },
-    "path": "Asset/Models/SkySphere/Sky.gltf",
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawLit": false,
+      "DrawPolygon": true,
+      "DrawSprite": false,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "path": "Asset\\Textures\\Title\\black.png",
     "pos": {
       "x": 0.0,
       "y": 0.0,

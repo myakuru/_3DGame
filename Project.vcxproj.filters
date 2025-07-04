@@ -58,9 +58,6 @@
     <Filter Include="Library\imgui">
       <UniqueIdentifier>{9e2b992a-9c34-450b-a4cf-c4749feebcc6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Src\Framework\Utility\Debug">
-      <UniqueIdentifier>{8998a2f9-9d4a-46aa-95ef-1d0c2545ca0d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Src\Application\GameObject">
       <UniqueIdentifier>{9858b20c-c4cb-4133-9eda-b28c74235aa7}</UniqueIdentifier>
     </Filter>
@@ -97,8 +94,14 @@
     <Filter Include="Src\Application\GameObject\SkySphere">
       <UniqueIdentifier>{0ba4043a-65dd-4987-9e59-1fa53fe229e3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Src\Application\Utility">
-      <UniqueIdentifier>{0d7ce187-4637-49d0-b14d-94b0445fd74d}</UniqueIdentifier>
+    <Filter Include="Src\Application\GameObject\Utility">
+      <UniqueIdentifier>{d73ea3c3-885e-48e6-ac48-0a0a6b8aab01}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\HUD">
+      <UniqueIdentifier>{d12fd14d-8dc5-485c-933f-da047cc3281e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\HUD\NormalUI">
+      <UniqueIdentifier>{5cc4f29e-f853-4b4f-bd06-bdc9a4a6b296}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -255,9 +258,6 @@
     <ClInclude Include="..\Library\imgui\ja_glyph_ranges.h">
       <Filter>Library\imgui</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Framework\Utility\Debug\KdDebugWireFrame.h">
-      <Filter>Src\Framework\Utility\Debug</Filter>
-    </ClInclude>
     <ClInclude Include="Src\Application\GameObject\Camera\CameraBase.h">
       <Filter>Src\Application\GameObject\Camera</Filter>
     </ClInclude>
@@ -295,7 +295,13 @@
       <Filter>Src\Application\GameObject\SkySphere</Filter>
     </ClInclude>
     <ClInclude Include="Src\Application\GameObject\Utility\SelectDrawObject.h">
-      <Filter>Src\Application\Utility</Filter>
+      <Filter>Src\Application\GameObject\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\HUD\NormalUI\NormalUI.h">
+      <Filter>Src\Application\GameObject\HUD\NormalUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Framework\Utility\KdDebugWireFrame.h">
+      <Filter>Src\Framework\Utility</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -422,9 +428,6 @@
     <ClCompile Include="..\Library\imgui\imgui_widgets.cpp">
       <Filter>Library\imgui</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Framework\Utility\Debug\KdDebugWireFrame.cpp">
-      <Filter>Src\Framework\Utility\Debug</Filter>
-    </ClCompile>
     <ClCompile Include="Src\Application\GameObject\Camera\CameraBase.cpp">
       <Filter>Src\Application\GameObject\Camera</Filter>
     </ClCompile>
@@ -457,6 +460,9 @@
     </ClCompile>
     <ClCompile Include="Src\Application\GameObject\SkySphere\SkySphere.cpp">
       <Filter>Src\Application\GameObject\SkySphere</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Framework\Utility\KdDebugWireFrame.cpp">
+      <Filter>Src\Framework\Utility</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

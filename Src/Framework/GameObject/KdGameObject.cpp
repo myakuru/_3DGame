@@ -7,15 +7,6 @@ void KdGameObject::Init()
 	ModelLoad(m_path);
 }
 
-void KdGameObject::DrawLit()
-{
-}
-
-void KdGameObject::DrawUnLit()
-{
-	KdShaderManager::Instance().m_StandardShader.DrawModel(*m_model, m_mWorld);
-}
-
 void KdGameObject::DrawDebug()
 {
 	// 早期リターン
@@ -98,14 +89,23 @@ void KdGameObject::JsonSave(nlohmann::json& _json) const
 
 bool KdGameObject::ModelLoad(std::string_view _path)
 {
-    if (m_model)
-    {
-		// モデルのロードをフライウェートパターンで行う。
-        m_model = KdAssets::Instance().m_modeldatas.GetData(_path);
-        return true;
-    }
+	std::string path(_path);
+	// .~ 以降の拡張子を識別するために部分文字列を取得
+	std::string ext = path.substr(path.find_last_of('.') + 1);
 
-    assert(false && "モデルのロード失敗");
+	m_path = path; // どちらでもパスを保存
+
+	if (ext == "png" || ext == "PNG") {
+		// テクスチャ読み込み
+		m_texture->Load(path);
+		m_polygon->SetMaterial(path);
+		return true;
+	}
+
+	// モデル読み込み
+	m_model = std::make_shared<KdModelData>();
+	m_model = KdAssets::Instance().m_modeldatas.GetData(path);
+
     return false;
 }
 
@@ -120,7 +120,7 @@ void KdGameObject::ImGuiInspector()
 	{
 		if (Application::Instance().GetWindow().OpenFileDialog(m_path))
 		{
-			m_model = KdAssets::Instance().m_modeldatas.GetData(m_path);
+			ModelLoad(m_path);
 		}
 	}
 

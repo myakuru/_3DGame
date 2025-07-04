@@ -8,6 +8,7 @@
 #include"../../Framework/Json/Json.h"
 #include"../GameObject/Camera/TPSCamera/TPSCamera.h"
 #include"../GameObject/SkySphere/SkySphere.h"
+#include"../GameObject/HUD/NormalUI/NormalUI.h"
 
 void SceneManager::Init()
 {
@@ -21,6 +22,7 @@ void SceneManager::Register() const
 	RegisterObject::GetInstance().Register<KdGameObject>();
 	RegisterObject::GetInstance().Register<TPSCamera>();
 	RegisterObject::GetInstance().Register<SkySphere>();
+	RegisterObject::GetInstance().Register<NormalUI>();
 }
 
 void SceneManager::PreUpdate()

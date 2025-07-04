@@ -11,6 +11,7 @@ public:
 	void DrawLit() override
 	{
 		if(m_bDrawLit) KdShaderManager::Instance().m_StandardShader.DrawModel(*m_model, m_mWorld, m_color);
+		if (m_bDrawPolygon) KdShaderManager::Instance().m_StandardShader.DrawPolygon(*m_polygon, m_mWorld, m_color);
 	}
 
 	void DrawUnLit() override
@@ -18,9 +19,13 @@ public:
 		if(m_bDrawUnLit) KdShaderManager::Instance().m_StandardShader.DrawModel(*m_model, m_mWorld, m_color);
 	}
 
-	void DrawBright() override { if (m_bDrawBright)KdShaderManager::Instance().m_StandardShader.DrawModel(*m_model, m_mWorld, m_color); }
+	void DrawBright() override 
+	{ 
+		if (m_bDrawBright)KdShaderManager::Instance().m_StandardShader.DrawModel(*m_model, m_mWorld, m_color); 
+	}
 
-	void DrawSprite() override {
+	void DrawSprite() override 
+	{
 		if (m_bDrawTexture)
 			KdShaderManager::Instance().m_spriteShader.DrawTex(
 				m_texture,
@@ -81,6 +86,7 @@ private:
 	bool m_bDrawUnLit = false;					// ライトの影響を受けない描画を行うかどうか
 	bool m_bDrawBright = false;					// ブライト描画を行うかどうか
 	bool m_bDrawTexture = false;				//2DTextureを描画するかどうか
+	bool m_bDrawPolygon = false;				// ポリゴンを描画するかどうか
 
 	std::map<std::string, bool*, std::less<void>> m_drawFlg =
 	{
@@ -89,5 +95,6 @@ private:
 			{"DrawUnLit", &m_bDrawUnLit},
 			{"DrawBright", &m_bDrawBright},
 			{"DrawSprite",&m_bDrawTexture},
+			{"DrawPolygon", &m_bDrawPolygon}
 	};
 };

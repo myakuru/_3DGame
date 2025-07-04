@@ -276,6 +276,7 @@
     <ClInclude Include="Src\Application\GameObject\Camera\CameraBase.h" />
     <ClInclude Include="Src\Application\GameObject\Camera\FPSCamera\FPSCamera.h" />
     <ClInclude Include="Src\Application\GameObject\Camera\TPSCamera\TPSCamera.h" />
+    <ClInclude Include="Src\Application\GameObject\HUD\NormalUI\NormalUI.h" />
     <ClInclude Include="Src\Application\GameObject\SkySphere\SkySphere.h" />
     <ClInclude Include="Src\Application\GameObject\Utility\SelectDrawObject.h" />
     <ClInclude Include="Src\Application\main.h" />
@@ -309,10 +310,10 @@
     <ClInclude Include="Src\Framework\Shader\KdAmbientController.h" />
     <ClInclude Include="Src\Framework\Shader\KdRenderTargetChange.h" />
     <ClInclude Include="Src\Framework\Shader\StandardShader\KdStandardShader.h" />
-    <ClInclude Include="Src\Framework\Utility\Debug\KdDebugWireFrame.h" />
     <ClInclude Include="Src\Framework\Utility\KdDataStorage.h" />
     <ClInclude Include="Src\Framework\Utility\KdCSVData.h" />
     <ClInclude Include="Src\Framework\Utility\KdDebugGUI.h" />
+    <ClInclude Include="Src\Framework\Utility\KdDebugWireFrame.h" />
     <ClInclude Include="Src\Framework\Utility\KdFPSController.h" />
     <ClInclude Include="Src\Framework\Utility\KdRandom.h" />
     <ClInclude Include="src\Pch.h" />
@@ -369,9 +370,9 @@
     <ClCompile Include="Src\Framework\Shader\KdAmbientController.cpp" />
     <ClCompile Include="Src\Framework\Shader\KdRenderTargetChange.cpp" />
     <ClCompile Include="Src\Framework\Shader\StandardShader\KdStandardShader.cpp" />
-    <ClCompile Include="Src\Framework\Utility\Debug\KdDebugWireFrame.cpp" />
     <ClCompile Include="Src\Framework\Utility\KdCSVData.cpp" />
     <ClCompile Include="Src\Framework\Utility\KdDebugGUI.cpp" />
+    <ClCompile Include="Src\Framework\Utility\KdDebugWireFrame.cpp" />
     <ClCompile Include="Src\Framework\Utility\KdFPSController.cpp" />
     <ClCompile Include="src\Pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
