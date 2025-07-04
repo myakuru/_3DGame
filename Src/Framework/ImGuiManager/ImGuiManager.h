@@ -5,9 +5,9 @@ public:
 	ImGuiManager() = default;
 	~ImGuiManager() override = default;
 
-	void ImGuiUpdate();
+	void ImGuiUpdate() const;
 
-	void Hierarchy();
+	void Hierarchy() const;
 
 	void MainMenuBar() const;
 

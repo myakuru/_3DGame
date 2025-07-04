@@ -15,7 +15,7 @@ public:
 		eDrawTypeDepthOfShadow = 1 << 4,
 	};
 
-	KdGameObject() {}
+	KdGameObject() = default;
 	virtual ~KdGameObject() { Release(); }
 
 	// 生成される全てに共通するパラメータに対する初期化のみ
@@ -77,19 +77,21 @@ public:
 	bool Intersects(const KdCollider::RayInfo& targetShape, std::list<KdCollider::CollisionResult>* pResults);
 
 	// 自分で追加
-	void JsonInput(const nlohmann::json& _json);
 
-	void JsonSave(nlohmann::json&_json) const;
+	// 各オブジェクトのデーターをここでJsonから取ってくる関数
+	virtual void JsonInput(const nlohmann::json& _json);
+
+	// 各オブジェクトのデーターをここでJsonに保存する関数
+	virtual void JsonSave(nlohmann::json&_json) const;
 
 	bool ModelLoad(std::string_view _path);
 
-	void ImGuiInspector();
+	// 各オブジェクトのImGuiインスペクターを実装する関数
+	virtual void ImGuiInspector();
 
 protected:
 
 	void Release() {}
-
-
 
 	// 描画タイプ・何の描画を行うのかを決める / 最適な描画リスト作成用
 	UINT m_drawType = 0;
@@ -120,6 +122,8 @@ protected:
 
 	// モデルの初期化
 	std::shared_ptr<KdModelData> m_model = std::make_shared<KdModelData>();
+	// 2Dテクスチャの初期化
+	std::shared_ptr <KdTexture> m_texture = std::make_shared<KdTexture>();
 
 	// 位置
 	Math::Vector3 m_pos = Math::Vector3::Zero;
@@ -128,7 +132,6 @@ protected:
 	//Math::Quaternion m_rot = Math::Quaternion::Identity; // 回転
 	// 回転角度（デグリー）
 	Math::Vector3 m_deg = Math::Vector3::Zero;
-
 	// カラー
 	Math::Color m_color = {1,1,1,1};
 

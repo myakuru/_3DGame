@@ -97,6 +97,9 @@
     <Filter Include="Src\Application\GameObject\SkySphere">
       <UniqueIdentifier>{0ba4043a-65dd-4987-9e59-1fa53fe229e3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\Utility">
+      <UniqueIdentifier>{0d7ce187-4637-49d0-b14d-94b0445fd74d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -290,6 +293,9 @@
     </ClInclude>
     <ClInclude Include="Src\Application\GameObject\SkySphere\SkySphere.h">
       <Filter>Src\Application\GameObject\SkySphere</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Utility\SelectDrawObject.h">
+      <Filter>Src\Application\Utility</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

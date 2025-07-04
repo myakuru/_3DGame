@@ -3,17 +3,16 @@
 #include"../../Application/Scene/SceneManager.h"
 #include"../../Application/main.h"
 
-void ImGuiManager::ImGuiUpdate()
+void ImGuiManager::ImGuiUpdate() const
 {
 	// 上部のメニューバーを表示
 	MainMenuBar();
 
 	// ヒエラルキーウィンドウを表示
 	Hierarchy();
-
 }
 
-void ImGuiManager::Hierarchy()
+void ImGuiManager::Hierarchy() const
 {
 	if (ImGui::Begin("Hierarchy"))
 	{
