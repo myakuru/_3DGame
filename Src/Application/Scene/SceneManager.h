@@ -40,6 +40,9 @@ public :
 	// シーンの種類をゲットするゲッター
 	std::shared_ptr<BaseScene> GetCurrentScene() { return m_currentScene; }
 
+	// 選択したオブジェクトをセット
+	std::shared_ptr<KdGameObject> m_selectObject = nullptr;
+
 private :
 
 	// RegisterObjectからオブジェクトを登録する関数

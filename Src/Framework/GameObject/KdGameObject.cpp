@@ -1,6 +1,7 @@
 ﻿#include "KdGameObject.h"
 #include"../../Application/main.h"
 #include"../../Framework/Json/Json.h"
+#include"../../Framework/ImGuiManager/ImGuiManager.h"
 
 void KdGameObject::Init()
 {
@@ -79,7 +80,7 @@ void KdGameObject::JsonInput(const nlohmann::json& _json)
 void KdGameObject::JsonSave(nlohmann::json& _json) const
 {
 	std::string className = typeid(*this).name(); // クラス名の所得(this)にすると基底クラスの名前が取得されるので自分自身のポインタを使用
-	
+
 	_json["Name"] = className;
 	_json["path"] = m_path;
 	_json["pos"] = JSON_MANAGER.VectorToJson(m_pos);
@@ -87,24 +88,24 @@ void KdGameObject::JsonSave(nlohmann::json& _json) const
 	_json["deg"] = JSON_MANAGER.VectorToJson(m_deg);
 }
 
-bool KdGameObject::ModelLoad(std::string_view _path)
+bool KdGameObject::ModelLoad(std::string _path)
 {
-	std::string path(_path);
 	// .~ 以降の拡張子を識別するために部分文字列を取得
-	std::string ext = path.substr(path.find_last_of('.') + 1);
+	std::string ext = _path.substr(_path.find_last_of('.') + 1);
 
-	m_path = path; // どちらでもパスを保存
-
-	if (ext == "png" || ext == "PNG") {
+	if (ext == "png" || ext == "PNG")
+	{
+		_path = m_path;
 		// テクスチャ読み込み
-		m_texture->Load(path);
-		m_polygon->SetMaterial(path);
+		m_texture = KdAssets::Instance().m_textures.GetData(m_path);
+		m_polygon->SetMaterial(m_path);
 		return true;
 	}
-
-	// モデル読み込み
-	m_model = std::make_shared<KdModelData>();
-	m_model = KdAssets::Instance().m_modeldatas.GetData(path);
+	else
+	{
+		// モデル読み込み
+		m_model = KdAssets::Instance().m_modeldatas.GetData(_path);
+	}
 
     return false;
 }

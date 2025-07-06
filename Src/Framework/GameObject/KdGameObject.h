@@ -22,7 +22,7 @@ public:
 	virtual void Init();
 
 	virtual void PreUpdate() {}
-	virtual void Update(){}
+	virtual void Update() {}
 	virtual void PostUpdate() 
 	{
 		m_mWorld = Math::Matrix::CreateScale(m_scale);
@@ -76,7 +76,9 @@ public:
 	bool Intersects(const KdCollider::BoxInfo& targetBox, std::list<KdCollider::CollisionResult>* pResults);
 	bool Intersects(const KdCollider::RayInfo& targetShape, std::list<KdCollider::CollisionResult>* pResults);
 
-	// 自分で追加
+	//===================================================================
+	// 自分で追加したもの
+	//===================================================================
 
 	// 各オブジェクトのデーターをここでJsonから取ってくる関数
 	virtual void JsonInput(const nlohmann::json& _json);
@@ -84,10 +86,20 @@ public:
 	// 各オブジェクトのデーターをここでJsonに保存する関数
 	virtual void JsonSave(nlohmann::json&_json) const;
 
-	bool ModelLoad(std::string_view _path);
+	bool ModelLoad(std::string _path);
 
 	// 各オブジェクトのImGuiインスペクターを実装する関数
 	virtual void ImGuiInspector();
+
+	// 指定した型のオブジェクトを取得
+	/*template<class T>
+	std::shared_ptr<T> FindObjectOfType() {
+		for (auto& obj : m_objList) {
+			auto casted = std::dynamic_pointer_cast<T>(obj);
+			if (casted) return casted;
+		}
+		return nullptr;
+	}*/
 
 protected:
 
