@@ -15,6 +15,9 @@ void ImGuiManager::ImGuiUpdate()
 
 	// ヒエラルキーウィンドウを表示
 	Hierarchy();
+
+	// インスペクターウィンドウを表示
+	ShowInspector();
 }
 
 void ImGuiManager::Hierarchy()
@@ -62,6 +65,16 @@ if (ImGui::BeginChild("Objects"))
     {
         const auto& objectName = *obj;
 
+		// 1. 開いているノードだけ開く
+		if (obj == m_openObject)
+		{
+			ImGui::SetNextItemOpen(true, ImGuiCond_Always);
+		}
+		else
+		{
+			ImGui::SetNextItemOpen(false, ImGuiCond_Always);
+		}
+
 		ImGui::PushID(obj.get());
 		std::string className = typeid(objectName).name();
 
@@ -81,16 +94,6 @@ if (ImGui::BeginChild("Objects"))
 		bool TreeNode = ImGui::TreeNode(className.data());
 		DragDropSource("GameObjectInstance", &obj);	//ゲームオブジェクトのポインターをドラック出来るようになる
 
-		// 1. 開いているノードだけ開く
-		if (obj == m_openObject)
-		{
-			ImGui::SetNextItemOpen(true, ImGuiCond_Always);
-		}
-		else
-		{
-			ImGui::SetNextItemOpen(false, ImGuiCond_Always);
-		}
-
         // ここからツリー形式で詳細情報を表示
         if (TreeNode) //className + "##" + std::to_string((int)obj.get()) <=こういう書き方もあるよ
         {
@@ -105,11 +108,10 @@ if (ImGui::BeginChild("Objects"))
             // ボタンでオブジェクトを削除できる
             if (ImGui::SmallButton("Delete"))
             {
-                obj->SetExpired(true);
+				obj->SetExpired(true);
             }
 
-            // 各オブジェクトのプロパティを表示
-            obj->ImGuiInspector();
+			obj->ImGuiSelectGltf(); // GLTFの選択を表示
 
             //ツリーの終了処理
             ImGui::TreePop();
@@ -150,7 +152,7 @@ void ImGuiManager::ImGuiSelectObject()
 		rayInfo.m_type = KdCollider::TypeEvent;
 
 		std::list<KdCollider::CollisionResult> results;
-		for (auto& it : SceneManager::GetInstance().GetObjList())
+		for (const auto& it : SceneManager::GetInstance().GetObjList())
 		{
 			// 当たったオブジェクトの自身のポインタが返り値になる
 			it->SelectObjectIntersects(rayInfo, &results);
@@ -172,9 +174,30 @@ void ImGuiManager::ImGuiSelectObject()
 		if (resultObject.m_resultObject)
 		{
 			SceneManager::GetInstance().m_selectObject = resultObject.m_resultObject;
-			m_openObject = resultObject.m_resultObject; // 選択したオブジェクトを保存
+			m_openObject = resultObject.m_resultObject;	// 選択したオブジェクトを保存
 		}
 	}
+}
+
+void ImGuiManager::ShowInspector()
+{
+	if (ImGui::Begin("Inspector"))
+	{
+		//選択されたオブジェクト
+		auto selectPbject = SceneManager::GetInstance().m_selectObject;
+		// 開きたいオブジェクト
+		auto openObject = m_openObject;
+
+		if (openObject && openObject != selectPbject)
+		{
+			openObject->ImGuiInspector(); // 選択したオブジェクトのインスペクターを表示
+		}
+		else if (openObject)
+		{
+			selectPbject->ImGuiInspector();
+		}
+	}
+	ImGui::End();
 }
 
 void ImGuiManager::listSwap(std::shared_ptr<KdGameObject> _obj1, std::shared_ptr<KdGameObject> _obj2)

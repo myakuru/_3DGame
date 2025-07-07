@@ -33,11 +33,38 @@
       "DrawUnLit": true,
       "GenerateDepthMapFromLight": false
     },
-    "path": "Asset/Models/SkySphere/Sky.gltf",
+    "path": "Asset\\Models\\AreaBoundary\\AreaBoundary.gltf",
     "pos": {
+      "x": -82.30000305175781,
+      "y": 1.7000000476837158,
+      "z": 184.3000030517578
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    }
+  },
+  {
+    "Name": "class SkySphere",
+    "deg": {
       "x": 0.0,
       "y": 0.0,
       "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawLit": false,
+      "DrawPolygon": false,
+      "DrawSprite": false,
+      "DrawUnLit": true,
+      "GenerateDepthMapFromLight": false
+    },
+    "path": "Asset/Models/SkySphere/Sky.gltf",
+    "pos": {
+      "x": 59.599998474121094,
+      "y": 0.0,
+      "z": 224.60000610351563
     },
     "scale": {
       "x": 1.0,

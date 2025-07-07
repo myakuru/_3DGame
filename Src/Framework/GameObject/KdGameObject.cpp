@@ -139,6 +139,12 @@ void KdGameObject::ImGuiInspector()
 	ImGui::DragFloat3("m_scale", &m_scale.x, 0.1f);
 	ImGui::DragFloat3("m_rot", &m_deg.x, 0.1f);
 
+	ImGui::ColorEdit4("color", &m_color.x);
+
+}
+
+void KdGameObject::ImGuiSelectGltf()
+{
 	if (ImGui::Button(("LoadPath: %s", m_path.data())))
 	{
 		if (Application::Instance().GetWindow().OpenFileDialog(m_path))
@@ -146,7 +152,4 @@ void KdGameObject::ImGuiInspector()
 			ModelLoad(m_path);
 		}
 	}
-
-	ImGui::ColorEdit4("color", &m_color.x);
-
 }

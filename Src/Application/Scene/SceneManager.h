@@ -47,7 +47,8 @@ public :
 	template<class T>
 	std::shared_ptr<T> FindObjectOfType()
 	{
-		for (auto& obj : GetObjList()) {
+		for (auto& obj : GetObjList()) 
+		{
 			auto casted = std::dynamic_pointer_cast<T>(obj);
 			if (casted) return casted;
 		}

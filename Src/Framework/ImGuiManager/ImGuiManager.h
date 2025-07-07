@@ -17,6 +17,9 @@ public:
 	// ImGuiでオブジェクトを選択できるようにするための関数
 	void ImGuiSelectObject();
 
+	// インスペクターの表示のみ
+	void ShowInspector();
+
 	template<class T>
 	inline bool DragDropSource(std::string_view _tag, T _payload)
 	{

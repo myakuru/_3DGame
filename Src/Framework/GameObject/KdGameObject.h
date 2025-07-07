@@ -93,6 +93,8 @@ public:
 	// 各オブジェクトのImGuiインスペクターを実装する関数
 	virtual void ImGuiInspector();
 
+	void ImGuiSelectGltf();
+
 protected:
 
 	void Release() {}
