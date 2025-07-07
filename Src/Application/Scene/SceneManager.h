@@ -43,6 +43,32 @@ public :
 	// 選択したオブジェクトをセット
 	std::shared_ptr<KdGameObject> m_selectObject = nullptr;
 
+	// 指定した型のオブジェクトを取得
+	template<class T>
+	std::shared_ptr<T> FindObjectOfType()
+	{
+		for (auto& obj : GetObjList()) {
+			auto casted = std::dynamic_pointer_cast<T>(obj);
+			if (casted) return casted;
+		}
+		return nullptr;
+	}
+
+
+	// 指定されたオブジェクトのウェークポインタを取得
+	template<class T>
+	void GetObjectWeakPtr(std::weak_ptr<T>& outPtr)
+	{
+		if (outPtr.expired())
+		{
+			if (auto findObj = FindObjectOfType<T>())
+			{
+				outPtr = findObj;
+			}
+		}
+	}
+
+
 private :
 
 	// RegisterObjectからオブジェクトを登録する関数

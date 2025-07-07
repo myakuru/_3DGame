@@ -1,5 +1,4 @@
 ﻿#pragma once
-class KdGameObject;
 class KdCollisionShape;
 
 // ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// /////
@@ -142,7 +141,7 @@ public:
 		Math::Vector3 m_hitDir;			// 対象からの方向ベクトル（押し返しなどに使う
 		Math::Vector3 m_hitNDir;		// HITした面の法線ベクトル
 		float m_overlapDistance = 0.0f; // 重なり量
-		std::shared_ptr<KdGameObject> m_resultObject;
+		std::shared_ptr<class KdGameObject> m_resultObject;
 	};
 
 	KdCollider() {}

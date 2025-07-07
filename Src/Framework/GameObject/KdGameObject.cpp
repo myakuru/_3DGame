@@ -2,6 +2,7 @@
 #include"../../Application/main.h"
 #include"../../Framework/Json/Json.h"
 #include"../../Framework/ImGuiManager/ImGuiManager.h"
+#include"../../Application/Scene/SceneManager.h"
 
 void KdGameObject::Init()
 {
@@ -69,6 +70,20 @@ bool KdGameObject::Intersects(const KdCollider::RayInfo& targetShape, std::list<
 	return m_pCollider->Intersects(targetShape, m_mWorld, pResults);
 }
 
+bool KdGameObject::SelectObjectIntersects(const KdCollider::RayInfo& targetShape, std::list<KdCollider::CollisionResult>* pResults)
+{
+	if (!m_pCollider) { return false; }
+	// 当たったかどうか判別
+	if (m_pCollider->Intersects(targetShape, m_mWorld, pResults))
+	{
+		// リストの最後に自分自身のポインタを追加することで、何と衝突したかを識別できるようにする
+		pResults->back().m_resultObject = shared_from_this();
+		return true;
+	}
+
+	return false;
+}
+
 void KdGameObject::JsonInput(const nlohmann::json& _json)
 {
 	if (_json.contains("path")) m_path = _json["path"];
@@ -105,6 +120,13 @@ bool KdGameObject::ModelLoad(std::string _path)
 	{
 		// モデル読み込み
 		m_model = KdAssets::Instance().m_modeldatas.GetData(_path);
+	}
+
+	if (m_model)
+	{
+		m_pCollider = std::make_unique<KdCollider>();
+		m_pCollider->RegisterCollisionShape("ModelMesh", std::make_unique<KdModelCollision>(m_model, KdCollider::TypeEvent));
+		return true;
 	}
 
     return false;

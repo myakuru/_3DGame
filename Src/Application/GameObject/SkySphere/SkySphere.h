@@ -6,4 +6,6 @@ public:
 	SkySphere() = default;
 	~SkySphere() override = default;
 
+	void Init() override;
+
 };

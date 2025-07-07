@@ -7,6 +7,9 @@
 
 void ImGuiManager::ImGuiUpdate()
 {
+	// ImGuiでオブジェクトをマウスで選択できるようにする
+	ImGuiSelectObject();
+
 	// 上部のメニューバーを表示
 	MainMenuBar();
 
@@ -78,10 +81,26 @@ if (ImGui::BeginChild("Objects"))
 		bool TreeNode = ImGui::TreeNode(className.data());
 		DragDropSource("GameObjectInstance", &obj);	//ゲームオブジェクトのポインターをドラック出来るようになる
 
+		// 1. 開いているノードだけ開く
+		if (obj == m_openObject)
+		{
+			ImGui::SetNextItemOpen(true, ImGuiCond_Always);
+		}
+		else
+		{
+			ImGui::SetNextItemOpen(false, ImGuiCond_Always);
+		}
+
         // ここからツリー形式で詳細情報を表示
         if (TreeNode) //className + "##" + std::to_string((int)obj.get()) <=こういう書き方もあるよ
         {
             ImGui::SameLine(270);
+
+			// クリックされたらこのノードを開く
+			if (ImGui::IsItemClicked())
+			{
+				m_openObject = obj; // 選択したオブジェクトを保存
+			}
 
             // ボタンでオブジェクトを削除できる
             if (ImGui::SmallButton("Delete"))
@@ -106,10 +125,10 @@ if (ImGui::BeginChild("Objects"))
 void ImGuiManager::ImGuiSelectObject()
 {
 	// 画面上で,click場合のみ当たり判定
-	if (ImGui::IsMouseClicked(ImGuiMouseButton_Left))
+	if (ImGui::IsMouseClicked(ImGuiMouseButton_Left) && !ImGui::IsWindowHovered(ImGuiHoveredFlags_AnyWindow))
 	{
 		// マウスの座標を取得
-		ImVec2 mousePos = ImGui::GetMousePos();
+		ImVec2 mousePos = ImGui::GetIO().MousePos;
 
 		// マウスを取得
 		POINT mouse;
@@ -119,17 +138,13 @@ void ImGuiManager::ImGuiSelectObject()
 		// コライダーからレイを取得
 		KdCollider::RayInfo rayInfo;
 
-		//　CameraBaseからカメラの情報を取得
-		//auto cameraBase = FindObjectOfType<CameraBase>();
-		//if (cameraBase)
-		//{
-		//	// CameraBaseのm_spCameraを取得
-		//	auto spCamera = cameraBase->GetCamera();
-		//	if (spCamera)
-		//	{
-		//		spCamera->GenerateRayInfoFromClientPos(mouse, rayInfo.m_pos, rayInfo.m_dir, rayInfo.m_range);
-		//	}
-		//}
+		SceneManager::GetInstance().GetObjectWeakPtr(m_camera);
+
+		if (m_camera.expired()) return; // カメラが無効な場合は何もしない
+
+		auto spCamera = m_camera.lock()->GetCamera();
+
+		spCamera->GenerateRayInfoFromClientPos(mouse, rayInfo.m_pos, rayInfo.m_dir, rayInfo.m_range);
 
 		// KdColliderのレイ情報を設定
 		rayInfo.m_type = KdCollider::TypeEvent;
@@ -137,16 +152,28 @@ void ImGuiManager::ImGuiSelectObject()
 		std::list<KdCollider::CollisionResult> results;
 		for (auto& it : SceneManager::GetInstance().GetObjList())
 		{
-			it->Intersects(rayInfo, &results);
+			// 当たったオブジェクトの自身のポインタが返り値になる
+			it->SelectObjectIntersects(rayInfo, &results);
 		}
 
 		KdCollider::CollisionResult resultObject;
 
+		float length = rayInfo.m_range;
+		for (auto& it : results)
+		{
+			if (length > (it.m_hitPos - spCamera->GetCameraMatrix().Translation()).Length())
+			{
+				resultObject = it;
+				length = (it.m_hitPos - spCamera->GetCameraMatrix().Translation()).Length();
+			}
+		}
+
+		// 当たったオブジェクトがある場合
 		if (resultObject.m_resultObject)
 		{
 			SceneManager::GetInstance().m_selectObject = resultObject.m_resultObject;
+			m_openObject = resultObject.m_resultObject; // 選択したオブジェクトを保存
 		}
-
 	}
 }
 

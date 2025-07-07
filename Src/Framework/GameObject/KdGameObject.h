@@ -1,5 +1,4 @@
 ﻿#pragma once
-
 // ゲーム上に存在するすべてのオブジェクトの基底となるクラス
 class KdGameObject : public std::enable_shared_from_this<KdGameObject>
 {
@@ -76,6 +75,9 @@ public:
 	bool Intersects(const KdCollider::BoxInfo& targetBox, std::list<KdCollider::CollisionResult>* pResults);
 	bool Intersects(const KdCollider::RayInfo& targetShape, std::list<KdCollider::CollisionResult>* pResults);
 
+	// 自分で追加したもの
+	bool SelectObjectIntersects(const KdCollider::RayInfo& targetShape, std::list<KdCollider::CollisionResult>* pResults);
+
 	//===================================================================
 	// 自分で追加したもの
 	//===================================================================
@@ -90,16 +92,6 @@ public:
 
 	// 各オブジェクトのImGuiインスペクターを実装する関数
 	virtual void ImGuiInspector();
-
-	// 指定した型のオブジェクトを取得
-	/*template<class T>
-	std::shared_ptr<T> FindObjectOfType() {
-		for (auto& obj : m_objList) {
-			auto casted = std::dynamic_pointer_cast<T>(obj);
-			if (casted) return casted;
-		}
-		return nullptr;
-	}*/
 
 protected:
 
