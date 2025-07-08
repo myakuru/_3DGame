@@ -137,6 +137,8 @@ public:
 private:
 	void GuiRelease();
 
+	void WaitForEventTimeout(double timeoutSeconds);
+
 	// FPSコントローラー
 	KdFPSController	m_fpsController;
 

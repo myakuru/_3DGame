@@ -18,7 +18,7 @@ struct KdFPSController
 
 	void Update();
 
-	float Control();
+	void Control();
 
 private:
 

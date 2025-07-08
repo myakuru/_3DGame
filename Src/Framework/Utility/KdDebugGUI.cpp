@@ -104,20 +104,18 @@ void KdDebugGUI::IdleBySleeping(FpsIdling& ioIdling)
 	ioIdling.isIdling = false;
 	if ((ioIdling.fpsIdle > 0.f) && ioIdling.enableIdling)
 	{
-		float elapsed = m_fpsController.Control();
-		float targetFrameTime = 1.0f / ioIdling.fpsIdle;
+		// スリープ前の時刻
+		auto beforeWait = std::chrono::high_resolution_clock::now();
+		double waitTimeout = 1.0 / ioIdling.fpsIdle;
 
-		// 残り時間だけスリープ処理
-		float sleepTime = targetFrameTime - elapsed;
-		if (sleepTime > 0.0f)
-		{
-			// ここで、スレッドをwaitTimeout秒だけ停止する。
-			std::this_thread::sleep_for(std::chrono::duration<double>(sleepTime));
+		// イベント待ち＋タイムアウト
+		WaitForEventTimeout(waitTimeout);
 
-			// スリープ後経過時間再計測
-			m_fpsController.Control();
-			ioIdling.isIdling = true;
-		}
+		// スリープ後の時刻
+		auto afterWait = std::chrono::high_resolution_clock::now();
+		std::chrono::duration<double> waitDuration = afterWait - beforeWait;
+		double waitIdleExpected = 1.0 / ioIdling.fpsIdle;
+		ioIdling.isIdling = (waitDuration.count() > waitIdleExpected * 0.9);
 	}
 }
 
@@ -131,4 +129,11 @@ void KdDebugGUI::GuiRelease()
 	ImGui_ImplDX11_Shutdown();
 	ImGui_ImplWin32_Shutdown();
 	ImGui::DestroyContext();
+}
+
+void KdDebugGUI::WaitForEventTimeout(double timeoutSeconds)
+{
+	DWORD timeoutMs = static_cast<DWORD>(timeoutSeconds * 1000.0);
+	// QS_ALLINPUT: すべての入力メッセージを対象
+	MsgWaitForMultipleObjects(0, nullptr, FALSE, timeoutMs, QS_ALLINPUT);
 }
