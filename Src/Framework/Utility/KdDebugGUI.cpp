@@ -7,7 +7,7 @@ KdDebugGUI::KdDebugGUI()
 {}
 KdDebugGUI::~KdDebugGUI()
 { 
-	GuiRelease(); 
+	GuiRelease();
 }
 
 void KdDebugGUI::GuiInit()
@@ -20,18 +20,22 @@ void KdDebugGUI::GuiInit()
 	ImGui::CreateContext();
 	// Setup Dear ImGui style
 	ImGui::StyleColorsDark();
-	//ImGui::StyleColorsClassic();
+	
+	ImGuiIO& io = ImGui::GetIO();
+	// ここの部分でImGuiのドッキング機能を有効にする
+	io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;		//	マルチウィンドウを有効にする
+	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;		//	ドッキングを有効にする
+
 	// Setup Platform/Renderer bindings
 	ImGui_ImplWin32_Init(Application::Instance().GetWindowHandle());
 	ImGui_ImplDX11_Init(
 		KdDirect3D::Instance().WorkDev(), KdDirect3D::Instance().WorkDevContext());
 
 #include "imgui/ja_glyph_ranges.h"
-	ImGuiIO& io = ImGui::GetIO();
 	ImFontConfig config;
 	config.MergeMode = true;
-	io.Fonts->AddFontDefault();
-	//io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\HGRME.TTC", 15.0f);
+	//io.Fonts->AddFontDefault();
+	io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\SegoeIcons.ttf", 15.0f);
 	// 日本語対応
 	io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\msgothic.ttc", 13.0f, &config, glyphRangesJapanese);
 
@@ -54,37 +58,31 @@ void KdDebugGUI::GuiProcess()
 	// 以下にImGui描画処理を記述
 	//===========================================================
 
-	// デバッグウィンドウ(日本語を表示したい場合はこう書く)
-//	if (ImGui::Begin(U8("えふぴぃえす")))
-//	{
-		// FPS
-//		ImGui::Text("FPS : %d", Application::Instance().GetNowFPS());
-//	}
-//	ImGui::End();
-
 	// ログウィンドウ
 	m_uqLog->Draw("Log Window");
 
 	IMGUI_MANAGER.ImGuiUpdate(); // ImGuiManagerの更新処理を呼び出す
 	
 
-	//=====================================================
-	// ログ出力 ・・・ AddLog("～") で追加
-	//=====================================================
-
-//	m_uqLog->AddLog("hello world\n");
-
-	//=====================================================
-	// 別ソースファイルからログを出力する場合
-	//=====================================================
-
-//	KdDebugGUI::Instance().AddLog("TestLog\n");
-
 	//===========================================================
 	// ここより上にImGuiの描画はする事
 	//===========================================================
 	ImGui::Render();
 	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
+
+	// マルチウィンドウを有効にしている場合は、以下の処理も必要
+	if (ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+	{
+		// 描画、更新
+		ImGui::UpdatePlatformWindows();
+		ImGui::RenderPlatformWindowsDefault();
+
+		// ここでレンダリングターゲットを戻す必要がある
+		KdDirect3D::Instance().WorkDevContext()->OMSetRenderTargets(
+			1,
+			KdDirect3D::Instance().GetBackBuffer()->WorkRTViewAddress(),
+			KdDirect3D::Instance().GetZBuffer()->WorkDSView());
+	}
 }
 
 void KdDebugGUI::AddLog(const char* fmt,...)

@@ -10,7 +10,7 @@ void KdFPSController::Init()
 
 void KdFPSController::UpdateStartTime()
 {
-	m_frameStartTime = timeGetTime();
+	m_lastTime = std::chrono::high_resolution_clock::now();
 }
 
 void KdFPSController::Update()
@@ -23,35 +23,26 @@ void KdFPSController::Update()
 // FPS制御
 void KdFPSController::Control()
 {
-	// 処理終了時間Get
-	DWORD frameProcessEndTime = timeGetTime();
-
-	// 1フレームで経過すべき時間
-	DWORD timePerFrame = kSecond / m_maxFps;
-
-	if (frameProcessEndTime - m_frameStartTime < timePerFrame)
-	{
-		// 1秒間にMaxFPS回数以上処理が回らないように待機する
-		Sleep(timePerFrame - (frameProcessEndTime - m_frameStartTime));
-	}
+	auto currentTime = std::chrono::high_resolution_clock::now();
+	std::chrono::duration<float> elapsedTime = currentTime - m_lastTime;
+	m_unscaledDeltaTime = elapsedTime.count();
+	m_deltaTime = m_unscaledDeltaTime * m_timeScale;
+	m_lastTime = currentTime;
 }
 
 // 現在のFPS計測
 void KdFPSController::Monitoring()
 {
-	// FPS計測のタイミング　0.5秒おき
-	constexpr float kFpsRefreshFrame = 500;		
+	static int fpsCount = 0;			// 現在のFPS
+	static float timeElapsed = 0.0f;	// 経過時間
 
-	m_fpsCnt++;
+	fpsCount++;							// FPSカウント
+	timeElapsed += m_deltaTime;			// 経過時間を加算
 
-	// 0.5秒おきに FPS計測
-	if (m_frameStartTime - m_fpsMonitorBeginTime >= kFpsRefreshFrame)
+	if(timeElapsed >= 1.0f)				// 1秒経過したら
 	{
-		// 現在のFPS算出
-		m_nowfps = (m_fpsCnt * kSecond) / (m_frameStartTime - m_fpsMonitorBeginTime);
-
-		m_fpsMonitorBeginTime = m_frameStartTime;
-
-		m_fpsCnt = 0;
+		m_nowfps = fpsCount;			// FPSを保存
+		fpsCount = 0;					// FPSカウントをリセット
+		timeElapsed = 0.0f;				// 経過時間をリセット
 	}
 }
