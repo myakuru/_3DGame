@@ -24,6 +24,17 @@ public:
 	int GetNowFPS()				const	{ return m_fpsController.m_nowfps; }
 	int GetMaxFPS()				const	{ return m_fpsController.m_maxFps; }
 
+	// デルタタイムのゲッター
+	float GetDeltaTime() const { return m_fpsController.m_deltaTime; }
+	float GetUnscaledDeltaTime() const { return m_fpsController.m_unscaledDeltaTime; }
+
+
+	float SetFpsScale(float _fpsScale)
+	{
+		m_fpsController.m_timeScale = _fpsScale;
+		return m_fpsController.m_timeScale;
+	}
+
 private:
 
 	void KdBeginUpdate();

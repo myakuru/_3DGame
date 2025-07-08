@@ -47,6 +47,8 @@ void KdDebugGUI::GuiProcess()
 	// 初期化されてないなら動作させない
 	if (!m_uqLog) return;
 
+	IdleBySleeping(params.fpsIdling);
+
 	//===========================================================
 	// ImGui開始
 	//===========================================================
@@ -94,6 +96,29 @@ void KdDebugGUI::AddLog(const char* fmt,...)
 	va_start(args, fmt);
 	m_uqLog->AddLog(fmt);
 	va_end(args);
+}
+
+void KdDebugGUI::IdleBySleeping(FpsIdling& ioIdling)
+{
+
+	ioIdling.isIdling = false;
+	if ((ioIdling.fpsIdle > 0.f) && ioIdling.enableIdling)
+	{
+		float elapsed = m_fpsController.Control();
+		float targetFrameTime = 1.0f / ioIdling.fpsIdle;
+
+		// 残り時間だけスリープ処理
+		float sleepTime = targetFrameTime - elapsed;
+		if (sleepTime > 0.0f)
+		{
+			// ここで、スレッドをwaitTimeout秒だけ停止する。
+			std::this_thread::sleep_for(std::chrono::duration<double>(sleepTime));
+
+			// スリープ後経過時間再計測
+			m_fpsController.Control();
+			ioIdling.isIdling = true;
+		}
+	}
 }
 
 void KdDebugGUI::GuiRelease()

@@ -116,9 +116,29 @@ public:
 	void GuiProcess();
 
 	void AddLog(const char* fmt, ...);
+
+	struct FpsIdling
+	{
+		float fpsIdle = 100.f;         // FPS when idling
+		bool  enableIdling = true;   // a bool to enable/disable idling
+		bool  isIdling = false;      // an output parameter filled by the runner
+	};
+
+	// This is your application/runner state.
+	// Call it whatever you want, store whatever you want in it!
+	struct RunnerState
+	{
+		// [...] Lots of other params, probably
+		FpsIdling fpsIdling;
+	}params;
+
+	void IdleBySleeping(FpsIdling& ioIdling);
 	
 private:
 	void GuiRelease();
+
+	// FPSコントローラー
+	KdFPSController	m_fpsController;
 
 	// ImGui
 	std::unique_ptr<ImGuiAppLog> m_uqLog = nullptr;

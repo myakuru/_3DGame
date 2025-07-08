@@ -17,17 +17,20 @@ void KdFPSController::Update()
 {
 	Control();
 
+	m_deltaTime = m_unscaledDeltaTime * m_timeScale;
+
+	m_lastTime = currentTime;
+
 	Monitoring();
 }
 
 // FPS制御
-void KdFPSController::Control()
+float KdFPSController::Control()
 {
-	auto currentTime = std::chrono::high_resolution_clock::now();
+	currentTime = std::chrono::high_resolution_clock::now();
 	std::chrono::duration<float> elapsedTime = currentTime - m_lastTime;
 	m_unscaledDeltaTime = elapsedTime.count();
-	m_deltaTime = m_unscaledDeltaTime * m_timeScale;
-	m_lastTime = currentTime;
+	return elapsedTime.count();
 }
 
 // 現在のFPS計測

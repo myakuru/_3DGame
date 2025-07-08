@@ -18,9 +18,9 @@ struct KdFPSController
 
 	void Update();
 
-private:
+	float Control();
 
-	void Control();
+private:
 
 	void Monitoring();
 
@@ -29,6 +29,7 @@ private:
 	int			m_fpsCnt = 0;				// FPS計測用カウント
 	DWORD		m_fpsMonitorBeginTime = 0;	// FPS計測開始時間
 	std::chrono::high_resolution_clock::time_point m_lastTime;
+	std::chrono::steady_clock::time_point currentTime;
 
 	const int	kSecond = 1000;				// １秒のミリ秒
 };
