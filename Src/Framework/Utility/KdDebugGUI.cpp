@@ -35,7 +35,7 @@ void KdDebugGUI::GuiInit()
 	ImFontConfig config;
 	config.MergeMode = true;
 	//io.Fonts->AddFontDefault();
-	io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\SegoeIcons.ttf", 15.0f);
+	io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\SegoeIcons.ttf", 13.0f);
 	// 日本語対応
 	io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\msgothic.ttc", 13.0f, &config, glyphRangesJapanese);
 

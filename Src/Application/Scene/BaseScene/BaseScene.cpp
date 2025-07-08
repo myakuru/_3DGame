@@ -57,6 +57,9 @@ void BaseScene::PreDraw()
 
 void BaseScene::Draw()
 {
+	m_renderTargetPack.ClearTexture();
+	m_renderTargetChanger.ChangeRenderTarget(m_renderTargetPack);
+
 	// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 	// 光を遮るオブジェクト(不透明な物体や2Dキャラ)はBeginとEndの間にまとめてDrawする
 	KdShaderManager::Instance().m_StandardShader.BeginGenerateDepthMapFromLight();
@@ -111,6 +114,8 @@ void BaseScene::Draw()
 		}
 	}
 	KdShaderManager::Instance().m_postProcessShader.EndBright();
+
+	m_renderTargetChanger.UndoRenderTarget();
 }
 
 void BaseScene::DrawSprite()
@@ -148,5 +153,6 @@ void BaseScene::Event()
 
 void BaseScene::Init()
 {
+	m_renderTargetPack.CreateRenderTarget(1280, 720, true);
 	// 各シーンで必要な内容を実装(オーバーライド)する
 }

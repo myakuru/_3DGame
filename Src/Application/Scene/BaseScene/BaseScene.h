@@ -35,11 +35,20 @@ public :
 	
 	virtual std::string GetSceneName() const = 0;
 
+	KdRenderTargetPack GetRenderTargetPack()
+	{
+		return m_renderTargetPack;
+	}
+
 protected :
 
 	// 継承先シーンで必要ならオーバーライドする
 	virtual void Event();
 	virtual void Init();
+
+	KdTexture m_defaultTexture;
+	KdRenderTargetChanger m_renderTargetChanger;
+	KdRenderTargetPack m_renderTargetPack;
 
 	// 全オブジェクトのアドレスをリストで管理
 	std::list<std::shared_ptr<KdGameObject>> m_objList;

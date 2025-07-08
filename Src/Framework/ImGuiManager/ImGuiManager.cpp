@@ -18,6 +18,9 @@ void ImGuiManager::ImGuiUpdate()
 
 	// インスペクターウィンドウを表示
 	ShowInspector();
+
+	// ゲームシーンを表示
+	ShowGameScene();
 }
 
 void ImGuiManager::Hierarchy()
@@ -196,6 +199,16 @@ void ImGuiManager::ShowInspector()
 		{
 			selectPbject->ImGuiInspector();
 		}
+	}
+	ImGui::End();
+}
+
+void ImGuiManager::ShowGameScene()
+{
+	if (ImGui::Begin("Game"))
+	{
+		ImTextureID texID = (ImTextureID)(SceneManager::GetInstance().GetCurrentScene()->GetRenderTargetPack().m_RTTexture->WorkSRView());
+		ImGui::Image(texID, ImVec2(1280, 720));
 	}
 	ImGui::End();
 }

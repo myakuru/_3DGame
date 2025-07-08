@@ -20,6 +20,8 @@ public:
 	// インスペクターの表示のみ
 	void ShowInspector();
 
+	void ShowGameScene();
+
 	template<class T>
 	inline bool DragDropSource(std::string_view _tag, T _payload)
 	{
@@ -101,12 +103,20 @@ public:
 
 	void listSwap(std::shared_ptr<KdGameObject> _obj1, std::shared_ptr<KdGameObject> _obj2);
 
+	//std::shared_ptr<KdTexture> GetTexture() const { return m_texture; }
+
+	KdRenderTargetPack GetRenderTargetChanger() { return m_renderTargetChanger; }
+
 private:
 
 	std::weak_ptr<CameraBase> m_camera;
 
 	// 開きたいオブジェクトを記録する変数
 	std::shared_ptr<KdGameObject> m_openObject = nullptr;
+
+	std::shared_ptr<KdTexture> m_texture = nullptr;
+
+	KdRenderTargetPack m_renderTargetChanger;
 
 	std::string m_modelPath = "Asset/";
 

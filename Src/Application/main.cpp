@@ -216,7 +216,6 @@ bool Application::Init(int w, int h)
 	// ImGuiManager初期化
 	// ===================================================================
 	m_imguiManager = std::make_shared<ImGuiManager>();
-
 	return true;
 }
 
