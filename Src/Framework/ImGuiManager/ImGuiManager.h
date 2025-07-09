@@ -20,7 +20,7 @@ public:
 	// インスペクターの表示のみ
 	void ShowInspector();
 
-	void ShowGameScene();
+	void ShowGameScene() const;
 
 	template<class T>
 	inline bool DragDropSource(std::string_view _tag, T _payload)
@@ -117,6 +117,9 @@ private:
 	std::shared_ptr<KdTexture> m_texture = nullptr;
 
 	KdRenderTargetPack m_renderTargetChanger;
+
+	// 本画像のを半分にする
+	Math::Vector2 m_gameSceneSize = { 1280.0f / 2, 720.0f / 2 };
 
 	std::string m_modelPath = "Asset/";
 

@@ -69,7 +69,8 @@ void SceneManager::DrawDebug()
 std::string SceneManager::ImSelectClass() const
 {
 	static std::string name = "KdGameObject";
-	if (ImGui::BeginCombo("##Class", name.data())) // c_str()も、data()も同じように使える
+	// ImGuiのコンボボックスを作成
+	if (ImGui::BeginCombo("##Class", name.data()))
 	{
 		for (const auto& [key,value] : RegisterObject::GetInstance().GetRegisterObject())
 		{

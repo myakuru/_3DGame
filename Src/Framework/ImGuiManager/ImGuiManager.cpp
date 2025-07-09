@@ -129,16 +129,36 @@ if (ImGui::BeginChild("Objects"))
 
 void ImGuiManager::ImGuiSelectObject()
 {
+	ImGui::Begin("Game");
+	ImVec2 imagePos = ImGui::GetCursorScreenPos();
+	auto imageSize = ImVec2{ m_gameSceneSize.x, m_gameSceneSize.y };
+
 	// 画面上で,click場合のみ当たり判定
-	if (ImGui::IsMouseClicked(ImGuiMouseButton_Left) && !ImGui::IsWindowHovered(ImGuiHoveredFlags_AnyWindow))
+	if (ImGui::IsWindowHovered() && ImGui::IsMouseClicked(ImGuiMouseButton_Left))
 	{
 		// マウスの座標を取得
 		ImVec2 mousePos = ImGui::GetIO().MousePos;
 
+		// Image内のクリック位置を計算
+		float offsetX = mousePos.x - imagePos.x;
+		float offsetY = mousePos.y - imagePos.y;
+
 		// マウスを取得
 		POINT mouse;
-		mouse.x = static_cast<LONG>(mousePos.x);
-		mouse.y = static_cast<LONG>(mousePos.y);
+
+		if (offsetX >= 0 && offsetY >= 0 && offsetX < imageSize.x && offsetY < imageSize.y)
+		{
+			// ゲーム画面の解像度に基づいてマウス座標をスケーリング
+			float gameX = offsetX * (1280.0f / imageSize.x);
+			float gameY = offsetY * (720.0f / imageSize.y);
+
+	
+			mouse.x = static_cast<LONG>(gameX);
+			mouse.y = static_cast<LONG>(gameY);
+
+			KdDebugGUI::Instance().AddLog("MousePosX:%d,MousePosY:%d \n", mouse.x, mouse.y);
+
+		}
 
 		// コライダーからレイを取得
 		KdCollider::RayInfo rayInfo;
@@ -180,6 +200,7 @@ void ImGuiManager::ImGuiSelectObject()
 			m_openObject = resultObject.m_resultObject;	// 選択したオブジェクトを保存
 		}
 	}
+	ImGui::End();
 }
 
 void ImGuiManager::ShowInspector()
@@ -203,12 +224,12 @@ void ImGuiManager::ShowInspector()
 	ImGui::End();
 }
 
-void ImGuiManager::ShowGameScene()
+void ImGuiManager::ShowGameScene() const
 {
 	if (ImGui::Begin("Game"))
 	{
 		ImTextureID texID = (ImTextureID)(SceneManager::GetInstance().GetCurrentScene()->GetRenderTargetPack().m_RTTexture->WorkSRView());
-		ImGui::Image(texID, ImVec2(1280, 720));
+		ImGui::Image(texID, ImVec2{ m_gameSceneSize.x ,m_gameSceneSize.y});
 	}
 	ImGui::End();
 }
