@@ -124,7 +124,7 @@ protected:
 	std::string m_className = "Name";
 
 	// モデルのロードパス
-	std::string m_path = "Asset/Models/SkySphere/Sky.gltf";
+	std::string m_path = "Asset/Models/Sky/Sky.gltf";
 
 	// モデルの初期化
 	std::shared_ptr<KdModelData> m_model = std::make_shared<KdModelData>();

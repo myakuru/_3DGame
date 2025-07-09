@@ -1,14 +1,20 @@
 ﻿#include "SceneManager.h"
 
+// シーンのインクルード
 #include "BaseScene/BaseScene.h"
 #include "GameScene/GameScene.h"
 #include "TitleScene/TitleScene.h"
+
+// フレームワークのインクルード
 #include"../../Framework/RegisterObject/RegisterObject.h"
 #include"../main.h"
 #include"../../Framework/Json/Json.h"
+
+// ゲームオブジェクトのインクルード
 #include"../GameObject/Camera/TPSCamera/TPSCamera.h"
 #include"../GameObject/SkySphere/SkySphere.h"
 #include"../GameObject/HUD/NormalUI/NormalUI.h"
+#include"../GameObject/Map/Map.h"
 
 void SceneManager::Init()
 {
@@ -23,6 +29,7 @@ void SceneManager::Register() const
 	RegisterObject::GetInstance().Register<TPSCamera>();
 	RegisterObject::GetInstance().Register<SkySphere>();
 	RegisterObject::GetInstance().Register<NormalUI>();
+	RegisterObject::GetInstance().Register<Map>();
 }
 
 void SceneManager::PreUpdate()
@@ -64,27 +71,6 @@ void SceneManager::DrawSprite()
 void SceneManager::DrawDebug()
 {
 	m_currentScene->DrawDebug();
-}
-
-std::string SceneManager::ImSelectClass() const
-{
-	static std::string name = "KdGameObject";
-	// ImGuiのコンボボックスを作成
-	if (ImGui::BeginCombo("##Class", name.data()))
-	{
-		for (const auto& [key,value] : RegisterObject::GetInstance().GetRegisterObject())
-		{
-			const char* nowName = key.data();
-			bool selected = (name == nowName);
-
-			// 選択されたものとレジスターに登録してある文字列を比較
-			if (ImGui::Selectable(nowName, selected))	name = nowName;
-			// 選択されたら青く光る
-			if (selected) ImGui::SetItemDefaultFocus();
-		}
-		ImGui::EndCombo();
-	}
-	return name;
 }
 
 const std::list<std::shared_ptr<KdGameObject>>& SceneManager::GetObjList()

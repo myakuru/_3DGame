@@ -140,7 +140,6 @@ void KdGameObject::ImGuiInspector()
 	ImGui::DragFloat3("m_rot", &m_deg.x, 0.1f);
 
 	ImGui::ColorEdit4("color", &m_color.x);
-
 }
 
 void KdGameObject::ImGuiSelectGltf()

@@ -85,7 +85,7 @@ void KdDebugGUI::GuiProcess()
 	//===========================================================
 
 	// ログウィンドウ
-	m_uqLog->Draw("Log Window");
+	m_uqLog->Draw("Console");
 
 	IMGUI_MANAGER.ImGuiUpdate(); // ImGuiManagerの更新処理を呼び出す
 	

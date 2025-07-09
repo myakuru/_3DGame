@@ -23,8 +23,6 @@ public :
 	void DrawSprite();
 	void DrawDebug();
 
-	std::string ImSelectClass() const;
-
 	// 次のシーンをセット (次のフレームから切り替わる)
 	void SetNextScene(SceneType _nextScene)
 	{

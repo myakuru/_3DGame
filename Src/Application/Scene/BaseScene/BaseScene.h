@@ -35,7 +35,7 @@ public :
 	
 	virtual std::string GetSceneName() const = 0;
 
-	KdRenderTargetPack GetRenderTargetPack()
+	const KdRenderTargetPack& GetRenderTargetPack() const
 	{
 		return m_renderTargetPack;
 	}

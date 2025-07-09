@@ -277,8 +277,11 @@
     <ClInclude Include="Src\Application\GameObject\Camera\FPSCamera\FPSCamera.h" />
     <ClInclude Include="Src\Application\GameObject\Camera\TPSCamera\TPSCamera.h" />
     <ClInclude Include="Src\Application\GameObject\HUD\NormalUI\NormalUI.h" />
+    <ClInclude Include="Src\Application\GameObject\Map\Map.h" />
     <ClInclude Include="Src\Application\GameObject\SkySphere\SkySphere.h" />
-    <ClInclude Include="Src\Application\GameObject\Utility\SelectDrawObject.h" />
+    <ClInclude Include="Src\Application\GameObject\Utility\SelectDraw2DTexture.h" />
+    <ClInclude Include="Src\Application\GameObject\Utility\SelectDraw3dModel.h" />
+    <ClInclude Include="Src\Application\GameObject\Utility\SelectDraw3dPolygon.h" />
     <ClInclude Include="Src\Application\main.h" />
     <ClInclude Include="Src\Application\Scene\BaseScene\BaseScene.h" />
     <ClInclude Include="Src\Application\Scene\GameScene\GameScene.h" />

@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include"../Utility/SelectDrawObject.h"
+#include"../Utility/SelectDraw3dModel.h"
 class SkySphere:public SelectDrawObject
 {
 public:

@@ -103,6 +103,9 @@
     <Filter Include="Src\Application\GameObject\HUD\NormalUI">
       <UniqueIdentifier>{5cc4f29e-f853-4b4f-bd06-bdc9a4a6b296}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\GameObject\Map">
+      <UniqueIdentifier>{2e11be86-5321-4125-9a2c-a96d03b3aa0b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -294,14 +297,23 @@
     <ClInclude Include="Src\Application\GameObject\SkySphere\SkySphere.h">
       <Filter>Src\Application\GameObject\SkySphere</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Application\GameObject\Utility\SelectDrawObject.h">
-      <Filter>Src\Application\GameObject\Utility</Filter>
-    </ClInclude>
     <ClInclude Include="Src\Application\GameObject\HUD\NormalUI\NormalUI.h">
       <Filter>Src\Application\GameObject\HUD\NormalUI</Filter>
     </ClInclude>
     <ClInclude Include="Src\Framework\Utility\KdDebugWireFrame.h">
       <Filter>Src\Framework\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Map\Map.h">
+      <Filter>Src\Application\GameObject\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Utility\SelectDraw3dModel.h">
+      <Filter>Src\Application\GameObject\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Utility\SelectDraw3dPolygon.h">
+      <Filter>Src\Application\GameObject\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Utility\SelectDraw2DTexture.h">
+      <Filter>Src\Application\GameObject\Utility</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

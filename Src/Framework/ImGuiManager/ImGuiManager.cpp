@@ -4,6 +4,7 @@
 #include"../../Application/main.h"
 #include"../../Application/GameObject/Camera/CameraBase.h"
 #include"../../Application/Scene/BaseScene/BaseScene.h"
+#include"../RegisterObject/RegisterObject.h"
 
 void ImGuiManager::ImGuiUpdate()
 {
@@ -27,7 +28,7 @@ void ImGuiManager::Hierarchy()
 {
 	if (ImGui::Begin("Hierarchy"))
 	{
-		std::string name = SceneManager::GetInstance().ImSelectClass();
+		std::string name = ImSelectClass();
 
 		if (ImGui::Button("AddObject"))
 		{
@@ -53,6 +54,13 @@ void ImGuiManager::MainMenuBar() const
 			JSON_MANAGER.AllSave();
 			ImGui::EndMenu();
 		}
+
+		ImGui::SameLine();
+
+		InGuiSceneSelect();
+
+		// シーンセレクタをメニューバーに配置
+
 		ImGui::EndMainMenuBar();
 	}
 }
@@ -131,7 +139,7 @@ void ImGuiManager::ImGuiSelectObject()
 {
 	ImGui::Begin("Game");
 	ImVec2 imagePos = ImGui::GetCursorScreenPos();
-	auto imageSize = ImVec2{ m_gameSceneSize.x, m_gameSceneSize.y };
+	ImVec2 imageSize = { m_gameSceneSize.x, m_gameSceneSize.y };
 
 	// 画面上で,click場合のみ当たり判定
 	if (ImGui::IsWindowHovered() && ImGui::IsMouseClicked(ImGuiMouseButton_Left))
@@ -224,14 +232,83 @@ void ImGuiManager::ShowInspector()
 	ImGui::End();
 }
 
-void ImGuiManager::ShowGameScene() const
+void ImGuiManager::ShowGameScene()
 {
-	if (ImGui::Begin("Game"))
+	if (ImGui::Begin("Game"));
+	if (!SceneManager::GetInstance().GetCurrentScene()) return; // シーンが存在しない場合は何もしない
+
+	ImTextureID texID = (ImTextureID)(SceneManager::GetInstance().GetCurrentScene()->GetRenderTargetPack().m_RTTexture->WorkSRView());
+	
+
+	std::array<std::string, 3> screenSizes = { "640x360", "1280x720", "1920x1080" };
+	static std::string name = "640x360"; // デフォルトの画面サイズ
+
+	if (ImGui::BeginCombo("##画面サイズ", name.data()))
 	{
-		ImTextureID texID = (ImTextureID)(SceneManager::GetInstance().GetCurrentScene()->GetRenderTargetPack().m_RTTexture->WorkSRView());
-		ImGui::Image(texID, ImVec2{ m_gameSceneSize.x ,m_gameSceneSize.y});
+		for (int i = 0; i < 3; i++)
+		{
+			bool selected = (name == screenSizes[i]);
+			if (ImGui::Selectable(screenSizes[i].data(), selected))
+			{
+				name = screenSizes[i];
+				if (name == "640x360") m_gameSceneSize = { 640, 360 };
+				else if (name == "1280x720") m_gameSceneSize = { 1280, 720 };
+				else if (name == "1920x1080") m_gameSceneSize = { 1920, 1080 };
+			}
+			if (selected) ImGui::SetItemDefaultFocus();
+		}
+		ImGui::EndCombo();
 	}
+	
+	ImGui::Image(texID, { m_gameSceneSize.x ,m_gameSceneSize.y });
 	ImGui::End();
+
+}
+
+std::string ImGuiManager::ImSelectClass() const
+{
+	static std::string name = "KdGameObject";
+	// ImGuiのコンボボックスを作成
+	if (ImGui::BeginCombo("##Class", name.data()))
+	{
+		for (const auto& [key, value] : RegisterObject::GetInstance().GetRegisterObject())
+		{
+			const char* nowName = key.data();
+			bool selected = (name == nowName);
+
+			// 選択されたものとレジスターに登録してある文字列を比較
+			if (ImGui::Selectable(nowName, selected))	name = nowName;
+			// 選択されたら青く光る
+			if (selected) ImGui::SetItemDefaultFocus();
+		}
+		ImGui::EndCombo();
+	}
+	return name;
+}
+
+void ImGuiManager::InGuiSceneSelect() const
+{
+	// シーンの種類を定義するマップを作成＜－こいつ増やせばシーンを増やせる
+	std::map<std::string,SceneManager::SceneType,std::less<>> sceneType =
+	{
+		{"Title",SceneManager::SceneType::Title},
+		{"Game",SceneManager::SceneType::Game}
+	};
+
+	// こいつと比較して、シーンが異なるかどうかを確認する
+	std::string nowSceneName = SceneManager::GetInstance().GetCurrentScene()->GetSceneName();
+
+	// シーンを選択するボタンを作成
+	for (const auto& [key,value]: sceneType)
+	{
+		// ボタンと現在のシーン名が異なる場合のみ、シーンを切り替える
+		if (ImGui::Button(key.data()) && nowSceneName != key.data())
+		{
+			SceneManager::GetInstance().SetNextScene(value);
+		}
+	}
+
+
 }
 
 void ImGuiManager::listSwap(std::shared_ptr<KdGameObject> _obj1, std::shared_ptr<KdGameObject> _obj2)
