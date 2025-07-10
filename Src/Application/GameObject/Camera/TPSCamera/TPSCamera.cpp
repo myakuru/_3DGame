@@ -1,4 +1,5 @@
 ﻿#include "TPSCamera.h"
+#include"../../../Scene/SceneManager.h"
 
 void TPSCamera::Init()
 {
@@ -13,6 +14,8 @@ void TPSCamera::Init()
 
 void TPSCamera::PostUpdate()
 {
+	if (SceneManager::GetInstance().m_sceneCamera) return;
+
 	// ターゲットの行列(有効な場合利用する)
 	Math::Matrix								_targetMat = Math::Matrix::Identity;
 	const std::shared_ptr<const KdGameObject>	_spTarget = m_wpTarget.lock();
@@ -24,6 +27,7 @@ void TPSCamera::PostUpdate()
 	// カメラの回転
 	UpdateRotateByMouse();
 	m_mRotation = GetRotationMatrix();
+	UpdateMoveKey();
 	m_mWorld = m_mLocalPos * m_mRotation * _targetMat;
 
 	// ↓めり込み防止の為の座標補正計算↓

@@ -33,6 +33,17 @@ public :
 		m_objList.push_back(_obj);
 	}
 	
+	// カメラオブジェクトリストを取得
+	void AddCameraObject(const std::shared_ptr<KdGameObject>& _obj)
+	{
+		m_CameraObjList.push_back(_obj);
+	}
+	// カメラオブジェクトリストを取得
+	const std::list<std::shared_ptr<KdGameObject>>& GetCameraObjList()
+	{
+		return m_CameraObjList;
+	}
+
 	virtual std::string GetSceneName() const = 0;
 
 	const KdRenderTargetPack& GetRenderTargetPack() const
@@ -52,4 +63,5 @@ protected :
 
 	// 全オブジェクトのアドレスをリストで管理
 	std::list<std::shared_ptr<KdGameObject>> m_objList;
+	std::list<std::shared_ptr<KdGameObject>> m_CameraObjList;
 };

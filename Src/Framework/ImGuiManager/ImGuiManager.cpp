@@ -131,6 +131,67 @@ if (ImGui::BeginChild("Objects"))
         ImGui::Separator();
 		ImGui::PopID();
     }
+
+	for (auto& obj : SceneManager::GetInstance().GetCurrentScene()->GetCameraObjList())
+	{
+		const auto& objectName = *obj;
+
+		// 1. 開いているノードだけ開く
+		if (obj == m_openObject)
+		{
+			ImGui::SetNextItemOpen(true, ImGuiCond_Always);
+		}
+		else
+		{
+			ImGui::SetNextItemOpen(false, ImGuiCond_Always);
+		}
+
+		ImGui::PushID(obj.get());
+		std::string className = typeid(objectName).name();
+
+		if (className.starts_with("class "))
+		{
+			className.erase(0, 6); // "class"の部分を削除
+		}
+
+		if (IsDroped("GameObjectInstance"))
+		{
+			std::shared_ptr<KdGameObject>* temp = nullptr;
+			GetDragData("GameObjectInstance", temp);
+			listSwap(obj, *temp);
+			ImGui::ClearDragDrop(); // 自作のドロップ処理のため自力で初期化
+		}
+
+		bool TreeNode = ImGui::TreeNode(className.data());
+		DragDropSource("GameObjectInstance", &obj);	//ゲームオブジェクトのポインターをドラック出来るようになる
+
+		// ここからツリー形式で詳細情報を表示
+		if (TreeNode) //className + "##" + std::to_string((int)obj.get()) <=こういう書き方もあるよ
+		{
+			ImGui::SameLine(270);
+
+			// クリックされたらこのノードを開く
+			if (ImGui::IsItemClicked())
+			{
+				m_openObject = obj; // 選択したオブジェクトを保存
+			}
+
+			// ボタンでオブジェクトを削除できる
+			if (ImGui::SmallButton("Delete"))
+			{
+				obj->SetExpired(true);
+			}
+
+			obj->ImGuiSelectGltf(); // GLTFの選択を表示
+
+			//ツリーの終了処理
+			ImGui::TreePop();
+		}
+
+		ImGui::Separator();
+		ImGui::PopID();
+	}
+
     ImGui::EndChild();
 }
 }
@@ -234,7 +295,7 @@ void ImGuiManager::ShowInspector()
 
 void ImGuiManager::ShowGameScene()
 {
-	if (ImGui::Begin("Game"));
+	if (ImGui::Begin("Game"))
 	if (!SceneManager::GetInstance().GetCurrentScene()) return; // シーンが存在しない場合は何もしない
 
 	ImTextureID texID = (ImTextureID)(SceneManager::GetInstance().GetCurrentScene()->GetRenderTargetPack().m_RTTexture->WorkSRView());
@@ -259,8 +320,13 @@ void ImGuiManager::ShowGameScene()
 		}
 		ImGui::EndCombo();
 	}
+
+	ImGui::SameLine();
+
+	ImGuiSelecetCamera();
 	
 	ImGui::Image(texID, { m_gameSceneSize.x ,m_gameSceneSize.y });
+
 	ImGui::End();
 
 }
@@ -307,8 +373,19 @@ void ImGuiManager::InGuiSceneSelect() const
 			SceneManager::GetInstance().SetNextScene(value);
 		}
 	}
+}
 
-
+void ImGuiManager::ImGuiSelecetCamera()
+{
+	
+	if (!SceneManager::GetInstance().m_sceneCamera)
+	{
+		if (ImGui::Button(U8("スタート", ImVec2(150, 20)))) SceneManager::GetInstance().m_sceneCamera = true;
+	}
+	else
+	{
+		if (ImGui::Button(U8("ストップ", ImVec2(150, 20)))) SceneManager::GetInstance().m_sceneCamera = false;
+	}
 }
 
 void ImGuiManager::listSwap(std::shared_ptr<KdGameObject> _obj1, std::shared_ptr<KdGameObject> _obj2)

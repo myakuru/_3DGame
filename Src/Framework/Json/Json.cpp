@@ -45,7 +45,16 @@ std::shared_ptr<KdGameObject> JsonManager::AddJsonObject(const std::string& _cla
 		// 各オブジェクトを,jsonファイルから読み込む
 		if (!_json.is_null()) obj->JsonInput(_json);
 
-		SceneManager::GetInstance().AddObject(obj);	// シーンに追加
+		// もしカメラだったら、シーンに追加しない
+		if (_className == "class FPSCamera")
+		{
+			SceneManager::GetInstance().GetCurrentScene()->AddCameraObject(obj);
+		}
+		else
+		{
+			SceneManager::GetInstance().AddObject(obj);	// シーンに追加
+		}
+
 		obj->Init();
 
 		return obj;

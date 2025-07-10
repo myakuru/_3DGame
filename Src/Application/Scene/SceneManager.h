@@ -47,12 +47,13 @@ public :
 	{
 		for (auto& obj : GetObjList()) 
 		{
+			// std::dynamic_pointer_castを使って、T型にキャストを試みる
+			// 重いキャストだけど、一旦はこれで良い
 			auto casted = std::dynamic_pointer_cast<T>(obj);
 			if (casted) return casted;
 		}
 		return nullptr;
 	}
-
 
 	// 指定されたオブジェクトのウェークポインタを取得
 	template<class T>
@@ -67,6 +68,8 @@ public :
 		}
 	}
 
+	// シーンカメラかどうか
+	bool m_sceneCamera = false;
 
 private :
 

@@ -7,6 +7,7 @@ public:
 	virtual ~CameraBase()	override	{}
 
 	void Init()				override;
+	void Update()			override;
 	void PreDraw()			override;
 
 	void SetTarget(const std::shared_ptr<KdGameObject>& target);
@@ -76,6 +77,7 @@ protected:
 	Math::Vector3								m_DegAng		= Math::Vector3::Zero;
 
 	void UpdateRotateByMouse();
+	void UpdateMoveKey();
 
 	std::shared_ptr<KdCamera>					m_spCamera		= nullptr;
 	std::weak_ptr<KdGameObject>					m_wpTarget;

@@ -12,6 +12,7 @@
 
 // ゲームオブジェクトのインクルード
 #include"../GameObject/Camera/TPSCamera/TPSCamera.h"
+#include"../GameObject/Camera/FPSCamera/FPSCamera.h"
 #include"../GameObject/SkySphere/SkySphere.h"
 #include"../GameObject/HUD/NormalUI/NormalUI.h"
 #include"../GameObject/Map/Map.h"
@@ -27,6 +28,7 @@ void SceneManager::Register() const
 {
 	RegisterObject::GetInstance().Register<KdGameObject>();
 	RegisterObject::GetInstance().Register<TPSCamera>();
+	RegisterObject::GetInstance().Register<FPSCamera>();
 	RegisterObject::GetInstance().Register<SkySphere>();
 	RegisterObject::GetInstance().Register<NormalUI>();
 	RegisterObject::GetInstance().Register<Map>();

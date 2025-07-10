@@ -247,6 +247,10 @@ void Application::Execute()
 		// 処理開始時間Get
 		m_fpsController.UpdateStartTime();
 
+		// 入力関係の更新
+		KeyboardManager::GetInstance().Update();
+		XInputManager::GetInstance().Update();
+
 		// ゲーム終了指定があるときはループ終了
 		if (m_endFlag)
 		{

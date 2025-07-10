@@ -1,4 +1,5 @@
 ﻿#include "BaseScene.h"
+#include"../SceneManager.h"
 
 void BaseScene::PreUpdate()
 {
@@ -29,21 +30,34 @@ void BaseScene::PreUpdate()
 
 void BaseScene::Update()
 {
-	// シーン毎のイベント処理
-	Event();
-
-	// KdGameObjectを継承した全てのオブジェクトの更新 (ポリモーフィズム)
-	for (auto& obj : m_objList)
+	if (!SceneManager::GetInstance().m_sceneCamera)
 	{
-		obj->Update();
+		// シーン毎のイベント処理
+		Event();
+
+		// KdGameObjectを継承した全てのオブジェクトの更新 (ポリモーフィズム)
+		for (auto& obj : m_objList)
+		{
+			obj->Update();
+		}
 	}
 }
 
 void BaseScene::PostUpdate()
 {
-	for (auto& obj : m_objList)
+	if (!SceneManager::GetInstance().m_sceneCamera)
 	{
-		obj->PostUpdate();
+		for (auto& obj : m_objList)
+		{
+			obj->PostUpdate();
+		}
+	}
+	else
+	{
+		for (auto& obj : m_CameraObjList)
+		{
+			obj->ScreenCameraUpdate();
+		}
 	}
 }
 

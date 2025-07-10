@@ -8,5 +8,5 @@ public:
 	~FPSCamera()			override	{}
 
 	void Init()				override;
-	void PostUpdate()		override;
+	void ScreenCameraUpdate()		override;
 };

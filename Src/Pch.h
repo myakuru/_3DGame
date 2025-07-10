@@ -119,5 +119,11 @@
 // 自作Framework
 //
 //===============================================
+#pragma comment(lib,"Xinput.lib")
+#include<Xinput.h>
+// XInputのヘッダはXinput.hをインクルードする
+#include"MyFramework/Manager/KeyboardManager.h"
+#include"MyFramework/Manager/XInputManager.h"
+
 #include <json.hpp>
 #include "Framework/KdFramework.h"

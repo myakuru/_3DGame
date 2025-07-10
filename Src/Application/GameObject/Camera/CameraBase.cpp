@@ -1,4 +1,5 @@
 ﻿#include "CameraBase.h"
+#include"../../main.h"
 
 void CameraBase::Init()
 {
@@ -11,11 +12,17 @@ void CameraBase::Init()
 	m_FixMousePos.y = 360;
 }
 
-void CameraBase::PreDraw()
+void CameraBase::Update()
 {
 	if (!m_spCamera) { return; }
 
+	m_mWorld.Translation(m_pos);
 	m_spCamera->SetCameraMatrix(m_mWorld);
+}
+
+void CameraBase::PreDraw()
+{
+	if (!m_spCamera) { return; }
 	m_spCamera->SetToShader();
 }
 
@@ -24,6 +31,37 @@ void CameraBase::SetTarget(const std::shared_ptr<KdGameObject>& target)
 	if (!target) { return; }
 
 	m_wpTarget = target;
+}
+
+void CameraBase::UpdateMoveKey()
+{
+	if (!m_enabled) return;
+
+	float deltaTime = Application::Instance().GetDeltaTime();
+
+	float moveSpeed = 50.0f; // 移動速度
+
+	// 回転行列から前方向と右方向を取得
+	Math::Vector3 backward = m_mRotation.Backward();
+	Math::Vector3 right = m_mRotation.Right();
+	float moveUpSpeed = 10.0f; // 上下移動速度
+
+	// 斜め移動はやくならないように正規化
+	backward.Normalize();
+	right.Normalize();
+
+	// 距離の移動量を計算
+	Math::Vector3 move = {};
+
+	if (KeyboardManager::GetInstance().IsKeyPressed('W')) move += backward * moveSpeed * deltaTime;
+	if (KeyboardManager::GetInstance().IsKeyPressed('A')) move -= right * moveSpeed * deltaTime;
+	if (KeyboardManager::GetInstance().IsKeyPressed('S')) move -= backward * moveSpeed * deltaTime;
+	if (KeyboardManager::GetInstance().IsKeyPressed('D')) move += right * moveSpeed * deltaTime;
+	if (KeyboardManager::GetInstance().IsKeyPressed(VK_SPACE)) move.y += moveUpSpeed * deltaTime; // 上に移動
+	if (KeyboardManager::GetInstance().IsKeyPressed(VK_LSHIFT)) move.y -= moveUpSpeed * deltaTime; // 下に移動
+
+	// 距離 = 速度 * 時間
+	m_pos += move;
 }
 
 void CameraBase::UpdateRotateByMouse()

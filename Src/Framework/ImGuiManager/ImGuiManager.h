@@ -26,6 +26,8 @@ public:
 
 	void InGuiSceneSelect() const;
 
+	void ImGuiSelecetCamera();
+
 	template<class T>
 	inline bool DragDropSource(std::string_view _tag, T _payload)
 	{

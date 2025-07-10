@@ -1,4 +1,5 @@
 ﻿#include "FPSCamera.h"
+#include"../../../Scene/SceneManager.h"
 
 void FPSCamera::Init()
 {
@@ -11,18 +12,16 @@ void FPSCamera::Init()
 	SetCursorPos(m_FixMousePos.x, m_FixMousePos.y);
 }
 
-void FPSCamera::PostUpdate()
+void FPSCamera::ScreenCameraUpdate()
 {
-	// ターゲットの行列(有効な場合利用する)
-	Math::Matrix								_targetMat	= Math::Matrix::Identity;
-	const std::shared_ptr<const KdGameObject>	_spTarget	= m_wpTarget.lock();	
-	if (_spTarget)
-	{
-		_targetMat = Math::Matrix::CreateTranslation(_spTarget->GetPos());
-	}
+	if (!SceneManager::GetInstance().m_sceneCamera) return;
 
 	// カメラの回転
 	UpdateRotateByMouse();
 	m_mRotation = GetRotationMatrix();
-	m_mWorld	= m_mRotation * m_mLocalPos * _targetMat;
+	UpdateMoveKey();
+	m_mWorld = m_mLocalPos * m_mRotation;
+	if (!m_spCamera) { return; }
+	m_mWorld.Translation(m_pos);
+	m_spCamera->SetCameraMatrix(m_mWorld);
 }

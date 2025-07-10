@@ -5,7 +5,7 @@ class KdGameObject : public std::enable_shared_from_this<KdGameObject>
 public:
 
 	// どのような描画を行うのかを設定するTypeID：Bitフラグで複数指定可能
-	enum
+	enum class DrawTypeID
 	{
 		eDrawTypeLit = 1 << 0,
 		eDrawTypeUnLit = 1 << 1,
@@ -32,6 +32,17 @@ public:
 		);
 		m_mWorld.Translation(m_pos);
 	}
+	virtual void ScreenCameraUpdate() 
+	{
+		m_mWorld = Math::Matrix::CreateScale(m_scale);
+		m_mWorld *= Math::Matrix::CreateFromYawPitchRoll(
+			DirectX::XMConvertToRadians(m_deg.y),
+			DirectX::XMConvertToRadians(m_deg.x),
+			DirectX::XMConvertToRadians(m_deg.z)
+		);
+		m_mWorld.Translation(m_pos);
+	}
+
 
 	// それぞれの状況で描画する関数
 	virtual void GenerateDepthMapFromLight() {}
