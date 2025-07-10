@@ -216,6 +216,7 @@ private:
 	ID3D11PixelShader* m_PS_Lit = nullptr;					// 陰影あり
 	ID3D11PixelShader* m_PS_UnLit = nullptr;				// 陰影なし
 	ID3D11PixelShader* m_PS_GenDepthFromLight = nullptr;	// 光からの深度
+	ID3D11PixelShader* m_PS_Toon = nullptr;					// トゥーン用ピクセルシェーダー
 
 	// テクスチャ
 	std::shared_ptr<KdTexture>	m_dissolveTex = nullptr;	// ディゾルブで使用するデフォルトテクスチャ

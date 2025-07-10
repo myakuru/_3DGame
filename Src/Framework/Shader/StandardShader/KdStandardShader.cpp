@@ -25,7 +25,14 @@ void KdStandardShader::BeginLit()
 	}
 
 	// ピクセルシェーダーのパイプライン変更
-	if (KdShaderManager::Instance().SetPixelShader(m_PS_Lit))
+	/*if (KdShaderManager::Instance().SetPixelShader(m_PS_Lit))
+	{
+		KdShaderManager::Instance().SetPSConstantBuffer(0, m_cb0_Obj.GetAddress());
+		KdShaderManager::Instance().SetPSConstantBuffer(2, m_cb2_Material.GetAddress());
+	}*/
+
+	// ★ここをトゥーンシェーダーに変更
+	if (KdShaderManager::Instance().SetPixelShader(m_PS_Toon))
 	{
 		KdShaderManager::Instance().SetPSConstantBuffer(0, m_cb0_Obj.GetAddress());
 		KdShaderManager::Instance().SetPSConstantBuffer(2, m_cb2_Material.GetAddress());
@@ -468,6 +475,20 @@ bool KdStandardShader::Init()
 			return false;
 		}
 	}
+
+	// トゥーンシェーダー
+	{
+#include "PS_Toon.shaderInc"
+
+		if (FAILED(KdDirect3D::Instance().WorkDev()->CreatePixelShader(
+			compiledBuffer, sizeof(compiledBuffer), nullptr, &m_PS_Toon)))
+		{
+			assert(0 && "トゥーンピクセルシェーダー作成失敗");
+			Release();
+			return false;
+		}
+	}
+
 	//-------------------------------------
 	// 定数バッファ作成
 	//-------------------------------------
@@ -507,6 +528,7 @@ void KdStandardShader::Release()
 	KdSafeRelease(m_PS_Lit);
 	KdSafeRelease(m_PS_GenDepthFromLight);
 	KdSafeRelease(m_PS_UnLit);
+	KdSafeRelease(m_PS_Toon);
 
 	m_cb0_Obj.Release();
 	m_cb1_Mesh.Release();
