@@ -9,14 +9,15 @@
     "drawFlags": {
       "DrawBright": false,
       "DrawLit": false,
+      "DrawToon": false,
       "DrawUnLit": true,
       "GenerateDepthMapFromLight": false
     },
     "path": "Asset/Models/Sky/Sky.gltf",
     "pos": {
-      "x": 300.0,
+      "x": 0.0,
       "y": 0.0,
-      "z": 1000.0
+      "z": 0.0
     },
     "scale": {
       "x": 8.0,
@@ -53,7 +54,8 @@
     },
     "drawFlags": {
       "DrawBright": false,
-      "DrawLit": true,
+      "DrawLit": false,
+      "DrawToon": true,
       "DrawUnLit": false,
       "GenerateDepthMapFromLight": false
     },
@@ -78,9 +80,9 @@
     },
     "path": "Asset/Models/Sky/Sky.gltf",
     "pos": {
-      "x": -5.233884334564209,
-      "y": 1.1865499019622803,
-      "z": -14.192545890808105
+      "x": -1.4434033632278442,
+      "y": 1.2776589393615723,
+      "z": -10.574577331542969
     },
     "scale": {
       "x": 1.0,

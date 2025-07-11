@@ -52,6 +52,7 @@ public:
 	virtual void DrawEffect() {}
 	virtual void DrawBright() {}
 	virtual void DrawSprite() {}
+	virtual void DrawToon() {}
 	virtual void DrawDebug();
 
 	virtual void SetAsset(const std::string&) {}

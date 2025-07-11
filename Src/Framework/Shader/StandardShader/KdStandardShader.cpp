@@ -25,14 +25,7 @@ void KdStandardShader::BeginLit()
 	}
 
 	// ピクセルシェーダーのパイプライン変更
-	/*if (KdShaderManager::Instance().SetPixelShader(m_PS_Lit))
-	{
-		KdShaderManager::Instance().SetPSConstantBuffer(0, m_cb0_Obj.GetAddress());
-		KdShaderManager::Instance().SetPSConstantBuffer(2, m_cb2_Material.GetAddress());
-	}*/
-
-	// ★ここをトゥーンシェーダーに変更
-	if (KdShaderManager::Instance().SetPixelShader(m_PS_Toon))
+	if (KdShaderManager::Instance().SetPixelShader(m_PS_Lit))
 	{
 		KdShaderManager::Instance().SetPSConstantBuffer(0, m_cb0_Obj.GetAddress());
 		KdShaderManager::Instance().SetPSConstantBuffer(2, m_cb2_Material.GetAddress());
@@ -125,6 +118,44 @@ void KdStandardShader::EndGenerateDepthMapFromLight()
 	m_depthMapFromLightRTChanger.UndoRenderTarget();
 }
 
+// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// /////
+// Toonシェーダーの描画準備
+void KdStandardShader::BeginToon()
+{
+	// 頂点シェーダーのパイプライン変更
+	if (KdShaderManager::Instance().SetVertexShader(m_VS_Lit))
+	{
+		KdShaderManager::Instance().SetInputLayout(m_inputLayout);
+
+		KdShaderManager::Instance().SetVSConstantBuffer(0, m_cb0_Obj.GetAddress());
+		KdShaderManager::Instance().SetVSConstantBuffer(1, m_cb1_Mesh.GetAddress());
+	}
+
+	// ピクセルシェーダーのパイプライン変更
+	// トゥーンシェーダーに変更
+	if (KdShaderManager::Instance().SetPixelShader(m_PS_Toon))
+	{
+		KdShaderManager::Instance().SetPSConstantBuffer(0, m_cb0_Obj.GetAddress());
+		KdShaderManager::Instance().SetPSConstantBuffer(2, m_cb2_Material.GetAddress());
+	}
+
+	// シャドウマップのテクスチャをセット
+	KdDirect3D::Instance().WorkDevContext()->PSSetShaderResources(10, 1, m_depthMapFromLightRTPack.m_RTTexture->WorkSRViewAddress());
+
+	// 通常テクスチャ用サンプラーのセット
+	KdShaderManager::Instance().ChangeSamplerState(KdSamplerState::Anisotropic_Wrap, 0);
+
+	// 影ぼかし用の比較機能付きサンプラーのセット
+	KdShaderManager::Instance().ChangeSamplerState(KdSamplerState::Linear_Clamp_Cmp, 1);
+}
+
+// Toonシェーダーの描画終了
+void KdStandardShader::EndToon()
+{
+	ID3D11ShaderResourceView* pNullSRV = nullptr;
+	KdDirect3D::Instance().WorkDevContext()->PSSetShaderResources(10, 1, &pNullSRV);
+}
+
 
 //================================================
 // 描画関数
@@ -185,7 +216,7 @@ void KdStandardShader::DrawModel(const KdModelData& rModel, const Math::Matrix& 
 	for (auto& nodeIdx : rModel.GetDrawMeshNodeIndices())
 	{
 		// 描画
-		DrawMesh(dataNodes[nodeIdx].m_spMesh.get(), dataNodes[nodeIdx].m_worldTransform * mWorld, 
+		DrawMesh(dataNodes[nodeIdx].m_spMesh.get(), dataNodes[nodeIdx].m_worldTransform * mWorld,
 			rModel.GetMaterials(), colRate, emissive);
 	}
 

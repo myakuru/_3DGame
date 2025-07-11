@@ -143,6 +143,10 @@ public:
 	void BeginGenerateDepthMapFromLight();
 	void EndGenerateDepthMapFromLight();
 
+	// トゥーンシェーダーを使用する前後に行う
+	void BeginToon();
+	void EndToon();
+
 	//================================================
 	// 描画関数
 	//================================================
@@ -216,6 +220,7 @@ private:
 	ID3D11PixelShader* m_PS_Lit = nullptr;					// 陰影あり
 	ID3D11PixelShader* m_PS_UnLit = nullptr;				// 陰影なし
 	ID3D11PixelShader* m_PS_GenDepthFromLight = nullptr;	// 光からの深度
+
 	ID3D11PixelShader* m_PS_Toon = nullptr;					// トゥーン用ピクセルシェーダー
 
 	// テクスチャ

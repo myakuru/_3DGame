@@ -23,6 +23,11 @@ public:
 		if (m_bDrawBright)KdShaderManager::Instance().m_StandardShader.DrawModel(*m_model, m_mWorld, m_color); 
 	}
 
+	void DrawToon() override
+	{
+		if (m_bDrawToon) KdShaderManager::Instance().m_StandardShader.DrawModel(*m_model, m_mWorld, m_color);
+	}
+
 	// ImGuiのインスペクターでDrawを変更できるようにする。
 	void ImGuiInspector() override
 	{
@@ -73,6 +78,7 @@ private:
 	bool m_bDrawLit = false;					// ライトの影響を受ける描画を行うかどうか
 	bool m_bDrawUnLit = false;					// ライトの影響を受けない描画を行うかどうか
 	bool m_bDrawBright = false;					// ブライト描画を行うかどうか
+	bool m_bDrawToon = false;					// トゥーンシェーダーで描画するかどうか
 
 	std::map<std::string, bool*, std::less<void>> m_drawFlg =
 	{
@@ -80,5 +86,6 @@ private:
 			{"DrawLit", &m_bDrawLit},
 			{"DrawUnLit", &m_bDrawUnLit},
 			{"DrawBright", &m_bDrawBright},
+			{"DrawToon", &m_bDrawToon}
 	};
 };

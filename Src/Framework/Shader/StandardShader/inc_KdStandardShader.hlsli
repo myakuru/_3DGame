@@ -30,6 +30,7 @@ cbuffer cbMaterial : register(b2)
 // 頂点シェーダから出力するデータ
 struct VSOutput
 {
+					// :　hogehoge  これはセマンティクスで、頂点シェーダからピクセルシェーダに渡すデータの名前を指定します。
 	float4 Pos	 : SV_Position;	// 射影座標
 	float3 wPos  : TEXCOORD0;	// ワールド3D座標
 

@@ -129,6 +129,17 @@ void BaseScene::Draw()
 	}
 	KdShaderManager::Instance().m_postProcessShader.EndBright();
 
+	// Toonシェーダーの描画
+	KdShaderManager::Instance().m_StandardShader.BeginToon();
+	{
+		for (auto& obj : m_objList)
+		{
+			obj->DrawToon();
+		}
+	}
+	KdShaderManager::Instance().m_StandardShader.EndToon();
+
+
 	m_renderTargetChanger.UndoRenderTarget();
 }
 
