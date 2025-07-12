@@ -16,6 +16,7 @@
 #include"../GameObject/SkySphere/SkySphere.h"
 #include"../GameObject/HUD/NormalUI/NormalUI.h"
 #include"../GameObject/Map/Map.h"
+#include"../GameObject/Character/Player/Player.h"
 
 void SceneManager::Init()
 {
@@ -32,6 +33,7 @@ void SceneManager::Register() const
 	RegisterObject::GetInstance().Register<SkySphere>();
 	RegisterObject::GetInstance().Register<NormalUI>();
 	RegisterObject::GetInstance().Register<Map>();
+	RegisterObject::GetInstance().Register<Player>();
 }
 
 void SceneManager::PreUpdate()

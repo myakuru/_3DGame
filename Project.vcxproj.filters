@@ -112,6 +112,12 @@
     <Filter Include="Src\MyFramework\Manager">
       <UniqueIdentifier>{78667a11-c1fa-4099-91e6-548842cd84d3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\GameObject\Character">
+      <UniqueIdentifier>{25ed2d0a-2c8c-45f6-add7-447f17fe4783}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Character\Player">
+      <UniqueIdentifier>{049c6f6c-17fe-4e63-841d-174adb8bc797}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -330,6 +336,9 @@
     <ClInclude Include="Src\MyFramework\Manager\XInputManager.h">
       <Filter>Src\MyFramework\Manager</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Character\Player\Player.h">
+      <Filter>Src\Application\GameObject\Character\Player</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -493,6 +502,9 @@
     </ClCompile>
     <ClCompile Include="Src\Application\GameObject\Camera\CameraManager.cpp">
       <Filter>Src\Application\GameObject\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Character\Player\Player.cpp">
+      <Filter>Src\Application\GameObject\Character\Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -65,7 +65,7 @@ float4 main(VSOutput In) : SV_Target0
 
     // --- 輪郭線（エッジ）検出 ---
 	float edge = dot(wN, viewDir);
-	float edgeFactor = smoothstep(0.0, 0.2, abs(edge)); // 0.2未満でエッジ
+	float edgeFactor = smoothstep(0.0, 0.3, abs(edge)); // 0.2未満でエッジ
 	float3 edgeColor = float3(0, 0, 0);
 	toonColor = lerp(edgeColor, toonColor, edgeFactor);
 
