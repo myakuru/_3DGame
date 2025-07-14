@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "../CharacterBase.h"
+class Katana;
 class Player :public CharaBase
 {
 public:
@@ -7,7 +8,8 @@ public:
 	~Player() override = default;
 
 	void Init() override;
-	void Update() override;	
+	void PreUpdate() override;
+	void Update() override;
 	void DrawToon() override;
 	void ImGuiInspector() override;
 	void JsonInput(const nlohmann::json& _json) override;
@@ -15,10 +17,5 @@ public:
 
 private:
 
-	Math::Matrix m_swordMatrix = Math::Matrix::Identity;
-	Math::Matrix m_swordRotetionMatrix = Math::Matrix::Identity;
-
-	Math::Vector3 m_weapomDeg = Math::Vector3::Zero;
-
-	std::shared_ptr<KdModelData>	m_swordModelData;
+	std::weak_ptr<Katana> m_katana;
 };

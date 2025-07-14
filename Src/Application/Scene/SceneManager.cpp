@@ -17,6 +17,7 @@
 #include"../GameObject/HUD/NormalUI/NormalUI.h"
 #include"../GameObject/Map/Map.h"
 #include"../GameObject/Character/Player/Player.h"
+#include"../GameObject/Weapon/Katana/Katana.h"
 
 void SceneManager::Init()
 {
@@ -34,6 +35,7 @@ void SceneManager::Register() const
 	RegisterObject::GetInstance().Register<NormalUI>();
 	RegisterObject::GetInstance().Register<Map>();
 	RegisterObject::GetInstance().Register<Player>();
+	RegisterObject::GetInstance().Register<Katana>();
 }
 
 void SceneManager::PreUpdate()

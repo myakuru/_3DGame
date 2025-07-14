@@ -118,6 +118,12 @@
     <Filter Include="Src\Application\GameObject\Character\Player">
       <UniqueIdentifier>{049c6f6c-17fe-4e63-841d-174adb8bc797}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\GameObject\Weapon">
+      <UniqueIdentifier>{8fcb7635-df4d-4884-9a74-5118c6dad539}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Weapon\Katana">
+      <UniqueIdentifier>{95a40f35-61cf-4a0e-a64c-c157a1b41705}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -342,6 +348,12 @@
     <ClInclude Include="Src\Application\GameObject\Character\CharacterBase.h">
       <Filter>Src\Application\GameObject\Character</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Weapon\Katana\Katana.h">
+      <Filter>Src\Application\GameObject\Weapon\Katana</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Weapon\WeaponBase.h">
+      <Filter>Src\Application\GameObject\Weapon</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -511,6 +523,12 @@
     </ClCompile>
     <ClCompile Include="Src\Application\GameObject\Character\CharacterBase.cpp">
       <Filter>Src\Application\GameObject\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Weapon\Katana\Katana.cpp">
+      <Filter>Src\Application\GameObject\Weapon\Katana</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Weapon\WeaponBase.cpp">
+      <Filter>Src\Application\GameObject\Weapon</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

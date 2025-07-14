@@ -7,15 +7,6 @@
 void KdGameObject::Init()
 {
 	ModelLoad(m_path);
-
-	m_mWorld = Math::Matrix::CreateScale(m_scale);
-	m_mWorld *= Math::Matrix::CreateFromYawPitchRoll(
-		DirectX::XMConvertToRadians(m_deg.y),
-		DirectX::XMConvertToRadians(m_deg.x),
-		DirectX::XMConvertToRadians(m_deg.z)
-	);
-	m_mWorld.Translation(m_pos);
-
 }
 
 void KdGameObject::DrawDebug()
@@ -37,7 +28,7 @@ void KdGameObject::SetScale(const Math::Vector3& scale)
 {
 	Math::Vector3 vecX = m_mWorld.Right();
 	Math::Vector3 vecY = m_mWorld.Up();
-	Math::Vector3 vecZ = m_mWorld.Backward(); 
+	Math::Vector3 vecZ = m_mWorld.Backward();
 	
 	vecX.Normalize();
 	vecY.Normalize();
