@@ -339,6 +339,9 @@
     <ClInclude Include="Src\Application\GameObject\Character\Player\Player.h">
       <Filter>Src\Application\GameObject\Character\Player</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Character\CharacterBase.h">
+      <Filter>Src\Application\GameObject\Character</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -505,6 +508,9 @@
     </ClCompile>
     <ClCompile Include="Src\Application\GameObject\Character\Player\Player.cpp">
       <Filter>Src\Application\GameObject\Character\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Character\CharacterBase.cpp">
+      <Filter>Src\Application\GameObject\Character</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

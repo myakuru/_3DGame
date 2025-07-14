@@ -1,6 +1,6 @@
 ﻿#pragma once
-#include"../../Utility/SelectDraw3dModel.h"
-class Player :public KdGameObject
+#include "../CharacterBase.h"
+class Player :public CharaBase
 {
 public:
 	Player() = default;
@@ -8,9 +8,17 @@ public:
 
 	void Init() override;
 	void Update() override;	
-	void DrawLit() override;
+	void DrawToon() override;
+	void ImGuiInspector() override;
+	void JsonInput(const nlohmann::json& _json) override;
+	void JsonSave(nlohmann::json& _json) const override;
 
 private:
-	std::shared_ptr<KdModelWork> m_model;
-	std::shared_ptr <KdAnimator>				m_animator = nullptr;
+
+	Math::Matrix m_swordMatrix = Math::Matrix::Identity;
+	Math::Matrix m_swordRotetionMatrix = Math::Matrix::Identity;
+
+	Math::Vector3 m_weapomDeg = Math::Vector3::Zero;
+
+	std::shared_ptr<KdModelData>	m_swordModelData;
 };

@@ -100,7 +100,7 @@ public:
 	// 各オブジェクトのデーターをここでJsonに保存する関数
 	virtual void JsonSave(nlohmann::json&_json) const;
 
-	bool ModelLoad(std::string _path);
+	virtual bool ModelLoad(std::string _path);
 
 	// 各オブジェクトのImGuiインスペクターを実装する関数
 	virtual void ImGuiInspector();

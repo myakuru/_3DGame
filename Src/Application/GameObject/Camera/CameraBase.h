@@ -27,15 +27,15 @@ public:
 	const Math::Matrix GetRotationMatrix()const
 	{
 		return Math::Matrix::CreateFromYawPitchRoll(
-		       DirectX::XMConvertToRadians(m_DegAng.y),
-		       DirectX::XMConvertToRadians(m_DegAng.x),
-		       DirectX::XMConvertToRadians(m_DegAng.z));
+		       DirectX::XMConvertToRadians(m_deg.y),
+		       DirectX::XMConvertToRadians(m_deg.x),
+		       DirectX::XMConvertToRadians(m_deg.z));
 	}
 
 	const Math::Matrix GetRotationYMatrix() const
 	{
 		return Math::Matrix::CreateRotationY(
-			   DirectX::XMConvertToRadians(m_DegAng.y));
+			   DirectX::XMConvertToRadians(m_deg.y));
 	}
 
 	void RegistHitObject(const std::shared_ptr<KdGameObject>& object)
@@ -74,7 +74,6 @@ public:
 
 protected:
 	// カメラ回転用角度
-	Math::Vector3								m_DegAng		= Math::Vector3::Zero;
 
 	void UpdateRotateByMouse();
 	void UpdateMoveKey();

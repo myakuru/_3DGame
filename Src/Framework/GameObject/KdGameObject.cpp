@@ -7,6 +7,15 @@
 void KdGameObject::Init()
 {
 	ModelLoad(m_path);
+
+	m_mWorld = Math::Matrix::CreateScale(m_scale);
+	m_mWorld *= Math::Matrix::CreateFromYawPitchRoll(
+		DirectX::XMConvertToRadians(m_deg.y),
+		DirectX::XMConvertToRadians(m_deg.x),
+		DirectX::XMConvertToRadians(m_deg.z)
+	);
+	m_mWorld.Translation(m_pos);
+
 }
 
 void KdGameObject::DrawDebug()

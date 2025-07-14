@@ -1,0 +1,256 @@
+{
+	"asset":
+	{
+		"version": "2.0",
+		"generator": "Unreal Engine 5.5.4"
+	},
+	"scene": 0,
+	"accessors": [
+		{
+			"bufferView": 0,
+			"count": 22884,
+			"type": "SCALAR",
+			"componentType": 5123
+		},
+		{
+			"bufferView": 1,
+			"count": 4814,
+			"type": "VEC3",
+			"componentType": 5126,
+			"min": [ -0.0218330361, -0.0257310178, -0.783269465 ],
+			"max": [ 0.0124804843, 0.0825857893, 0.157961369 ]
+		},
+		{
+			"bufferView": 2,
+			"count": 4814,
+			"type": "VEC3",
+			"componentType": 5126
+		},
+		{
+			"bufferView": 3,
+			"count": 4814,
+			"type": "VEC4",
+			"componentType": 5126
+		},
+		{
+			"bufferView": 4,
+			"count": 4814,
+			"type": "VEC2",
+			"componentType": 5126
+		},
+		{
+			"bufferView": 5,
+			"count": 4814,
+			"type": "VEC2",
+			"componentType": 5126
+		},
+		{
+			"bufferView": 6,
+			"count": 4814,
+			"type": "VEC2",
+			"componentType": 5126
+		},
+		{
+			"bufferView": 7,
+			"count": 57318,
+			"type": "SCALAR",
+			"componentType": 5123
+		},
+		{
+			"bufferView": 8,
+			"count": 13441,
+			"type": "VEC3",
+			"componentType": 5126,
+			"min": [ -0.0205369405, -0.0282611195, -0.0631592274 ],
+			"max": [ 0.0153257716, 0.0270776171, 0.0693641528 ]
+		},
+		{
+			"bufferView": 9,
+			"count": 13441,
+			"type": "VEC3",
+			"componentType": 5126
+		},
+		{
+			"bufferView": 10,
+			"count": 13441,
+			"type": "VEC4",
+			"componentType": 5126
+		},
+		{
+			"bufferView": 11,
+			"count": 13441,
+			"type": "VEC2",
+			"componentType": 5126
+		},
+		{
+			"bufferView": 12,
+			"count": 13441,
+			"type": "VEC2",
+			"componentType": 5126
+		},
+		{
+			"bufferView": 13,
+			"count": 13441,
+			"type": "VEC2",
+			"componentType": 5126
+		}
+	],
+	"buffers": [
+		{
+			"uri": "saya.bin",
+			"byteLength": 1328724
+		}
+	],
+	"bufferViews": [
+		{
+			"buffer": 0,
+			"byteLength": 45768,
+			"target": 34963
+		},
+		{
+			"buffer": 0,
+			"byteLength": 57768,
+			"byteOffset": 45768,
+			"target": 34962
+		},
+		{
+			"buffer": 0,
+			"byteLength": 57768,
+			"byteOffset": 103536,
+			"target": 34962
+		},
+		{
+			"buffer": 0,
+			"byteLength": 77024,
+			"byteOffset": 161304,
+			"target": 34962
+		},
+		{
+			"buffer": 0,
+			"byteLength": 38512,
+			"byteOffset": 238328,
+			"target": 34962
+		},
+		{
+			"buffer": 0,
+			"byteLength": 38512,
+			"byteOffset": 276840,
+			"target": 34962
+		},
+		{
+			"buffer": 0,
+			"byteLength": 38512,
+			"byteOffset": 315352,
+			"target": 34962
+		},
+		{
+			"buffer": 0,
+			"byteLength": 114636,
+			"byteOffset": 353864,
+			"target": 34963
+		},
+		{
+			"buffer": 0,
+			"byteLength": 161292,
+			"byteOffset": 468500,
+			"target": 34962
+		},
+		{
+			"buffer": 0,
+			"byteLength": 161292,
+			"byteOffset": 629792,
+			"target": 34962
+		},
+		{
+			"buffer": 0,
+			"byteLength": 215056,
+			"byteOffset": 791084,
+			"target": 34962
+		},
+		{
+			"buffer": 0,
+			"byteLength": 107528,
+			"byteOffset": 1006140,
+			"target": 34962
+		},
+		{
+			"buffer": 0,
+			"byteLength": 107528,
+			"byteOffset": 1113668,
+			"target": 34962
+		},
+		{
+			"buffer": 0,
+			"byteLength": 107528,
+			"byteOffset": 1221196,
+			"target": 34962
+		}
+	],
+	"materials": [
+		{
+			"name": "Mat_Weapon",
+			"pbrMetallicRoughness":
+			{
+				"baseColorFactor": [ 0.020833334, 0.020833334, 0.020833334, 1 ],
+				"metallicFactor": 0,
+				"roughnessFactor": 0.5
+			},
+			"doubleSided": true
+		},
+		{
+			"name": "Mat_Weapon_2",
+			"pbrMetallicRoughness":
+			{
+				"baseColorFactor": [ 0.75, 0.75, 0.75, 1 ],
+				"metallicFactor": 0,
+				"roughnessFactor": 0.5
+			},
+			"doubleSided": true
+		}
+	],
+	"meshes": [
+		{
+			"name": "SM_Scabbard01",
+			"primitives": [
+				{
+					"attributes":
+					{
+						"POSITION": 1,
+						"NORMAL": 2,
+						"TANGENT": 3,
+						"TEXCOORD_0": 4,
+						"TEXCOORD_1": 5,
+						"TEXCOORD_2": 6
+					},
+					"indices": 0,
+					"material": 0
+				},
+				{
+					"attributes":
+					{
+						"POSITION": 8,
+						"NORMAL": 9,
+						"TANGENT": 10,
+						"TEXCOORD_0": 11,
+						"TEXCOORD_1": 12,
+						"TEXCOORD_2": 13
+					},
+					"indices": 7,
+					"material": 1
+				}
+			]
+		}
+	],
+	"nodes": [
+		{
+			"name": "SM_Scabbard01",
+			"mesh": 0
+		}
+	],
+	"scenes": [
+		{
+			"name": "Map_Main",
+			"nodes": [ 0 ]
+		}
+	]
+}
