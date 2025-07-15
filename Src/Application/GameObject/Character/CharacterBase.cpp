@@ -1,9 +1,10 @@
 ﻿#include "CharacterBase.h"
+#include"Player/PlayerState/PlayerState.h"
 
 void CharaBase::Init()
 {
 	ModelLoad(m_path);
-	//m_animator->SetAnimation(m_modelWork->GetData()->GetAnimation(0));
+	m_animator->SetAnimation(m_modelWork->GetData()->GetAnimation(0));
 }
 
 void CharaBase::DrawToon()

@@ -539,6 +539,16 @@ bool KdStandardShader::Init()
 			return false;
 		}
 	}
+
+	{
+#include"PS_Toon.shaderInc"
+		if (FAILED(KdDirect3D::Instance().WorkDev()->CreatePixelShader(compiledBuffer, sizeof(compiledBuffer), nullptr, &m_PS_Toon))) {
+			assert(0 && "ピクセルシェーダー作成失敗");
+			Release();
+			return false;
+		}
+	}
+
 	//-------------------------------------
 	// 定数バッファ作成
 	//-------------------------------------

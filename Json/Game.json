@@ -74,15 +74,16 @@
   {
     "Name": "class TPSCamera",
     "deg": {
-      "x": 15.44999885559082,
-      "y": 33.449974060058594,
+      "x": 13.950005531311035,
+      "y": -1.2000157833099365,
       "z": 0.0
     },
+    "moveSpeed": 5.0,
     "path": "Asset/Models/Sky/Sky.gltf",
     "pos": {
-      "x": -1.3327187299728394,
-      "y": 2.0746676921844482,
-      "z": -2.80777645111084
+      "x": -1.6122684478759766,
+      "y": 1.393951177597046,
+      "z": -9.078965187072754
     },
     "scale": {
       "x": 1.0,
@@ -149,6 +150,11 @@
       "DrawUnLit": false,
       "GenerateDepthMapFromLight": false
     },
+    "katanaOffset": {
+      "x": -0.4000000059604645,
+      "y": 0.09000000357627869,
+      "z": 0.4300000071525574
+    },
     "path": "Asset\\Models\\Player\\katana.gltf",
     "pos": {
       "x": 0.0,
@@ -161,9 +167,40 @@
       "z": 1.0
     },
     "weaponDeg": {
-      "x": 170.5,
-      "y": 89.69999694824219,
-      "z": -50.5
+      "x": -13.0,
+      "y": -90.0,
+      "z": -100.0
+    }
+  },
+  {
+    "Name": "class Saya",
+    "deg": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawLit": false,
+      "DrawToon": false,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "path": "Asset\\Models\\Player\\saya.gltf",
+    "pos": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "weaponDeg": {
+      "x": 83.80000305175781,
+      "y": 0.0,
+      "z": 180.0
     }
   }
 ]

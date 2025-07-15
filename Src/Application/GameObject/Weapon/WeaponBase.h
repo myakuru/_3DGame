@@ -25,5 +25,6 @@ protected:
 	};
 
 	SwordData m_swordData;	// 刀のデータ
+	SwordData m_sayaData;
 
 };

@@ -9,6 +9,9 @@ public:
 	void Init()				override;
 	void Update()			override;
 	void PreDraw()			override;
+	void ImGuiInspector()	override;
+	void JsonSave(nlohmann::json& _json) const override;
+	void JsonInput(const nlohmann::json& _json) override;
 
 	void SetTarget(const std::shared_ptr<KdGameObject>& target);
 
@@ -73,7 +76,8 @@ public:
 	bool m_enabled = false;
 
 protected:
-	// カメラ回転用角度
+
+	float moveSpeed = 50.0f; // 移動速度
 
 	void UpdateRotateByMouse();
 	void UpdateMoveKey();

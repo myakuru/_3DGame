@@ -70,18 +70,6 @@
     <Filter Include="Src\Application\GameObject\Camera\FPSCamera">
       <UniqueIdentifier>{d0d23d7d-5e27-4301-b41e-72bedc1202bc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Src\Application\Scene">
-      <UniqueIdentifier>{4d2ab234-f9f8-4d65-8770-a559283a7cb6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\Application\Scene\BaseScene">
-      <UniqueIdentifier>{00ac5e5d-1015-406e-a8db-649e83a3f93d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\Application\Scene\GameScene">
-      <UniqueIdentifier>{ec8d74aa-71c1-43a1-80fb-e5fb0be65922}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\Application\Scene\TitleScene">
-      <UniqueIdentifier>{79ee70a1-187a-4dd1-8140-bdd9d69d2a00}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Src\Framework\RegisterObject">
       <UniqueIdentifier>{fe917327-d2f4-465f-b2ef-ad69671ef908}</UniqueIdentifier>
     </Filter>
@@ -93,9 +81,6 @@
     </Filter>
     <Filter Include="Src\Application\GameObject\SkySphere">
       <UniqueIdentifier>{0ba4043a-65dd-4987-9e59-1fa53fe229e3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\Application\GameObject\Utility">
-      <UniqueIdentifier>{d73ea3c3-885e-48e6-ac48-0a0a6b8aab01}</UniqueIdentifier>
     </Filter>
     <Filter Include="Src\Application\GameObject\HUD">
       <UniqueIdentifier>{d12fd14d-8dc5-485c-933f-da047cc3281e}</UniqueIdentifier>
@@ -123,6 +108,42 @@
     </Filter>
     <Filter Include="Src\Application\GameObject\Weapon\Katana">
       <UniqueIdentifier>{95a40f35-61cf-4a0e-a64c-c157a1b41705}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Utility">
+      <UniqueIdentifier>{d73ea3c3-885e-48e6-ac48-0a0a6b8aab01}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Weapon\Saya">
+      <UniqueIdentifier>{362016fb-40f3-40ac-8700-32a1c4070d8a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\Scene">
+      <UniqueIdentifier>{4d2ab234-f9f8-4d65-8770-a559283a7cb6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\Scene\BaseScene">
+      <UniqueIdentifier>{00ac5e5d-1015-406e-a8db-649e83a3f93d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\Scene\GameScene">
+      <UniqueIdentifier>{ec8d74aa-71c1-43a1-80fb-e5fb0be65922}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\Scene\TitleScene">
+      <UniqueIdentifier>{79ee70a1-187a-4dd1-8140-bdd9d69d2a00}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\MyFramework\State">
+      <UniqueIdentifier>{aa7fcf7f-8de3-47f2-b735-35c4a8d228b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\MyFramework\State\StateBase">
+      <UniqueIdentifier>{4137b03a-e627-4f0d-8eba-8c6d00af50ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\MyFramework\State\StateManager">
+      <UniqueIdentifier>{e526b26d-2baf-4794-afca-5fb5c583a186}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Character\Player\State">
+      <UniqueIdentifier>{1cd19184-ee19-44b7-be0d-6ddb404adcf9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_Idle">
+      <UniqueIdentifier>{db560bc2-bbf7-4b9d-9bce-4e2238cbfc73}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_Run">
+      <UniqueIdentifier>{324d331c-5567-4c7f-b182-41c4d1405302}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -354,6 +375,24 @@
     <ClInclude Include="Src\Application\GameObject\Weapon\WeaponBase.h">
       <Filter>Src\Application\GameObject\Weapon</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Weapon\Saya\Saya.h">
+      <Filter>Src\Application\GameObject\Weapon\Saya</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\MyFramework\State\StateBase\StateBase.h">
+      <Filter>Src\MyFramework\State\StateBase</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\MyFramework\State\StateManager\StateManager.h">
+      <Filter>Src\MyFramework\State\StateManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState.h">
+      <Filter>Src\Application\GameObject\Character\Player\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_Run\PlayerState_Run.h">
+      <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_Run</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_Idle\PlayerState_Idle.h">
+      <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_Idle</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -529,6 +568,18 @@
     </ClCompile>
     <ClCompile Include="Src\Application\GameObject\Weapon\WeaponBase.cpp">
       <Filter>Src\Application\GameObject\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Weapon\Saya\Saya.cpp">
+      <Filter>Src\Application\GameObject\Weapon\Saya</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\MyFramework\State\StateManager\StateManager.cpp">
+      <Filter>Src\MyFramework\State\StateManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_Run\PlayerState_Run.cpp">
+      <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_Run</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_Idle\PlayerState_Idle.cpp">
+      <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_Idle</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

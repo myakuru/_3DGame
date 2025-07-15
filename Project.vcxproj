@@ -279,6 +279,9 @@
     <ClInclude Include="Src\Application\GameObject\Camera\TPSCamera\TPSCamera.h" />
     <ClInclude Include="Src\Application\GameObject\Character\CharacterBase.h" />
     <ClInclude Include="Src\Application\GameObject\Character\Player\Player.h" />
+    <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState.h" />
+    <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_Idle\PlayerState_Idle.h" />
+    <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_Run\PlayerState_Run.h" />
     <ClInclude Include="Src\Application\GameObject\HUD\NormalUI\NormalUI.h" />
     <ClInclude Include="Src\Application\GameObject\Map\Map.h" />
     <ClInclude Include="Src\Application\GameObject\SkySphere\SkySphere.h" />
@@ -286,6 +289,7 @@
     <ClInclude Include="Src\Application\GameObject\Utility\SelectDraw3dModel.h" />
     <ClInclude Include="Src\Application\GameObject\Utility\SelectDraw3dPolygon.h" />
     <ClInclude Include="Src\Application\GameObject\Weapon\Katana\Katana.h" />
+    <ClInclude Include="Src\Application\GameObject\Weapon\Saya\Saya.h" />
     <ClInclude Include="Src\Application\GameObject\Weapon\WeaponBase.h" />
     <ClInclude Include="Src\Application\main.h" />
     <ClInclude Include="Src\Application\Scene\BaseScene\BaseScene.h" />
@@ -326,6 +330,8 @@
     <ClInclude Include="Src\Framework\Utility\KdRandom.h" />
     <ClInclude Include="Src\MyFramework\Manager\KeyboardManager.h" />
     <ClInclude Include="Src\MyFramework\Manager\XInputManager.h" />
+    <ClInclude Include="Src\MyFramework\State\StateBase\StateBase.h" />
+    <ClInclude Include="Src\MyFramework\State\StateManager\StateManager.h" />
     <ClInclude Include="src\Pch.h" />
     <ClInclude Include="Src\Framework\Math\KdAnimation.h" />
     <ClInclude Include="Src\Framework\Math\KdCollision.h" />
@@ -350,8 +356,11 @@
     <ClCompile Include="Src\Application\GameObject\Camera\TPSCamera\TPSCamera.cpp" />
     <ClCompile Include="Src\Application\GameObject\Character\CharacterBase.cpp" />
     <ClCompile Include="Src\Application\GameObject\Character\Player\Player.cpp" />
+    <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_Idle\PlayerState_Idle.cpp" />
+    <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_Run\PlayerState_Run.cpp" />
     <ClCompile Include="Src\Application\GameObject\SkySphere\SkySphere.cpp" />
     <ClCompile Include="Src\Application\GameObject\Weapon\Katana\Katana.cpp" />
+    <ClCompile Include="Src\Application\GameObject\Weapon\Saya\Saya.cpp" />
     <ClCompile Include="Src\Application\GameObject\Weapon\WeaponBase.cpp" />
     <ClCompile Include="Src\Application\main.cpp" />
     <ClCompile Include="Src\Application\Scene\BaseScene\BaseScene.cpp" />
@@ -389,6 +398,7 @@
     <ClCompile Include="Src\Framework\Utility\KdDebugGUI.cpp" />
     <ClCompile Include="Src\Framework\Utility\KdDebugWireFrame.cpp" />
     <ClCompile Include="Src\Framework\Utility\KdFPSController.cpp" />
+    <ClCompile Include="Src\MyFramework\State\StateManager\StateManager.cpp" />
     <ClCompile Include="src\Pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

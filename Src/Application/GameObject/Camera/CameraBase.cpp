@@ -26,6 +26,27 @@ void CameraBase::PreDraw()
 	m_spCamera->SetToShader();
 }
 
+void CameraBase::ImGuiInspector()
+{
+	KdGameObject::ImGuiInspector();
+
+	if (!m_spCamera) { return; }
+	ImGui::DragFloat("moveSpeed", &moveSpeed, 1.0f);
+
+}
+
+void CameraBase::JsonSave(nlohmann::json& _json) const
+{
+	KdGameObject::JsonSave(_json);
+	_json["moveSpeed"] = moveSpeed;
+}
+
+void CameraBase::JsonInput(const nlohmann::json& _json)
+{
+	KdGameObject::JsonInput(_json);
+	if (_json.contains("moveSpeed")) moveSpeed = _json["moveSpeed"].get<float>();
+}
+
 void CameraBase::SetTarget(const std::shared_ptr<KdGameObject>& target)
 {
 	if (!target) { return; }
@@ -38,8 +59,6 @@ void CameraBase::UpdateMoveKey()
 	if (!m_enabled) return;
 
 	float deltaTime = Application::Instance().GetDeltaTime();
-
-	float moveSpeed = 50.0f; // 移動速度
 
 	// 回転行列から前方向と右方向を取得
 	Math::Vector3 backward = m_mRotation.Backward();
