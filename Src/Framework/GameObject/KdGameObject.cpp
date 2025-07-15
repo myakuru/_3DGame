@@ -7,6 +7,14 @@
 void KdGameObject::Init()
 {
 	ModelLoad(m_path);
+
+	m_mWorld = Math::Matrix::CreateScale(m_scale);
+	m_mWorld *= Math::Matrix::CreateFromYawPitchRoll(
+		DirectX::XMConvertToRadians(m_deg.y),
+		DirectX::XMConvertToRadians(m_deg.x),
+		DirectX::XMConvertToRadians(m_deg.z)
+	);
+	m_mWorld.Translation(m_pos);
 }
 
 void KdGameObject::DrawDebug()
@@ -140,6 +148,16 @@ void KdGameObject::ImGuiInspector()
 	ImGui::DragFloat3("m_rot", &m_deg.x, 0.1f);
 
 	ImGui::ColorEdit4("color", &m_color.x);
+
+
+	m_mWorld = Math::Matrix::CreateScale(m_scale);
+	m_mWorld *= Math::Matrix::CreateFromYawPitchRoll(
+		DirectX::XMConvertToRadians(m_deg.y),
+		DirectX::XMConvertToRadians(m_deg.x),
+		DirectX::XMConvertToRadians(m_deg.z)
+	);
+	m_mWorld.Translation(m_pos);
+
 }
 
 void KdGameObject::ImGuiSelectGltf()

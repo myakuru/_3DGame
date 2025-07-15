@@ -56,7 +56,7 @@ void BaseScene::PostUpdate()
 	{
 		for (auto& obj : m_CameraObjList)
 		{
-			obj->ScreenCameraUpdate();
+			obj->CameraUpdate();
 		}
 	}
 }
@@ -67,6 +67,15 @@ void BaseScene::PreDraw()
 	{
 		obj->PreDraw();
 	}
+
+	if (SceneManager::GetInstance().m_sceneCamera)
+	{
+		for (auto& cameraObj : m_CameraObjList)
+		{
+			cameraObj->PreDraw();
+		}
+	}
+
 }
 
 void BaseScene::Draw()

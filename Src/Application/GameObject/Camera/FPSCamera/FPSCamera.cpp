@@ -12,16 +12,16 @@ void FPSCamera::Init()
 	SetCursorPos(m_FixMousePos.x, m_FixMousePos.y);
 }
 
-void FPSCamera::ScreenCameraUpdate()
+void FPSCamera::CameraUpdate()
 {
 	if (!SceneManager::GetInstance().m_sceneCamera) return;
-
-	// カメラの回転
-	UpdateRotateByMouse();
-	m_mRotation = GetRotationMatrix();
-	UpdateMoveKey();
-	m_mWorld = m_mLocalPos * m_mRotation;
-	if (!m_spCamera) { return; }
-	m_mWorld.Translation(m_pos);
-	m_spCamera->SetCameraMatrix(m_mWorld);
+	{
+		// カメラの回転
+		UpdateRotateByMouse();
+		m_mRotation = GetRotationMatrix();
+		UpdateMoveKey();
+		m_mWorld = m_mLocalPos * m_mRotation;
+		m_mWorld.Translation(m_pos);
+		m_spCamera->SetCameraMatrix(m_mWorld);
+	}
 }

@@ -35,6 +35,8 @@ void JsonManager::AllSave() const
 std::shared_ptr<KdGameObject> JsonManager::AddJsonObject(const std::string& _className, const nlohmann::json& _json) const
 {
 
+	static int count = 0;	// デバッグ用のカウント
+
 	// 一発検索して、インスタンスを生成させる
 	if (auto found = RegisterObject::GetInstance().GetRegisterObject().find(_className);
 		found != RegisterObject::GetInstance().GetRegisterObject().end())
@@ -49,10 +51,16 @@ std::shared_ptr<KdGameObject> JsonManager::AddJsonObject(const std::string& _cla
 		if (_className == "class FPSCamera")
 		{
 			SceneManager::GetInstance().GetCurrentScene()->AddCameraObject(obj);
+
+			KdDebugGUI::Instance().AddLog(U8("FPSCameraを追加しました"));
+
 		}
 		else
 		{
+			count++;	// デバッグ用のカウントアップ
+
 			SceneManager::GetInstance().AddObject(obj);	// シーンに追加
+			KdDebugGUI::Instance().AddLog(U8("Jsonからオブジェクトを追加しました : %d \n"), count);
 		}
 
 		obj->Init();

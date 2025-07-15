@@ -22,27 +22,8 @@ public:
 
 	virtual void PreUpdate() {}
 	virtual void Update() {}
-	virtual void PostUpdate() 
-	{
-		m_mWorld = Math::Matrix::CreateScale(m_scale);
-		m_mWorld *= Math::Matrix::CreateFromYawPitchRoll(
-			DirectX::XMConvertToRadians(m_deg.y),
-			DirectX::XMConvertToRadians(m_deg.x),
-			DirectX::XMConvertToRadians(m_deg.z)
-		);
-		m_mWorld.Translation(m_pos);
-	}
-	virtual void ScreenCameraUpdate() 
-	{
-		m_mWorld = Math::Matrix::CreateScale(m_scale);
-		m_mWorld *= Math::Matrix::CreateFromYawPitchRoll(
-			DirectX::XMConvertToRadians(m_deg.y),
-			DirectX::XMConvertToRadians(m_deg.x),
-			DirectX::XMConvertToRadians(m_deg.z)
-		);
-		m_mWorld.Translation(m_pos);
-	}
-
+	virtual void PostUpdate() {}
+	virtual void CameraUpdate() {}
 
 	// それぞれの状況で描画する関数
 	virtual void GenerateDepthMapFromLight() {}

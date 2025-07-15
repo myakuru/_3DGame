@@ -8,5 +8,6 @@ public:
 	~FPSCamera()			override	{}
 
 	void Init()				override;
-	void ScreenCameraUpdate()		override;
+	//void ImGuiInspector()	override;
+	void CameraUpdate()	override;
 };
