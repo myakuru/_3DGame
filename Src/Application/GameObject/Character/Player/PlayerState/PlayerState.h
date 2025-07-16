@@ -9,7 +9,7 @@ public:
 
 	void SetPlayer(Player* player) { m_player = player; }
 
-private:
+protected:
 	Player* m_player = nullptr;
 
 };

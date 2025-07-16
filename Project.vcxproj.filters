@@ -142,6 +142,9 @@
     <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_Run">
       <UniqueIdentifier>{324d331c-5567-4c7f-b182-41c4d1405302}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\GameObject\Camera\PlayerCamera">
+      <UniqueIdentifier>{e3d2c73d-a38e-455a-9646-97e7d4a449cb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -387,6 +390,9 @@
     <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_Idle\PlayerState_Idle.h">
       <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_Idle</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Camera\PlayerCamera\PlayerCamera.h">
+      <Filter>Src\Application\GameObject\Camera\PlayerCamera</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -571,6 +577,9 @@
     </ClCompile>
     <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_Idle\PlayerState_Idle.cpp">
       <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_Idle</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Camera\PlayerCamera\PlayerCamera.cpp">
+      <Filter>Src\Application\GameObject\Camera\PlayerCamera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

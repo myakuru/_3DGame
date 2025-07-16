@@ -1,7 +1,6 @@
 ﻿#include "Katana.h"
 #include"../../../main.h"
 #include"../../../../Framework/Json/Json.h"
-#include"../Saya/Saya.h"
 #include"../../../Scene/SceneManager.h"
 
 void Katana::Update()

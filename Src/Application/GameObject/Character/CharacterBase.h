@@ -8,6 +8,20 @@ public:
 	CharaBase() = default;
 	~CharaBase() override = default;
 
+	/// <summary>
+	/// 移動ベクトルを設定します。
+	/// </summary>
+	/// <param name="_move">新しい移動ベクトル。</param>
+	void SetIsMoving(Math::Vector3 _move) { m_movement = _move; }
+	Math::Vector3 &GetMovement() { return m_movement; }
+
+	/// <summary>
+	/// ステートで変更するアニメーションモデルを取得する関数
+	/// </summary>
+	std::shared_ptr<KdModelWork> GetAnimeModel() const { return m_modelWork; }
+	std::shared_ptr<KdAnimator> GetAnimator() const { return m_animator; }
+	bool& AnimeSetFlg() { return IsAnimeSet; }
+
 protected:
 
 	/// <summary>
@@ -29,10 +43,12 @@ protected:
 	StateManager m_stateManager;
 
 	/// <summary>
-	/// 変数関係
+	/// アニメーション関係
 	/// </summary>
 	std::shared_ptr<KdModelWork>	m_modelWork = std::make_shared<KdModelWork>();
 	std::shared_ptr <KdAnimator>	m_animator = std::make_shared<KdAnimator>();
+	bool IsAnimeSet = false;
+
 
 	// 重力
 	float m_gravity = 0.0f;
@@ -44,7 +60,9 @@ protected:
 	// 行列関係
 	Math::Matrix m_mRotation = Math::Matrix::Identity;
 
-	// 移動関係
+	/// <summary>
+	/// 移動関係
+	/// </summary>
 	Math::Vector3 m_movement = Math::Vector3::Zero;
 
 	KdTrailPolygon m_trailPolygon; // トレイルポリゴン

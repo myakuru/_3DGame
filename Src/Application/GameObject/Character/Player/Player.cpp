@@ -1,7 +1,6 @@
 ﻿#include "Player.h"
 #include"../../../Scene/SceneManager.h"
 #include"../../Weapon/Katana/Katana.h"
-#include"../../Weapon/Saya/Saya.h"
 #include"../Player/PlayerState/PlayerState.h"
 #include"../Player/PlayerState/PlayerState_Idle/PlayerState_Idle.h"
 #include"../../../main.h"
@@ -14,12 +13,6 @@ void Player::Init()
 
 void Player::PreUpdate()
 {
-}
-
-void Player::Update()
-{
-	CharaBase::Update();
-
 	// アニメーション適用後にノード行列を再計算
 	m_modelWork->CalcNodeMatrices();
 
@@ -34,11 +27,18 @@ void Player::Update()
 
 		if (m_katana.expired()) return;
 
+		// katanaが有効な場合は、katanaのポインタを取得
 		std::shared_ptr<Katana> katana = m_katana.lock();
 
+		// プレイヤーに追尾する刀にするためにワークノードとプレイヤーのワールド変換を設定
 		katana->SetKatanaMatrix(backWorkNode->m_worldTransform);
 		katana->SetPlayerMatrix(m_mWorld);
 	}
+}
+
+void Player::Update()
+{
+	CharaBase::Update();
 }
 
 void Player::DrawToon()

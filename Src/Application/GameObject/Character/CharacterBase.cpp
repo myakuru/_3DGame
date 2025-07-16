@@ -15,7 +15,6 @@ void CharaBase::Init()
 	);
 
 	m_trailPolygon.SetMaterial("Asset/Textures/System/WhiteNoise.png");
-
 }
 
 void CharaBase::DrawToon()
