@@ -18,6 +18,7 @@
 #include"../GameObject/Map/Map.h"
 #include"../GameObject/Character/Player/Player.h"
 #include"../GameObject/Weapon/Katana/Katana.h"
+#include"../GameObject/Camera/PlayerCamera/PlayerCamera.h"
 
 void SceneManager::Init()
 {
@@ -31,6 +32,7 @@ void SceneManager::Register() const
 	RegisterObject::GetInstance().Register<KdGameObject>();
 	RegisterObject::GetInstance().Register<TPSCamera>();
 	RegisterObject::GetInstance().Register<FPSCamera>();
+	RegisterObject::GetInstance().Register<PlayerCamera>();
 	RegisterObject::GetInstance().Register<SkySphere>();
 	RegisterObject::GetInstance().Register<NormalUI>();
 	RegisterObject::GetInstance().Register<Map>();

@@ -151,7 +151,6 @@ void BaseScene::Draw()
 	}
 	KdShaderManager::Instance().m_StandardShader.EndToon();
 
-
 	m_renderTargetChanger.UndoRenderTarget();
 }
 

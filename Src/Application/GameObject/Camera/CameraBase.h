@@ -1,5 +1,4 @@
 ﻿#pragma once
-
 class CameraBase : public KdGameObject
 {
 public:
@@ -13,7 +12,7 @@ public:
 	void JsonSave(nlohmann::json& _json) const override;
 	void JsonInput(const nlohmann::json& _json) override;
 
-	void SetTarget(const std::shared_ptr<KdGameObject>& target);
+	//void SetTarget(const std::shared_ptr<KdGameObject>& target);
 
 	// 「絶対変更しません！見るだけ！」な書き方
 	const std::shared_ptr<KdCamera>& GetCamera() const

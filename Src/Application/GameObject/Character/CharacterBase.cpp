@@ -1,11 +1,13 @@
 ﻿#include "CharacterBase.h"
 #include"Player/PlayerState/PlayerState.h"
 #include"../../main.h"
+#include"../../Scene/SceneManager.h"
+#include"../Camera/PlayerCamera/PlayerCamera.h"
 
 void CharaBase::Init()
 {
 	ModelLoad(m_path);
-	m_animator->SetAnimation(m_modelWork->GetData()->GetAnimation(0));
+	//m_animator->SetAnimation(m_modelWork->GetData()->GetAnimation(0));
 
 	m_mRotation = Math::Matrix::CreateFromYawPitchRoll
 	(
@@ -14,24 +16,25 @@ void CharaBase::Init()
 		DirectX::XMConvertToRadians(m_degree.z)
 	);
 
-	m_trailPolygon.SetMaterial("Asset/Textures/System/WhiteNoise.png");
+	//m_trailPolygon.SetMaterial("Asset/Textures/System/WhiteNoise.png");
 }
 
 void CharaBase::DrawToon()
 {
-	KdShaderManager::Instance().m_StandardShader.DrawPolygon(m_trailPolygon);
 	KdShaderManager::Instance().m_StandardShader.DrawModel(*m_modelWork, m_mWorld, m_color);
+	//KdShaderManager::Instance().m_StandardShader.DrawPolygon(m_trailPolygon);
+}
+
+void CharaBase::DrawLit()
+{
 }
 
 void CharaBase::Update()
 {
 	KdGameObject::Update();
-
 	float deltaTime = Application::Instance().GetDeltaTime();
 
 	m_animator->AdvanceTime(m_modelWork->WorkNodes(), m_fixedFrameRate * deltaTime);
-
-	return;
 
 	// 移動関係
 	m_gravity += m_gravitySpeed * deltaTime;
@@ -39,7 +42,7 @@ void CharaBase::Update()
 	// 最終的な移動量
 	m_position.x += m_movement.x * m_fixedFrameRate * deltaTime;
 	m_position.y += m_movement.y * m_fixedFrameRate * deltaTime;
-	m_position.y += m_gravity;
+	//m_position.y += m_gravity;
 
 	// ステートで移動処理など管理
 	m_stateManager.Update();
@@ -50,8 +53,19 @@ void CharaBase::Update()
 	m_mWorld.Translation(m_position);
 
 	// トレイルポリゴンの更新
-	m_trailPolygon.AddPoint(m_mWorld);
+	//m_trailPolygon.AddPoint(m_mWorld);
 
+}
+
+void CharaBase::PreUpdate()
+{
+	SceneManager::GetInstance().GetObjectWeakPtr(m_playerCamera);
+
+	if (m_playerCamera.expired()) return;
+
+	auto playerCamera = m_playerCamera.lock();
+
+	playerCamera->SetPosition(m_position);
 }
 
 bool CharaBase::ModelLoad(std::string _path)

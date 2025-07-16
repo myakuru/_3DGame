@@ -300,9 +300,8 @@ void ImGuiManager::ShowGameScene()
 	if (ImGui::Begin("Game"))
 	if (!SceneManager::GetInstance().GetCurrentScene()) return; // シーンが存在しない場合は何もしない
 
-	ImTextureID texID = (ImTextureID)(SceneManager::GetInstance().GetCurrentScene()->GetRenderTargetPack().m_RTTexture->WorkSRView());
+	auto texID = (ImTextureID)(SceneManager::GetInstance().GetCurrentScene()->GetRenderTargetPack().m_RTTexture->WorkSRView());
 	
-
 	std::array<std::string, 3> screenSizes = { "640x360", "1280x720", "1920x1080" };
 	static std::string name = "640x360"; // デフォルトの画面サイズ
 

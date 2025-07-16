@@ -9,6 +9,7 @@
 void Player::Init()
 {
 	CharaBase::Init();
+	StateInit();
 }
 
 void Player::PreUpdate()
@@ -38,6 +39,7 @@ void Player::PreUpdate()
 
 void Player::Update()
 {
+
 	CharaBase::Update();
 }
 

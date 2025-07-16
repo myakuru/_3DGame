@@ -2,6 +2,7 @@
 #include"../Utility/SelectDraw3dModel.h"
 #include"../../../MyFramework/State/StateManager/StateManager.h"
 class PlayerStateBase;
+class PlayerCamera;
 class CharaBase:public SelectDrawObject
 {
 public:
@@ -22,6 +23,8 @@ public:
 	std::shared_ptr<KdAnimator> GetAnimator() const { return m_animator; }
 	bool& AnimeSetFlg() { return IsAnimeSet; }
 
+	std::shared_ptr<PlayerCamera> GetPlayerCamera() const { return m_playerCamera.lock(); }
+
 protected:
 
 	/// <summary>
@@ -29,7 +32,9 @@ protected:
 	/// </summary>
 	void Init() override;
 	void DrawToon() override;
+	void DrawLit() override;
 	void Update() override;
+	void PreUpdate() override;
 	bool ModelLoad(std::string _path) override;
 	void ImGuiInspector() override;
 	void JsonInput(const nlohmann::json& _json) override;
@@ -38,8 +43,8 @@ protected:
 	/// <summary>
 	/// ステート関係の関数
 	/// </summary>
-	virtual void StateInit() {};
-	virtual void ChangeState(std::shared_ptr<PlayerStateBase> _state) {};
+	void StateInit() {};
+	void ChangeState(std::shared_ptr<PlayerStateBase> _state) {};
 	StateManager m_stateManager;
 
 	/// <summary>
@@ -64,6 +69,9 @@ protected:
 	/// 移動関係
 	/// </summary>
 	Math::Vector3 m_movement = Math::Vector3::Zero;
+
+	// カメラへの参照
+	std::weak_ptr<PlayerCamera> m_playerCamera;
 
 	KdTrailPolygon m_trailPolygon; // トレイルポリゴン
 

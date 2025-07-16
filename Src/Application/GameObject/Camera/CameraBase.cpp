@@ -47,13 +47,6 @@ void CameraBase::JsonInput(const nlohmann::json& _json)
 	if (_json.contains("moveSpeed")) moveSpeed = _json["moveSpeed"].get<float>();
 }
 
-void CameraBase::SetTarget(const std::shared_ptr<KdGameObject>& target)
-{
-	if (!target) { return; }
-
-	m_wpTarget = target;
-}
-
 void CameraBase::UpdateMoveKey()
 {
 	if (!m_enabled) return;
