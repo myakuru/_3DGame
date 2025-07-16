@@ -1,6 +1,5 @@
 ﻿#pragma once
 #include"../WeaponBase.h"
-class Saya;
 class Katana : public WeaponBase
 {
 public:
@@ -8,11 +7,10 @@ public:
 	~Katana() override = default;
 
 	// 刀の行列はPlayerで設定される
-	void SetKatanaMatrix(const Math::Matrix& matrix) { m_swordData.m_swordTranslationMatrix = matrix; }
+	void SetKatanaMatrix(const Math::Matrix& matrix) { m_swordData.m_weaponTranslationMatrix = matrix; }
+	void SetPlayerMatrix(const Math::Matrix& matrix) { m_swordData.m_playerTranslationMatrix = matrix; }
 
 private:
-
-	std::weak_ptr<Saya> m_saya; // 刀の鞘
 
 	void Update() override;
 	void ImGuiInspector() override;

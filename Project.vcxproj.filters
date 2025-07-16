@@ -112,9 +112,6 @@
     <Filter Include="Src\Application\GameObject\Utility">
       <UniqueIdentifier>{d73ea3c3-885e-48e6-ac48-0a0a6b8aab01}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Src\Application\GameObject\Weapon\Saya">
-      <UniqueIdentifier>{362016fb-40f3-40ac-8700-32a1c4070d8a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Src\Application\Scene">
       <UniqueIdentifier>{4d2ab234-f9f8-4d65-8770-a559283a7cb6}</UniqueIdentifier>
     </Filter>
@@ -375,9 +372,6 @@
     <ClInclude Include="Src\Application\GameObject\Weapon\WeaponBase.h">
       <Filter>Src\Application\GameObject\Weapon</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Application\GameObject\Weapon\Saya\Saya.h">
-      <Filter>Src\Application\GameObject\Weapon\Saya</Filter>
-    </ClInclude>
     <ClInclude Include="Src\MyFramework\State\StateBase\StateBase.h">
       <Filter>Src\MyFramework\State\StateBase</Filter>
     </ClInclude>
@@ -568,9 +562,6 @@
     </ClCompile>
     <ClCompile Include="Src\Application\GameObject\Weapon\WeaponBase.cpp">
       <Filter>Src\Application\GameObject\Weapon</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Application\GameObject\Weapon\Saya\Saya.cpp">
-      <Filter>Src\Application\GameObject\Weapon\Saya</Filter>
     </ClCompile>
     <ClCompile Include="Src\MyFramework\State\StateManager\StateManager.cpp">
       <Filter>Src\MyFramework\State\StateManager</Filter>

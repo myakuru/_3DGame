@@ -115,7 +115,7 @@ if (ImGui::BeginChild("Objects"))
         // ここからツリー形式で詳細情報を表示
         if (TreeNode) //className + "##" + std::to_string((int)obj.get()) <=こういう書き方もあるよ
         {
-            ImGui::SameLine(270);
+            ImGui::SameLine(70);
 
 			// クリックされたらこのノードを開く
 			if (ImGui::IsItemClicked())
@@ -128,9 +128,6 @@ if (ImGui::BeginChild("Objects"))
             {
 				obj->SetExpired(true);
             }
-
-			obj->ImGuiSelectGltf(); // GLTFの選択を表示
-
             //ツリーの終了処理
             ImGui::TreePop();
         }

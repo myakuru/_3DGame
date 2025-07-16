@@ -132,6 +132,8 @@ public:
 	}params;
 
 	void IdleBySleeping(FpsIdling& ioIdling);
+
+	const bool &ShowImGUiFlg() const { return m_showImGui; }
 	
 private:
 	void GuiRelease();
@@ -143,6 +145,8 @@ private:
 
 	// ImGui
 	std::unique_ptr<ImGuiAppLog> m_uqLog = nullptr;
+
+	bool m_showImGui = true;
 
 //=====================================================
 // シングルトンパターン

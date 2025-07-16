@@ -80,8 +80,11 @@ void BaseScene::PreDraw()
 
 void BaseScene::Draw()
 {
-	m_renderTargetPack.ClearTexture();
-	m_renderTargetChanger.ChangeRenderTarget(m_renderTargetPack);
+	if (KdDebugGUI::Instance().ShowImGUiFlg())
+	{
+		m_renderTargetPack.ClearTexture();
+		m_renderTargetChanger.ChangeRenderTarget(m_renderTargetPack);
+	}
 
 	// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 	// 光を遮るオブジェクト(不透明な物体や2Dキャラ)はBeginとEndの間にまとめてDrawする

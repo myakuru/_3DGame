@@ -14,6 +14,12 @@ void Player::Init()
 
 void Player::PreUpdate()
 {
+}
+
+void Player::Update()
+{
+	CharaBase::Update();
+
 	// アニメーション適用後にノード行列を再計算
 	m_modelWork->CalcNodeMatrices();
 
@@ -31,12 +37,8 @@ void Player::PreUpdate()
 		std::shared_ptr<Katana> katana = m_katana.lock();
 
 		katana->SetKatanaMatrix(backWorkNode->m_worldTransform);
+		katana->SetPlayerMatrix(m_mWorld);
 	}
-}
-
-void Player::Update()
-{
-	CharaBase::Update();
 }
 
 void Player::DrawToon()

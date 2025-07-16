@@ -47,4 +47,6 @@ protected:
 	// 移動関係
 	Math::Vector3 m_movement = Math::Vector3::Zero;
 
+	KdTrailPolygon m_trailPolygon; // トレイルポリゴン
+
 };

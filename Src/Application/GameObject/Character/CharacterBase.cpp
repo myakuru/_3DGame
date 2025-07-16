@@ -14,10 +14,13 @@ void CharaBase::Init()
 		DirectX::XMConvertToRadians(m_degree.z)
 	);
 
+	m_trailPolygon.SetMaterial("Asset/Textures/System/WhiteNoise.png");
+
 }
 
 void CharaBase::DrawToon()
 {
+	KdShaderManager::Instance().m_StandardShader.DrawPolygon(m_trailPolygon);
 	KdShaderManager::Instance().m_StandardShader.DrawModel(*m_modelWork, m_mWorld, m_color);
 }
 
@@ -25,11 +28,11 @@ void CharaBase::Update()
 {
 	KdGameObject::Update();
 
-	return;
-
 	float deltaTime = Application::Instance().GetDeltaTime();
 
 	m_animator->AdvanceTime(m_modelWork->WorkNodes(), m_fixedFrameRate * deltaTime);
+
+	return;
 
 	// 移動関係
 	m_gravity += m_gravitySpeed * deltaTime;
@@ -46,6 +49,9 @@ void CharaBase::Update()
 	m_mWorld = Math::Matrix::CreateScale(m_scale);
 	m_mWorld *= m_mRotation;
 	m_mWorld.Translation(m_position);
+
+	// トレイルポリゴンの更新
+	m_trailPolygon.AddPoint(m_mWorld);
 
 }
 

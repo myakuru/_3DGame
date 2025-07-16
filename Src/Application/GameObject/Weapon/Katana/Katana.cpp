@@ -6,7 +6,7 @@
 
 void Katana::Update()
 {
-	m_swordData.m_swordRotationMatrix = Math::Matrix::CreateFromYawPitchRoll
+	m_swordData.m_weaponRotationMatrix = Math::Matrix::CreateFromYawPitchRoll
 	(
 		DirectX::XMConvertToRadians(m_swordData.m_weaponDeg.y),
 		DirectX::XMConvertToRadians(m_swordData.m_weaponDeg.x),
@@ -14,16 +14,15 @@ void Katana::Update()
 	);
 
 	// 回転行列を適用
-	m_swordData.m_swordMatrix = m_swordData.m_swordRotationMatrix;
+	m_swordData.m_weaponMatrix = m_swordData.m_weaponRotationMatrix;
 	
 	
 	// 移動行列はPlayer側から手の位置を取得しているので、下記で最終的に行列に入れてる。
-	Math::Vector3 playerHipPos = m_swordData.m_swordTranslationMatrix.Translation();
+	Math::Vector3 playerHipPos = m_swordData.m_weaponTranslationMatrix.Translation();
 	// プレイヤーの後ろにある剣の位置を計算(エディターでいじれるようになっている)
-	m_swordData.m_swordTranslationMatrix.Translation(m_katanaOffset + playerHipPos);
-	// 最終的な剣の行列を計算
-	m_swordData.m_swordMatrix *= m_swordData.m_swordTranslationMatrix;
-
+	m_swordData.m_weaponTranslationMatrix.Translation(m_katanaOffset + playerHipPos);
+	// プレイヤーに追尾するように、プレイヤーの位置を取得して、剣の位置を更新
+	m_swordData.m_weaponMatrix *= m_swordData.m_weaponTranslationMatrix * m_swordData.m_playerTranslationMatrix;
 }
 
 void Katana::ImGuiInspector()

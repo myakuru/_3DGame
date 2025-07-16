@@ -125,7 +125,7 @@
       "y": 0.0,
       "z": 0.0
     },
-    "fixedFps": 0.0,
+    "fixedFps": 60.0,
     "path": "Asset\\Models\\Player\\Run.gltf",
     "pos": {
       "x": 0.0,

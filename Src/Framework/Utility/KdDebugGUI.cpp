@@ -1,5 +1,6 @@
 ﻿#include"../../Application/main.h"
 #include"../ImGuiManager/ImGuiManager.h"
+#include"../../MyFramework/Manager/KeyboardManager.h"
 
 #include "KdDebugGUI.h"
 
@@ -44,6 +45,14 @@ void KdDebugGUI::GuiInit()
 
 void KdDebugGUI::GuiProcess()
 {
+
+	if (KeyboardManager::GetInstance().IsKeyJustPressed(VK_F2))
+	{
+		m_showImGui = !m_showImGui;
+	}
+
+	if (!m_showImGui) return;
+
 	// 初期化されてないなら動作させない
 	if (!m_uqLog) return;
 

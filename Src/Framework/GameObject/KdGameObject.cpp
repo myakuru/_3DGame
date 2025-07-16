@@ -149,6 +149,8 @@ void KdGameObject::ImGuiInspector()
 
 	ImGui::ColorEdit4("color", &m_color.x);
 
+	ImGuiSelectGltf();
+
 
 	m_mWorld = Math::Matrix::CreateScale(m_scale);
 	m_mWorld *= Math::Matrix::CreateFromYawPitchRoll(

@@ -7,7 +7,7 @@ void WeaponBase::Init()
 
 void WeaponBase::DrawToon()
 {
-	KdShaderManager::Instance().m_StandardShader.DrawModel(*m_model, m_swordData.m_swordMatrix);
+	KdShaderManager::Instance().m_StandardShader.DrawModel(*m_model, m_swordData.m_weaponMatrix);
 }
 
 void WeaponBase::Update()
