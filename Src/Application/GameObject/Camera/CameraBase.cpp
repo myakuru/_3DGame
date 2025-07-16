@@ -16,7 +16,7 @@ void CameraBase::Update()
 {
 	if (!m_spCamera) { return; }
 
-	m_mWorld.Translation(m_pos);
+	m_mWorld.Translation(m_position);
 	m_spCamera->SetCameraMatrix(m_mWorld);
 }
 
@@ -80,7 +80,7 @@ void CameraBase::UpdateMoveKey()
 	if (KeyboardManager::GetInstance().IsKeyPressed(VK_LSHIFT)) move.y -= moveUpSpeed * deltaTime; // 下に移動
 
 	// 距離 = 速度 * 時間
-	m_pos += move;
+	m_position += move;
 }
 
 void CameraBase::UpdateRotateByMouse()
@@ -117,10 +117,10 @@ void CameraBase::UpdateRotateByMouse()
 		SetCursorPos(m_FixMousePos.x, m_FixMousePos.y);
 
 		// 実際にカメラを回転させる処理(0.15はただの補正値)
-		m_deg.x += _mouseMove.y * 0.15f;
-		m_deg.y += _mouseMove.x * 0.15f;
+		m_degree.x += _mouseMove.y * 0.15f;
+		m_degree.y += _mouseMove.x * 0.15f;
 	}
 
 	// 回転制御
-	m_deg.x = std::clamp(m_deg.x, -45.f, 45.f);
+	m_degree.x = std::clamp(m_degree.x, -45.f, 45.f);
 }

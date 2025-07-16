@@ -4,6 +4,8 @@
 #include"../../Weapon/Saya/Saya.h"
 #include"../Player/PlayerState/PlayerState.h"
 #include"../Player/PlayerState/PlayerState_Idle/PlayerState_Idle.h"
+#include"../../../main.h"
+#include"../../../../Framework/Json/Json.h"
 
 void Player::Init()
 {
@@ -35,7 +37,6 @@ void Player::PreUpdate()
 void Player::Update()
 {
 	CharaBase::Update();
-	m_animator->AdvanceTime(m_modelWork->WorkNodes(), 0.1f);
 }
 
 void Player::DrawToon()
@@ -46,16 +47,24 @@ void Player::DrawToon()
 void Player::ImGuiInspector()
 {
 	CharaBase::ImGuiInspector();
+
+	ImGui::DragFloat(U8("重力の大きさ"), &m_gravitySpeed, 0.01f);
+	ImGui::DragFloat(U8("フレームレート制限"), &m_fixedFrameRate, 1.f);
+
 }
 
 void Player::JsonInput(const nlohmann::json& _json)
 {
 	CharaBase::JsonInput(_json);
+	if (_json.contains("GravitySpeed")) m_gravitySpeed = _json["GravitySpeed"].get<float>();
+	if (_json.contains("fixedFps")) m_fixedFrameRate = _json["fixedFps"].get<float>();
 }
 
 void Player::JsonSave(nlohmann::json& _json) const
 {
 	CharaBase::JsonSave(_json);
+	_json["GravitySpeed"] = m_gravitySpeed;
+	_json["fixedFps"] = m_fixedFrameRate;
 }
 
 void Player::StateInit()

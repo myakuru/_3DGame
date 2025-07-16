@@ -16,7 +16,7 @@
     "path": "Asset/Models/Sky/Sky.gltf",
     "pos": {
       "x": 0.0,
-      "y": 0.0,
+      "y": 0.4000000059604645,
       "z": 0.0
     },
     "scale": {
@@ -74,16 +74,16 @@
   {
     "Name": "class TPSCamera",
     "deg": {
-      "x": 25.950002670288086,
-      "y": 17.399982452392578,
+      "x": 26.8499813079834,
+      "y": 15.599920272827148,
       "z": 0.0
     },
     "moveSpeed": 5.0,
     "path": "Asset/Models/Sky/Sky.gltf",
     "pos": {
-      "x": -2.2636361122131348,
-      "y": 2.991481304168701,
-      "z": -10.047932624816895
+      "x": -2.546581745147705,
+      "y": 3.060530185699463,
+      "z": -9.38261890411377
     },
     "scale": {
       "x": 1.0,
@@ -100,7 +100,7 @@
     },
     "drawFlags": {
       "DrawBright": false,
-      "DrawLit": true,
+      "DrawLit": false,
       "DrawToon": true,
       "DrawUnLit": false,
       "GenerateDepthMapFromLight": false
@@ -118,12 +118,14 @@
     }
   },
   {
+    "GravitySpeed": 0.05000000074505806,
     "Name": "class Player",
     "deg": {
       "x": 0.0,
       "y": 0.0,
       "z": 0.0
     },
+    "fixedFps": 0.0,
     "path": "Asset\\Models\\Player\\Run.gltf",
     "pos": {
       "x": 0.0,
@@ -170,6 +172,52 @@
       "x": -13.0,
       "y": -90.0,
       "z": -100.0
+    }
+  },
+  {
+    "Name": "class Map",
+    "deg": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawLit": false,
+      "DrawToon": true,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "path": "Asset\\Models\\Map\\Cone\\Cone.gltf",
+    "pos": {
+      "x": -3.200000047683716,
+      "y": 0.4000000059604645,
+      "z": -5.800000190734863
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    }
+  },
+  {
+    "Name": "class FPSCamera",
+    "deg": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "moveSpeed": 50.0,
+    "path": "Asset/Models/Sky/Sky.gltf",
+    "pos": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
     }
   }
 ]

@@ -1,7 +1,6 @@
 ﻿#pragma once
 #include "../CharacterBase.h"
 class Katana;
-class Saya;
 class Player :public CharaBase
 {
 public:
@@ -22,7 +21,6 @@ public:
 private:
 
 	std::weak_ptr<Katana>	m_katana;
-	std::weak_ptr<Saya>		m_saya;
 
 	// 腰のノード情報取得用変数
 	const struct KdModelWork::Node* backWorkNode = nullptr;

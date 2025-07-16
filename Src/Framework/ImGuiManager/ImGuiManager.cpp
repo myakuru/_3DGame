@@ -2,7 +2,8 @@
 #include"../Json/Json.h"
 #include"../../Application/Scene/SceneManager.h"
 #include"../../Application/main.h"
-#include"../../Application/GameObject/Camera/CameraBase.h"
+#include"../../Application/GameObject/Camera/TPSCamera/TPSCamera.h"
+#include"../../Application/GameObject/Camera/FPSCamera/FPSCamera.h"
 #include"../../Application/Scene/BaseScene/BaseScene.h"
 #include"../RegisterObject/RegisterObject.h"
 
@@ -42,7 +43,7 @@ void ImGuiManager::Hierarchy()
 	ImGui::End();
 }
 
-void ImGuiManager::MainMenuBar() const
+void ImGuiManager::MainMenuBar()
 {
 	if (ImGui::BeginMainMenuBar())
 	{
@@ -58,6 +59,12 @@ void ImGuiManager::MainMenuBar() const
 		ImGui::SameLine();
 
 		InGuiSceneSelect();
+
+		ImGui::SameLine(1280/2);
+		if (U8("実行"))
+		{
+			ImGuiSelecetCamera();
+		}
 
 		// シーンセレクタをメニューバーに配置
 
@@ -232,11 +239,9 @@ void ImGuiManager::ImGuiSelectObject()
 		// コライダーからレイを取得
 		KdCollider::RayInfo rayInfo;
 
-		SceneManager::GetInstance().GetObjectWeakPtr(m_camera);
+		auto spCamera = GetActiveCamera();
 
-		if (m_camera.expired()) return; // カメラが無効な場合は何もしない
-
-		auto spCamera = m_camera.lock()->GetCamera();
+		if (!spCamera) return;
 
 		spCamera->GenerateRayInfoFromClientPos(mouse, rayInfo.m_pos, rayInfo.m_dir, rayInfo.m_range);
 
@@ -320,10 +325,6 @@ void ImGuiManager::ShowGameScene()
 		}
 		ImGui::EndCombo();
 	}
-
-	ImGui::SameLine();
-
-	ImGuiSelecetCamera();
 	
 	ImGui::Image(texID, { m_gameSceneSize.x ,m_gameSceneSize.y });
 
@@ -398,4 +399,21 @@ void ImGuiManager::listSwap(std::shared_ptr<KdGameObject> _obj1, std::shared_ptr
 	if (it2 == _list.end())return;
 
 	std::swap(*it1, *it2);
+}
+
+std::shared_ptr<KdCamera> ImGuiManager::GetActiveCamera()
+{
+
+	if (!SceneManager::GetInstance().m_sceneCamera)
+	{
+		SceneManager::GetInstance().GetObjectWeakPtr(m_tpsCamera);
+		if (!m_tpsCamera.expired()) return m_tpsCamera.lock()->GetCamera();
+	}
+	else
+	{
+		SceneManager::GetInstance().GetCameraWeakPtr(m_fpsCamera);
+		if (!m_fpsCamera.expired()) return m_fpsCamera.lock()->GetCamera();
+	}
+
+	return nullptr;
 }

@@ -10,11 +10,11 @@ void KdGameObject::Init()
 
 	m_mWorld = Math::Matrix::CreateScale(m_scale);
 	m_mWorld *= Math::Matrix::CreateFromYawPitchRoll(
-		DirectX::XMConvertToRadians(m_deg.y),
-		DirectX::XMConvertToRadians(m_deg.x),
-		DirectX::XMConvertToRadians(m_deg.z)
+		DirectX::XMConvertToRadians(m_degree.y),
+		DirectX::XMConvertToRadians(m_degree.x),
+		DirectX::XMConvertToRadians(m_degree.z)
 	);
-	m_mWorld.Translation(m_pos);
+	m_mWorld.Translation(m_position);
 }
 
 void KdGameObject::DrawDebug()
@@ -95,9 +95,9 @@ bool KdGameObject::SelectObjectIntersects(const KdCollider::RayInfo& targetShape
 void KdGameObject::JsonInput(const nlohmann::json& _json)
 {
 	if (_json.contains("path")) m_path = _json["path"];
-	if (_json.contains("pos")) m_pos = JSON_MANAGER.JsonToVector(_json["pos"]);
+	if (_json.contains("pos")) m_position = JSON_MANAGER.JsonToVector(_json["pos"]);
 	if (_json.contains("scale")) m_scale = JSON_MANAGER.JsonToVector(_json["scale"]);
-	if (_json.contains("deg")) m_deg = JSON_MANAGER.JsonToVector(_json["deg"]);
+	if (_json.contains("deg")) m_degree = JSON_MANAGER.JsonToVector(_json["deg"]);
 }
 
 void KdGameObject::JsonSave(nlohmann::json& _json) const
@@ -106,9 +106,9 @@ void KdGameObject::JsonSave(nlohmann::json& _json) const
 
 	_json["Name"] = className;
 	_json["path"] = m_path;
-	_json["pos"] = JSON_MANAGER.VectorToJson(m_pos);
+	_json["pos"] = JSON_MANAGER.VectorToJson(m_position);
 	_json["scale"] = JSON_MANAGER.VectorToJson(m_scale);
-	_json["deg"] = JSON_MANAGER.VectorToJson(m_deg);
+	_json["deg"] = JSON_MANAGER.VectorToJson(m_degree);
 }
 
 bool KdGameObject::ModelLoad(std::string _path)
@@ -143,20 +143,20 @@ bool KdGameObject::ModelLoad(std::string _path)
 void KdGameObject::ImGuiInspector()
 {
 	// 0.1ずつのステップでドラッグできるようにする
-	ImGui::DragFloat3("pos", &m_pos.x, 0.1f);
+	ImGui::DragFloat3("pos", &m_position.x, 0.1f);
 	ImGui::DragFloat3("m_scale", &m_scale.x, 0.1f);
-	ImGui::DragFloat3("m_rot", &m_deg.x, 0.1f);
+	ImGui::DragFloat3("m_rot", &m_degree.x, 0.1f);
 
 	ImGui::ColorEdit4("color", &m_color.x);
 
 
 	m_mWorld = Math::Matrix::CreateScale(m_scale);
 	m_mWorld *= Math::Matrix::CreateFromYawPitchRoll(
-		DirectX::XMConvertToRadians(m_deg.y),
-		DirectX::XMConvertToRadians(m_deg.x),
-		DirectX::XMConvertToRadians(m_deg.z)
+		DirectX::XMConvertToRadians(m_degree.y),
+		DirectX::XMConvertToRadians(m_degree.x),
+		DirectX::XMConvertToRadians(m_degree.z)
 	);
-	m_mWorld.Translation(m_pos);
+	m_mWorld.Translation(m_position);
 
 }
 

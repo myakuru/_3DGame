@@ -10,8 +10,8 @@ public:
 		if (m_bDrawTexture)
 			KdShaderManager::Instance().m_spriteShader.DrawTex(
 				m_texture,
-				static_cast<int>(m_pos.x),
-				static_cast<int>(m_pos.y),
+				static_cast<int>(m_position.x),
+				static_cast<int>(m_position.y),
 				nullptr,
 				&m_color);
 	}

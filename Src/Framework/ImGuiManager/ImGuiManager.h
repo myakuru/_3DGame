@@ -1,5 +1,6 @@
 ﻿#pragma once
-class CameraBase;
+class TPSCamera;
+class FPSCamera;
 class ImGuiManager : public KdGameObject
 {
 public:
@@ -10,7 +11,7 @@ public:
 
 	void Hierarchy();
 
-	void MainMenuBar() const;
+	void MainMenuBar();
 
 	void TreeNode();
 
@@ -115,7 +116,10 @@ public:
 
 private:
 
-	std::weak_ptr<CameraBase> m_camera;
+	std::weak_ptr<TPSCamera> m_tpsCamera;
+	std::weak_ptr<FPSCamera> m_fpsCamera;
+
+	std::shared_ptr<KdCamera> GetActiveCamera();
 
 	// 開きたいオブジェクトを記録する変数
 	std::shared_ptr<KdGameObject> m_openObject = nullptr;

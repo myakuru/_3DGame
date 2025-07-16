@@ -26,6 +26,12 @@ void JsonManager::AllSave() const
 		it->JsonSave(jsonObj);
 		json.push_back(jsonObj);
 	}
+	for (auto& camera : SceneManager::GetInstance().GetCurrentScene()->GetCameraObjList())
+	{
+		nlohmann::json jsonObj;
+		camera->JsonSave(jsonObj);
+		json.push_back(jsonObj);
+	}
 
 	std::string nowScene = SceneManager::GetInstance().GetCurrentScene()->GetSceneName();
 

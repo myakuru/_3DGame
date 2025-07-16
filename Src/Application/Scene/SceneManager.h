@@ -31,6 +31,7 @@ public :
 
 	// 現在のシーンのオブジェクトリストを取得
 	const std::list<std::shared_ptr<KdGameObject>>& GetObjList();
+	const std::list<std::shared_ptr<KdGameObject>>& GetCameraList();
 
 	// 現在のシーンにオブジェクトを追加
 	void AddObject(const std::shared_ptr<KdGameObject>& _obj);
@@ -64,6 +65,31 @@ public :
 			if (auto findObj = FindObjectOfType<T>())
 			{
 				outPtr = findObj;
+			}
+		}
+	}
+
+	// カメラのオブジェクトを取得
+	template<typename T>
+	std::shared_ptr<T> FindCameraObj()
+	{
+		for (auto& cameraObj : GetCameraList())
+		{
+			auto camera = std::dynamic_pointer_cast<T>(cameraObj);
+			if (camera) return camera;
+		}
+		return nullptr;
+	}
+
+	// カメラのウィークポインタを取得
+	template<typename T>
+	void GetCameraWeakPtr(std::weak_ptr<T>& _ptr)
+	{
+		if (_ptr.expired())
+		{
+			if (auto findCamera = FindCameraObj<T>())
+			{
+				_ptr = findCamera;
 			}
 		}
 	}

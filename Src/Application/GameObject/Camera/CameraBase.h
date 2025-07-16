@@ -30,15 +30,15 @@ public:
 	const Math::Matrix GetRotationMatrix()const
 	{
 		return Math::Matrix::CreateFromYawPitchRoll(
-		       DirectX::XMConvertToRadians(m_deg.y),
-		       DirectX::XMConvertToRadians(m_deg.x),
-		       DirectX::XMConvertToRadians(m_deg.z));
+		       DirectX::XMConvertToRadians(m_degree.y),
+		       DirectX::XMConvertToRadians(m_degree.x),
+		       DirectX::XMConvertToRadians(m_degree.z));
 	}
 
 	const Math::Matrix GetRotationYMatrix() const
 	{
 		return Math::Matrix::CreateRotationY(
-			   DirectX::XMConvertToRadians(m_deg.y));
+			   DirectX::XMConvertToRadians(m_degree.y));
 	}
 
 	void RegistHitObject(const std::shared_ptr<KdGameObject>& object)

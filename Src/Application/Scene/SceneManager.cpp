@@ -87,6 +87,11 @@ const std::list<std::shared_ptr<KdGameObject>>& SceneManager::GetObjList()
 	return m_currentScene->GetObjList();
 }
 
+const std::list<std::shared_ptr<KdGameObject>>& SceneManager::GetCameraList()
+{
+	return m_currentScene->GetCameraObjList();
+}
+
 void SceneManager::AddObject(const std::shared_ptr<KdGameObject>& _obj)
 {
 	m_currentScene->AddObject(_obj);

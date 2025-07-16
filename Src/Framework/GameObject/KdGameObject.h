@@ -127,12 +127,12 @@ protected:
 	std::shared_ptr <KdTexture> m_texture = std::make_shared<KdTexture>();
 
 	// 位置
-	Math::Vector3 m_pos = Math::Vector3::Zero;
+	Math::Vector3 m_position = Math::Vector3::Zero;
 	// 拡大率
 	Math::Vector3 m_scale = Math::Vector3::One;
 	//Math::Quaternion m_rot = Math::Quaternion::Identity; // 回転
 	// 回転角度（デグリー）
-	Math::Vector3 m_deg = Math::Vector3::Zero;
+	Math::Vector3 m_degree = Math::Vector3::Zero;
 	// カラー
 	Math::Color m_color = {1,1,1,1};
 

@@ -34,4 +34,17 @@ protected:
 	std::shared_ptr<KdModelWork>	m_modelWork = std::make_shared<KdModelWork>();
 	std::shared_ptr <KdAnimator>	m_animator = std::make_shared<KdAnimator>();
 
+	// 重力
+	float m_gravity = 0.0f;
+	float m_gravitySpeed = 0.0f;
+
+	// 60fps換算にするようの変数
+	float m_fixedFrameRate = 0.0f;
+
+	// 行列関係
+	Math::Matrix m_mRotation = Math::Matrix::Identity;
+
+	// 移動関係
+	Math::Vector3 m_movement = Math::Vector3::Zero;
+
 };
