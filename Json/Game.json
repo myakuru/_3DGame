@@ -1,5 +1,25 @@
 [
   {
+    "Name": "class TPSCamera",
+    "deg": {
+      "x": 24.29998016357422,
+      "y": -180.44998168945313,
+      "z": 0.0
+    },
+    "moveSpeed": 50.0,
+    "path": "Asset/Models/Sky/Sky.gltf",
+    "pos": {
+      "x": -0.48566725850105286,
+      "y": 2.435340404510498,
+      "z": 1.980536937713623
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    }
+  },
+  {
     "Name": "class SkySphere",
     "deg": {
       "x": 0.0,
@@ -16,98 +36,6 @@
     "path": "Asset/Models/Sky/Sky.gltf",
     "pos": {
       "x": 0.0,
-      "y": 0.4000000059604645,
-      "z": 0.0
-    },
-    "scale": {
-      "x": 8.0,
-      "y": 8.0,
-      "z": 8.0
-    }
-  },
-  {
-    "Name": "class NormalUI",
-    "deg": {
-      "x": 0.0,
-      "y": 0.0,
-      "z": 0.0
-    },
-    "drawFlags": false,
-    "path": "Asset\\Textures\\Title\\black.png",
-    "pos": {
-      "x": 0.0,
-      "y": 0.0,
-      "z": -17.100000381469727
-    },
-    "scale": {
-      "x": 1.0,
-      "y": 1.0,
-      "z": 1.0
-    }
-  },
-  {
-    "Name": "class SkySphere",
-    "deg": {
-      "x": 0.0,
-      "y": -123.5,
-      "z": 0.0
-    },
-    "drawFlags": {
-      "DrawBright": false,
-      "DrawLit": false,
-      "DrawToon": true,
-      "DrawUnLit": false,
-      "GenerateDepthMapFromLight": false
-    },
-    "path": "Asset\\Models\\Map\\Arcade\\Arcade.gltf",
-    "pos": {
-      "x": -1.7999999523162842,
-      "y": 0.0,
-      "z": -7.0
-    },
-    "scale": {
-      "x": 1.399999976158142,
-      "y": 1.0,
-      "z": 1.0
-    }
-  },
-  {
-    "Name": "class TPSCamera",
-    "deg": {
-      "x": -1.0500144958496094,
-      "y": -4.800079822540283,
-      "z": 0.0
-    },
-    "moveSpeed": 5.0,
-    "path": "Asset/Models/Sky/Sky.gltf",
-    "pos": {
-      "x": -4.644362449645996,
-      "y": 3.465698003768921,
-      "z": 16.24417495727539
-    },
-    "scale": {
-      "x": 1.0,
-      "y": 1.0,
-      "z": 1.0
-    }
-  },
-  {
-    "Name": "class Map",
-    "deg": {
-      "x": 0.0,
-      "y": 0.0,
-      "z": 0.0
-    },
-    "drawFlags": {
-      "DrawBright": false,
-      "DrawLit": false,
-      "DrawToon": true,
-      "DrawUnLit": false,
-      "GenerateDepthMapFromLight": false
-    },
-    "path": "Asset\\Models\\Map\\Gate\\Gate.gltf",
-    "pos": {
-      "x": 0.0,
       "y": 0.0,
       "z": 0.0
     },
@@ -118,20 +46,20 @@
     }
   },
   {
-    "GravitySpeed": 0.05000000074505806,
+    "GravitySpeed": 0.0,
     "Name": "class Player",
     "deg": {
       "x": 0.0,
       "y": 0.0,
       "z": 0.0
     },
-    "fixedFps": 60.0,
-    "moveSpeed": 0.10000000149011612,
+    "fixedFps": 0.0,
+    "moveSpeed": 0.0,
     "path": "Asset\\Models\\Player\\Run.gltf",
     "pos": {
-      "x": 1.5261882543563843,
+      "x": 0.0,
       "y": 0.0,
-      "z": 10.28060531616211
+      "z": 0.0
     },
     "scale": {
       "x": 1.0,
@@ -154,9 +82,9 @@
       "GenerateDepthMapFromLight": false
     },
     "katanaOffset": {
-      "x": -0.4000000059604645,
-      "y": 0.09000000357627869,
-      "z": 0.4300000071525574
+      "x": -0.49000000953674316,
+      "y": -0.06499999761581421,
+      "z": 0.7200000286102295
     },
     "path": "Asset\\Models\\Player\\katana.gltf",
     "pos": {
@@ -170,75 +98,9 @@
       "z": 1.0
     },
     "weaponDeg": {
-      "x": -13.0,
-      "y": -90.0,
-      "z": -100.0
-    }
-  },
-  {
-    "Name": "class Map",
-    "deg": {
-      "x": 0.0,
-      "y": 0.0,
-      "z": 0.0
-    },
-    "drawFlags": {
-      "DrawBright": false,
-      "DrawLit": false,
-      "DrawToon": true,
-      "DrawUnLit": false,
-      "GenerateDepthMapFromLight": false
-    },
-    "path": "Asset\\Models\\Map\\Cone\\Cone.gltf",
-    "pos": {
-      "x": -3.200000047683716,
-      "y": 0.4000000059604645,
-      "z": -5.800000190734863
-    },
-    "scale": {
-      "x": 1.0,
-      "y": 1.0,
-      "z": 1.0
-    }
-  },
-  {
-    "Name": "class PlayerCamera",
-    "deg": {
-      "x": 10.79999828338623,
-      "y": 533.4005126953125,
-      "z": 0.0
-    },
-    "moveSpeed": 50.0,
-    "path": "Asset/Models/Sky/Sky.gltf",
-    "pos": {
-      "x": 0.0,
-      "y": 0.0,
-      "z": 0.0
-    },
-    "scale": {
-      "x": 1.0,
-      "y": 1.0,
-      "z": 1.0
-    }
-  },
-  {
-    "Name": "class FPSCamera",
-    "deg": {
-      "x": 17.549943923950195,
-      "y": 20.84993553161621,
-      "z": 0.0
-    },
-    "moveSpeed": 5.0,
-    "path": "Asset/Models/Sky/Sky.gltf",
-    "pos": {
-      "x": -3.979365110397339,
-      "y": 3.7697701454162598,
-      "z": -11.32721996307373
-    },
-    "scale": {
-      "x": 1.0,
-      "y": 1.0,
-      "z": 1.0
+      "x": 189.5,
+      "y": 104.0,
+      "z": 94.5
     }
   }
 ]

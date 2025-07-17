@@ -195,8 +195,7 @@ if (ImGui::BeginChild("Objects"))
 		ImGui::Separator();
 		ImGui::PopID();
 	}
-
-    ImGui::EndChild();
+	ImGui::EndChild();
 }
 }
 
@@ -238,7 +237,11 @@ void ImGuiManager::ImGuiSelectObject()
 
 		auto spCamera = GetActiveCamera();
 
-		if (!spCamera) return;
+		if (!spCamera)
+		{
+			ImGui::End();
+			return;
+		}
 
 		spCamera->GenerateRayInfoFromClientPos(mouse, rayInfo.m_pos, rayInfo.m_dir, rayInfo.m_range);
 
@@ -330,23 +333,19 @@ void ImGuiManager::ShowGameScene()
 
 std::string ImGuiManager::ImSelectClass() const
 {
-	static std::string name = "KdGameObject";
+	static std::string currentName = "KdGameObject";
 	// ImGuiのコンボボックスを作成
-	if (ImGui::BeginCombo("##Class", name.data()))
+	if (ImGui::BeginCombo("##Class", currentName.data()))
 	{
-		for (const auto& [key, value] : RegisterObject::GetInstance().GetRegisterObject())
+		for (const auto& [name, id] : RegisterObject::GetInstance().m_ClassNameToID)
 		{
-			const char* nowName = key.data();
-			bool selected = (name == nowName);
-
-			// 選択されたものとレジスターに登録してある文字列を比較
-			if (ImGui::Selectable(nowName, selected))	name = nowName;
-			// 選択されたら青く光る
+			bool selected = (currentName == name);
+			if (ImGui::Selectable(name.c_str(), selected)) currentName = name;
 			if (selected) ImGui::SetItemDefaultFocus();
 		}
 		ImGui::EndCombo();
 	}
-	return name;
+	return currentName;
 }
 
 void ImGuiManager::InGuiSceneSelect() const

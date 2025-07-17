@@ -4,8 +4,12 @@
 class FPSCamera : public CameraBase
 {
 public:
-	FPSCamera()							{}
+
+	static const uint32_t TypeID;
+
+	FPSCamera()							{ m_typeID = TypeID; }
 	~FPSCamera()			override	{}
+	uint32_t GetTypeID() const override { return m_typeID; }
 
 	void Init()				override;
 	//void ImGuiInspector()	override;

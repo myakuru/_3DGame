@@ -46,12 +46,13 @@ public :
 	template<class T>
 	std::shared_ptr<T> FindObjectOfType()
 	{
-		for (auto& obj : GetObjList()) 
+		uint32_t typeId = T::TypeID;
+		for (auto& obj : GetObjList())
 		{
-			// std::dynamic_pointer_castを使って、T型にキャストを試みる
-			// 重いキャストだけど、一旦はこれで良い
-			auto casted = std::dynamic_pointer_cast<T>(obj);
-			if (casted) return casted;
+			if (obj->GetTypeID() == typeId)
+			{
+				return std::static_pointer_cast<T>(obj);
+			}
 		}
 		return nullptr;
 	}
@@ -73,10 +74,14 @@ public :
 	template<typename T>
 	std::shared_ptr<T> FindCameraObj()
 	{
+		uint32_t typeId = T::GenerateTypeID();
 		for (auto& cameraObj : GetCameraList())
 		{
-			auto camera = std::dynamic_pointer_cast<T>(cameraObj);
-			if (camera) return camera;
+			if (cameraObj->GetTypeID() == typeId)
+			{
+				// キャストして返す
+				return std::static_pointer_cast<T>(cameraObj);
+			}
 		}
 		return nullptr;
 	}

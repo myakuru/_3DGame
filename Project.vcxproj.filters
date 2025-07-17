@@ -581,6 +581,12 @@
     <ClCompile Include="Src\Application\GameObject\Camera\PlayerCamera\PlayerCamera.cpp">
       <Filter>Src\Application\GameObject\Camera\PlayerCamera</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Map\Map.cpp">
+      <Filter>Src\Application\GameObject\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\HUD\NormalUI\NormalUI.cpp">
+      <Filter>Src\Application\GameObject\HUD\NormalUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Src\Framework\Shader\inc_KdCommon.hlsli">

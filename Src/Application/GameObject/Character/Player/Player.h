@@ -4,7 +4,10 @@ class Katana;
 class Player :public CharaBase
 {
 public:
-	Player() = default;
+
+	// クラスごとに一意なTypeIDを持たせる
+	static const uint32_t TypeID;
+	Player() { m_typeID = TypeID; };
 	~Player() override = default;
 
 	void Init() override;

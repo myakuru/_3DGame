@@ -3,6 +3,9 @@
 #include"../../../../Framework/Json/Json.h"
 #include"../../../Scene/SceneManager.h"
 
+// TypeIDの定義と初期化
+const uint32_t Katana::TypeID = KdGameObject::GenerateTypeID();
+
 void Katana::Update()
 {
 	m_swordData.m_weaponRotationMatrix = Math::Matrix::CreateFromYawPitchRoll

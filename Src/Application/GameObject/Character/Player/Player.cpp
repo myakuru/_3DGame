@@ -7,6 +7,8 @@
 #include"../../../../Framework/Json/Json.h"
 #include"../../Camera/PlayerCamera/PlayerCamera.h"
 
+const uint32_t Player::TypeID = KdGameObject::GenerateTypeID();
+
 void Player::Init()
 {
 	CharaBase::Init();

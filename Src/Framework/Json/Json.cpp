@@ -40,43 +40,45 @@ void JsonManager::AllSave() const
 
 std::shared_ptr<KdGameObject> JsonManager::AddJsonObject(const std::string& _className, const nlohmann::json& _json) const
 {
+	static int count = 0; // デバッグ用のカウント
 
-	static int count = 0;	// デバッグ用のカウント
-
-	// 一発検索して、インスタンスを生成させる
-	if (auto found = RegisterObject::GetInstance().GetRegisterObject().find(_className);
-		found != RegisterObject::GetInstance().GetRegisterObject().end())
+	const auto& classMap = RegisterObject::GetInstance().m_ClassNameToID;
+	auto it = classMap.find(_className);
+	if (it != classMap.end())
 	{
-		// バリューにインスタンスを生成するラムダ式入ってるからそれを呼び出す
-		std::shared_ptr<KdGameObject> obj = found->second();
-
-		// 各オブジェクトを,jsonファイルから読み込む
-		if (!_json.is_null()) obj->JsonInput(_json);
-
-		// もしカメラだったら、シーンに追加しない
-		if (_className == "class FPSCamera")
+		uint32_t classKey = it->second;
+		auto& regObj = RegisterObject::GetInstance().GetRegisterObject();
+		auto found = regObj.find(classKey);
+		if (found != regObj.end())
 		{
-			SceneManager::GetInstance().GetCurrentScene()->AddCameraObject(obj);
+			// バリューにインスタンスを生成するラムダ式入ってるからそれを呼び出す
+			std::shared_ptr<KdGameObject> obj = found->second();
 
-			KdDebugGUI::Instance().AddLog(U8("FPSCameraを追加しました"));
+			// 各オブジェクトを,jsonファイルから読み込む
+			if (!_json.is_null()) obj->JsonInput(_json);
 
+			// もしカメラだったら、シーンに追加しない
+			if (_className == "class FPSCamera")
+			{
+				SceneManager::GetInstance().GetCurrentScene()->AddCameraObject(obj);
+
+				KdDebugGUI::Instance().AddLog(U8("FPSCameraを追加しました"));
+			}
+			else
+			{
+				count++; // デバッグ用のカウントアップ
+
+				SceneManager::GetInstance().AddObject(obj); // シーンに追加
+				KdDebugGUI::Instance().AddLog(U8("Jsonからオブジェクトを追加しました : %d \n"), count);
+			}
+
+			obj->Init();
+
+			return obj;
 		}
-		else
-		{
-			count++;	// デバッグ用のカウントアップ
-
-			SceneManager::GetInstance().AddObject(obj);	// シーンに追加
-			KdDebugGUI::Instance().AddLog(U8("Jsonからオブジェクトを追加しました : %d \n"), count);
-		}
-
-		obj->Init();
-
-		return obj;
-
 	}
 	// 見つからなかった場合は,nullptrを返す
 	return nullptr;
-
 }
 
 void JsonManager::JsonSerialize(const nlohmann::json& _json, const std::string& _path) const

@@ -1,6 +1,8 @@
 ﻿#include "FPSCamera.h"
 #include"../../../Scene/SceneManager.h"
 
+const uint32_t FPSCamera::TypeID = KdGameObject::GenerateTypeID();
+
 void FPSCamera::Init()
 {
 	// 親クラスの初期化呼び出し

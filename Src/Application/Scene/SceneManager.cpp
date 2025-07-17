@@ -29,7 +29,6 @@ void SceneManager::Init()
 
 void SceneManager::Register() const
 {
-	RegisterObject::GetInstance().Register<KdGameObject>();
 	RegisterObject::GetInstance().Register<TPSCamera>();
 	RegisterObject::GetInstance().Register<FPSCamera>();
 	RegisterObject::GetInstance().Register<PlayerCamera>();

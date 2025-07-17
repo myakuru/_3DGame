@@ -3,6 +3,9 @@
 class NormalUI :public SelectDraw2DTexture
 {
 public:
-	NormalUI() = default;
+
+	static const uint32_t TypeID;
+
+	NormalUI();
 	~NormalUI() override = default;
 };

@@ -1,6 +1,8 @@
 ﻿#include "TPSCamera.h"
 #include"../../../Scene/SceneManager.h"
 
+const uint32_t TPSCamera::TypeID = KdGameObject::GenerateTypeID();
+
 void TPSCamera::Init()
 {
 	// 親クラスの初期化呼び出し

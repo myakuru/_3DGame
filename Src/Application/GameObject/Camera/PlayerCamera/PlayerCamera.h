@@ -4,8 +4,13 @@ class Player;
 class PlayerCamera :public CameraBase
 {
 public:
-	PlayerCamera() = default;
+
+	static const uint32_t TypeID;
+
+	PlayerCamera() { m_typeID = TypeID; }
 	~PlayerCamera() override = default;
+
+	uint32_t GetTypeID() const override { return m_typeID; }
 
 	void Init() override;
 	void Update() override;

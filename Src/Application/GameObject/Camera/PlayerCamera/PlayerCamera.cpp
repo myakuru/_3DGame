@@ -4,6 +4,8 @@
 #include"../../../Scene/SceneManager.h"
 #include"../../Character/Player/Player.h"
 
+const uint32_t PlayerCamera::TypeID = KdGameObject::GenerateTypeID();
+
 void PlayerCamera::Init()
 {
 	CameraBase::Init();

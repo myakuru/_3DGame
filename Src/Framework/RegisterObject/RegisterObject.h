@@ -8,15 +8,20 @@ public:
 	template<typename T>
 	void Register()
 	{
-		std::string className = typeid(T).name();
+		std::string className = typeid(T).name(); // クラス名取得
+		uint32_t typeID = T::TypeID;
 
-		auto registerFunc = [className]()
+		auto registerFunc = [typeID]()
 			{
-				std::shared_ptr<T> NewClass = std::make_shared<T>();
-				return NewClass;
+				auto obj = std::make_shared<T>();
+				obj->m_typeID = typeID;
+				return obj;
 			};
 
-		m_RegisterObject.emplace(className, registerFunc);
+		KdDebugGUI::Instance().AddLog("RegisterObject: %s, ID: %u\n", className.data(), typeID);
+
+		m_RegisterObject.emplace(typeID, registerFunc);
+		m_ClassNameToID.try_emplace(className, typeID); // クラス名とIdもぺ。
 	}
 
 	// m_RegisterObjectのゲッター
@@ -25,8 +30,10 @@ public:
 		return m_RegisterObject;
 	}
 
+	std::map<std::string, uint32_t,std::less<>> m_ClassNameToID; // クラス名からID
+
 private:
-	std::map<std::string, std::function<std::shared_ptr<KdGameObject>()>,std::less<> > m_RegisterObject;
+	std::map<uint32_t, std::function<std::shared_ptr<KdGameObject>()>> m_RegisterObject;
 
 public:
 	// シングルトンインスタンスを取得する関数
