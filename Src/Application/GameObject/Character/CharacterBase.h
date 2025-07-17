@@ -15,6 +15,7 @@ public:
 	/// <param name="_move">新しい移動ベクトル。</param>
 	void SetIsMoving(Math::Vector3 _move) { m_movement = _move; }
 	Math::Vector3 &GetMovement() { return m_movement; }
+	Math::Matrix& GetRotationMatrix() { return m_mRotation; }
 
 	/// <summary>
 	/// ステートで変更するアニメーションモデルを取得する関数
@@ -22,6 +23,8 @@ public:
 	std::shared_ptr<KdModelWork> GetAnimeModel() const { return m_modelWork; }
 	std::shared_ptr<KdAnimator> GetAnimator() const { return m_animator; }
 	bool& AnimeSetFlg() { return IsAnimeSet; }
+
+	void RotationUpdate(float _target, float _angle, float _rotSpeed);
 
 	std::shared_ptr<PlayerCamera> GetPlayerCamera() const { return m_playerCamera.lock(); }
 
@@ -39,6 +42,7 @@ protected:
 	void ImGuiInspector() override;
 	void JsonInput(const nlohmann::json& _json) override;
 	void JsonSave(nlohmann::json& _json) const override;
+
 
 	/// <summary>
 	/// ステート関係の関数
@@ -69,6 +73,7 @@ protected:
 	/// 移動関係
 	/// </summary>
 	Math::Vector3 m_movement = Math::Vector3::Zero;
+	float m_moveSpeed = 0.0f; // 移動速度
 
 	// カメラへの参照
 	std::weak_ptr<PlayerCamera> m_playerCamera;

@@ -2,7 +2,6 @@
 #include"Player/PlayerState/PlayerState.h"
 #include"../../main.h"
 #include"../../Scene/SceneManager.h"
-#include"../Camera/PlayerCamera/PlayerCamera.h"
 
 void CharaBase::Init()
 {
@@ -32,6 +31,7 @@ void CharaBase::DrawLit()
 void CharaBase::Update()
 {
 	KdGameObject::Update();
+
 	float deltaTime = Application::Instance().GetDeltaTime();
 
 	m_animator->AdvanceTime(m_modelWork->WorkNodes(), m_fixedFrameRate * deltaTime);
@@ -40,8 +40,8 @@ void CharaBase::Update()
 	m_gravity += m_gravitySpeed * deltaTime;
 
 	// 最終的な移動量
-	m_position.x += m_movement.x * m_fixedFrameRate * deltaTime;
-	m_position.y += m_movement.y * m_fixedFrameRate * deltaTime;
+	m_position.x += m_movement.x * m_moveSpeed * m_fixedFrameRate * deltaTime;
+	m_position.z += m_movement.z * m_moveSpeed * m_fixedFrameRate * deltaTime;
 	//m_position.y += m_gravity;
 
 	// ステートで移動処理など管理
@@ -59,13 +59,7 @@ void CharaBase::Update()
 
 void CharaBase::PreUpdate()
 {
-	SceneManager::GetInstance().GetObjectWeakPtr(m_playerCamera);
 
-	if (m_playerCamera.expired()) return;
-
-	auto playerCamera = m_playerCamera.lock();
-
-	playerCamera->SetPosition(m_position);
 }
 
 bool CharaBase::ModelLoad(std::string _path)
@@ -91,4 +85,25 @@ void CharaBase::JsonInput(const nlohmann::json& _json)
 void CharaBase::JsonSave(nlohmann::json& _json) const
 {
 	KdGameObject::JsonSave(_json);
+}
+
+void CharaBase::RotationUpdate(float _target, float _angle, float _rotSpeed)
+{
+	float targetAngle = atan2(-_target, -_angle);
+	float currentAngle = DirectX::XMConvertToRadians(m_degree.y);
+	float angleDiff = targetAngle - currentAngle;
+
+	// 角度の正規化
+	if (angleDiff > DirectX::XM_PI) angleDiff -= DirectX::XM_2PI;
+	if (angleDiff < -DirectX::XM_PI) angleDiff += DirectX::XM_2PI;
+
+	// 回転速度に基づいて補間
+	m_degree.y += DirectX::XMConvertToDegrees(
+		std::clamp(angleDiff, -_rotSpeed, _rotSpeed)
+	);
+
+	// 回転行列の更新
+	m_mRotation = Math::Matrix::CreateRotationY(
+		DirectX::XMConvertToRadians(m_degree.y)
+	);
 }

@@ -15,7 +15,6 @@ void Katana::Update()
 	// 回転行列を適用
 	m_swordData.m_weaponMatrix = m_swordData.m_weaponRotationMatrix;
 	
-	
 	// 移動行列はPlayer側から手の位置を取得しているので、下記で最終的に行列に入れてる。
 	Math::Vector3 playerHipPos = m_swordData.m_weaponTranslationMatrix.Translation();
 	// プレイヤーの後ろにある剣の位置を計算(エディターでいじれるようになっている)
@@ -26,6 +25,8 @@ void Katana::Update()
 
 void Katana::ImGuiInspector()
 {
+	KdGameObject::ImGuiInspector();
+
 	ImGui::Text("Katana Inspector");
 
 	ImGui::Text(U8("刀の角度を変更"));

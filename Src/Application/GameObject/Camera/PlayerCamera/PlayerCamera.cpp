@@ -13,7 +13,7 @@ void PlayerCamera::Update()
 {
 	if (SceneManager::GetInstance().m_sceneCamera) return;
 
-	float deltaTime = Application::Instance().GetDeltaTime();
+	//float deltaTime = Application::Instance().GetDeltaTime();
 
 	SceneManager::GetInstance().GetObjectWeakPtr(m_player);
 
@@ -21,21 +21,24 @@ void PlayerCamera::Update()
 
 	auto player = m_player.lock();
 
-	Math::Vector3 targetPos = m_player.lock()->GetPos();
 
 	// カメラの回転
 	UpdatePlayerRotetionMouse();
 
 	m_mRotation = GetRotationMatrix();
 
-	m_mWorld = m_mRotation;
+	m_mWorld = Math::Matrix::CreateTranslation(0, 2.f, -3.f);
+
+	Math::Vector3 targetPos = m_player.lock()->GetPos();
+
+	//Math::Matrix transMatrix = Math::Matrix::CreateTranslation(targetPos);
+
+	m_mWorld = m_mWorld * m_mRotation;
 
 	// 最終的なカメラの移動行列更新
 	//m_mWorld.Translation(m_mWorld.Translation() + targetPos + Math::Vector3{ 0.0f,2.0f,2.0f });
 
-	Math::Matrix transMat = Math::Matrix::CreateTranslation(targetPos);
-
-	m_mWorld = m_mRotation * transMat;
+	m_mWorld *= Math::Matrix::CreateTranslation( m_mWorld.Translation() + targetPos);
 
 	m_spCamera->SetCameraMatrix(m_mWorld);
 
