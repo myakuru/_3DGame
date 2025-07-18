@@ -24,7 +24,7 @@ public:
 	std::shared_ptr<KdAnimator> GetAnimator() const { return m_animator; }
 	bool& AnimeSetFlg() { return IsAnimeSet; }
 
-	void RotationUpdate(float _target, float _angle, float _rotSpeed);
+	void UpdateRotation(const Math::Vector3& _movevVector);
 
 	std::shared_ptr<PlayerCamera> GetPlayerCamera() const { return m_playerCamera.lock(); }
 

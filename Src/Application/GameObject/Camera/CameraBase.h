@@ -1,12 +1,12 @@
 ﻿#pragma once
+class Player;
 class CameraBase : public KdGameObject
 {
 public:
-	CameraBase()						{}
-	virtual ~CameraBase()	override	{}
+	CameraBase() = default;
+	virtual ~CameraBase()	override = default;
 
 	void Init()				override;
-	void Update()			override;
 	void PreDraw()			override;
 	void ImGuiInspector()	override;
 	void JsonSave(nlohmann::json& _json) const override;
@@ -77,12 +77,13 @@ public:
 protected:
 
 	float moveSpeed = 50.0f; // 移動速度
+	bool m_freeCameraFlg = false;
 
 	void UpdateRotateByMouse();
 	void UpdateMoveKey();
 
 	std::shared_ptr<KdCamera>					m_spCamera		= nullptr;
-	std::weak_ptr<KdGameObject>					m_wpTarget;
+	std::weak_ptr<Player>					m_Player;
 	std::vector<std::weak_ptr<KdGameObject>>	m_wpHitObjectList{};
 
 	Math::Matrix								m_mLocalPos		= Math::Matrix::Identity;

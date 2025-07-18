@@ -1,25 +1,5 @@
 [
   {
-    "Name": "class TPSCamera",
-    "deg": {
-      "x": 24.29998016357422,
-      "y": -180.44998168945313,
-      "z": 0.0
-    },
-    "moveSpeed": 50.0,
-    "path": "Asset/Models/Sky/Sky.gltf",
-    "pos": {
-      "x": -0.48566725850105286,
-      "y": 2.435340404510498,
-      "z": 1.980536937713623
-    },
-    "scale": {
-      "x": 1.0,
-      "y": 1.0,
-      "z": 1.0
-    }
-  },
-  {
     "Name": "class SkySphere",
     "deg": {
       "x": 0.0,
@@ -50,7 +30,7 @@
     "Name": "class Player",
     "deg": {
       "x": 0.0,
-      "y": 0.0,
+      "y": -1552.36181640625,
       "z": 0.0
     },
     "fixedFps": 0.0,
@@ -101,6 +81,71 @@
       "x": 189.5,
       "y": 104.0,
       "z": 94.5
+    }
+  },
+  {
+    "Name": "class PlayerCamera",
+    "deg": {
+      "x": 5.250001430511475,
+      "y": 123.74994659423828,
+      "z": 0.0
+    },
+    "path": "Asset/Models/Sky/Sky.gltf",
+    "pos": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    }
+  },
+  {
+    "Name": "class Map",
+    "deg": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawLit": false,
+      "DrawToon": true,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "path": "Asset\\Models\\Map\\Arcade\\Arcade.gltf",
+    "pos": {
+      "x": -2.5,
+      "y": 2.299999952316284,
+      "z": 0.0
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    }
+  },
+  {
+    "Name": "class FPSCamera",
+    "deg": {
+      "x": 20.399978637695313,
+      "y": 126.90007019042969,
+      "z": 0.0
+    },
+    "moveSpeed": 50.0,
+    "path": "Asset/Models/Sky/Sky.gltf",
+    "pos": {
+      "x": -4.426313877105713,
+      "y": 4.1987223625183105,
+      "z": 1.4514713287353516
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
     }
   }
 ]

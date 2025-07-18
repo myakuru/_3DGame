@@ -5,7 +5,9 @@ class KdGameObject : public std::enable_shared_from_this<KdGameObject>
 public:
 
 	virtual uint32_t GetTypeID() const { return m_typeID; }
-	static uint32_t GenerateTypeID() {
+
+	static uint32_t GenerateTypeID()
+	{
 		static uint32_t s_nextTypeID = 1;
 		return s_nextTypeID++;
 	}

@@ -3,6 +3,40 @@
 #include"../../main.h"
 #include"../../Scene/SceneManager.h"
 
+void CharaBase::UpdateRotation(const Math::Vector3& _movevVector)
+{
+	if (_movevVector.LengthSquared() == 0.0f) return;
+
+	// キャラの正面方向のベクトル
+	Math::Vector3 _nowDir = GetMatrix().Backward();
+
+	// 移動方向のベクトル
+	Math::Vector3 _targetDir = _movevVector;
+
+	_nowDir.Normalize();
+	_targetDir.Normalize();
+
+	float _nowAng = atan2(_nowDir.x, _nowDir.z);
+	_nowAng = DirectX::XMConvertToDegrees(_nowAng);
+
+	float _targetAng = atan2(_targetDir.x, _targetDir.z);
+	_targetAng = DirectX::XMConvertToDegrees(_targetAng);
+
+	// 角度の差分を求める
+	float _betweenAng = _targetAng - _nowAng;
+	if (_betweenAng > 180)
+	{
+		_betweenAng -= 360;
+	}
+	else if (_betweenAng < -180)
+	{
+		_betweenAng += 360;
+	}
+
+	float rotateAng = std::clamp(_betweenAng, -8.0f, 8.0f);
+	m_degree.y += rotateAng;
+}
+
 void CharaBase::Init()
 {
 	ModelLoad(m_path);
@@ -48,9 +82,10 @@ void CharaBase::Update()
 	m_stateManager.Update();
 
 	// 最終的なワールド行列計算
-	m_mWorld = Math::Matrix::CreateScale(m_scale);
-	m_mWorld *= m_mRotation;
-	m_mWorld.Translation(m_position);
+	Math::Matrix scaleMat = Math::Matrix::CreateScale(m_scale);
+	Math::Matrix transMat = Math::Matrix::CreateTranslation(m_position);
+
+	m_mWorld = scaleMat * m_mRotation * transMat;
 
 	// トレイルポリゴンの更新
 	//m_trailPolygon.AddPoint(m_mWorld);
@@ -85,25 +120,4 @@ void CharaBase::JsonInput(const nlohmann::json& _json)
 void CharaBase::JsonSave(nlohmann::json& _json) const
 {
 	KdGameObject::JsonSave(_json);
-}
-
-void CharaBase::RotationUpdate(float _target, float _angle, float _rotSpeed)
-{
-	float targetAngle = atan2(-_target, -_angle);
-	float currentAngle = DirectX::XMConvertToRadians(m_degree.y);
-	float angleDiff = targetAngle - currentAngle;
-
-	// 角度の正規化
-	if (angleDiff > DirectX::XM_PI) angleDiff -= DirectX::XM_2PI;
-	if (angleDiff < -DirectX::XM_PI) angleDiff += DirectX::XM_2PI;
-
-	// 回転速度に基づいて補間
-	m_degree.y += DirectX::XMConvertToDegrees(
-		std::clamp(angleDiff, -_rotSpeed, _rotSpeed)
-	);
-
-	// 回転行列の更新
-	m_mRotation = Math::Matrix::CreateRotationY(
-		DirectX::XMConvertToRadians(m_degree.y)
-	);
 }

@@ -13,11 +13,10 @@ public:
 	uint32_t GetTypeID() const override { return m_typeID; }
 
 	void Init() override;
-	void Update() override;
-
-	void UpdatePlayerRotetionMouse();
-
-	void SetPosition(Math::Vector3 _pos) { m_targetPos = _pos; }
+	void PostUpdate() override;
+	void ImGuiInspector()	override;
+	void JsonSave(nlohmann::json& _json) const override;
+	void JsonInput(const nlohmann::json& _json) override;
 
 private:
 

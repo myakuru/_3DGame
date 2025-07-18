@@ -220,7 +220,7 @@ void ImGuiManager::ImGuiSelectObject()
 
 		if (offsetX >= 0 && offsetY >= 0 && offsetX < imageSize.x && offsetY < imageSize.y)
 		{
-			// ゲーム画面の解像度に基づいてマウス座標をスケーリング
+			// ゲーム画面の解像度に基づいてマウス座標を合わせる
 			float gameX = offsetX * (1280.0f / imageSize.x);
 			float gameY = offsetY * (720.0f / imageSize.y);
 

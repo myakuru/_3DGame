@@ -36,9 +36,9 @@ void PlayerState_Run::StateUpdate()
 	auto playerCamera = m_player->GetPlayerCamera();
 
 	// 第1引数の移動ベクトルと第２引数の回転ベクトルを掛け合わせて、戻り値として移動ベクトルを返す
-	m_movement = Math::Vector3::TransformNormal(m_movement, playerCamera->GetRotationYMatrix());
+	m_movement = m_movement.TransformNormal(m_movement, playerCamera->GetRotationYMatrix());
 
-	m_player->RotationUpdate(m_movement.x, m_movement.z, 0.5f);
+	m_player->UpdateRotation(m_movement);
 
 	m_player->SetIsMoving(m_movement);
 
