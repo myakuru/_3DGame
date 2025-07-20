@@ -2,52 +2,36 @@
 #include"Player/PlayerState/PlayerState.h"
 #include"../../main.h"
 #include"../../Scene/SceneManager.h"
+#include"../Camera/PlayerCamera/PlayerCamera.h"
 
-void CharaBase::UpdateRotation(const Math::Vector3& _movevVector)
+void CharaBase::UpdateQuaternion(Math::Vector3& _moveVector)
 {
-	if (_movevVector.LengthSquared() == 0.0f) return;
+	float deltaTime = Application::Instance().GetDeltaTime();
 
-	// キャラの正面方向のベクトル
-	Math::Vector3 _nowDir = GetMatrix().Backward();
+	if (_moveVector == Math::Vector3::Zero) return;
 
-	// 移動方向のベクトル
-	Math::Vector3 _targetDir = _movevVector;
+	SceneManager::Instance().GetObjectWeakPtr(m_playerCamera);
+	if (m_playerCamera.expired()) return;
 
-	_nowDir.Normalize();
-	_targetDir.Normalize();
+	const auto camera = m_playerCamera.lock();
 
-	float _nowAng = atan2(_nowDir.x, _nowDir.z);
-	_nowAng = DirectX::XMConvertToDegrees(_nowAng);
+	// カメラのY軸回転と移動ベクトルをかけ合わせて、WASDから入力された値に基づく方向を計算
+	_moveVector = Math::Vector3::TransformNormal(_moveVector, camera->GetRotationYMatrix());
 
-	float _targetAng = atan2(_targetDir.x, _targetDir.z);
-	_targetAng = DirectX::XMConvertToDegrees(_targetAng);
+	_moveVector.Normalize();
 
-	// 角度の差分を求める
-	float _betweenAng = _targetAng - _nowAng;
-	if (_betweenAng > 180)
-	{
-		_betweenAng -= 360;
-	}
-	else if (_betweenAng < -180)
-	{
-		_betweenAng += 360;
-	}
+	// 向きたい方向をクォータニオンに変換 第1引数：前を向く方向, 第2引数：どっちが上か
+	Math::Quaternion targetRotation = Math::Quaternion::LookRotation(_moveVector, Math::Vector3::Up);
 
-	float rotateAng = std::clamp(_betweenAng, -8.0f, 8.0f);
-	m_degree.y += rotateAng;
+	// 滑らかに回転させるために、現在の回転と目標の回転を補間
+	m_rotation = Math::Quaternion::Slerp(m_rotation, targetRotation, deltaTime * m_fixedFrameRate);
+
 }
 
 void CharaBase::Init()
 {
 	ModelLoad(m_path);
-	//m_animator->SetAnimation(m_modelWork->GetData()->GetAnimation(0));
-
-	m_mRotation = Math::Matrix::CreateFromYawPitchRoll
-	(
-		DirectX::XMConvertToRadians(m_degree.y),
-		DirectX::XMConvertToRadians(m_degree.x),
-		DirectX::XMConvertToRadians(m_degree.z)
-	);
+	m_animator->SetAnimation(m_modelWork->GetData()->GetAnimation(1));
 
 	//m_trailPolygon.SetMaterial("Asset/Textures/System/WhiteNoise.png");
 }
@@ -56,10 +40,6 @@ void CharaBase::DrawToon()
 {
 	KdShaderManager::Instance().m_StandardShader.DrawModel(*m_modelWork, m_mWorld, m_color);
 	//KdShaderManager::Instance().m_StandardShader.DrawPolygon(m_trailPolygon);
-}
-
-void CharaBase::DrawLit()
-{
 }
 
 void CharaBase::Update()
@@ -82,14 +62,11 @@ void CharaBase::Update()
 	m_stateManager.Update();
 
 	// 最終的なワールド行列計算
-	Math::Matrix scaleMat = Math::Matrix::CreateScale(m_scale);
-	Math::Matrix transMat = Math::Matrix::CreateTranslation(m_position);
-
-	m_mWorld = scaleMat * m_mRotation * transMat;
-
+	m_mWorld = Math::Matrix::CreateScale(m_scale);
+	m_mWorld *= Math::Matrix::CreateFromQuaternion(m_rotation);
+	m_mWorld.Translation(m_position);
 	// トレイルポリゴンの更新
 	//m_trailPolygon.AddPoint(m_mWorld);
-
 }
 
 void CharaBase::PreUpdate()

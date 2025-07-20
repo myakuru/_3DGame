@@ -13,6 +13,16 @@ void Player::Init()
 {
 	CharaBase::Init();
 	StateInit();
+
+	m_pDebugWire = std::make_unique<KdDebugWireFrame>();
+
+	m_mRotation = Math::Matrix::CreateFromYawPitchRoll
+	(
+		DirectX::XMConvertToRadians(m_degree.y), // Y軸回転
+		DirectX::XMConvertToRadians(m_degree.x), // X軸回転
+		DirectX::XMConvertToRadians(m_degree.z)  // Z軸回転
+	);
+
 }
 
 void Player::PreUpdate()
@@ -27,7 +37,7 @@ void Player::PreUpdate()
 
 	//手のワークノードを取得して、カタナのワールド変換を設定
 	{
-		SceneManager::GetInstance().GetObjectWeakPtr(m_katana);
+		SceneManager::Instance().GetObjectWeakPtr(m_katana);
 
 		if (m_katana.expired()) return;
 
@@ -42,7 +52,7 @@ void Player::PreUpdate()
 
 void Player::Update()
 {
-	SceneManager::GetInstance().GetObjectWeakPtr(m_playerCamera);
+	SceneManager::Instance().GetObjectWeakPtr(m_playerCamera);
 
 	if (m_playerCamera.expired()) return;
 
@@ -79,6 +89,11 @@ void Player::JsonSave(nlohmann::json& _json) const
 	_json["GravitySpeed"] = m_gravitySpeed;
 	_json["fixedFps"] = m_fixedFrameRate;
 	_json["moveSpeed"] = m_moveSpeed;
+}
+
+void Player::DrawDebug()
+{
+	m_pDebugWire->Draw();
 }
 
 void Player::StateInit()

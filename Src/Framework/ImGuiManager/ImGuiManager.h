@@ -119,6 +119,7 @@ private:
 	std::weak_ptr<TPSCamera> m_tpsCamera;
 	std::weak_ptr<FPSCamera> m_fpsCamera;
 
+	// FPSカメラのウィークポインタを取得する。
 	std::shared_ptr<KdCamera> GetActiveCamera();
 
 	// 開きたいオブジェクトを記録する変数

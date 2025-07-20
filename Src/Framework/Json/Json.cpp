@@ -5,7 +5,7 @@
 
 void JsonManager::JsonToObj() const
 {
-	auto name = SceneManager::GetInstance().GetCurrentScene()->GetSceneName();
+	auto name = SceneManager::Instance().GetCurrentScene()->GetSceneName();
 	nlohmann::json json = JsonDeserialize("Json/" + name);
 
 	for (auto& it : json)
@@ -20,20 +20,20 @@ void JsonManager::AllSave() const
 	// jsonの配列の生成
 	nlohmann::json json = nlohmann::json::array();
 	
-	for (auto& it : SceneManager::GetInstance().GetObjList())
+	for (auto& it : SceneManager::Instance().GetObjList())
 	{
 		nlohmann::json jsonObj;
 		it->JsonSave(jsonObj);
 		json.push_back(jsonObj);
 	}
-	for (auto& camera : SceneManager::GetInstance().GetCurrentScene()->GetCameraObjList())
+	for (auto& camera : SceneManager::Instance().GetCurrentScene()->GetCameraObjList())
 	{
 		nlohmann::json jsonObj;
 		camera->JsonSave(jsonObj);
 		json.push_back(jsonObj);
 	}
 
-	std::string nowScene = SceneManager::GetInstance().GetCurrentScene()->GetSceneName();
+	std::string nowScene = SceneManager::Instance().GetCurrentScene()->GetSceneName();
 
 	JsonSerialize(json, "Json/" + nowScene);
 }
@@ -60,7 +60,7 @@ std::shared_ptr<KdGameObject> JsonManager::AddJsonObject(const std::string& _cla
 			// もしカメラだったら、シーンに追加しない
 			if (_className == "class FPSCamera")
 			{
-				SceneManager::GetInstance().GetCurrentScene()->AddCameraObject(obj);
+				SceneManager::Instance().GetCurrentScene()->AddCameraObject(obj);
 
 				KdDebugGUI::Instance().AddLog(U8("FPSCameraを追加しました"));
 			}
@@ -68,7 +68,7 @@ std::shared_ptr<KdGameObject> JsonManager::AddJsonObject(const std::string& _cla
 			{
 				count++; // デバッグ用のカウントアップ
 
-				SceneManager::GetInstance().AddObject(obj); // シーンに追加
+				SceneManager::Instance().AddObject(obj); // シーンに追加
 				KdDebugGUI::Instance().AddLog(U8("Jsonからオブジェクトを追加しました : %d \n"), count);
 			}
 

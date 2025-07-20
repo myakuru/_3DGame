@@ -60,7 +60,7 @@ void Application::KdPostUpdate()
 // ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// /////
 void Application::PreUpdate()
 {
-	SceneManager::GetInstance().PreUpdate();
+	SceneManager::Instance().PreUpdate();
 }
 
 // ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// /////
@@ -68,7 +68,7 @@ void Application::PreUpdate()
 // ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// /////
 void Application::Update()
 {
-	SceneManager::GetInstance().Update();
+	SceneManager::Instance().Update();
 }
 
 // ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// /////
@@ -76,7 +76,7 @@ void Application::Update()
 // ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// /////
 void Application::PostUpdate()
 {
-	SceneManager::GetInstance().PostUpdate();
+	SceneManager::Instance().PostUpdate();
 }
 
 // ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// /////
@@ -109,7 +109,7 @@ void Application::KdPostDraw()
 // ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// /////
 void Application::PreDraw()
 {
-	SceneManager::GetInstance().PreDraw();
+	SceneManager::Instance().PreDraw();
 }
 
 // ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// /////
@@ -117,7 +117,7 @@ void Application::PreDraw()
 // ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// /////
 void Application::Draw()
 {
-	SceneManager::GetInstance().Draw();
+	SceneManager::Instance().Draw();
 }
 
 // ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// /////
@@ -129,7 +129,7 @@ void Application::PostDraw()
 	KdShaderManager::Instance().m_postProcessShader.PostEffectProcess();
 
 	// 現在のシーンのデバッグ描画
-	SceneManager::GetInstance().DrawDebug();
+	SceneManager::Instance().DrawDebug();
 }
 
 // ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// /////
@@ -137,7 +137,7 @@ void Application::PostDraw()
 // ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// /////
 void Application::DrawSprite()
 {
-	SceneManager::GetInstance().DrawSprite();
+	SceneManager::Instance().DrawSprite();
 }
 
 // ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// /////
@@ -207,7 +207,7 @@ bool Application::Init(int w, int h)
 	// ==================================================================
 	// シーンの初期化
 	// ==================================================================
-	SceneManager::GetInstance().Init();
+	SceneManager::Instance().Init();
 	//===================================================================
 	// JsonManager初期化
 	//===================================================================

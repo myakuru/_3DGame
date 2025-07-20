@@ -30,8 +30,8 @@ public :
 	}
 
 	// 現在のシーンのオブジェクトリストを取得
-	const std::list<std::shared_ptr<KdGameObject>>& GetObjList();
-	const std::list<std::shared_ptr<KdGameObject>>& GetCameraList();
+	std::list<std::shared_ptr<KdGameObject>>& GetObjList();
+	std::list<std::shared_ptr<KdGameObject>>& GetCameraList();
 
 	// 現在のシーンにオブジェクトを追加
 	void AddObject(const std::shared_ptr<KdGameObject>& _obj);
@@ -74,7 +74,7 @@ public :
 	template<typename T>
 	std::shared_ptr<T> FindCameraObj()
 	{
-		uint32_t typeId = T::GenerateTypeID();
+		uint32_t typeId = T::TypeID;
 		for (auto& cameraObj : GetCameraList())
 		{
 			if (cameraObj->GetTypeID() == typeId)
@@ -128,7 +128,7 @@ public:
 	// 常に存在する && 必ず1つしか存在しない(1つしか存在出来ない)
 	// どこからでもアクセスが可能で便利だが
 	// 何でもかんでもシングルトンという思考はNG
-	static SceneManager& GetInstance()
+	static SceneManager& Instance()
 	{
 		static SceneManager instance;
 		return instance;

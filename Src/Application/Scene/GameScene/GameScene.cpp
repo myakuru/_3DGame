@@ -5,7 +5,7 @@ void GameScene::Event()
 {
 	if (GetAsyncKeyState('T') & 0x8000)
 	{
-		SceneManager::GetInstance().SetNextScene
+		SceneManager::Instance().SetNextScene
 		(
 			SceneManager::SceneType::Title
 		);

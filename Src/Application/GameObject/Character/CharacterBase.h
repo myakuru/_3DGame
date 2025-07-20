@@ -14,7 +14,7 @@ public:
 	/// </summary>
 	/// <param name="_move">新しい移動ベクトル。</param>
 	void SetIsMoving(Math::Vector3 _move) { m_movement = _move; }
-	Math::Vector3 &GetMovement() { return m_movement; }
+	const Math::Vector3 &GetMovement() { return m_movement; }
 	Math::Matrix& GetRotationMatrix() { return m_mRotation; }
 
 	/// <summary>
@@ -24,7 +24,11 @@ public:
 	std::shared_ptr<KdAnimator> GetAnimator() const { return m_animator; }
 	bool& AnimeSetFlg() { return IsAnimeSet; }
 
-	void UpdateRotation(const Math::Vector3& _movevVector);
+	/// <summary>
+	/// ムーブベクトルに基づいてクォータニオンを更新
+	/// </summary>
+	/// <param name="_moveVector">クォータニオンの更新に使用するVector3の移動ベクトル。</param>
+	void UpdateQuaternion(Math::Vector3& _moveVector);
 
 	std::shared_ptr<PlayerCamera> GetPlayerCamera() const { return m_playerCamera.lock(); }
 
@@ -35,7 +39,6 @@ protected:
 	/// </summary>
 	void Init() override;
 	void DrawToon() override;
-	void DrawLit() override;
 	void Update() override;
 	void PreUpdate() override;
 	bool ModelLoad(std::string _path) override;
@@ -47,8 +50,6 @@ protected:
 	/// <summary>
 	/// ステート関係の関数
 	/// </summary>
-	void StateInit() {};
-	void ChangeState(std::shared_ptr<PlayerStateBase> _state) {};
 	StateManager m_stateManager;
 
 	/// <summary>
@@ -68,6 +69,8 @@ protected:
 
 	// 行列関係
 	Math::Matrix m_mRotation = Math::Matrix::Identity;
+
+	Math::Quaternion m_rotation = Math::Quaternion::Identity; // 回転用クォータニオン
 
 	/// <summary>
 	/// 移動関係

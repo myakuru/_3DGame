@@ -21,8 +21,8 @@ void KdGameObject::DrawDebug()
 {
 	// 早期リターン
 	if (!m_pDebugWire)return;
-
 	m_pDebugWire->Draw();
+
 }
 
 void KdGameObject::SetScale(float scalar)

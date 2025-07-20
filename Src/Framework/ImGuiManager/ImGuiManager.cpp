@@ -79,7 +79,7 @@ if (ImGui::BeginChild("Objects"))
 {
     ImGui::Separator();
     // オブジェクトリストからオブジェクトを取得し、ツリーで表示
-    for (auto& obj : SceneManager::GetInstance().GetObjList())
+    for (auto& obj : SceneManager::Instance().GetObjList())
     {
         const auto& objectName = *obj;
 
@@ -115,7 +115,7 @@ if (ImGui::BeginChild("Objects"))
         // ここからツリー形式で詳細情報を表示
         if (TreeNode) //className + "##" + std::to_string((int)obj.get()) <=こういう書き方もあるよ
         {
-            ImGui::SameLine(100);
+            ImGui::SameLine(120);
 
 			// クリックされたらこのノードを開く
 			if (ImGui::IsItemClicked())
@@ -136,7 +136,7 @@ if (ImGui::BeginChild("Objects"))
 		ImGui::PopID();
     }
 
-	for (auto& obj : SceneManager::GetInstance().GetCurrentScene()->GetCameraObjList())
+	for (auto& obj : SceneManager::Instance().GetCurrentScene()->GetCameraObjList())
 	{
 		const auto& objectName = *obj;
 
@@ -249,7 +249,7 @@ void ImGuiManager::ImGuiSelectObject()
 		rayInfo.m_type = KdCollider::TypeEvent;
 
 		std::list<KdCollider::CollisionResult> results;
-		for (const auto& it : SceneManager::GetInstance().GetObjList())
+		for (const auto& it : SceneManager::Instance().GetObjList())
 		{
 			// 当たったオブジェクトの自身のポインタが返り値になる
 			it->SelectObjectIntersects(rayInfo, &results);
@@ -270,7 +270,7 @@ void ImGuiManager::ImGuiSelectObject()
 		// 当たったオブジェクトがある場合
 		if (resultObject.m_resultObject)
 		{
-			SceneManager::GetInstance().m_selectObject = resultObject.m_resultObject;
+			SceneManager::Instance().m_selectObject = resultObject.m_resultObject;
 			m_openObject = resultObject.m_resultObject;	// 選択したオブジェクトを保存
 		}
 	}
@@ -282,7 +282,7 @@ void ImGuiManager::ShowInspector()
 	if (ImGui::Begin("Inspector"))
 	{
 		//選択されたオブジェクト
-		auto selectPbject = SceneManager::GetInstance().m_selectObject;
+		auto selectPbject = SceneManager::Instance().m_selectObject;
 		// 開きたいオブジェクト
 		auto openObject = m_openObject;
 
@@ -301,9 +301,9 @@ void ImGuiManager::ShowInspector()
 void ImGuiManager::ShowGameScene()
 {
 	if (ImGui::Begin("Game"))
-	if (!SceneManager::GetInstance().GetCurrentScene()) return; // シーンが存在しない場合は何もしない
+	if (!SceneManager::Instance().GetCurrentScene()) return; // シーンが存在しない場合は何もしない
 
-	auto texID = (ImTextureID)(SceneManager::GetInstance().GetCurrentScene()->GetRenderTargetPack().m_RTTexture->WorkSRView());
+	auto texID = (ImTextureID)(SceneManager::Instance().GetCurrentScene()->GetRenderTargetPack().m_RTTexture->WorkSRView());
 	
 	std::array<std::string, 3> screenSizes = { "640x360", "1280x720", "1920x1080" };
 	static std::string name = "640x360"; // デフォルトの画面サイズ
@@ -358,7 +358,7 @@ void ImGuiManager::InGuiSceneSelect() const
 	};
 
 	// こいつと比較して、シーンが異なるかどうかを確認する
-	std::string nowSceneName = SceneManager::GetInstance().GetCurrentScene()->GetSceneName();
+	std::string nowSceneName = SceneManager::Instance().GetCurrentScene()->GetSceneName();
 
 	// シーンを選択するボタンを作成
 	for (const auto& [key,value]: sceneType)
@@ -366,7 +366,7 @@ void ImGuiManager::InGuiSceneSelect() const
 		// ボタンと現在のシーン名が異なる場合のみ、シーンを切り替える
 		if (ImGui::Button(key.data()) && nowSceneName != key.data())
 		{
-			SceneManager::GetInstance().SetNextScene(value);
+			SceneManager::Instance().SetNextScene(value);
 		}
 	}
 }
@@ -374,19 +374,19 @@ void ImGuiManager::InGuiSceneSelect() const
 void ImGuiManager::ImGuiSelecetCamera()
 {
 	
-	if (!SceneManager::GetInstance().m_sceneCamera)
+	if (!SceneManager::Instance().m_sceneCamera)
 	{
-		if (ImGui::Button(U8("スタート", ImVec2(150, 20)))) SceneManager::GetInstance().m_sceneCamera = true;
+		if (ImGui::Button(U8("スタート", ImVec2(150, 20)))) SceneManager::Instance().m_sceneCamera = true;
 	}
 	else
 	{
-		if (ImGui::Button(U8("ストップ", ImVec2(150, 20)))) SceneManager::GetInstance().m_sceneCamera = false;
+		if (ImGui::Button(U8("ストップ", ImVec2(150, 20)))) SceneManager::Instance().m_sceneCamera = false;
 	}
 }
 
 void ImGuiManager::listSwap(std::shared_ptr<KdGameObject> _obj1, std::shared_ptr<KdGameObject> _obj2)
 {
-	auto& _list = SceneManager::GetInstance().GetCurrentScene()->WorkObjList();
+	auto& _list = SceneManager::Instance().GetCurrentScene()->WorkObjList();
 
 	auto it1 = std::find(_list.begin(), _list.end(), _obj1);
 	if (it1 == _list.end())return;
@@ -398,17 +398,10 @@ void ImGuiManager::listSwap(std::shared_ptr<KdGameObject> _obj1, std::shared_ptr
 
 std::shared_ptr<KdCamera> ImGuiManager::GetActiveCamera()
 {
-
-	if (!SceneManager::GetInstance().m_sceneCamera)
+	if (SceneManager::Instance().m_sceneCamera)
 	{
-		SceneManager::GetInstance().GetObjectWeakPtr(m_tpsCamera);
-		if (!m_tpsCamera.expired()) return m_tpsCamera.lock()->GetCamera();
-	}
-	else
-	{
-		SceneManager::GetInstance().GetCameraWeakPtr(m_fpsCamera);
+		SceneManager::Instance().GetCameraWeakPtr(m_fpsCamera);
 		if (!m_fpsCamera.expired()) return m_fpsCamera.lock()->GetCamera();
 	}
-
 	return nullptr;
 }

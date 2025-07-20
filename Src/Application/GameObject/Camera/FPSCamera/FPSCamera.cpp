@@ -16,7 +16,7 @@ void FPSCamera::Init()
 
 void FPSCamera::CameraUpdate()
 {
-	if (!SceneManager::GetInstance().m_sceneCamera) return;
+	if (!SceneManager::Instance().m_sceneCamera) return;
 	{
 		// カメラの回転
 		UpdateRotateByMouse();

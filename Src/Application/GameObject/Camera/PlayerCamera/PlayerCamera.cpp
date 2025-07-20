@@ -18,12 +18,12 @@ void PlayerCamera::Init()
 
 void PlayerCamera::PostUpdate()
 {
-	if (SceneManager::GetInstance().m_sceneCamera) return;
+	if (SceneManager::Instance().m_sceneCamera) return;
 
 	// ターゲットの行列(有効な場合利用する)
 	Math::Matrix	_targetMat = Math::Matrix::Identity;
 	
-	SceneManager::GetInstance().GetObjectWeakPtr(m_Player);
+	SceneManager::Instance().GetObjectWeakPtr(m_Player);
 	auto _spTarget = m_Player.lock();
 
 	if (_spTarget)
@@ -34,7 +34,6 @@ void PlayerCamera::PostUpdate()
 	// カメラの回転
 	UpdateRotateByMouse();
 	m_mRotation = GetRotationMatrix();
-	UpdateMoveKey();
 	m_mWorld = m_mLocalPos * m_mRotation * _targetMat;
 
 	// ↓めり込み防止の為の座標補正計算↓

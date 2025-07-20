@@ -30,7 +30,7 @@ void BaseScene::PreUpdate()
 
 void BaseScene::Update()
 {
-	if (!SceneManager::GetInstance().m_sceneCamera)
+	if (!SceneManager::Instance().m_sceneCamera)
 	{
 		// シーン毎のイベント処理
 		Event();
@@ -45,7 +45,7 @@ void BaseScene::Update()
 
 void BaseScene::PostUpdate()
 {
-	if (!SceneManager::GetInstance().m_sceneCamera)
+	if (!SceneManager::Instance().m_sceneCamera)
 	{
 		for (auto& obj : m_objList)
 		{
@@ -68,7 +68,7 @@ void BaseScene::PreDraw()
 		obj->PreDraw();
 	}
 
-	if (SceneManager::GetInstance().m_sceneCamera)
+	if (SceneManager::Instance().m_sceneCamera)
 	{
 		for (auto& cameraObj : m_CameraObjList)
 		{

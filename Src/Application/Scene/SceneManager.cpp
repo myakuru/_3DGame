@@ -80,12 +80,12 @@ void SceneManager::DrawDebug()
 	m_currentScene->DrawDebug();
 }
 
-const std::list<std::shared_ptr<KdGameObject>>& SceneManager::GetObjList()
+std::list<std::shared_ptr<KdGameObject>>& SceneManager::GetObjList()
 {
 	return m_currentScene->GetObjList();
 }
 
-const std::list<std::shared_ptr<KdGameObject>>& SceneManager::GetCameraList()
+std::list<std::shared_ptr<KdGameObject>>& SceneManager::GetCameraList()
 {
 	return m_currentScene->GetCameraObjList();
 }

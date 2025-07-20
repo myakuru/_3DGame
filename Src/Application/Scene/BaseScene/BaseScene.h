@@ -17,7 +17,7 @@ public :
 	void DrawDebug();
 
 	// オブジェクトリストを取得
-	const std::list<std::shared_ptr<KdGameObject>>& GetObjList()
+	std::list<std::shared_ptr<KdGameObject>>& GetObjList()
 	{
 		return m_objList;
 	}
@@ -39,7 +39,7 @@ public :
 		m_CameraObjList.push_back(_obj);
 	}
 	// カメラオブジェクトリストを取得
-	const std::list<std::shared_ptr<KdGameObject>>& GetCameraObjList()
+	std::list<std::shared_ptr<KdGameObject>>& GetCameraObjList()
 	{
 		return m_CameraObjList;
 	}
