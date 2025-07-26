@@ -68,9 +68,17 @@ public:
 	// アニメーションの更新
 	void AdvanceTime(std::vector<KdModelWork::Node>& rNodes, float speed = 1.0f);
 
+	void AnimationBlend(const std::shared_ptr<KdAnimationData>& nextAnim, float duration);
+
 private:
 
 	std::shared_ptr<KdAnimationData>	m_spAnimation = nullptr;	// 再生するアニメーションデータ
+
+	std::shared_ptr<KdAnimationData> m_spNextAnimation = nullptr;	// 次に再生するアニメーションデータ
+
+	float m_blendTime = 0.0f;      // 補間経過時間
+	float m_blendDuration = 0.0f;  // 補間全体時間
+	bool m_isBlending = false;
 
 	float m_time = 0.0f;
 

@@ -6,7 +6,7 @@
 void PlayerState_Run::StateStart()
 {
 	auto anime = m_player->GetAnimeModel()->GetAnimation("Run");
-	m_player->GetAnimator()->SetAnimation(anime);
+	m_player->GetAnimator()->AnimationBlend(anime, 100.0f); // 0.3秒かけて補間
 	m_player->AnimeSetFlg() = true;
 }
 
