@@ -20,6 +20,25 @@
       "z": 0.0
     },
     "scale": {
+      "x": 15.0,
+      "y": 15.0,
+      "z": 15.0
+    }
+  },
+  {
+    "Name": "class PlayerCamera",
+    "deg": {
+      "x": 15.45004940032959,
+      "y": -2106.611328125,
+      "z": 0.0
+    },
+    "path": "Asset/Models/Sky/Sky.gltf",
+    "pos": {
+      "x": 18.592540740966797,
+      "y": -15.656250953674316,
+      "z": 33.94562530517578
+    },
+    "scale": {
       "x": 1.0,
       "y": 1.0,
       "z": 1.0
@@ -30,21 +49,21 @@
     "Name": "class Player",
     "deg": {
       "x": 0.0,
-      "y": -146.25006103515625,
+      "y": 0.0,
       "z": 0.0
     },
     "fixedFps": 60.0,
-    "moveSpeed": 0.05000000074505806,
-    "path": "Asset\\Models\\Player\\Run.gltf",
+    "moveSpeed": 0.5,
+    "path": "Asset\\Models\\Player\\Player.gltf",
     "pos": {
-      "x": -2.6983916759490967,
+      "x": -4.897805690765381,
       "y": 0.0,
-      "z": 0.07488593459129333
+      "z": -9.977962493896484
     },
     "scale": {
-      "x": 1.0,
-      "y": 1.0,
-      "z": 1.0
+      "x": 0.6000000238418579,
+      "y": 0.6000000238418579,
+      "z": 0.6000000238418579
     }
   },
   {
@@ -62,11 +81,11 @@
       "GenerateDepthMapFromLight": false
     },
     "katanaOffset": {
-      "x": -0.49000000953674316,
-      "y": -0.06499999761581421,
-      "z": 0.7200000286102295
+      "x": -0.4300000071525574,
+      "y": 0.2750000059604645,
+      "z": 1.059999942779541
     },
-    "path": "Asset\\Models\\Player\\katana.gltf",
+    "path": "Asset\\Models\\Sword\\scene.gltf",
     "pos": {
       "x": 0.0,
       "y": 0.0,
@@ -78,23 +97,368 @@
       "z": 1.0
     },
     "weaponDeg": {
-      "x": 189.5,
-      "y": 104.0,
-      "z": 94.5
+      "x": 77.19999694824219,
+      "y": 17.200000762939453,
+      "z": -95.0
     }
   },
   {
-    "Name": "class PlayerCamera",
+    "Name": "class Map",
     "deg": {
-      "x": 23.099977493286133,
-      "y": 134.2440185546875,
+      "x": 0.0,
+      "y": 7.0,
       "z": 0.0
     },
-    "path": "Asset/Models/Sky/Sky.gltf",
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawLit": false,
+      "DrawToon": true,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "path": "Asset\\3DAssets\\Building2\\Building2.gltf",
     "pos": {
-      "x": 18.592540740966797,
-      "y": -15.656250953674316,
-      "z": 33.94562530517578
+      "x": 44.88999938964844,
+      "y": 0.0,
+      "z": 12.710000038146973
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    }
+  },
+  {
+    "Name": "class Map",
+    "deg": {
+      "x": 0.0,
+      "y": 7.0,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawLit": false,
+      "DrawToon": true,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "path": "Asset\\3DAssets\\SushiBuilding\\SushiBuilding.gltf",
+    "pos": {
+      "x": -3.5399999618530273,
+      "y": 0.0,
+      "z": -10.5600004196167
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    }
+  },
+  {
+    "Name": "class Map",
+    "deg": {
+      "x": 0.0,
+      "y": 21.0,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawLit": false,
+      "DrawToon": true,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "path": "Asset\\3DAssets\\Railway\\Railway.gltf",
+    "pos": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 29.540000915527344
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    }
+  },
+  {
+    "Name": "class Map",
+    "deg": {
+      "x": 0.0,
+      "y": 166.0,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawLit": false,
+      "DrawToon": true,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "path": "Asset\\3DAssets\\RailwaySupports\\RailwaySupports.gltf",
+    "pos": {
+      "x": 13.5600004196167,
+      "y": 0.0,
+      "z": 48.58000183105469
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    }
+  },
+  {
+    "Name": "class Map",
+    "deg": {
+      "x": 0.0,
+      "y": -9.0,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawLit": false,
+      "DrawToon": true,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "path": "Asset\\3DAssets\\RailwaySupports\\RailwaySupports.gltf",
+    "pos": {
+      "x": 33.25,
+      "y": 0.0,
+      "z": 26.8799991607666
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    }
+  },
+  {
+    "Name": "class Map",
+    "deg": {
+      "x": 0.0,
+      "y": 194.0,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawLit": false,
+      "DrawToon": true,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "path": "Asset\\3DAssets\\Sidewalk_Corner_60\\Sidewalk_Corner_60.gltf",
+    "pos": {
+      "x": -5.929999828338623,
+      "y": 0.0,
+      "z": -8.630000114440918
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    }
+  },
+  {
+    "Name": "class Map",
+    "deg": {
+      "x": 0.0,
+      "y": 9.0,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawLit": false,
+      "DrawToon": true,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "path": "Asset\\3DAssets\\Gate\\Gate.gltf",
+    "pos": {
+      "x": 16.860000610351563,
+      "y": 0.12999999523162842,
+      "z": 0.9900000095367432
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    }
+  },
+  {
+    "Name": "class Map",
+    "deg": {
+      "x": 0.0,
+      "y": 7.0,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawLit": false,
+      "DrawToon": true,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "path": "Asset\\3DAssets\\Ground\\Graund.gltf",
+    "pos": {
+      "x": -109.0,
+      "y": 0.0,
+      "z": 42.900001525878906
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    }
+  },
+  {
+    "Name": "class Map",
+    "deg": {
+      "x": 0.0,
+      "y": 7.0,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawLit": false,
+      "DrawToon": true,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "path": "Asset\\3DAssets\\SideWalks\\SideWalks.gltf",
+    "pos": {
+      "x": -109.0,
+      "y": 0.0,
+      "z": 42.79999923706055
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    }
+  },
+  {
+    "Name": "class Map",
+    "deg": {
+      "x": 180.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawLit": false,
+      "DrawToon": true,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": true
+    },
+    "path": "Asset\\3DAssets\\Road\\Road.gltf",
+    "pos": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    }
+  },
+  {
+    "Name": "class Map",
+    "deg": {
+      "x": 0.0,
+      "y": 7.5,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawLit": false,
+      "DrawToon": true,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "path": "Asset\\3DAssets\\RoadBarrier\\RoadBarrier.gltf",
+    "pos": {
+      "x": 17.670000076293945,
+      "y": 0.7300000190734863,
+      "z": -11.59000015258789
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    }
+  },
+  {
+    "Name": "class Map",
+    "deg": {
+      "x": 0.0,
+      "y": 8.0,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawLit": false,
+      "DrawToon": true,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "path": "Asset\\3DAssets\\StreetMark\\StreetMark.gltf",
+    "pos": {
+      "x": -2.990000009536743,
+      "y": -0.10000000149011612,
+      "z": -23.290000915527344
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    }
+  },
+  {
+    "Name": "class Map",
+    "deg": {
+      "x": 0.0,
+      "y": 6.900000095367432,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawLit": true,
+      "DrawToon": true,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": true
+    },
+    "path": "Asset\\3DAssets\\StreetMarkings\\StreetMarking.gltf",
+    "pos": {
+      "x": -109.0,
+      "y": -0.10000000149011612,
+      "z": 42.70000076293945
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    }
+  },
+  {
+    "Name": "class Map",
+    "deg": {
+      "x": 0.0,
+      "y": -34.0,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawLit": false,
+      "DrawToon": true,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "path": "Asset\\3DAssets\\Building1\\Building1.gltf",
+    "pos": {
+      "x": 33.560001373291016,
+      "y": 0.30000001192092896,
+      "z": 23.700000762939453
     },
     "scale": {
       "x": 1.0,
@@ -116,11 +480,1051 @@
       "DrawUnLit": false,
       "GenerateDepthMapFromLight": false
     },
-    "path": "Asset\\Models\\Map\\Arcade\\Arcade.gltf",
+    "path": "Asset\\3DAssets\\Cone\\Cone.gltf",
     "pos": {
-      "x": -2.5,
-      "y": 2.299999952316284,
+      "x": 9.119999885559082,
+      "y": 0.0,
+      "z": -1.7200000286102295
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    }
+  },
+  {
+    "Name": "class Map",
+    "deg": {
+      "x": 0.0,
+      "y": 0.0,
       "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawLit": false,
+      "DrawToon": true,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "path": "Asset\\3DAssets\\Cone\\Cone.gltf",
+    "pos": {
+      "x": 10.130000114440918,
+      "y": 0.0,
+      "z": -3.3399999141693115
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    }
+  },
+  {
+    "Name": "class Map",
+    "deg": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawLit": false,
+      "DrawToon": true,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "path": "Asset\\3DAssets\\Cone\\Cone.gltf",
+    "pos": {
+      "x": 11.119999885559082,
+      "y": 0.0,
+      "z": -4.909999847412109
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    }
+  },
+  {
+    "Name": "class Map",
+    "deg": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawLit": false,
+      "DrawToon": true,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "path": "Asset\\3DAssets\\Sakura\\Sakura.gltf",
+    "pos": {
+      "x": 23.93000030517578,
+      "y": 0.28999999165534973,
+      "z": -6.699999809265137
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    }
+  },
+  {
+    "Name": "class Map",
+    "deg": {
+      "x": 0.0,
+      "y": -5.0,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawLit": false,
+      "DrawToon": true,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "path": "Asset\\3DAssets\\Monorail\\Monorail.gltf",
+    "pos": {
+      "x": 27.739999771118164,
+      "y": 14.479999542236328,
+      "z": 34.13999938964844
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    }
+  },
+  {
+    "Name": "class Map",
+    "deg": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawLit": false,
+      "DrawToon": true,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "path": "Asset\\3DAssets\\StreetDiner\\StreetDiner.gltf",
+    "pos": {
+      "x": 10.329999923706055,
+      "y": 0.0,
+      "z": 6.900000095367432
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    }
+  },
+  {
+    "Name": "class Map",
+    "deg": {
+      "x": 0.0,
+      "y": 8.0,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawLit": false,
+      "DrawToon": true,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "path": "Asset\\3DAssets\\Untiteled\\Untitteled.gltf",
+    "pos": {
+      "x": 17.040000915527344,
+      "y": -0.23000000417232513,
+      "z": 20.0
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    }
+  },
+  {
+    "Name": "class Map",
+    "deg": {
+      "x": 0.0,
+      "y": -33.0,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawLit": false,
+      "DrawToon": true,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "path": "Asset\\3DAssets\\StreetLamp\\StreetLamp.gltf",
+    "pos": {
+      "x": 19.1200008392334,
+      "y": 0.0,
+      "z": 6.489999771118164
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    }
+  },
+  {
+    "Name": "class Map",
+    "deg": {
+      "x": 0.0,
+      "y": -30.0,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawLit": false,
+      "DrawToon": true,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "path": "Asset\\3DAssets\\StreetLamp\\StreetLamp.gltf",
+    "pos": {
+      "x": 27.809999465942383,
+      "y": 0.0,
+      "z": 12.15999984741211
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    }
+  },
+  {
+    "Name": "class Map",
+    "deg": {
+      "x": 0.0,
+      "y": 150.0,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawLit": false,
+      "DrawToon": true,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "path": "Asset\\3DAssets\\StreetLamp\\StreetLamp.gltf",
+    "pos": {
+      "x": 22.90999984741211,
+      "y": 0.0,
+      "z": 0.9599999785423279
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    }
+  },
+  {
+    "Name": "class Map",
+    "deg": {
+      "x": 0.0,
+      "y": 149.0,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawLit": false,
+      "DrawToon": true,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "path": "Asset\\3DAssets\\StreetLamp\\StreetLamp.gltf",
+    "pos": {
+      "x": 31.469999313354492,
+      "y": 0.0,
+      "z": 6.480000019073486
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    }
+  },
+  {
+    "Name": "class Map",
+    "deg": {
+      "x": 0.0,
+      "y": -35.0,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawLit": false,
+      "DrawToon": true,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "path": "Asset\\3DAssets\\StreetLamp\\StreetLamp.gltf",
+    "pos": {
+      "x": 36.400001525878906,
+      "y": 0.0,
+      "z": 17.68000030517578
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    }
+  },
+  {
+    "Name": "class Map",
+    "deg": {
+      "x": 0.0,
+      "y": 149.0,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawLit": false,
+      "DrawToon": true,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "path": "Asset\\3DAssets\\StreetLamp\\StreetLamp.gltf",
+    "pos": {
+      "x": 40.220001220703125,
+      "y": 0.0,
+      "z": 12.020000457763672
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    }
+  },
+  {
+    "Name": "class Map",
+    "deg": {
+      "x": 0.0,
+      "y": 6.0,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawLit": false,
+      "DrawToon": true,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "path": "Asset\\3DAssets\\CarWhite\\carWhite.gltf",
+    "pos": {
+      "x": 2.7699999809265137,
+      "y": 0.14000000059604645,
+      "z": 9.9399995803833
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    }
+  },
+  {
+    "Name": "class Map",
+    "deg": {
+      "x": 0.0,
+      "y": 7.0,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawLit": false,
+      "DrawToon": true,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "path": "Asset\\3DAssets\\New Folder\\Building3.gltf",
+    "pos": {
+      "x": 25.799999237060547,
+      "y": 0.0,
+      "z": 48.34000015258789
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    }
+  },
+  {
+    "Name": "class Map",
+    "deg": {
+      "x": 0.0,
+      "y": 9.0,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawLit": false,
+      "DrawToon": true,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "path": "Asset\\3DAssets\\Stairs\\Stairs.gltf",
+    "pos": {
+      "x": 36.41999816894531,
+      "y": 0.0,
+      "z": -20.079999923706055
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    }
+  },
+  {
+    "Name": "class Map",
+    "deg": {
+      "x": 0.0,
+      "y": 7.0,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawLit": false,
+      "DrawToon": true,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "path": "Asset\\3DAssets\\Building4\\Building4.gltf",
+    "pos": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": -49.08000183105469
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    }
+  },
+  {
+    "Name": "class Map",
+    "deg": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawLit": false,
+      "DrawToon": true,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "path": "Asset\\3DAssets\\Tower\\Tower.gltf",
+    "pos": {
+      "x": 483.989990234375,
+      "y": -2.0,
+      "z": -91.22000122070313
+    },
+    "scale": {
+      "x": 2.0,
+      "y": 2.0,
+      "z": 2.0
+    }
+  },
+  {
+    "Name": "class Map",
+    "deg": {
+      "x": 0.0,
+      "y": 187.0,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawLit": false,
+      "DrawToon": true,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "path": "Asset\\3DAssets\\Building5\\Building5.gltf",
+    "pos": {
+      "x": -28.700000762939453,
+      "y": 0.0,
+      "z": -55.939998626708984
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    }
+  },
+  {
+    "Name": "class Map",
+    "deg": {
+      "x": 0.0,
+      "y": 7.0,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawLit": false,
+      "DrawToon": true,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "path": "Asset\\3DAssets\\Building6\\Building6.gltf",
+    "pos": {
+      "x": -61.63999938964844,
+      "y": 0.0,
+      "z": -55.56999969482422
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    }
+  },
+  {
+    "Name": "class Map",
+    "deg": {
+      "x": 0.0,
+      "y": 187.0,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawLit": false,
+      "DrawToon": true,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "path": "Asset\\3DAssets\\Building6\\Building6.gltf",
+    "pos": {
+      "x": -82.94999694824219,
+      "y": 0.0,
+      "z": -50.150001525878906
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    }
+  },
+  {
+    "Name": "class Map",
+    "deg": {
+      "x": 0.0,
+      "y": 8.0,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawLit": false,
+      "DrawToon": true,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "path": "Asset\\3DAssets\\Wall\\Wall.gltf",
+    "pos": {
+      "x": -96.44000244140625,
+      "y": 0.0,
+      "z": -11.5600004196167
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    }
+  },
+  {
+    "Name": "class Map",
+    "deg": {
+      "x": 0.0,
+      "y": 187.0,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawLit": false,
+      "DrawToon": true,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "path": "Asset\\3DAssets\\Buildong7\\Building7.gltf",
+    "pos": {
+      "x": -69.80999755859375,
+      "y": 0.0,
+      "z": 22.530000686645508
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    }
+  },
+  {
+    "Name": "class Map",
+    "deg": {
+      "x": 0.0,
+      "y": 97.0,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawLit": false,
+      "DrawToon": true,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "path": "Asset\\3DAssets\\Building6\\Building6.gltf",
+    "pos": {
+      "x": -23.309999465942383,
+      "y": 0.0,
+      "z": 89.19000244140625
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    }
+  },
+  {
+    "Name": "class Map",
+    "deg": {
+      "x": 0.0,
+      "y": 7.0,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawLit": false,
+      "DrawToon": true,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "path": "Asset\\3DAssets\\Building8\\B8.gltf",
+    "pos": {
+      "x": 51.29999923706055,
+      "y": 0.0,
+      "z": 108.05000305175781
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    }
+  },
+  {
+    "Name": "class Map",
+    "deg": {
+      "x": 0.0,
+      "y": 12.0,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawLit": false,
+      "DrawToon": true,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "path": "Asset\\3DAssets\\B9\\B9.gltf",
+    "pos": {
+      "x": 313.07000732421875,
+      "y": -2.25,
+      "z": 227.52999877929688
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    }
+  },
+  {
+    "Name": "class Map",
+    "deg": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawLit": false,
+      "DrawToon": true,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "path": "Asset\\3DAssets\\B10\\B10.gltf",
+    "pos": {
+      "x": 0.8700000047683716,
+      "y": 0.7400000095367432,
+      "z": 189.11000061035156
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    }
+  },
+  {
+    "Name": "class Map",
+    "deg": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawLit": false,
+      "DrawToon": true,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "path": "Asset\\3DAssets\\Building6\\Building6.gltf",
+    "pos": {
+      "x": 348.8900146484375,
+      "y": -1.409999966621399,
+      "z": -27.84000015258789
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    }
+  },
+  {
+    "Name": "class Map",
+    "deg": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawLit": true,
+      "DrawToon": false,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "path": "Asset\\3DAssets\\Building6\\Building6.gltf",
+    "pos": {
+      "x": 348.8900146484375,
+      "y": -1.409999966621399,
+      "z": -27.84000015258789
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    }
+  },
+  {
+    "Name": "class Map",
+    "deg": {
+      "x": 0.0,
+      "y": 24.0,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawLit": true,
+      "DrawToon": false,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "path": "Asset\\3DAssets\\B11\\B11.gltf",
+    "pos": {
+      "x": 236.74000549316406,
+      "y": 0.0,
+      "z": 56.20000076293945
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    }
+  },
+  {
+    "Name": "class Map",
+    "deg": {
+      "x": 0.0,
+      "y": 188.0,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawLit": true,
+      "DrawToon": false,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "path": "Asset\\3DAssets\\Building6\\Building6.gltf",
+    "pos": {
+      "x": 270.30999755859375,
+      "y": -2.9800000190734863,
+      "z": 4.179999828338623
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    }
+  },
+  {
+    "Name": "class Map",
+    "deg": {
+      "x": 0.0,
+      "y": 88.0,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawLit": true,
+      "DrawToon": false,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "path": "Asset\\3DAssets\\B12\\B12.gltf",
+    "pos": {
+      "x": 163.42999267578125,
+      "y": -0.46000000834465027,
+      "z": 184.2100067138672
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    }
+  },
+  {
+    "Name": "class Map",
+    "deg": {
+      "x": 0.0,
+      "y": 6.0,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawLit": true,
+      "DrawToon": false,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "path": "Asset\\3DAssets\\New Folder\\Building3.gltf",
+    "pos": {
+      "x": 144.75,
+      "y": 0.0,
+      "z": 62.86000061035156
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    }
+  },
+  {
+    "Name": "class Map",
+    "deg": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawLit": true,
+      "DrawToon": false,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "path": "Asset\\3DAssets\\B10\\B10.gltf",
+    "pos": {
+      "x": 317.55999755859375,
+      "y": -1.840000033378601,
+      "z": -124.19999694824219
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    }
+  },
+  {
+    "Name": "class Map",
+    "deg": {
+      "x": 0.0,
+      "y": 7.0,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawLit": true,
+      "DrawToon": false,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": true
+    },
+    "path": "Asset\\3DAssets\\B13\\B13.gltf",
+    "pos": {
+      "x": 49.88999938964844,
+      "y": 2.4000000953674316,
+      "z": -43.810001373291016
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    }
+  },
+  {
+    "Name": "class Map",
+    "deg": {
+      "x": 0.0,
+      "y": 10.0,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawLit": true,
+      "DrawToon": false,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "path": "Asset\\3DAssets\\B14\\B14.gltf",
+    "pos": {
+      "x": 159.6999969482422,
+      "y": 0.0,
+      "z": -29.270000457763672
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    }
+  },
+  {
+    "Name": "class Map",
+    "deg": {
+      "x": 0.0,
+      "y": 8.0,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawLit": true,
+      "DrawToon": false,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "path": "Asset\\3DAssets\\SushiBuilding\\SushiBuilding.gltf",
+    "pos": {
+      "x": 119.18000030517578,
+      "y": 0.0,
+      "z": -26.84000015258789
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    }
+  },
+  {
+    "Name": "class Map",
+    "deg": {
+      "x": 0.0,
+      "y": 8.0,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawLit": true,
+      "DrawToon": false,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": true
+    },
+    "path": "Asset\\3DAssets\\Tunnel\\Tunnel.gltf",
+    "pos": {
+      "x": 74.02999877929688,
+      "y": 0.0,
+      "z": 43.29999923706055
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    }
+  },
+  {
+    "Name": "class Map",
+    "deg": {
+      "x": 0.0,
+      "y": 7.0,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawLit": true,
+      "DrawToon": false,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": true
+    },
+    "path": "Asset\\3DAssets\\Tunnel\\Tunnel.gltf",
+    "pos": {
+      "x": 6.610000133514404,
+      "y": 0.0,
+      "z": 53.619998931884766
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    }
+  },
+  {
+    "Name": "class Map",
+    "deg": {
+      "x": 0.0,
+      "y": 7.0,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawLit": true,
+      "DrawToon": false,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": true
+    },
+    "path": "Asset\\3DAssets\\B13\\B13.gltf",
+    "pos": {
+      "x": -32.349998474121094,
+      "y": 0.0,
+      "z": 3.990000009536743
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    }
+  },
+  {
+    "Name": "class Map",
+    "deg": {
+      "x": 0.0,
+      "y": 7.0,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawLit": true,
+      "DrawToon": false,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": true
+    },
+    "path": "Asset\\3DAssets\\B14\\B14.gltf",
+    "pos": {
+      "x": -29.489999771118164,
+      "y": -6.369999885559082,
+      "z": 22.5
     },
     "scale": {
       "x": 1.0,
@@ -131,16 +1535,16 @@
   {
     "Name": "class FPSCamera",
     "deg": {
-      "x": 4.94999361038208,
-      "y": 149.10006713867188,
+      "x": 5.84989070892334,
+      "y": -13.199812889099121,
       "z": 0.0
     },
     "moveSpeed": 50.0,
     "path": "Asset/Models/Sky/Sky.gltf",
     "pos": {
-      "x": -11.484336853027344,
-      "y": 2.5583648681640625,
-      "z": -4.398155689239502
+      "x": 31.10772132873535,
+      "y": 2.731304168701172,
+      "z": 16.048559188842773
     },
     "scale": {
       "x": 1.0,

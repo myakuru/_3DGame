@@ -16,14 +16,15 @@ Texture2D g_environmentTex : register(t12);
 SamplerState g_ss : register(s0);
 SamplerComparisonState g_ssCmp : register(s1);
 
-// 段階数（例: 3段階）
-static const int ToonSteps = 3;
-static const float3 ToonRamp[ToonSteps] =
+// ToonRamp（よりシンプルに）
+static const float3 ToonRamp[2] =
 {
-	float3(0.2, 0.2, 0.3), // 影色
-    float3(0.7, 0.7, 0.9), // 中間色
-    float3(1.0, 1.0, 1.0) // 明色
+	float3(0.22, 0.24, 0.32), // 影色（青みグレー）
+    float3(1.0, 0.98, 0.95) // 明色（やや暖色）
 };
+
+// 影の閾値
+static const float shadowThreshold = 0.55;
 
 float4 main(VSOutput In) : SV_Target0
 {
@@ -44,29 +45,22 @@ float4 main(VSOutput In) : SV_Target0
 	float NdotL = dot(wN, lightDir);
 	NdotL = saturate(NdotL);
 
-    // 段階化（セルルック）
-	int stepIdx = (int) floor(NdotL * ToonSteps);
-	stepIdx = clamp(stepIdx, 0, ToonSteps - 1);
+    // 段階化（2段階でセルルック）
+	float3 toonColor;
+	if (NdotL < shadowThreshold)
+		toonColor = baseColor.rgb * ToonRamp[0];
+	else
+		toonColor = baseColor.rgb * ToonRamp[1];
 
-	float3 toonColor = baseColor.rgb * ToonRamp[stepIdx];
-
-    // --- セルルックスペキュラー（ハイライト） ---
-	float3 viewDir = normalize(g_CamPos - In.wPos);
-	float3 halfDir = normalize(lightDir + viewDir);
-	float NdotH = dot(wN, halfDir);
-	NdotH = saturate(NdotH);
-
-    // ハイライトを段階化
-	float highlight = step(1.0, NdotH); // 0.95以上でハイライト
-	toonColor += highlight * float3(1.0, 1.0, 0.8); // 黄色っぽいハイライト
-
-    // 環境光加算
-	toonColor += g_AmbientLight.rgb * baseColor.rgb * baseColor.a;
+    // 環境光加算（控えめに）
+	toonColor += g_AmbientLight.rgb * baseColor.rgb * baseColor.a * 1.0;
 
     // --- 輪郭線（エッジ）検出 ---
+	float3 viewDir = normalize(g_CamPos - In.wPos);
 	float edge = dot(wN, viewDir);
-	float edgeFactor = smoothstep(0.0, 0.2, abs(edge)); // 0.2未満でエッジ
-	float3 edgeColor = float3(0, 0, 0);
+	float edgeWidth = 0.3;
+	float edgeFactor = smoothstep(0.0, edgeWidth, abs(edge));
+	float3 edgeColor = float3(0.05, 0.05, 0.08);
 	toonColor = lerp(edgeColor, toonColor, edgeFactor);
 
     // 出力

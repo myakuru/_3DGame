@@ -83,7 +83,7 @@ protected:
 	void UpdateMoveKey();
 
 	std::shared_ptr<KdCamera>					m_spCamera		= nullptr;
-	std::weak_ptr<Player>					m_Player;
+	std::weak_ptr<Player>						m_Player;
 	std::vector<std::weak_ptr<KdGameObject>>	m_wpHitObjectList{};
 
 	Math::Matrix								m_mLocalPos		= Math::Matrix::Identity;

@@ -30,9 +30,9 @@ void CharaBase::UpdateQuaternion(Math::Vector3& _moveVector)
 
 void CharaBase::Init()
 {
+	KdGameObject::Init();
 	ModelLoad(m_path);
-	m_animator->SetAnimation(m_modelWork->GetData()->GetAnimation(1));
-
+	m_animator->SetAnimation(m_modelWork->GetData()->GetAnimation("Idle"));
 	//m_trailPolygon.SetMaterial("Asset/Textures/System/WhiteNoise.png");
 }
 

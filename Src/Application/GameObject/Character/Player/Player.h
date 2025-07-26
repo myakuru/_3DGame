@@ -26,7 +26,7 @@ public:
 private:
 
 	std::weak_ptr<Katana>	m_katana;
-
+	
 	// 腰のノード情報取得用変数
 	const struct KdModelWork::Node* backWorkNode = nullptr;
 	const struct KdModelWork::Node* handWorkNode = nullptr;
