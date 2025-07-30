@@ -39,6 +39,7 @@ protected:
 	/// </summary>
 	void Init() override;
 	void DrawToon() override;
+	void DrawLit() override;
 	void Update() override;
 	void PreUpdate() override;
 	bool ModelLoad(std::string _path) override;

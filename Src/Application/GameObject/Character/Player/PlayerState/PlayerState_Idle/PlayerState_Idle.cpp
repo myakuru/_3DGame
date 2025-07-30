@@ -7,7 +7,7 @@
 void PlayerState_Idle::StateStart()
 {
 	auto anime = m_player->GetAnimeModel()->GetAnimation("Idle");
-	m_player->GetAnimator()->AnimationBlend(anime, 100.0f); // 0.3秒かけて補間
+	m_player->GetAnimator()->AnimationBlend(anime, 1.0f);
 	m_player->AnimeSetFlg() = true;
 }
 

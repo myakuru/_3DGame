@@ -145,6 +145,9 @@
     <Filter Include="Src\Application\GameObject\Camera\PlayerCamera">
       <UniqueIdentifier>{e3d2c73d-a38e-455a-9646-97e7d4a449cb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_Attack">
+      <UniqueIdentifier>{3b166324-03ae-4787-8c16-39e458eadddf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -354,9 +357,6 @@
     <ClInclude Include="Src\Application\GameObject\Utility\SelectDraw2DTexture.h">
       <Filter>Src\Application\GameObject\Utility</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Application\GameObject\Camera\CameraManager.h">
-      <Filter>Src\Application\GameObject\Camera</Filter>
-    </ClInclude>
     <ClInclude Include="Src\MyFramework\Manager\KeyboardManager.h">
       <Filter>Src\MyFramework\Manager</Filter>
     </ClInclude>
@@ -392,6 +392,9 @@
     </ClInclude>
     <ClInclude Include="Src\Application\GameObject\Camera\PlayerCamera\PlayerCamera.h">
       <Filter>Src\Application\GameObject\Camera\PlayerCamera</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_Attack\PlayerState_Attack.h">
+      <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_Attack</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -554,9 +557,6 @@
     <ClCompile Include="Src\Framework\Utility\KdDebugWireFrame.cpp">
       <Filter>Src\Framework\Utility</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Application\GameObject\Camera\CameraManager.cpp">
-      <Filter>Src\Application\GameObject\Camera</Filter>
-    </ClCompile>
     <ClCompile Include="Src\Application\GameObject\Character\Player\Player.cpp">
       <Filter>Src\Application\GameObject\Character\Player</Filter>
     </ClCompile>
@@ -586,6 +586,9 @@
     </ClCompile>
     <ClCompile Include="Src\Application\GameObject\HUD\NormalUI\NormalUI.cpp">
       <Filter>Src\Application\GameObject\HUD\NormalUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_Attack\PlayerState_Attack.cpp">
+      <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_Attack</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

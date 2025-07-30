@@ -98,6 +98,7 @@ void KdGameObject::JsonInput(const nlohmann::json& _json)
 	if (_json.contains("pos")) m_position = JSON_MANAGER.JsonToVector(_json["pos"]);
 	if (_json.contains("scale")) m_scale = JSON_MANAGER.JsonToVector(_json["scale"]);
 	if (_json.contains("deg")) m_degree = JSON_MANAGER.JsonToVector(_json["deg"]);
+	if (_json.contains("color")) m_color = JSON_MANAGER.JsonToVector4(_json["color"]);
 }
 
 void KdGameObject::JsonSave(nlohmann::json& _json) const
@@ -109,6 +110,7 @@ void KdGameObject::JsonSave(nlohmann::json& _json) const
 	_json["pos"] = JSON_MANAGER.VectorToJson(m_position);
 	_json["scale"] = JSON_MANAGER.VectorToJson(m_scale);
 	_json["deg"] = JSON_MANAGER.VectorToJson(m_degree);
+	_json["color"] = JSON_MANAGER.Vector4ToJson(m_color);
 }
 
 bool KdGameObject::ModelLoad(std::string _path)

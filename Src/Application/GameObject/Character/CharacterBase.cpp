@@ -42,6 +42,11 @@ void CharaBase::DrawToon()
 	//KdShaderManager::Instance().m_StandardShader.DrawPolygon(m_trailPolygon);
 }
 
+void CharaBase::DrawLit()
+{
+	//KdShaderManager::Instance().m_StandardShader.DrawModel(*m_modelWork, m_mWorld, m_color);
+}
+
 void CharaBase::Update()
 {
 	KdGameObject::Update();

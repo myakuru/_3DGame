@@ -16,15 +16,15 @@ Texture2D g_environmentTex : register(t12);
 SamplerState g_ss : register(s0);
 SamplerComparisonState g_ssCmp : register(s1);
 
-// ToonRamp（よりシンプルに）
+// ToonRamp
 static const float3 ToonRamp[2] =
 {
-	float3(0.22, 0.24, 0.32), // 影色（青みグレー）
-    float3(1.0, 0.98, 0.95) // 明色（やや暖色）
+	float3(0.8, 0.8, 0.8), // 影色
+    float3(0.8, 0.8, 0.8) // 明色
 };
 
 // 影の閾値
-static const float shadowThreshold = 0.55;
+static const float shadowThreshold = 0.05;
 
 float4 main(VSOutput In) : SV_Target0
 {
@@ -58,7 +58,7 @@ float4 main(VSOutput In) : SV_Target0
     // --- 輪郭線（エッジ）検出 ---
 	float3 viewDir = normalize(g_CamPos - In.wPos);
 	float edge = dot(wN, viewDir);
-	float edgeWidth = 0.3;
+	float edgeWidth = 0.2;
 	float edgeFactor = smoothstep(0.0, edgeWidth, abs(edge));
 	float3 edgeColor = float3(0.05, 0.05, 0.08);
 	toonColor = lerp(edgeColor, toonColor, edgeFactor);

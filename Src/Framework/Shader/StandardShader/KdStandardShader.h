@@ -9,7 +9,7 @@ class KdStandardShader
 public:
 
 	// スキンメッシュ対応
-	static const int maxBoneBufferSize = 300;
+	static const int maxBoneBufferSize = 500;
 
 	// 定数バッファ(オブジェクト単位更新)
 	struct cbObject
@@ -55,7 +55,7 @@ public:
 
 	// 定数バッファ(ボーン単位更新：スキンメッシュ対応)
 	struct cbBone {
-		Math::Matrix	mBones[300];
+		Math::Matrix	mBones[500];
 	};
 
 	//================================================

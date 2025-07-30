@@ -3,16 +3,13 @@
 #include"../../../../MyFramework/Manager/KeyboardManager.h"
 #include"../../../Scene/SceneManager.h"
 #include"../../Character/Player/Player.h"
+#include"../../../../Framework/Json/Json.h"
 
 const uint32_t PlayerCamera::TypeID = KdGameObject::GenerateTypeID();
 
 void PlayerCamera::Init()
 {
 	CameraBase::Init();
-
-	// 注視点
-	m_mLocalPos = Math::Matrix::CreateTranslation(0, 1.5f, -5.0f);
-
 	SetCursorPos(m_FixMousePos.x, m_FixMousePos.y);
 }
 
@@ -30,6 +27,9 @@ void PlayerCamera::PostUpdate()
 	{
 		_targetMat = Math::Matrix::CreateTranslation(_spTarget->GetPos());
 	}
+
+	// カメラの位置をターゲットの位置に設定
+	m_mLocalPos = Math::Matrix::CreateTranslation(m_targetLookAt.x, m_targetLookAt.y, m_targetLookAt.z);
 
 	// カメラの回転
 	UpdateRotateByMouse();
@@ -98,14 +98,19 @@ void PlayerCamera::PostUpdate()
 void PlayerCamera::ImGuiInspector()
 {
 	KdGameObject::ImGuiInspector();
+
+	ImGui::Text(U8("プレイヤーとカメラの距離"));
+	ImGui::DragFloat3("offsetPos", &m_targetLookAt.x, 0.1f);
 }
 
 void PlayerCamera::JsonSave(nlohmann::json& _json) const
 {
 	KdGameObject::JsonSave(_json);
+	_json["targetLookAt"] = JSON_MANAGER.VectorToJson(m_targetLookAt);
 }
 
 void PlayerCamera::JsonInput(const nlohmann::json& _json)
 {
 	KdGameObject::JsonInput(_json);
+	m_targetLookAt = JSON_MANAGER.JsonToVector(_json["targetLookAt"]);
 }
