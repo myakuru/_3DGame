@@ -1,26 +1,17 @@
-﻿#include "PlayerState_Attack.h"
-#include"../../../../../main.h"
-#include"../PlayerState_Attack1/PlayerState_Attack1.h"
+﻿#include "PlayerState_Attack2.h"
 #include"../PlayerState_Idle/PlayerState_Idle.h"
 #include"../PlayerState_Run/PlayerState_Run.h"
 
-void PlayerState_Attack::StateStart()
+void PlayerState_Attack2::StateStart()
 {
-	auto anime = m_player->GetAnimeModel()->GetAnimation("Attack0");
+	auto anime = m_player->GetAnimeModel()->GetAnimation("Attack2");
 	m_player->GetAnimator()->AnimationBlend(anime, 10.0f, false);
 	m_player->AnimeSetFlg() = true;
 }
 
-void PlayerState_Attack::StateUpdate()
+void PlayerState_Attack2::StateUpdate()
 {
 	m_player->SetAnimeSpeed(120.0f);
-
-	if (KeyboardManager::GetInstance().IsKeyJustPressed(VK_LBUTTON))
-	{
-		auto attack1state = std::make_shared<PlayerState_Attack1>();
-		m_player->ChangeState(attack1state);
-		return;
-	}
 
 	if (m_player->GetAnimator()->IsAnimationEnd())
 	{
@@ -35,11 +26,9 @@ void PlayerState_Attack::StateUpdate()
 		return;
 	}
 
-
 	m_player->SetIsMoving(Math::Vector3::Zero);
-
 }
 
-void PlayerState_Attack::StateEnd()
+void PlayerState_Attack2::StateEnd()
 {
 }

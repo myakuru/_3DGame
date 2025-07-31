@@ -112,5 +112,5 @@ void PlayerCamera::JsonSave(nlohmann::json& _json) const
 void PlayerCamera::JsonInput(const nlohmann::json& _json)
 {
 	KdGameObject::JsonInput(_json);
-	m_targetLookAt = JSON_MANAGER.JsonToVector(_json["targetLookAt"]);
+	if(_json.contains("targetLookAt")) m_targetLookAt = JSON_MANAGER.JsonToVector(_json["targetLookAt"]);
 }

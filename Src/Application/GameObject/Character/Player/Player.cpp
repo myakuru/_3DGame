@@ -50,6 +50,10 @@ void Player::PreUpdate()
 	}
 }
 
+void Player::SkirtUpdate()
+{
+}
+
 void Player::Update()
 {
 	SceneManager::Instance().GetObjectWeakPtr(m_playerCamera);
@@ -57,6 +61,11 @@ void Player::Update()
 	if (m_playerCamera.expired()) return;
 
 	CharaBase::Update();
+
+	// 最終的なワールド行列計算
+	m_mWorld = Math::Matrix::CreateScale(m_scale);
+	m_mWorld *= Math::Matrix::CreateFromQuaternion(m_rotation);
+	m_mWorld.Translation(m_position);
 }
 
 void Player::DrawToon()

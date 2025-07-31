@@ -14,8 +14,9 @@ public:
 	/// </summary>
 	/// <param name="_move">新しい移動ベクトル。</param>
 	void SetIsMoving(Math::Vector3 _move) { m_movement = _move; }
-	const Math::Vector3 &GetMovement() { return m_movement; }
+	const Math::Vector3 &GetMovement() const { return m_movement; }
 	Math::Matrix& GetRotationMatrix() { return m_mRotation; }
+	const bool & GetMoving() const { return m_isMoving; }
 
 	/// <summary>
 	/// ステートで変更するアニメーションモデルを取得する関数
@@ -23,6 +24,7 @@ public:
 	std::shared_ptr<KdModelWork> GetAnimeModel() const { return m_modelWork; }
 	std::shared_ptr<KdAnimator> GetAnimator() const { return m_animator; }
 	bool& AnimeSetFlg() { return IsAnimeSet; }
+	void SetAnimeSpeed(float speed) { m_fixedFrameRate = speed; }
 
 	/// <summary>
 	/// ムーブベクトルに基づいてクォータニオンを更新
@@ -78,6 +80,7 @@ protected:
 	/// </summary>
 	Math::Vector3 m_movement = Math::Vector3::Zero;
 	float m_moveSpeed = 0.0f; // 移動速度
+	bool m_isMoving = false; // 移動中かどうか
 
 	// カメラへの参照
 	std::weak_ptr<PlayerCamera> m_playerCamera;

@@ -6,12 +6,14 @@
 void PlayerState_Run::StateStart()
 {
 	auto anime = m_player->GetAnimeModel()->GetAnimation("Run");
-	m_player->GetAnimator()->AnimationBlend(anime, 1.0f); // 0.3秒かけて補間
+	m_player->GetAnimator()->AnimationBlend(anime, 10.0f);
 	m_player->AnimeSetFlg() = true;
 }
 
 void PlayerState_Run::StateUpdate()
 {
+	m_player->SetAnimeSpeed(60.0f);
+
 	Math::Vector3 m_moveDirection = m_player->GetMovement();
 
 	m_moveDirection = Math::Vector3::Zero;

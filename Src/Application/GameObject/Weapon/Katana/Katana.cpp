@@ -46,6 +46,7 @@ void Katana::JsonSave(nlohmann::json& _json) const
 	WeaponBase::JsonSave(_json);
 	_json["weaponDeg"] = JSON_MANAGER.VectorToJson(m_swordData.m_weaponDeg);
 	_json["katanaOffset"] = JSON_MANAGER.VectorToJson(m_katanaOffset);
+	_json["scale"] = JSON_MANAGER.VectorToJson(m_swordData.m_scale);
 }
 
 void Katana::JsonInput(const nlohmann::json& _json)
@@ -53,4 +54,5 @@ void Katana::JsonInput(const nlohmann::json& _json)
 	WeaponBase::JsonInput(_json);
 	if (_json.contains("weaponDeg")) m_swordData.m_weaponDeg = JSON_MANAGER.JsonToVector(_json["weaponDeg"]);
 	if (_json.contains("katanaOffset")) m_katanaOffset = JSON_MANAGER.JsonToVector(_json["katanaOffset"]);
+	if (_json.contains("scale")) m_swordData.m_scale = JSON_MANAGER.JsonToVector(_json["scale"]);
 }

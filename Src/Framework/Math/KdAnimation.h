@@ -68,7 +68,7 @@ public:
 	// アニメーションの更新
 	void AdvanceTime(std::vector<KdModelWork::Node>& rNodes, float speed = 1.0f);
 
-	void AnimationBlend(const std::shared_ptr<KdAnimationData>& nextAnim, float duration);
+	void AnimationBlend(const std::shared_ptr<KdAnimationData>& nextAnim, float duration, bool nextIsLoop = true);
 
 private:
 
@@ -83,4 +83,5 @@ private:
 	float m_time = 0.0f;
 
 	bool m_isLoop = false;
+	bool m_nextIsLoop = false;
 };

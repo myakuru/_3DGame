@@ -55,6 +55,8 @@ void CharaBase::Update()
 
 	m_animator->AdvanceTime(m_modelWork->WorkNodes(), m_fixedFrameRate * deltaTime);
 
+	m_isMoving = m_movement.LengthSquared() > 0;
+
 	// 移動関係
 	m_gravity += m_gravitySpeed * deltaTime;
 

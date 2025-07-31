@@ -12,6 +12,7 @@ public:
 
 	void Init() override;
 	void PreUpdate() override;
+	void SkirtUpdate();
 	void Update() override;
 	void DrawToon() override;
 	void ImGuiInspector() override;
@@ -30,5 +31,8 @@ private:
 	// 腰のノード情報取得用変数
 	const struct KdModelWork::Node* backWorkNode = nullptr;
 	const struct KdModelWork::Node* handWorkNode = nullptr;
+	struct KdModelWork::Node* skirtWorkNode = nullptr;
+
+	Math::Matrix m_skirtMatrix = Math::Matrix::Identity;
 
 };

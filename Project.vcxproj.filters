@@ -148,6 +148,12 @@
     <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_Attack">
       <UniqueIdentifier>{3b166324-03ae-4787-8c16-39e458eadddf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_Attack1">
+      <UniqueIdentifier>{325f0f44-f5f5-496c-b6f8-37cd8589507f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_Attack2">
+      <UniqueIdentifier>{9d332d6f-b02f-4a7a-a761-c9fcb3b741ab}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -396,6 +402,12 @@
     <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_Attack\PlayerState_Attack.h">
       <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_Attack</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_Attack1\PlayerState_Attack1.h">
+      <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_Attack1</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_Attack2\PlayerState_Attack2.h">
+      <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_Attack2</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -589,6 +601,12 @@
     </ClCompile>
     <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_Attack\PlayerState_Attack.cpp">
       <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_Attack1\PlayerState_Attack1.cpp">
+      <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_Attack1</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_Attack2\PlayerState_Attack2.cpp">
+      <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_Attack2</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

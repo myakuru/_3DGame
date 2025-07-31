@@ -206,6 +206,7 @@ void KdAnimator::AdvanceTime(std::vector<KdModelWork::Node>& rNodes, float speed
 			m_time = 0.0f;
 			m_isBlending = false;
 			m_spNextAnimation = nullptr;
+			m_isLoop = m_nextIsLoop;
 		}
 		return;
 	}
@@ -232,10 +233,11 @@ void KdAnimator::AdvanceTime(std::vector<KdModelWork::Node>& rNodes, float speed
 	}
 }
 
-void KdAnimator::AnimationBlend(const std::shared_ptr<KdAnimationData>& nextAnim, float duration)
+void KdAnimator::AnimationBlend(const std::shared_ptr<KdAnimationData>& nextAnim, float duration, bool nextIsLoop)
 {
 	m_spNextAnimation = nextAnim;
 	m_blendTime = 0.0f;
 	m_blendDuration = duration;
 	m_isBlending = true;
+	m_nextIsLoop = nextIsLoop;
 }
