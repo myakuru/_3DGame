@@ -32,7 +32,7 @@ void Player::PreUpdate()
 
 	// 手のワークノードを取得
 	//handWorkNode = m_modelWork->FindWorkNode("ring_01_r");
-	backWorkNode = m_modelWork->FindWorkNode("spine_01");
+	backWorkNode = m_modelWork->FindWorkNode("Hips");
 	if (!backWorkNode) return;
 
 	//手のワークノードを取得して、カタナのワールド変換を設定

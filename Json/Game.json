@@ -40,8 +40,8 @@
       "z": 1.0
     },
     "deg": {
-      "x": 4.499994277954102,
-      "y": -1344.763671875,
+      "x": 12.600034713745117,
+      "y": -2087.41650390625,
       "z": 0.0
     },
     "path": "Asset/Models/Sky/Sky.gltf",
@@ -58,7 +58,7 @@
     "targetLookAt": {
       "x": 0.0,
       "y": 1.0,
-      "z": -0.699999988079071
+      "z": -2.0
     }
   },
   {
@@ -1836,17 +1836,59 @@
       "z": 0.0
     },
     "fixedFps": 60.0,
-    "moveSpeed": 0.5,
+    "moveSpeed": 0.0,
     "path": "Asset\\Models\\Player\\Perula\\Perula.gltf",
     "pos": {
-      "x": -25.961166381835938,
+      "x": -15.353318214416504,
       "y": 0.0,
-      "z": -10.203462600708008
+      "z": -13.380264282226563
     },
     "scale": {
       "x": 1.0,
       "y": 1.0,
       "z": 1.0
+    }
+  },
+  {
+    "Name": "class Katana",
+    "color": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "deg": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawLit": false,
+      "DrawToon": false,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "katanaOffset": {
+      "x": -0.23000000417232513,
+      "y": 0.0949999988079071,
+      "z": 0.23999999463558197
+    },
+    "path": "Asset\\Models\\Sword\\scene.gltf",
+    "pos": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "scale": {
+      "x": 0.5,
+      "y": 0.5,
+      "z": 0.5
+    },
+    "weaponDeg": {
+      "x": 2.700000047683716,
+      "y": 2.799999952316284,
+      "z": 267.5
     }
   },
   {

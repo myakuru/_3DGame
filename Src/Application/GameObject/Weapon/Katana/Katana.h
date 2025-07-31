@@ -20,5 +20,5 @@ private:
 	void JsonSave(nlohmann::json& _json) const override;
 	void JsonInput(const nlohmann::json& _json) override;
 
-	Math::Vector3 m_katanaOffset{ 0.25f, 0.025f, -0.220f };
+	Math::Vector3 m_katanaOffset = Math::Vector3::Zero;
 };
