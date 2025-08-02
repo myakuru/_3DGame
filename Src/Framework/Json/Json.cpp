@@ -62,7 +62,13 @@ std::shared_ptr<KdGameObject> JsonManager::AddJsonObject(const std::string& _cla
 			{
 				SceneManager::Instance().GetCurrentScene()->AddCameraObject(obj);
 
-				KdDebugGUI::Instance().AddLog(U8("FPSCameraを追加しました"));
+				KdDebugGUI::Instance().AddLog(U8("FPSCameraを追加しました\n"));
+			}
+			else if (_className == "class Map")
+			{
+				SceneManager::Instance().GetCurrentScene()->AddMapObject(obj);
+				count++;
+				KdDebugGUI::Instance().AddLog(U8("マップオブジェクトを追加しました : %d\n"), count);
 			}
 			else
 			{

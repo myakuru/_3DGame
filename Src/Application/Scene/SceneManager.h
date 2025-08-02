@@ -32,6 +32,7 @@ public :
 	// 現在のシーンのオブジェクトリストを取得
 	std::list<std::shared_ptr<KdGameObject>>& GetObjList();
 	std::list<std::shared_ptr<KdGameObject>>& GetCameraList();
+	std::list<std::shared_ptr<KdGameObject>>& GetMapList();
 
 	// 現在のシーンにオブジェクトを追加
 	void AddObject(const std::shared_ptr<KdGameObject>& _obj);

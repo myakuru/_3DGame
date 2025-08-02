@@ -39,8 +39,6 @@ void CharaBase::Init()
 
 	ModelLoad(m_path);
 
-	m_animator->SetAnimation(m_modelWork->GetData()->GetAnimation("Idle"));
-
 	//m_trailPolygon.SetMaterial("Asset/Textures/System/WhiteNoise.png");
 }
 
@@ -103,7 +101,7 @@ void CharaBase::PostUpdate()
 	// レイに当たったオブジェクト情報を格納するリスト
 	std::list<KdCollider::CollisionResult> retRayList;
 	// 作成したレイ情報でオブジェクトリストと当たり判定をする
-	for (auto& obj : SceneManager::Instance().GetObjList())
+	for (auto& obj : SceneManager::Instance().GetMapList())
 	{
 		obj->Intersects(rayInfo, &retRayList);
 	}
@@ -153,7 +151,7 @@ void CharaBase::PostUpdate()
 	std::list<KdCollider::CollisionResult> retSpherelist;
 
 	// 球とアタリ判定を行う
-	for (auto& obj : SceneManager::Instance().GetObjList())
+	for (auto& obj : SceneManager::Instance().GetMapList())
 	{
 		obj->Intersects(sphereInfo, &retSpherelist);
 	}

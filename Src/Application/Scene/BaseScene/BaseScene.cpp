@@ -20,12 +20,33 @@ void BaseScene::PreUpdate()
 		}
 	}
 
+	auto mapIt = m_MapObjectList.begin();
+	while (mapIt != m_MapObjectList.end())
+	{
+		if ((*mapIt)->IsExpired())	// IsExpired() ・・・ 無効ならtrue
+		{
+			// 無効なオブジェクトをリストから削除
+			mapIt = m_MapObjectList.erase(mapIt);
+		}
+		else
+		{
+			++mapIt;	// 次の要素へイテレータを進める
+		}
+	}
+
 	// ↑の後には有効なオブジェクトだけのリストになっている
 
 	for (auto& obj : m_objList)
 	{
 		obj->PreUpdate();
 	}
+
+	for (auto& obj : m_MapObjectList)
+	{
+		obj->PreUpdate();
+	}
+
+
 }
 
 void BaseScene::Update()

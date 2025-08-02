@@ -2,15 +2,14 @@
 
 void Enemy::Init()
 {
-}
-
-void Enemy::PreUpdate()
-{
+	CharaBase::Init();
 }
 
 void Enemy::Update()
 {
 	CharaBase::Update();
+
+	m_animator->SetAnimation(m_modelWork->GetData()->GetAnimation("Idle"));
 
 	// 最終的なワールド行列計算
 	m_mWorld = Math::Matrix::CreateScale(m_scale);
@@ -19,18 +18,17 @@ void Enemy::Update()
 }
 
 
-void Enemy::DrawToon()
-{
-}
-
 void Enemy::ImGuiInspector()
 {
+	CharaBase::ImGuiInspector();
 }
 
 void Enemy::JsonInput(const nlohmann::json& _json)
 {
+	CharaBase::JsonInput(_json);
 }
 
 void Enemy::JsonSave(nlohmann::json& _json) const
 {
+	CharaBase::JsonSave(_json);
 }

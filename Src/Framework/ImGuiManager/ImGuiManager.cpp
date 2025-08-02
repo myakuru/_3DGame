@@ -192,86 +192,67 @@ if (ImGui::BeginChild("Objects"))
 		ImGui::Separator();
 		ImGui::PopID();
 	}
+
+	for (auto& obj : SceneManager::Instance().GetCurrentScene()->GetMapObjectList())
+	{
+		const auto& objectName = *obj;
+
+		// 1. 開いているノードだけ開く
+		if (obj == m_openObject)
+		{
+			ImGui::SetNextItemOpen(true, ImGuiCond_Always);
+		}
+		else
+		{
+			ImGui::SetNextItemOpen(false, ImGuiCond_Always);
+		}
+
+		ImGui::PushID(obj.get());
+		std::string className = typeid(objectName).name();
+
+		if (className.starts_with("class "))
+		{
+			className.erase(0, 6); // "class"の部分を削除
+		}
+
+		if (IsDroped("GameObjectInstance"))
+		{
+			std::shared_ptr<KdGameObject>* temp = nullptr;
+			GetDragData("GameObjectInstance", temp);
+			listSwap(obj, *temp);
+			ImGui::ClearDragDrop(); // 自作のドロップ処理のため自力で初期化
+		}
+
+		bool TreeNode = ImGui::TreeNode(className.data());
+		DragDropSource("GameObjectInstance", &obj);	//ゲームオブジェクトのポインターをドラック出来るようになる
+
+		// ここからツリー形式で詳細情報を表示
+		if (TreeNode) //className + "##" + std::to_string((int)obj.get()) <=こういう書き方もあるよ
+		{
+			ImGui::SameLine(270);
+
+			// クリックされたらこのノードを開く
+			if (ImGui::IsItemClicked())
+			{
+				m_openObject = obj; // 選択したオブジェクトを保存
+			}
+
+			// ボタンでオブジェクトを削除できる
+			if (ImGui::SmallButton("Delete"))
+			{
+				obj->SetExpired(true);
+			}
+
+			//ツリーの終了処理
+			ImGui::TreePop();
+		}
+
+		ImGui::Separator();
+		ImGui::PopID();
+	}
+
 	ImGui::EndChild();
 }
-}
-
-void ImGuiManager::ImGuiSelectObject()
-{
-	ImGui::Begin("Game");
-	ImVec2 imagePos = ImGui::GetCursorScreenPos();
-	ImVec2 imageSize = { m_gameSceneSize.x, m_gameSceneSize.y };
-
-	// 画面上で,click場合のみ当たり判定
-	if (ImGui::IsWindowHovered() && ImGui::IsMouseClicked(ImGuiMouseButton_Left))
-	{
-		// マウスの座標を取得
-		ImVec2 mousePos = ImGui::GetIO().MousePos;
-
-		// Image内のクリック位置を計算
-		float offsetX = mousePos.x - imagePos.x;
-		float offsetY = mousePos.y - imagePos.y;
-
-		// マウスを取得
-		POINT mouse;
-
-		if (offsetX >= 0 && offsetY >= 0 && offsetX < imageSize.x && offsetY < imageSize.y)
-		{
-			// ゲーム画面の解像度に基づいてマウス座標を合わせる
-			float gameX = offsetX * (1280.0f / imageSize.x);
-			float gameY = offsetY * (720.0f / imageSize.y);
-
-	
-			mouse.x = static_cast<LONG>(gameX);
-			mouse.y = static_cast<LONG>(gameY);
-
-			KdDebugGUI::Instance().AddLog("MousePosX:%d,MousePosY:%d \n", mouse.x, mouse.y);
-
-		}
-
-		// コライダーからレイを取得
-		KdCollider::RayInfo rayInfo;
-
-		auto spCamera = GetActiveCamera();
-
-		if (!spCamera)
-		{
-			ImGui::End();
-			return;
-		}
-
-		spCamera->GenerateRayInfoFromClientPos(mouse, rayInfo.m_pos, rayInfo.m_dir, rayInfo.m_range);
-
-		// KdColliderのレイ情報を設定
-		rayInfo.m_type = KdCollider::TypeEvent;
-
-		std::list<KdCollider::CollisionResult> results;
-		for (const auto& it : SceneManager::Instance().GetObjList())
-		{
-			// 当たったオブジェクトの自身のポインタが返り値になる
-			it->SelectObjectIntersects(rayInfo, &results);
-		}
-
-		KdCollider::CollisionResult resultObject;
-
-		float length = rayInfo.m_range;
-		for (auto& it : results)
-		{
-			if (length > (it.m_hitPos - spCamera->GetCameraMatrix().Translation()).Length())
-			{
-				resultObject = it;
-				length = (it.m_hitPos - spCamera->GetCameraMatrix().Translation()).Length();
-			}
-		}
-
-		// 当たったオブジェクトがある場合
-		if (resultObject.m_resultObject)
-		{
-			SceneManager::Instance().m_selectObject = resultObject.m_resultObject;
-			m_openObject = resultObject.m_resultObject;	// 選択したオブジェクトを保存
-		}
-	}
-	ImGui::End();
 }
 
 void ImGuiManager::ShowInspector()
@@ -347,6 +328,11 @@ void ImGuiManager::ShowGameScene()
 					rayInfo.m_type = KdCollider::TypeEvent;
 
 					std::list<KdCollider::CollisionResult> results;
+					for (const auto& it : SceneManager::Instance().GetMapList())
+					{
+						it->SelectObjectIntersects(rayInfo, &results);
+					}
+
 					for (const auto& it : SceneManager::Instance().GetObjList())
 					{
 						it->SelectObjectIntersects(rayInfo, &results);

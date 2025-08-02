@@ -15,9 +15,6 @@ public:
 
 	void TreeNode();
 
-	// ImGuiでオブジェクトを選択できるようにするための関数
-	void ImGuiSelectObject();
-
 	// インスペクターの表示のみ
 	void ShowInspector();
 

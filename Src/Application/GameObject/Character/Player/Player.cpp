@@ -12,6 +12,9 @@ const uint32_t Player::TypeID = KdGameObject::GenerateTypeID();
 void Player::Init()
 {
 	CharaBase::Init();
+
+	m_animator->SetAnimation(m_modelWork->GetData()->GetAnimation("Idle"));
+
 	StateInit();
 
 	m_pDebugWire = std::make_unique<KdDebugWireFrame>();
@@ -28,7 +31,7 @@ void Player::Init()
 void Player::PreUpdate()
 {
 	// アニメーション適用後にノード行列を再計算
-	m_modelWork->CalcNodeMatrices();
+	//m_modelWork->CalcNodeMatrices();
 
 	// 手のワークノードを取得
 	//handWorkNode = m_modelWork->FindWorkNode("ring_01_r");
