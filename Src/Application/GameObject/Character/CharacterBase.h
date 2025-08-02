@@ -2,6 +2,7 @@
 #include"../Utility/SelectDraw3dModel.h"
 #include"../../../MyFramework/State/StateManager/StateManager.h"
 class PlayerStateBase;
+class EnemyStateBase;
 class PlayerCamera;
 class CharaBase:public SelectDraw3dModel
 {

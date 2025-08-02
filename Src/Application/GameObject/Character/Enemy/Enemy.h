@@ -15,7 +15,7 @@ public:
 	void JsonSave(nlohmann::json& _json) const override;
 
 	void StateInit();
-	void ChangeState(std::shared_ptr<PlayerStateBase> _state);
+	void ChangeState(std::shared_ptr<EnemyStateBase> _state);
 
 
 

@@ -36,6 +36,7 @@ void CharaBase::UpdateQuaternion(Math::Vector3& _moveVector)
 void CharaBase::Init()
 {
 	KdGameObject::Init();
+	m_pDebugWire = std::make_unique<KdDebugWireFrame>();
 
 	ModelLoad(m_path);
 
@@ -130,6 +131,8 @@ void CharaBase::PostUpdate()
 		m_gravity = 0.0f;	// 重力をリセット
 		m_position = groundPos;
 	}
+
+	return;
 
 	//=====================================================
 	// レイ当り判定::::::::::::::::::::ここまで::::::::::::::::

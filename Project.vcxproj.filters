@@ -157,6 +157,12 @@
     <Filter Include="Src\Application\GameObject\Character\Enemy">
       <UniqueIdentifier>{1bc54b83-466c-46e1-985b-1198dd537aff}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\GameObject\Character\Enemy\EnemyState">
+      <UniqueIdentifier>{f8859f0e-6a0c-4aeb-a901-35a705ee7dbe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Character\Enemy\EnemyState\EnemyState_Idle">
+      <UniqueIdentifier>{885fb9fc-6972-4db1-99a2-7a9a428fbf36}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -414,6 +420,12 @@
     <ClInclude Include="Src\Application\GameObject\Character\Enemy\Enemy.h">
       <Filter>Src\Application\GameObject\Character\Enemy</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Character\Enemy\EnemyState\EnemyState_Idle\EnemyState_Idle.h">
+      <Filter>Src\Application\GameObject\Character\Enemy\EnemyState\EnemyState_Idle</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Character\Enemy\EnemyState\EnemyStateBase.h">
+      <Filter>Src\Application\GameObject\Character\Enemy\EnemyState</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -616,6 +628,9 @@
     </ClCompile>
     <ClCompile Include="Src\Application\GameObject\Character\Enemy\Enemy.cpp">
       <Filter>Src\Application\GameObject\Character\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Character\Enemy\EnemyState\EnemyState_Idle\EnemyState_Idle.cpp">
+      <Filter>Src\Application\GameObject\Character\Enemy\EnemyState\EnemyState_Idle</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

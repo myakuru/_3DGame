@@ -19,6 +19,7 @@
 #include"../GameObject/Character/Player/Player.h"
 #include"../GameObject/Weapon/Katana/Katana.h"
 #include"../GameObject/Camera/PlayerCamera/PlayerCamera.h"
+#include"../GameObject/Character/Enemy/Enemy.h"
 
 void SceneManager::Init()
 {
@@ -37,6 +38,7 @@ void SceneManager::Register() const
 	RegisterObject::GetInstance().Register<Map>();
 	RegisterObject::GetInstance().Register<Player>();
 	RegisterObject::GetInstance().Register<Katana>();
+	RegisterObject::GetInstance().Register<Enemy>();
 }
 
 void SceneManager::PreUpdate()

@@ -32,7 +32,12 @@ void JsonManager::AllSave() const
 		camera->JsonSave(jsonObj);
 		json.push_back(jsonObj);
 	}
-
+	for (auto& mapList : SceneManager::Instance().GetMapList())
+	{
+		nlohmann::json jsonObj;
+		mapList->JsonSave(jsonObj);
+		json.push_back(jsonObj);
+	}
 	std::string nowScene = SceneManager::Instance().GetCurrentScene()->GetSceneName();
 
 	JsonSerialize(json, "Json/" + nowScene);

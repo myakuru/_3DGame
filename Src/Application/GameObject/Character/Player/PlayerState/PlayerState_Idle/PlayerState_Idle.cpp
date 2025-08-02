@@ -37,8 +37,6 @@ void PlayerState_Idle::StateUpdate()
 		return;
 	}
 
-
-
 	// 移動量リセット
 	m_player->SetIsMoving(Math::Vector3::Zero);
 

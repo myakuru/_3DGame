@@ -41,8 +41,8 @@
       "z": 1.0
     },
     "deg": {
-      "x": 14.70002555847168,
-      "y": -2476.8408203125,
+      "x": 17.40001106262207,
+      "y": -2442.93994140625,
       "z": 0.0
     },
     "path": "Asset/Models/Sky/Sky.gltf",
@@ -62,6 +62,175 @@
       "z": -2.0
     },
     "type": 32
+  },
+  {
+    "GravitySpeed": -0.009999999776482582,
+    "Name": "class Player",
+    "color": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "deg": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawLit": false,
+      "DrawToon": true,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "fixedFps": 120.0,
+    "moveSpeed": 0.10000000149011612,
+    "path": "Asset\\Models\\Player\\Perula\\Perula.gltf",
+    "pos": {
+      "x": -2.548464059829712,
+      "y": -0.00024006349849514663,
+      "z": -10.844548225402832
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "type": 32
+  },
+  {
+    "Name": "class Katana",
+    "color": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "deg": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawLit": false,
+      "DrawToon": false,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "katanaOffset": {
+      "x": -0.23999999463558197,
+      "y": 0.07500000298023224,
+      "z": 0.2199999988079071
+    },
+    "path": "Asset\\Models\\Sword\\scene.gltf",
+    "pos": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "scale": {
+      "x": 0.5,
+      "y": 0.5,
+      "z": 0.5
+    },
+    "type": 32,
+    "weaponDeg": {
+      "x": 2.700000047683716,
+      "y": 2.799999952316284,
+      "z": 267.5
+    }
+  },
+  {
+    "Name": "class NormalUI",
+    "color": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "deg": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "drawFlags": false,
+    "path": "Asset\\Textures\\Title\\black.png",
+    "pos": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "type": 32
+  },
+  {
+    "GravitySpeed": -0.009999999776482582,
+    "Name": "class Enemy",
+    "color": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "deg": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawLit": false,
+      "DrawToon": true,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "fixedFps": 60.0,
+    "moveSpeed": 0.0,
+    "path": "Asset\\Models\\Enemy\\Enemy.gltf",
+    "pos": {
+      "x": 0.0,
+      "y": -0.00024134499835781753,
+      "z": 0.0
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "type": 32
+  },
+  {
+    "Name": "class FPSCamera",
+    "color": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "deg": {
+      "x": 25.050010681152344,
+      "y": 1828.9422607421875,
+      "z": 0.0
+    },
+    "moveSpeed": 10.0,
+    "path": "Asset/Models/Sky/Sky.gltf",
+    "pos": {
+      "x": -1.784906268119812,
+      "y": 1.3804867267608643,
+      "z": -1.50973379611969
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "type": 0
   },
   {
     "Name": "class Map",
@@ -1844,138 +2013,5 @@
       "z": 1.0
     },
     "type": 32
-  },
-  {
-    "GravitySpeed": -0.05000000074505806,
-    "Name": "class Player",
-    "color": {
-      "w": 1.0,
-      "x": 1.0,
-      "y": 1.0,
-      "z": 1.0
-    },
-    "deg": {
-      "x": 0.0,
-      "y": 0.0,
-      "z": 0.0
-    },
-    "drawFlags": {
-      "DrawBright": false,
-      "DrawLit": false,
-      "DrawToon": true,
-      "DrawUnLit": false,
-      "GenerateDepthMapFromLight": false
-    },
-    "fixedFps": 120.0,
-    "moveSpeed": 0.10000000149011612,
-    "path": "Asset\\Models\\Player\\Perula\\Perula.gltf",
-    "pos": {
-      "x": 7.34210205078125,
-      "y": 1.1473894119262695e-06,
-      "z": -9.501241683959961
-    },
-    "scale": {
-      "x": 1.0,
-      "y": 1.0,
-      "z": 1.0
-    },
-    "type": 0
-  },
-  {
-    "Name": "class Katana",
-    "color": {
-      "w": 1.0,
-      "x": 1.0,
-      "y": 1.0,
-      "z": 1.0
-    },
-    "deg": {
-      "x": 0.0,
-      "y": 0.0,
-      "z": 0.0
-    },
-    "drawFlags": {
-      "DrawBright": false,
-      "DrawLit": false,
-      "DrawToon": false,
-      "DrawUnLit": false,
-      "GenerateDepthMapFromLight": false
-    },
-    "katanaOffset": {
-      "x": -0.23999999463558197,
-      "y": 0.07500000298023224,
-      "z": 0.2199999988079071
-    },
-    "path": "Asset\\Models\\Sword\\scene.gltf",
-    "pos": {
-      "x": 0.0,
-      "y": 0.0,
-      "z": 0.0
-    },
-    "scale": {
-      "x": 0.5,
-      "y": 0.5,
-      "z": 0.5
-    },
-    "type": 32,
-    "weaponDeg": {
-      "x": 2.700000047683716,
-      "y": 2.799999952316284,
-      "z": 267.5
-    }
-  },
-  {
-    "Name": "class NormalUI",
-    "color": {
-      "w": 1.0,
-      "x": 1.0,
-      "y": 1.0,
-      "z": 1.0
-    },
-    "deg": {
-      "x": 0.0,
-      "y": 0.0,
-      "z": 0.0
-    },
-    "drawFlags": false,
-    "path": "Asset\\Textures\\Title\\black.png",
-    "pos": {
-      "x": 0.0,
-      "y": 0.0,
-      "z": 0.0
-    },
-    "scale": {
-      "x": 1.0,
-      "y": 1.0,
-      "z": 1.0
-    },
-    "type": 32
-  },
-  {
-    "Name": "class FPSCamera",
-    "color": {
-      "w": 1.0,
-      "x": 1.0,
-      "y": 1.0,
-      "z": 1.0
-    },
-    "deg": {
-      "x": 13.799979209899902,
-      "y": 1703.9925537109375,
-      "z": 0.0
-    },
-    "moveSpeed": 10.0,
-    "path": "Asset/Models/Sky/Sky.gltf",
-    "pos": {
-      "x": -4.314535140991211,
-      "y": 0.9195213317871094,
-      "z": -6.187939643859863
-    },
-    "scale": {
-      "x": 1.0,
-      "y": 1.0,
-      "z": 1.0
-    },
-    "type": 0
   }
 ]
