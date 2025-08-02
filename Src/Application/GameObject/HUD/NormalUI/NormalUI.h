@@ -8,4 +8,5 @@ public:
 
 	NormalUI();
 	~NormalUI() override = default;
+
 };

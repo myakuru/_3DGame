@@ -100,7 +100,7 @@ public :
 	}
 
 	// シーンカメラかどうか
-	bool m_sceneCamera = false;
+	bool m_sceneCamera = true;
 
 private :
 

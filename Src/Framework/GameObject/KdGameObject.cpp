@@ -99,6 +99,7 @@ void KdGameObject::JsonInput(const nlohmann::json& _json)
 	if (_json.contains("scale")) m_scale = JSON_MANAGER.JsonToVector(_json["scale"]);
 	if (_json.contains("deg")) m_degree = JSON_MANAGER.JsonToVector(_json["deg"]);
 	if (_json.contains("color")) m_color = JSON_MANAGER.JsonToVector4(_json["color"]);
+	if (_json.contains("type")) m_type = static_cast<KdCollider::Type>(_json["type"].get<int>());
 }
 
 void KdGameObject::JsonSave(nlohmann::json& _json) const
@@ -111,31 +112,19 @@ void KdGameObject::JsonSave(nlohmann::json& _json) const
 	_json["scale"] = JSON_MANAGER.VectorToJson(m_scale);
 	_json["deg"] = JSON_MANAGER.VectorToJson(m_degree);
 	_json["color"] = JSON_MANAGER.Vector4ToJson(m_color);
+	_json["type"] = static_cast<int>(m_type);
 }
 
 bool KdGameObject::ModelLoad(std::string _path)
 {
-	// .~ 以降の拡張子を識別するために部分文字列を取得
-	std::string ext = _path.substr(_path.find_last_of('.') + 1);
-
-	if (ext == "png" || ext == "PNG")
-	{
-		_path = m_path;
-		// テクスチャ読み込み
-		m_texture = KdAssets::Instance().m_textures.GetData(m_path);
-		m_polygon->SetMaterial(m_path);
-		return true;
-	}
-	else
-	{
-		// モデル読み込み
-		m_model = KdAssets::Instance().m_modeldatas.GetData(_path);
-	}
+	// モデル読み込み
+	m_model = KdAssets::Instance().m_modeldatas.GetData(_path);
+	
 
 	if (m_model)
 	{
 		m_pCollider = std::make_unique<KdCollider>();
-		m_pCollider->RegisterCollisionShape("ModelMesh", std::make_unique<KdModelCollision>(m_model, KdCollider::TypeEvent));
+		m_pCollider->RegisterCollisionShape("ModelMesh", std::make_unique<KdModelCollision>(m_model, m_type));
 		return true;
 	}
 
@@ -144,13 +133,24 @@ bool KdGameObject::ModelLoad(std::string _path)
 
 void KdGameObject::ImGuiInspector()
 {
-	// 0.1ずつのステップでドラッグできるようにする
-	ImGui::DragFloat3("pos", &m_position.x, 0.1f);
-	ImGui::DragFloat3("m_scale", &m_scale.x, 0.1f);
-	ImGui::DragFloat3("m_rot", &m_degree.x, 0.1f);
+	ImGui::Text(U8("トランスフォーム"));
+
+	static std::string currentName = "Transform";
+
+	// ImGuiのコンボボックスを作成
+	if (ImGui::BeginCombo("##TransForm", currentName.data()))// 実際のIDは「&currentName + 'Class'」
+	{
+		ImGui::DragFloat3(U8("位置"), &m_position.x, 0.1f);
+		ImGui::DragFloat3(U8("拡大、縮小"), &m_scale.x, 0.1f);
+		ImGui::DragFloat3(U8("回転"), &m_degree.x, 0.1f);
+
+		ImGui::EndCombo();
+	}
 
 	ImGui::ColorEdit4("color", &m_color.x);
 
+	SetCollider();
+	
 	ImGuiSelectGltf();
 
 
@@ -166,6 +166,8 @@ void KdGameObject::ImGuiInspector()
 
 void KdGameObject::ImGuiSelectGltf()
 {
+	ImGui::Text(U8("GLTFの読み込み"));
+
 	if (ImGui::Button(("LoadPath: %s", m_path.data())))
 	{
 		if (Application::Instance().GetWindow().OpenFileDialog(m_path))
@@ -173,4 +175,33 @@ void KdGameObject::ImGuiSelectGltf()
 			ModelLoad(m_path);
 		}
 	}
+}
+
+void KdGameObject::SetCollider()
+{
+	ImGui::Text(U8("当たり判定フラグ"));
+
+	static std::string currentName = "Collider Type";
+	// ImGuiのコンボボックスを作成
+	if (ImGui::BeginCombo("##Collider", currentName.data()))
+	{
+
+		CheckBoxBit("Ground", m_type, (UINT)KdCollider::TypeGround);
+		CheckBoxBit("Bump", m_type, (UINT)KdCollider::TypeBump);
+		CheckBoxBit("Damage", m_type, (UINT)KdCollider::TypeDamage);
+		CheckBoxBit("TypeDamageLine", m_type, (UINT)KdCollider::TypeDamageLine);
+		CheckBoxBit("TypeSight", m_type, (UINT)KdCollider::TypeSight);
+		CheckBoxBit("TypeEvent", m_type, (UINT)KdCollider::TypeEvent);
+
+		ImGui::EndCombo();
+	}
+}
+
+bool KdGameObject::CheckBoxBit(std::string _name, UINT& _ID, UINT _checkID)
+{
+	bool flg = _ID & _checkID;
+	bool change = ImGui::Checkbox(_name.c_str(), &flg);
+	if (flg) _ID |= _checkID;
+	else _ID &= (~_checkID);
+	return change;
 }

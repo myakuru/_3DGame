@@ -9,8 +9,8 @@
 
 void ImGuiManager::ImGuiUpdate()
 {
-	// ImGuiでオブジェクトをマウスで選択できるようにする
-	ImGuiSelectObject();
+	// ゲームシーンを表示
+	ShowGameScene();
 
 	// 上部のメニューバーを表示
 	MainMenuBar();
@@ -20,9 +20,6 @@ void ImGuiManager::ImGuiUpdate()
 
 	// インスペクターウィンドウを表示
 	ShowInspector();
-
-	// ゲームシーンを表示
-	ShowGameScene();
 }
 
 void ImGuiManager::Hierarchy()
@@ -301,34 +298,82 @@ void ImGuiManager::ShowInspector()
 void ImGuiManager::ShowGameScene()
 {
 	if (ImGui::Begin("Game"))
-	if (!SceneManager::Instance().GetCurrentScene()) return; // シーンが存在しない場合は何もしない
-
-	auto texID = (ImTextureID)(SceneManager::Instance().GetCurrentScene()->GetRenderTargetPack().m_RTTexture->WorkSRView());
-	
-	std::array<std::string, 3> screenSizes = { "640x360", "1280x720", "1920x1080" };
-	static std::string name = "640x360"; // デフォルトの画面サイズ
-
-	if (ImGui::BeginCombo("##画面サイズ", name.data()))
 	{
-		for (int i = 0; i < 3; i++)
+		if (!SceneManager::Instance().GetCurrentScene())
 		{
-			bool selected = (name == screenSizes[i]);
-			if (ImGui::Selectable(screenSizes[i].data(), selected))
-			{
-				name = screenSizes[i];
-				if (name == "640x360") m_gameSceneSize = { 640, 360 };
-				else if (name == "1280x720") m_gameSceneSize = { 1280, 720 };
-				else if (name == "1920x1080") m_gameSceneSize = { 1920, 1080 };
-			}
-			if (selected) ImGui::SetItemDefaultFocus();
+			ImGui::End();
+			return;
 		}
-		ImGui::EndCombo();
+
+		m_winSize = ImGui::GetWindowSize();
+
+		auto texID = (ImTextureID)(SceneManager::Instance().GetCurrentScene()->GetRenderTargetPack().m_RTTexture->WorkSRView());
+
+		m_width = m_winSize.x;
+		m_height = m_width * 9.0f / 16.0f;
+		m_gameSceneSize.x = m_width - 20.f;
+		m_gameSceneSize.y = m_height;
+
+		ImGui::Image(texID, { m_gameSceneSize.x ,m_gameSceneSize.y });
+
+		// 画像の矩形取得
+		ImVec2 imageMin = ImGui::GetItemRectMin();
+		ImVec2 imageMax = ImGui::GetItemRectMax();
+
+		// 画像上でクリックされたか判定
+		if (ImGui::IsItemHovered() && ImGui::IsMouseClicked(ImGuiMouseButton_Left))
+		{
+			ImVec2 mousePos = ImGui::GetIO().MousePos;
+			float offsetX = mousePos.x - imageMin.x;
+			float offsetY = mousePos.y - imageMin.y;
+
+			POINT mouse;
+			if (offsetX >= 0 && offsetY >= 0 && offsetX < m_gameSceneSize.x && offsetY < m_gameSceneSize.y)
+			{
+				float gameX = offsetX * (1280.0f / m_gameSceneSize.x);
+				float gameY = offsetY * (720.0f / m_gameSceneSize.y);
+
+				mouse.x = static_cast<LONG>(gameX);
+				mouse.y = static_cast<LONG>(gameY);
+
+				KdDebugGUI::Instance().AddLog("MousePosX:%d,MousePosY:%d \n", mouse.x, mouse.y);
+
+				// コライダーからレイを取得
+				KdCollider::RayInfo rayInfo;
+				auto spCamera = GetActiveCamera();
+				if (spCamera)
+				{
+					spCamera->GenerateRayInfoFromClientPos(mouse, rayInfo.m_pos, rayInfo.m_dir, rayInfo.m_range);
+					rayInfo.m_type = KdCollider::TypeEvent;
+
+					std::list<KdCollider::CollisionResult> results;
+					for (const auto& it : SceneManager::Instance().GetObjList())
+					{
+						it->SelectObjectIntersects(rayInfo, &results);
+					}
+
+					KdCollider::CollisionResult resultObject;
+					float length = rayInfo.m_range;
+					for (auto& it : results)
+					{
+						if (length > (it.m_hitPos - spCamera->GetCameraMatrix().Translation()).Length())
+						{
+							resultObject = it;
+							length = (it.m_hitPos - spCamera->GetCameraMatrix().Translation()).Length();
+						}
+					}
+
+					if (resultObject.m_resultObject)
+					{
+						SceneManager::Instance().m_selectObject = resultObject.m_resultObject;
+						m_openObject = resultObject.m_resultObject;
+					}
+				}
+			}
+		}
+
+		ImGui::End();
 	}
-	
-	ImGui::Image(texID, { m_gameSceneSize.x ,m_gameSceneSize.y });
-
-	ImGui::End();
-
 }
 
 std::string ImGuiManager::ImSelectClass() const

@@ -3,7 +3,7 @@
 #include"../../../MyFramework/State/StateManager/StateManager.h"
 class PlayerStateBase;
 class PlayerCamera;
-class CharaBase:public SelectDrawObject
+class CharaBase:public SelectDraw3dModel
 {
 public:
 	CharaBase() = default;
@@ -21,7 +21,7 @@ public:
 	/// <summary>
 	/// ステートで変更するアニメーションモデルを取得する関数
 	/// </summary>
-	std::shared_ptr<KdModelWork> GetAnimeModel() const { return m_modelWork; }
+	std::shared_ptr<KdModelWork> GetAnimeModel();
 	std::shared_ptr<KdAnimator> GetAnimator() const { return m_animator; }
 	bool& AnimeSetFlg() { return IsAnimeSet; }
 	void SetAnimeSpeed(float speed) { m_fixedFrameRate = speed; }
@@ -40,10 +40,8 @@ protected:
 	/// KdGameObjectから派生された関数
 	/// </summary>
 	void Init() override;
-	void DrawToon() override;
-	void DrawLit() override;
 	void Update() override;
-	void PreUpdate() override;
+	void PostUpdate() override;
 	bool ModelLoad(std::string _path) override;
 	void ImGuiInspector() override;
 	void JsonInput(const nlohmann::json& _json) override;
@@ -58,7 +56,6 @@ protected:
 	/// <summary>
 	/// アニメーション関係
 	/// </summary>
-	std::shared_ptr<KdModelWork>	m_modelWork = std::make_shared<KdModelWork>();
 	std::shared_ptr <KdAnimator>	m_animator = std::make_shared<KdAnimator>();
 	bool IsAnimeSet = false;
 

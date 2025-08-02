@@ -20,14 +20,14 @@ bool KdWindow::Create(int clientWidth, int clientHeight, std::string_view titleN
 	WNDCLASSEX wc;											// ウィンドウクラスの定義用
 	wc.cbSize = sizeof(WNDCLASSEX);							// 構造体のサイズ
 	wc.style = 0;											// スタイル
-	wc.lpfnWndProc = &KdWindow::callWindowProc;			// ウインドウ関数
+	wc.lpfnWndProc = &KdWindow::callWindowProc;				// ウインドウ関数
 	wc.cbClsExtra = 0;										// エキストラクラス情報 
 	wc.cbWndExtra = 0;										// エキストラウィンドウ情報
 	wc.hInstance = hInst;									// インスタンスハンドル
 	wc.hIcon = LoadIcon(nullptr, IDI_APPLICATION);			// ラージアイコン
 	wc.hIconSm = LoadIcon(nullptr, IDI_APPLICATION);		// スモールアイコン 
 	wc.hCursor = LoadCursor(nullptr, IDC_ARROW);			// マウスカーソル
-	wc.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH);	// 背景色 
+	wc.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH);	// 背景色
 	wc.lpszMenuName = nullptr;								// メインメニュー名
 	wc.lpszClassName = wndClsName.c_str();					// ウィンドウクラス名
 

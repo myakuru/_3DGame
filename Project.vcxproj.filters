@@ -154,6 +154,9 @@
     <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_Attack2">
       <UniqueIdentifier>{9d332d6f-b02f-4a7a-a761-c9fcb3b741ab}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\GameObject\Character\Enemy">
+      <UniqueIdentifier>{1bc54b83-466c-46e1-985b-1198dd537aff}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -408,6 +411,9 @@
     <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_Attack2\PlayerState_Attack2.h">
       <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_Attack2</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Character\Enemy\Enemy.h">
+      <Filter>Src\Application\GameObject\Character\Enemy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -607,6 +613,9 @@
     </ClCompile>
     <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_Attack2\PlayerState_Attack2.cpp">
       <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_Attack2</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Character\Enemy\Enemy.cpp">
+      <Filter>Src\Application\GameObject\Character\Enemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

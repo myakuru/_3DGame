@@ -1,45 +1,47 @@
 ﻿#pragma once
-class SelectDrawObject:public KdGameObject
+class SelectDraw3dModel:public KdGameObject
 {
 public:
 
 	void GenerateDepthMapFromLight() override
 	{
 		if (m_bGenerateDepthMapFromLight) KdShaderManager::Instance().m_StandardShader.DrawModel(*m_model, m_mWorld, m_color);
+		if (m_bGenerateDepthMapFromLight) KdShaderManager::Instance().m_StandardShader.DrawModel(*m_modelWork, m_mWorld, m_color);
 	}
 
 	void DrawLit() override
 	{
 		if(m_bDrawLit) KdShaderManager::Instance().m_StandardShader.DrawModel(*m_model, m_mWorld, m_color);
+		if (m_bDrawLit) KdShaderManager::Instance().m_StandardShader.DrawModel(*m_modelWork, m_mWorld, m_color);
 	}
 
 	void DrawUnLit() override
 	{
 		if(m_bDrawUnLit) KdShaderManager::Instance().m_StandardShader.DrawModel(*m_model, m_mWorld, m_color);
+		if (m_bDrawUnLit) KdShaderManager::Instance().m_StandardShader.DrawModel(*m_modelWork, m_mWorld, m_color);
 	}
 
-	void DrawBright() override 
+	void DrawBright() override
 	{ 
-		if (m_bDrawBright)KdShaderManager::Instance().m_StandardShader.DrawModel(*m_model, m_mWorld, m_color); 
+		if (m_bDrawBright)KdShaderManager::Instance().m_StandardShader.DrawModel(*m_model, m_mWorld, m_color);
+		if (m_bDrawBright)KdShaderManager::Instance().m_StandardShader.DrawModel(*m_modelWork, m_mWorld, m_color);
 	}
 
 	void DrawToon() override
 	{
 		if (m_bDrawToon) KdShaderManager::Instance().m_StandardShader.DrawModel(*m_model, m_mWorld, m_color);
+		if (m_bDrawToon) KdShaderManager::Instance().m_StandardShader.DrawModel(*m_modelWork, m_mWorld, m_color);
 	}
 
 	// ImGuiのインスペクターでDrawを変更できるようにする。
 	void ImGuiInspector() override
 	{
 		KdGameObject::ImGuiInspector();
-
 		ImGui::BeginTable("DrawFlags", 2); // 3列
-		int col = 0;
 		for (const auto& [name, flg] : m_drawFlg)
 		{
 			ImGui::TableNextColumn();
 			ImGui::Checkbox(name.data(), flg);
-			col++;
 		}
 		ImGui::EndTable();
 	}

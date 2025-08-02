@@ -1,6 +1,6 @@
 ﻿#pragma once
 #include"../Utility/SelectDraw3dModel.h"
-class WeaponBase : public SelectDrawObject
+class WeaponBase : public SelectDraw3dModel
 {
 public:
 	WeaponBase() = default;

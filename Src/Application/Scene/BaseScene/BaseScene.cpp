@@ -94,6 +94,10 @@ void BaseScene::Draw()
 		{
 			obj->GenerateDepthMapFromLight();
 		}
+		for (auto& obj : m_MapObjectList)
+		{
+			obj->GenerateDepthMapFromLight();
+		}
 	}
 	KdShaderManager::Instance().m_StandardShader.EndGenerateDepthMapFromLight();
 
@@ -105,6 +109,11 @@ void BaseScene::Draw()
 		{
 			obj->DrawUnLit();
 		}
+		for (auto& obj : m_MapObjectList)
+		{
+			obj->DrawUnLit();
+		}
+
 	}
 	KdShaderManager::Instance().m_StandardShader.EndUnLit();
 
@@ -113,6 +122,10 @@ void BaseScene::Draw()
 	KdShaderManager::Instance().m_StandardShader.BeginLit();
 	{
 		for (auto& obj : m_objList)
+		{
+			obj->DrawLit();
+		}
+		for (auto& obj : m_MapObjectList)
 		{
 			obj->DrawLit();
 		}
@@ -127,6 +140,10 @@ void BaseScene::Draw()
 		{
 			obj->DrawEffect();
 		}
+		for (auto& obj : m_MapObjectList)
+		{
+			obj->DrawEffect();
+		}
 	}
 	KdShaderManager::Instance().m_StandardShader.EndUnLit();
 
@@ -135,6 +152,10 @@ void BaseScene::Draw()
 	KdShaderManager::Instance().m_postProcessShader.BeginBright();
 	{
 		for (auto& obj : m_objList)
+		{
+			obj->DrawBright();
+		}
+		for (auto& obj : m_MapObjectList)
 		{
 			obj->DrawBright();
 		}
@@ -148,6 +169,10 @@ void BaseScene::Draw()
 		{
 			obj->DrawToon();
 		}
+		for (auto& obj : m_MapObjectList)
+		{
+			obj->DrawToon();
+		}
 	}
 	KdShaderManager::Instance().m_StandardShader.EndToon();
 
@@ -156,6 +181,11 @@ void BaseScene::Draw()
 
 void BaseScene::DrawSprite()
 {
+	if (KdDebugGUI::Instance().ShowImGUiFlg())
+	{
+		m_renderTargetChanger.ChangeRenderTarget(m_renderTargetPack);
+	}
+
 	// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 	// 2Dの描画はこの間で行う
 	KdShaderManager::Instance().m_spriteShader.Begin();
@@ -166,6 +196,9 @@ void BaseScene::DrawSprite()
 		}
 	}
 	KdShaderManager::Instance().m_spriteShader.End();
+
+	m_renderTargetChanger.UndoRenderTarget();
+
 }
 
 void BaseScene::DrawDebug()

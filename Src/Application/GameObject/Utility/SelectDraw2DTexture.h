@@ -19,7 +19,9 @@ public:
 	// ImGuiのインスペクターでDrawを変更できるようにする。
 	void ImGuiInspector() override
 	{
-		KdGameObject::ImGuiInspector();
+		//KdGameObject::ImGuiInspector();
+
+		ImGuiSelectGltf();
 
 		ImGui::Checkbox("Draw Texture", &m_bDrawTexture);
 	}
@@ -35,15 +37,32 @@ public:
 	void JsonInput(const nlohmann::json& _json) override
 	{
 		KdGameObject::JsonInput(_json);
-
-		if (_json.contains("drawFlags"))
-		{
-			const auto& flagsJson = _json["drawFlags"];
-			if (flagsJson.contains("texture")) m_bDrawTexture = flagsJson["texture"].get<bool>();
-		}
+		
+		if (_json.contains("drawFlags")) m_bDrawTexture = _json["drawFlags"].get<bool>();
 	}
 
 private:
+
+	bool ModelLoad(std::string _path) override
+	{
+		// .~ 以降の拡張子を識別するために部分文字列を取得
+		std::string ext = _path.substr(_path.find_last_of('.') + 1);
+
+		if (ext == "png" || ext == "PNG")
+		{
+			_path = m_path;
+			// テクスチャ読み込み
+			m_texture = KdAssets::Instance().m_textures.GetData(m_path);
+			return true;
+		}
+
+		return false;
+	}
+
+	void ImGuiSelectGltf() override
+	{
+		KdGameObject::ImGuiSelectGltf();
+	}
 
 	bool m_bDrawTexture = false;
 

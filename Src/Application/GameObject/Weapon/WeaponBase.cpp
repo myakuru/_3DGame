@@ -17,15 +17,15 @@ void WeaponBase::Update()
 
 void WeaponBase::ImGuiInspector()
 {
-	SelectDrawObject::ImGuiInspector();
+	SelectDraw3dModel::ImGuiInspector();
 }
 
 void WeaponBase::JsonSave(nlohmann::json& _json) const
 {
-	SelectDrawObject::JsonSave(_json);
+	SelectDraw3dModel::JsonSave(_json);
 }
 
 void WeaponBase::JsonInput(const nlohmann::json& _json)
 {
-	SelectDrawObject::JsonInput(_json);
+	SelectDraw3dModel::JsonInput(_json);
 }

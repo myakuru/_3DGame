@@ -132,6 +132,10 @@ private:
 	// 本画像のを半分にする
 	ImVec2 m_gameSceneSize = { 1280.0f / 2, 720.0f / 2 };
 
+	ImVec2 m_winSize{};
+	float m_width = 0.0f;
+	float m_height = 0.0f;
+
 	std::string m_modelPath = "Asset/";
 
 };

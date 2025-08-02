@@ -19,7 +19,7 @@ struct KdGLTFMaterial
 												// "BLEND"  : 
 
 	float			AlphaCutoff = 0.5f;			// MASKモード時に、カットオフの閾値として使用　それ以外のモードでは使用されない
-	bool			DoubleSided = false;		// 両面か？
+	bool			DoubleSided = true;		// 両面か？
 
 	//------------------------------
 	// PBR材質データ

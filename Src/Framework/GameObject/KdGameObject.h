@@ -96,7 +96,13 @@ public:
 	// 各オブジェクトのImGuiインスペクターを実装する関数
 	virtual void ImGuiInspector();
 
-	void ImGuiSelectGltf();
+	virtual void ImGuiSelectGltf();
+
+	// 当たり判定セットする関数(インスペクターで変更される)
+	void SetCollider();
+
+	// 当たり判定の仕組み
+	bool CheckBoxBit(std::string _name, UINT& _ID, UINT _checkID);
 
 protected:
 
@@ -129,8 +135,11 @@ protected:
 	// モデルのロードパス
 	std::string m_path = "Asset/Models/Sky/Sky.gltf";
 
+	UINT m_type = (UINT)KdCollider::TypeEvent;	// 当たり判定のタイプを格納する。
+
 	// モデルの初期化
 	std::shared_ptr<KdModelData> m_model = std::make_shared<KdModelData>();
+	std::shared_ptr<KdModelWork> m_modelWork = std::make_shared<KdModelWork>();
 	// ポリゴンの初期化
 	std::shared_ptr<KdSquarePolygon> m_polygon = std::make_shared<KdSquarePolygon>();
 	// 2Dテクスチャの初期化

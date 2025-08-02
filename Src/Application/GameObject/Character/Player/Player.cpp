@@ -68,11 +68,6 @@ void Player::Update()
 	m_mWorld.Translation(m_position);
 }
 
-void Player::DrawToon()
-{
-	CharaBase::DrawToon();
-}
-
 void Player::ImGuiInspector()
 {
 	CharaBase::ImGuiInspector();
@@ -98,11 +93,6 @@ void Player::JsonSave(nlohmann::json& _json) const
 	_json["GravitySpeed"] = m_gravitySpeed;
 	_json["fixedFps"] = m_fixedFrameRate;
 	_json["moveSpeed"] = m_moveSpeed;
-}
-
-void Player::DrawDebug()
-{
-	m_pDebugWire->Draw();
 }
 
 void Player::StateInit()

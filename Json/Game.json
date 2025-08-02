@@ -29,7 +29,8 @@
       "x": 15.0,
       "y": 15.0,
       "z": 15.0
-    }
+    },
+    "type": 32
   },
   {
     "Name": "class PlayerCamera",
@@ -40,8 +41,8 @@
       "z": 1.0
     },
     "deg": {
-      "x": 16.650014877319336,
-      "y": -3165.318115234375,
+      "x": 14.70002555847168,
+      "y": -2476.8408203125,
       "z": 0.0
     },
     "path": "Asset/Models/Sky/Sky.gltf",
@@ -59,7 +60,8 @@
       "x": 0.0,
       "y": 1.0,
       "z": -2.0
-    }
+    },
+    "type": 32
   },
   {
     "Name": "class Map",
@@ -79,7 +81,7 @@
       "DrawLit": false,
       "DrawToon": true,
       "DrawUnLit": false,
-      "GenerateDepthMapFromLight": false
+      "GenerateDepthMapFromLight": true
     },
     "path": "Asset\\3DAssets\\Building2\\Building2.gltf",
     "pos": {
@@ -91,7 +93,8 @@
       "x": 1.0,
       "y": 1.0,
       "z": 1.0
-    }
+    },
+    "type": 32
   },
   {
     "Name": "class Map",
@@ -111,7 +114,7 @@
       "DrawLit": false,
       "DrawToon": true,
       "DrawUnLit": false,
-      "GenerateDepthMapFromLight": false
+      "GenerateDepthMapFromLight": true
     },
     "path": "Asset\\3DAssets\\SushiBuilding\\SushiBuilding.gltf",
     "pos": {
@@ -123,7 +126,8 @@
       "x": 1.0,
       "y": 1.0,
       "z": 1.0
-    }
+    },
+    "type": 32
   },
   {
     "Name": "class Map",
@@ -155,7 +159,8 @@
       "x": 1.0,
       "y": 1.0,
       "z": 1.0
-    }
+    },
+    "type": 32
   },
   {
     "Name": "class Map",
@@ -187,7 +192,8 @@
       "x": 1.0,
       "y": 1.0,
       "z": 1.0
-    }
+    },
+    "type": 32
   },
   {
     "Name": "class Map",
@@ -219,39 +225,8 @@
       "x": 1.0,
       "y": 1.0,
       "z": 1.0
-    }
-  },
-  {
-    "Name": "class Map",
-    "color": {
-      "w": 1.0,
-      "x": 1.0,
-      "y": 1.0,
-      "z": 1.0
     },
-    "deg": {
-      "x": 0.0,
-      "y": 194.0,
-      "z": 0.0
-    },
-    "drawFlags": {
-      "DrawBright": false,
-      "DrawLit": false,
-      "DrawToon": true,
-      "DrawUnLit": false,
-      "GenerateDepthMapFromLight": false
-    },
-    "path": "Asset\\3DAssets\\Sidewalk_Corner_60\\Sidewalk_Corner_60.gltf",
-    "pos": {
-      "x": -5.929999828338623,
-      "y": 0.0,
-      "z": -8.630000114440918
-    },
-    "scale": {
-      "x": 1.0,
-      "y": 1.0,
-      "z": 1.0
-    }
+    "type": 32
   },
   {
     "Name": "class Map",
@@ -271,7 +246,7 @@
       "DrawLit": false,
       "DrawToon": true,
       "DrawUnLit": false,
-      "GenerateDepthMapFromLight": false
+      "GenerateDepthMapFromLight": true
     },
     "path": "Asset\\3DAssets\\Gate\\Gate.gltf",
     "pos": {
@@ -283,7 +258,8 @@
       "x": 1.0,
       "y": 1.0,
       "z": 1.0
-    }
+    },
+    "type": 32
   },
   {
     "Name": "class Map",
@@ -303,19 +279,20 @@
       "DrawLit": false,
       "DrawToon": true,
       "DrawUnLit": false,
-      "GenerateDepthMapFromLight": false
+      "GenerateDepthMapFromLight": true
     },
     "path": "Asset\\3DAssets\\Ground\\Graund.gltf",
     "pos": {
       "x": -109.0,
-      "y": 0.0,
+      "y": -0.10000000149011612,
       "z": 42.900001525878906
     },
     "scale": {
       "x": 1.0,
       "y": 1.0,
       "z": 1.0
-    }
+    },
+    "type": 33
   },
   {
     "Name": "class Map",
@@ -335,27 +312,28 @@
       "DrawLit": false,
       "DrawToon": true,
       "DrawUnLit": false,
-      "GenerateDepthMapFromLight": false
+      "GenerateDepthMapFromLight": true
     },
     "path": "Asset\\3DAssets\\SideWalks\\SideWalks.gltf",
     "pos": {
       "x": -109.0,
-      "y": 0.0,
+      "y": -0.10000000149011612,
       "z": 42.79999923706055
     },
     "scale": {
       "x": 1.0,
       "y": 1.0,
       "z": 1.0
-    }
+    },
+    "type": 33
   },
   {
     "Name": "class Map",
     "color": {
       "w": 1.0,
       "x": 0.0,
-      "y": 0.2450980544090271,
-      "z": 0.23788921535015106
+      "y": 1.0,
+      "z": 0.239215686917305
     },
     "deg": {
       "x": 180.0,
@@ -379,7 +357,8 @@
       "x": 1.0,
       "y": 1.0,
       "z": 1.0
-    }
+    },
+    "type": 33
   },
   {
     "Name": "class Map",
@@ -399,7 +378,7 @@
       "DrawLit": false,
       "DrawToon": true,
       "DrawUnLit": false,
-      "GenerateDepthMapFromLight": false
+      "GenerateDepthMapFromLight": true
     },
     "path": "Asset\\3DAssets\\RoadBarrier\\RoadBarrier.gltf",
     "pos": {
@@ -411,7 +390,8 @@
       "x": 1.0,
       "y": 1.0,
       "z": 1.0
-    }
+    },
+    "type": 32
   },
   {
     "Name": "class Map",
@@ -443,7 +423,8 @@
       "x": 1.0,
       "y": 1.0,
       "z": 1.0
-    }
+    },
+    "type": 32
   },
   {
     "Name": "class Map",
@@ -460,7 +441,7 @@
     },
     "drawFlags": {
       "DrawBright": false,
-      "DrawLit": true,
+      "DrawLit": false,
       "DrawToon": true,
       "DrawUnLit": false,
       "GenerateDepthMapFromLight": true
@@ -468,14 +449,15 @@
     "path": "Asset\\3DAssets\\StreetMarkings\\StreetMarking.gltf",
     "pos": {
       "x": -109.0,
-      "y": -0.10000000149011612,
+      "y": -0.12999999523162842,
       "z": 42.70000076293945
     },
     "scale": {
       "x": 1.0,
       "y": 1.0,
       "z": 1.0
-    }
+    },
+    "type": 32
   },
   {
     "Name": "class Map",
@@ -507,7 +489,8 @@
       "x": 1.0,
       "y": 1.0,
       "z": 1.0
-    }
+    },
+    "type": 32
   },
   {
     "Name": "class Map",
@@ -527,7 +510,7 @@
       "DrawLit": false,
       "DrawToon": true,
       "DrawUnLit": false,
-      "GenerateDepthMapFromLight": false
+      "GenerateDepthMapFromLight": true
     },
     "path": "Asset\\3DAssets\\Cone\\Cone.gltf",
     "pos": {
@@ -539,7 +522,8 @@
       "x": 1.0,
       "y": 1.0,
       "z": 1.0
-    }
+    },
+    "type": 32
   },
   {
     "Name": "class Map",
@@ -559,7 +543,7 @@
       "DrawLit": false,
       "DrawToon": true,
       "DrawUnLit": false,
-      "GenerateDepthMapFromLight": false
+      "GenerateDepthMapFromLight": true
     },
     "path": "Asset\\3DAssets\\Cone\\Cone.gltf",
     "pos": {
@@ -571,7 +555,8 @@
       "x": 1.0,
       "y": 1.0,
       "z": 1.0
-    }
+    },
+    "type": 32
   },
   {
     "Name": "class Map",
@@ -591,7 +576,7 @@
       "DrawLit": false,
       "DrawToon": true,
       "DrawUnLit": false,
-      "GenerateDepthMapFromLight": false
+      "GenerateDepthMapFromLight": true
     },
     "path": "Asset\\3DAssets\\Cone\\Cone.gltf",
     "pos": {
@@ -603,7 +588,8 @@
       "x": 1.0,
       "y": 1.0,
       "z": 1.0
-    }
+    },
+    "type": 32
   },
   {
     "Name": "class Map",
@@ -635,7 +621,8 @@
       "x": 1.0,
       "y": 1.0,
       "z": 1.0
-    }
+    },
+    "type": 32
   },
   {
     "Name": "class Map",
@@ -667,7 +654,8 @@
       "x": 1.0,
       "y": 1.0,
       "z": 1.0
-    }
+    },
+    "type": 32
   },
   {
     "Name": "class Map",
@@ -687,7 +675,7 @@
       "DrawLit": false,
       "DrawToon": true,
       "DrawUnLit": false,
-      "GenerateDepthMapFromLight": false
+      "GenerateDepthMapFromLight": true
     },
     "path": "Asset\\3DAssets\\StreetDiner\\StreetDiner.gltf",
     "pos": {
@@ -699,7 +687,8 @@
       "x": 1.0,
       "y": 1.0,
       "z": 1.0
-    }
+    },
+    "type": 32
   },
   {
     "Name": "class Map",
@@ -731,7 +720,8 @@
       "x": 1.0,
       "y": 1.0,
       "z": 1.0
-    }
+    },
+    "type": 32
   },
   {
     "Name": "class Map",
@@ -763,7 +753,8 @@
       "x": 1.0,
       "y": 1.0,
       "z": 1.0
-    }
+    },
+    "type": 32
   },
   {
     "Name": "class Map",
@@ -795,7 +786,8 @@
       "x": 1.0,
       "y": 1.0,
       "z": 1.0
-    }
+    },
+    "type": 32
   },
   {
     "Name": "class Map",
@@ -827,7 +819,8 @@
       "x": 1.0,
       "y": 1.0,
       "z": 1.0
-    }
+    },
+    "type": 32
   },
   {
     "Name": "class Map",
@@ -859,7 +852,8 @@
       "x": 1.0,
       "y": 1.0,
       "z": 1.0
-    }
+    },
+    "type": 32
   },
   {
     "Name": "class Map",
@@ -891,7 +885,8 @@
       "x": 1.0,
       "y": 1.0,
       "z": 1.0
-    }
+    },
+    "type": 32
   },
   {
     "Name": "class Map",
@@ -923,7 +918,8 @@
       "x": 1.0,
       "y": 1.0,
       "z": 1.0
-    }
+    },
+    "type": 32
   },
   {
     "Name": "class Map",
@@ -955,7 +951,8 @@
       "x": 1.0,
       "y": 1.0,
       "z": 1.0
-    }
+    },
+    "type": 32
   },
   {
     "Name": "class Map",
@@ -987,7 +984,8 @@
       "x": 1.0,
       "y": 1.0,
       "z": 1.0
-    }
+    },
+    "type": 32
   },
   {
     "Name": "class Map",
@@ -1007,7 +1005,7 @@
       "DrawLit": false,
       "DrawToon": true,
       "DrawUnLit": false,
-      "GenerateDepthMapFromLight": false
+      "GenerateDepthMapFromLight": true
     },
     "path": "Asset\\3DAssets\\Stairs\\Stairs.gltf",
     "pos": {
@@ -1019,7 +1017,8 @@
       "x": 1.0,
       "y": 1.0,
       "z": 1.0
-    }
+    },
+    "type": 32
   },
   {
     "Name": "class Map",
@@ -1039,7 +1038,7 @@
       "DrawLit": false,
       "DrawToon": true,
       "DrawUnLit": false,
-      "GenerateDepthMapFromLight": false
+      "GenerateDepthMapFromLight": true
     },
     "path": "Asset\\3DAssets\\Building4\\Building4.gltf",
     "pos": {
@@ -1051,7 +1050,8 @@
       "x": 1.0,
       "y": 1.0,
       "z": 1.0
-    }
+    },
+    "type": 32
   },
   {
     "Name": "class Map",
@@ -1083,7 +1083,8 @@
       "x": 2.0,
       "y": 2.0,
       "z": 2.0
-    }
+    },
+    "type": 32
   },
   {
     "Name": "class Map",
@@ -1103,7 +1104,7 @@
       "DrawLit": false,
       "DrawToon": true,
       "DrawUnLit": false,
-      "GenerateDepthMapFromLight": false
+      "GenerateDepthMapFromLight": true
     },
     "path": "Asset\\3DAssets\\Building5\\Building5.gltf",
     "pos": {
@@ -1115,7 +1116,8 @@
       "x": 1.0,
       "y": 1.0,
       "z": 1.0
-    }
+    },
+    "type": 32
   },
   {
     "Name": "class Map",
@@ -1135,7 +1137,7 @@
       "DrawLit": false,
       "DrawToon": true,
       "DrawUnLit": false,
-      "GenerateDepthMapFromLight": false
+      "GenerateDepthMapFromLight": true
     },
     "path": "Asset\\3DAssets\\Building6\\Building6.gltf",
     "pos": {
@@ -1147,7 +1149,8 @@
       "x": 1.0,
       "y": 1.0,
       "z": 1.0
-    }
+    },
+    "type": 32
   },
   {
     "Name": "class Map",
@@ -1167,7 +1170,7 @@
       "DrawLit": false,
       "DrawToon": true,
       "DrawUnLit": false,
-      "GenerateDepthMapFromLight": false
+      "GenerateDepthMapFromLight": true
     },
     "path": "Asset\\3DAssets\\Building6\\Building6.gltf",
     "pos": {
@@ -1179,7 +1182,8 @@
       "x": 1.0,
       "y": 1.0,
       "z": 1.0
-    }
+    },
+    "type": 32
   },
   {
     "Name": "class Map",
@@ -1199,7 +1203,7 @@
       "DrawLit": false,
       "DrawToon": true,
       "DrawUnLit": false,
-      "GenerateDepthMapFromLight": false
+      "GenerateDepthMapFromLight": true
     },
     "path": "Asset\\3DAssets\\Wall\\Wall.gltf",
     "pos": {
@@ -1211,7 +1215,8 @@
       "x": 1.0,
       "y": 1.0,
       "z": 1.0
-    }
+    },
+    "type": 32
   },
   {
     "Name": "class Map",
@@ -1231,7 +1236,7 @@
       "DrawLit": false,
       "DrawToon": true,
       "DrawUnLit": false,
-      "GenerateDepthMapFromLight": false
+      "GenerateDepthMapFromLight": true
     },
     "path": "Asset\\3DAssets\\Buildong7\\Building7.gltf",
     "pos": {
@@ -1243,7 +1248,8 @@
       "x": 1.0,
       "y": 1.0,
       "z": 1.0
-    }
+    },
+    "type": 32
   },
   {
     "Name": "class Map",
@@ -1275,7 +1281,8 @@
       "x": 1.0,
       "y": 1.0,
       "z": 1.0
-    }
+    },
+    "type": 32
   },
   {
     "Name": "class Map",
@@ -1307,7 +1314,8 @@
       "x": 1.0,
       "y": 1.0,
       "z": 1.0
-    }
+    },
+    "type": 32
   },
   {
     "Name": "class Map",
@@ -1339,7 +1347,8 @@
       "x": 1.0,
       "y": 1.0,
       "z": 1.0
-    }
+    },
+    "type": 32
   },
   {
     "Name": "class Map",
@@ -1371,7 +1380,8 @@
       "x": 1.0,
       "y": 1.0,
       "z": 1.0
-    }
+    },
+    "type": 32
   },
   {
     "Name": "class Map",
@@ -1403,7 +1413,8 @@
       "x": 1.0,
       "y": 1.0,
       "z": 1.0
-    }
+    },
+    "type": 32
   },
   {
     "Name": "class Map",
@@ -1435,7 +1446,8 @@
       "x": 1.0,
       "y": 1.0,
       "z": 1.0
-    }
+    },
+    "type": 32
   },
   {
     "Name": "class Map",
@@ -1452,8 +1464,8 @@
     },
     "drawFlags": {
       "DrawBright": false,
-      "DrawLit": true,
-      "DrawToon": false,
+      "DrawLit": false,
+      "DrawToon": true,
       "DrawUnLit": false,
       "GenerateDepthMapFromLight": false
     },
@@ -1467,7 +1479,8 @@
       "x": 1.0,
       "y": 1.0,
       "z": 1.0
-    }
+    },
+    "type": 32
   },
   {
     "Name": "class Map",
@@ -1484,8 +1497,8 @@
     },
     "drawFlags": {
       "DrawBright": false,
-      "DrawLit": true,
-      "DrawToon": false,
+      "DrawLit": false,
+      "DrawToon": true,
       "DrawUnLit": false,
       "GenerateDepthMapFromLight": false
     },
@@ -1499,7 +1512,8 @@
       "x": 1.0,
       "y": 1.0,
       "z": 1.0
-    }
+    },
+    "type": 32
   },
   {
     "Name": "class Map",
@@ -1516,8 +1530,8 @@
     },
     "drawFlags": {
       "DrawBright": false,
-      "DrawLit": true,
-      "DrawToon": false,
+      "DrawLit": false,
+      "DrawToon": true,
       "DrawUnLit": false,
       "GenerateDepthMapFromLight": false
     },
@@ -1531,7 +1545,8 @@
       "x": 1.0,
       "y": 1.0,
       "z": 1.0
-    }
+    },
+    "type": 32
   },
   {
     "Name": "class Map",
@@ -1548,8 +1563,8 @@
     },
     "drawFlags": {
       "DrawBright": false,
-      "DrawLit": true,
-      "DrawToon": false,
+      "DrawLit": false,
+      "DrawToon": true,
       "DrawUnLit": false,
       "GenerateDepthMapFromLight": false
     },
@@ -1563,7 +1578,8 @@
       "x": 1.0,
       "y": 1.0,
       "z": 1.0
-    }
+    },
+    "type": 32
   },
   {
     "Name": "class Map",
@@ -1580,8 +1596,8 @@
     },
     "drawFlags": {
       "DrawBright": false,
-      "DrawLit": true,
-      "DrawToon": false,
+      "DrawLit": false,
+      "DrawToon": true,
       "DrawUnLit": false,
       "GenerateDepthMapFromLight": false
     },
@@ -1595,7 +1611,8 @@
       "x": 1.0,
       "y": 1.0,
       "z": 1.0
-    }
+    },
+    "type": 32
   },
   {
     "Name": "class Map",
@@ -1612,10 +1629,10 @@
     },
     "drawFlags": {
       "DrawBright": false,
-      "DrawLit": true,
-      "DrawToon": false,
+      "DrawLit": false,
+      "DrawToon": true,
       "DrawUnLit": false,
-      "GenerateDepthMapFromLight": true
+      "GenerateDepthMapFromLight": false
     },
     "path": "Asset\\3DAssets\\B13\\B13.gltf",
     "pos": {
@@ -1627,7 +1644,8 @@
       "x": 1.0,
       "y": 1.0,
       "z": 1.0
-    }
+    },
+    "type": 32
   },
   {
     "Name": "class Map",
@@ -1659,7 +1677,8 @@
       "x": 1.0,
       "y": 1.0,
       "z": 1.0
-    }
+    },
+    "type": 32
   },
   {
     "Name": "class Map",
@@ -1691,7 +1710,8 @@
       "x": 1.0,
       "y": 1.0,
       "z": 1.0
-    }
+    },
+    "type": 32
   },
   {
     "Name": "class Map",
@@ -1723,7 +1743,8 @@
       "x": 1.0,
       "y": 1.0,
       "z": 1.0
-    }
+    },
+    "type": 32
   },
   {
     "Name": "class Map",
@@ -1740,8 +1761,8 @@
     },
     "drawFlags": {
       "DrawBright": false,
-      "DrawLit": true,
-      "DrawToon": false,
+      "DrawLit": false,
+      "DrawToon": true,
       "DrawUnLit": false,
       "GenerateDepthMapFromLight": true
     },
@@ -1755,7 +1776,8 @@
       "x": 1.0,
       "y": 1.0,
       "z": 1.0
-    }
+    },
+    "type": 32
   },
   {
     "Name": "class Map",
@@ -1772,8 +1794,8 @@
     },
     "drawFlags": {
       "DrawBright": false,
-      "DrawLit": true,
-      "DrawToon": false,
+      "DrawLit": false,
+      "DrawToon": true,
       "DrawUnLit": false,
       "GenerateDepthMapFromLight": true
     },
@@ -1787,7 +1809,8 @@
       "x": 1.0,
       "y": 1.0,
       "z": 1.0
-    }
+    },
+    "type": 32
   },
   {
     "Name": "class Map",
@@ -1804,10 +1827,10 @@
     },
     "drawFlags": {
       "DrawBright": false,
-      "DrawLit": true,
-      "DrawToon": false,
+      "DrawLit": false,
+      "DrawToon": true,
       "DrawUnLit": false,
-      "GenerateDepthMapFromLight": true
+      "GenerateDepthMapFromLight": false
     },
     "path": "Asset\\3DAssets\\B14\\B14.gltf",
     "pos": {
@@ -1819,10 +1842,11 @@
       "x": 1.0,
       "y": 1.0,
       "z": 1.0
-    }
+    },
+    "type": 32
   },
   {
-    "GravitySpeed": 0.0,
+    "GravitySpeed": -0.05000000074505806,
     "Name": "class Player",
     "color": {
       "w": 1.0,
@@ -1835,19 +1859,27 @@
       "y": 0.0,
       "z": 0.0
     },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawLit": false,
+      "DrawToon": true,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
     "fixedFps": 120.0,
     "moveSpeed": 0.10000000149011612,
     "path": "Asset\\Models\\Player\\Perula\\Perula.gltf",
     "pos": {
-      "x": -0.3716561496257782,
-      "y": 0.0,
-      "z": -11.507763862609863
+      "x": 7.34210205078125,
+      "y": 1.1473894119262695e-06,
+      "z": -9.501241683959961
     },
     "scale": {
       "x": 1.0,
       "y": 1.0,
       "z": 1.0
-    }
+    },
+    "type": 0
   },
   {
     "Name": "class Katana",
@@ -1885,11 +1917,39 @@
       "y": 0.5,
       "z": 0.5
     },
+    "type": 32,
     "weaponDeg": {
       "x": 2.700000047683716,
       "y": 2.799999952316284,
       "z": 267.5
     }
+  },
+  {
+    "Name": "class NormalUI",
+    "color": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "deg": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "drawFlags": false,
+    "path": "Asset\\Textures\\Title\\black.png",
+    "pos": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "type": 32
   },
   {
     "Name": "class FPSCamera",
@@ -1900,21 +1960,22 @@
       "z": 1.0
     },
     "deg": {
-      "x": 3.450000524520874,
-      "y": 290.70025634765625,
+      "x": 13.799979209899902,
+      "y": 1703.9925537109375,
       "z": 0.0
     },
     "moveSpeed": 10.0,
     "path": "Asset/Models/Sky/Sky.gltf",
     "pos": {
-      "x": -0.03745777904987335,
-      "y": 1.1398595571517944,
-      "z": -11.66601276397705
+      "x": -4.314535140991211,
+      "y": 0.9195213317871094,
+      "z": -6.187939643859863
     },
     "scale": {
       "x": 1.0,
       "y": 1.0,
       "z": 1.0
-    }
+    },
+    "type": 0
   }
 ]

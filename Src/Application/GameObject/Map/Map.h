@@ -1,6 +1,6 @@
 ﻿#pragma once
 #include"../Utility/SelectDraw3dModel.h"
-class Map :public SelectDrawObject
+class Map :public SelectDraw3dModel
 {
 public:
 
