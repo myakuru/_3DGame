@@ -18,18 +18,7 @@
 	"nodes":[
 		{
 			"mesh":0,
-			"name":"SM_Tower",
-			"rotation":[
-				0.7071068286895752,
-				0,
-				0,
-				0.7071068286895752
-			],
-			"scale":[
-				0.009999999776482582,
-				0.009999999776482582,
-				0.009999999776482582
-			]
+			"name":"SM_Tower"
 		}
 	],
 	"materials":[
@@ -109,35 +98,35 @@
 		{
 			"bufferView":0,
 			"componentType":5126,
-			"count":1557,
+			"count":1564,
 			"max":[
-				1051.7589111328125,
-				1036.2886962890625,
-				-1517.562255859375
+				10.51758861541748,
+				119.21524047851562,
+				10.362889289855957
 			],
 			"min":[
-				-1362.92529296875,
-				-1350.55078125,
-				-11921.5234375
+				-13.629252433776855,
+				15.175622940063477,
+				-13.50550651550293
 			],
 			"type":"VEC3"
 		},
 		{
 			"bufferView":1,
 			"componentType":5126,
-			"count":1557,
+			"count":1564,
 			"type":"VEC3"
 		},
 		{
 			"bufferView":2,
 			"componentType":5126,
-			"count":1557,
+			"count":1564,
 			"type":"VEC2"
 		},
 		{
 			"bufferView":3,
 			"componentType":5126,
-			"count":1557,
+			"count":1564,
 			"type":"VEC2"
 		},
 		{
@@ -149,35 +138,35 @@
 		{
 			"bufferView":5,
 			"componentType":5126,
-			"count":2058,
+			"count":2106,
 			"max":[
-				1307.230224609375,
-				1291.760009765625,
-				0.00019444386998657137
+				13.072301864624023,
+				145.1481475830078,
+				12.917600631713867
 			],
 			"min":[
-				-1618.396728515625,
-				-1606.0220947265625,
-				-14514.814453125
+				-16.18396759033203,
+				-3.633389042079216e-06,
+				-16.060222625732422
 			],
 			"type":"VEC3"
 		},
 		{
 			"bufferView":6,
 			"componentType":5126,
-			"count":2058,
+			"count":2106,
 			"type":"VEC3"
 		},
 		{
 			"bufferView":7,
 			"componentType":5126,
-			"count":2058,
+			"count":2106,
 			"type":"VEC2"
 		},
 		{
 			"bufferView":8,
 			"componentType":5126,
-			"count":2058,
+			"count":2106,
 			"type":"VEC2"
 		},
 		{
@@ -190,68 +179,68 @@
 	"bufferViews":[
 		{
 			"buffer":0,
-			"byteLength":18684,
+			"byteLength":18768,
 			"byteOffset":0,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":18684,
-			"byteOffset":18684,
+			"byteLength":18768,
+			"byteOffset":18768,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":12456,
-			"byteOffset":37368,
+			"byteLength":12512,
+			"byteOffset":37536,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":12456,
-			"byteOffset":49824,
+			"byteLength":12512,
+			"byteOffset":50048,
 			"target":34962
 		},
 		{
 			"buffer":0,
 			"byteLength":7920,
-			"byteOffset":62280,
+			"byteOffset":62560,
 			"target":34963
 		},
 		{
 			"buffer":0,
-			"byteLength":24696,
-			"byteOffset":70200,
+			"byteLength":25272,
+			"byteOffset":70480,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":24696,
-			"byteOffset":94896,
+			"byteLength":25272,
+			"byteOffset":95752,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":16464,
-			"byteOffset":119592,
+			"byteLength":16848,
+			"byteOffset":121024,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":16464,
-			"byteOffset":136056,
+			"byteLength":16848,
+			"byteOffset":137872,
 			"target":34962
 		},
 		{
 			"buffer":0,
 			"byteLength":10824,
-			"byteOffset":152520,
+			"byteOffset":154720,
 			"target":34963
 		}
 	],
 	"buffers":[
 		{
-			"byteLength":163344,
+			"byteLength":165544,
 			"uri":"Tower.bin"
 		}
 	]

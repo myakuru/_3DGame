@@ -15,18 +15,7 @@
 	"nodes":[
 		{
 			"mesh":0,
-			"name":"SM_Cone",
-			"rotation":[
-				0.6272114515304565,
-				-0.32650551199913025,
-				0.32650554180145264,
-				0.6272113919258118
-			],
-			"scale":[
-				0.009999999776482582,
-				0.009999999776482582,
-				0.009999999776482582
-			]
+			"name":"SM_Cone"
 		}
 	],
 	"materials":[
@@ -77,42 +66,41 @@
 		{
 			"bufferView":0,
 			"componentType":5126,
-			"count":880,
+			"count":889,
 			"max":[
-				18.301456451416016,
-				18.310346603393555,
-				0.6696760654449463
+				0.18582694232463837,
+				1.0061817169189453,
+				0.18587030470371246
 			],
 			"min":[
-				-18.306312561035156,
-				-18.1441650390625,
-				-100.61817169189453
+				-0.1857430785894394,
+				-0.00669676112011075,
+				-0.18568745255470276
 			],
 			"type":"VEC3"
 		},
 		{
 			"bufferView":1,
 			"componentType":5126,
-			"count":880,
+			"count":889,
 			"type":"VEC3"
 		},
 		{
 			"bufferView":2,
 			"componentType":5126,
-			"count":880,
+			"count":889,
 			"type":"VEC2"
 		},
 		{
 			"bufferView":3,
-			"componentType":5121,
-			"count":880,
-			"normalized":true,
-			"type":"VEC4"
+			"componentType":5126,
+			"count":889,
+			"type":"VEC3"
 		},
 		{
 			"bufferView":4,
 			"componentType":5123,
-			"count":880,
+			"count":889,
 			"normalized":true,
 			"type":"VEC4"
 		},
@@ -126,38 +114,38 @@
 	"bufferViews":[
 		{
 			"buffer":0,
-			"byteLength":10560,
+			"byteLength":10668,
 			"byteOffset":0,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":10560,
-			"byteOffset":10560,
+			"byteLength":10668,
+			"byteOffset":10668,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":7040,
-			"byteOffset":21120,
+			"byteLength":7112,
+			"byteOffset":21336,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":3520,
-			"byteOffset":28160,
+			"byteLength":10668,
+			"byteOffset":28448,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":7040,
-			"byteOffset":31680,
+			"byteLength":7112,
+			"byteOffset":39116,
 			"target":34962
 		},
 		{
 			"buffer":0,
 			"byteLength":3888,
-			"byteOffset":38720,
+			"byteOffset":46228,
 			"target":34963
 		}
 	],
@@ -169,7 +157,7 @@
 	],
 	"buffers":[
 		{
-			"byteLength":42608,
+			"byteLength":50116,
 			"uri":"Cone.bin"
 		}
 	]

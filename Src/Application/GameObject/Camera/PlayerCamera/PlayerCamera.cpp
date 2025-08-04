@@ -121,14 +121,8 @@ DirectX::BoundingFrustum PlayerCamera::CreateFrustum() const
 {
 	DirectX::BoundingFrustum frustum;
 	DirectX::BoundingFrustum::CreateFromMatrix(frustum, m_spCamera->GetProjMatrix());
-
-	frustum.Origin = m_mWorld.Translation();
-
-	// 視錐台の回転をクォータニオンで設定
-	frustum.Orientation = Math::Quaternion::CreateFromYawPitchRoll(
-		DirectX::XMConvertToRadians(m_degree.y),
-		DirectX::XMConvertToRadians(m_degree.x),
-		DirectX::XMConvertToRadians(m_degree.z));
+	// カメラのワールド行列で変換（ビュー行列の逆行列）
+	frustum.Transform(frustum, m_spCamera->GetCameraMatrix());
 
 	// 8つのコーナー座標を取得
 	DirectX::XMFLOAT3 corners[8];

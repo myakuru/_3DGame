@@ -21,18 +21,7 @@
 			"children":[
 				0
 			],
-			"name":"P_StreetLamp",
-			"rotation":[
-				0,
-				0.7071066498756409,
-				-0.70710688829422,
-				5.3385061704602776e-08
-			],
-			"scale":[
-				0.009999999776482582,
-				0.009999999776482582,
-				0.009999999776482582
-			]
+			"name":"P_StreetLamp"
 		}
 	],
 	"materials":[
@@ -108,48 +97,47 @@
 		{
 			"bufferView":0,
 			"componentType":5126,
-			"count":1134,
+			"count":1146,
 			"max":[
-				3.007680654525757,
-				29.459083557128906,
-				6.541229722863227e-15
+				0.2945917546749115,
+				6.452209949493408,
+				1.4797861576080322
 			],
 			"min":[
-				-29.45918083190918,
-				-147.9788818359375,
-				-645.2210693359375
+				-0.03007679060101509,
+				-8.683269214770917e-08,
+				-0.2945908010005951
 			],
 			"type":"VEC3"
 		},
 		{
 			"bufferView":1,
 			"componentType":5126,
-			"count":1134,
+			"count":1146,
 			"type":"VEC3"
 		},
 		{
 			"bufferView":2,
 			"componentType":5126,
-			"count":1134,
+			"count":1146,
 			"type":"VEC2"
 		},
 		{
 			"bufferView":3,
 			"componentType":5126,
-			"count":1134,
+			"count":1146,
 			"type":"VEC2"
 		},
 		{
 			"bufferView":4,
-			"componentType":5121,
-			"count":1134,
-			"normalized":true,
-			"type":"VEC4"
+			"componentType":5126,
+			"count":1146,
+			"type":"VEC3"
 		},
 		{
 			"bufferView":5,
 			"componentType":5123,
-			"count":1134,
+			"count":1146,
 			"normalized":true,
 			"type":"VEC4"
 		},
@@ -164,14 +152,14 @@
 			"componentType":5126,
 			"count":136,
 			"max":[
-				-6.520305633544922,
-				-78.74102020263672,
-				-628.6923217773438
+				0.19930696487426758,
+				6.34722900390625,
+				1.4535056352615356
 			],
 			"min":[
-				-19.93075942993164,
-				-145.350830078125,
-				-634.7229614257812
+				0.0652025043964386,
+				6.286922454833984,
+				0.7874076962471008
 			],
 			"type":"VEC3"
 		},
@@ -195,10 +183,9 @@
 		},
 		{
 			"bufferView":11,
-			"componentType":5121,
+			"componentType":5126,
 			"count":136,
-			"normalized":true,
-			"type":"VEC4"
+			"type":"VEC3"
 		},
 		{
 			"bufferView":12,
@@ -217,86 +204,86 @@
 	"bufferViews":[
 		{
 			"buffer":0,
-			"byteLength":13608,
+			"byteLength":13752,
 			"byteOffset":0,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":13608,
-			"byteOffset":13608,
+			"byteLength":13752,
+			"byteOffset":13752,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":9072,
-			"byteOffset":27216,
+			"byteLength":9168,
+			"byteOffset":27504,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":9072,
-			"byteOffset":36288,
+			"byteLength":9168,
+			"byteOffset":36672,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":4536,
-			"byteOffset":45360,
+			"byteLength":13752,
+			"byteOffset":45840,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":9072,
-			"byteOffset":49896,
+			"byteLength":9168,
+			"byteOffset":59592,
 			"target":34962
 		},
 		{
 			"buffer":0,
 			"byteLength":7152,
-			"byteOffset":58968,
+			"byteOffset":68760,
 			"target":34963
 		},
 		{
 			"buffer":0,
 			"byteLength":1632,
-			"byteOffset":66120,
+			"byteOffset":75912,
 			"target":34962
 		},
 		{
 			"buffer":0,
 			"byteLength":1632,
-			"byteOffset":67752,
+			"byteOffset":77544,
 			"target":34962
 		},
 		{
 			"buffer":0,
 			"byteLength":1088,
-			"byteOffset":69384,
+			"byteOffset":79176,
 			"target":34962
 		},
 		{
 			"buffer":0,
 			"byteLength":1088,
-			"byteOffset":70472,
+			"byteOffset":80264,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":544,
-			"byteOffset":71560,
+			"byteLength":1632,
+			"byteOffset":81352,
 			"target":34962
 		},
 		{
 			"buffer":0,
 			"byteLength":1088,
-			"byteOffset":72104,
+			"byteOffset":82984,
 			"target":34962
 		},
 		{
 			"buffer":0,
 			"byteLength":576,
-			"byteOffset":73192,
+			"byteOffset":84072,
 			"target":34963
 		}
 	],
@@ -308,7 +295,7 @@
 	],
 	"buffers":[
 		{
-			"byteLength":73768,
+			"byteLength":84648,
 			"uri":"StreetLamp.bin"
 		}
 	]

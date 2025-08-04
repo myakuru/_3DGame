@@ -21,36 +21,15 @@
 	"nodes":[
 		{
 			"mesh":0,
-			"name":"Traffic_Light_Model.002",
-			"translation":[
-				-2.2064554691314697,
-				5.381283760070801,
-				-0.05472898483276367
-			]
+			"name":"Traffic_Light_Model.002"
 		},
 		{
 			"mesh":1,
-			"name":"Traffic_Light_Model.001",
-			"translation":[
-				0,
-				5.314519882202148,
-				0
-			]
+			"name":"Traffic_Light_Model.001"
 		},
 		{
 			"mesh":2,
-			"name":"Traffic_Light_Model.003",
-			"rotation":[
-				0,
-				0.7071068286895752,
-				0,
-				0.7071068286895752
-			],
-			"translation":[
-				0,
-				2.1842200756073,
-				0
-			]
+			"name":"Traffic_Light_Model.003"
 		}
 	],
 	"materials":[
@@ -63,7 +42,7 @@
 					"ior":1.4500000476837158
 				}
 			},
-			"name":"Material",
+			"name":"Material.001",
 			"pbrMetallicRoughness":{
 				"baseColorTexture":{
 					"index":0
@@ -134,29 +113,29 @@
 		{
 			"bufferView":0,
 			"componentType":5126,
-			"count":130,
+			"count":132,
 			"max":[
-				2.3095951080322266,
-				0.7593303322792053,
-				0.15786851942539215
+				0.10313963890075684,
+				6.140614032745361,
+				0.10313953459262848
 			],
 			"min":[
-				2.071074962615967,
-				-5.381284236907959,
-				-0.07981428503990173
+				-0.13538050651550293,
+				-4.76837158203125e-07,
+				-0.1345432698726654
 			],
 			"type":"VEC3"
 		},
 		{
 			"bufferView":1,
 			"componentType":5126,
-			"count":130,
+			"count":132,
 			"type":"VEC3"
 		},
 		{
 			"bufferView":2,
 			"componentType":5126,
-			"count":130,
+			"count":132,
 			"type":"VEC2"
 		},
 		{
@@ -171,12 +150,12 @@
 			"count":661,
 			"max":[
 				0.11581897735595703,
-				0.2283329963684082,
+				5.542852878570557,
 				0.13283321261405945
 			],
 			"min":[
 				-2.4051599502563477,
-				-0.6306543350219727,
+				4.683865547180176,
 				-0.22492915391921997
 			],
 			"type":"VEC3"
@@ -202,29 +181,29 @@
 		{
 			"bufferView":8,
 			"componentType":5126,
-			"count":571,
+			"count":576,
 			"max":[
-				0.5091245174407959,
-				0.26262950897216797,
-				0.12964916229248047
+				0.12964913249015808,
+				2.4468495845794678,
+				0.11581921577453613
 			],
 			"min":[
-				-0.11581920087337494,
-				-0.2841501235961914,
-				-0.17861199378967285
+				-0.17861206829547882,
+				1.9000699520111084,
+				-0.5091245770454407
 			],
 			"type":"VEC3"
 		},
 		{
 			"bufferView":9,
 			"componentType":5126,
-			"count":571,
+			"count":576,
 			"type":"VEC3"
 		},
 		{
 			"bufferView":10,
 			"componentType":5126,
-			"count":571,
+			"count":576,
 			"type":"VEC2"
 		},
 		{
@@ -237,74 +216,74 @@
 	"bufferViews":[
 		{
 			"buffer":0,
-			"byteLength":1560,
+			"byteLength":1584,
 			"byteOffset":0,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":1560,
-			"byteOffset":1560,
+			"byteLength":1584,
+			"byteOffset":1584,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":1040,
-			"byteOffset":3120,
+			"byteLength":1056,
+			"byteOffset":3168,
 			"target":34962
 		},
 		{
 			"buffer":0,
 			"byteLength":600,
-			"byteOffset":4160,
+			"byteOffset":4224,
 			"target":34963
 		},
 		{
 			"buffer":0,
 			"byteLength":7932,
-			"byteOffset":4760,
+			"byteOffset":4824,
 			"target":34962
 		},
 		{
 			"buffer":0,
 			"byteLength":7932,
-			"byteOffset":12692,
+			"byteOffset":12756,
 			"target":34962
 		},
 		{
 			"buffer":0,
 			"byteLength":5288,
-			"byteOffset":20624,
+			"byteOffset":20688,
 			"target":34962
 		},
 		{
 			"buffer":0,
 			"byteLength":3552,
-			"byteOffset":25912,
+			"byteOffset":25976,
 			"target":34963
 		},
 		{
 			"buffer":0,
-			"byteLength":6852,
-			"byteOffset":29464,
+			"byteLength":6912,
+			"byteOffset":29528,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":6852,
-			"byteOffset":36316,
+			"byteLength":6912,
+			"byteOffset":36440,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":4568,
-			"byteOffset":43168,
+			"byteLength":4608,
+			"byteOffset":43352,
 			"target":34962
 		},
 		{
 			"buffer":0,
 			"byteLength":2400,
-			"byteOffset":47736,
+			"byteOffset":47960,
 			"target":34963
 		}
 	],
@@ -316,7 +295,7 @@
 	],
 	"buffers":[
 		{
-			"byteLength":50136,
+			"byteLength":50360,
 			"uri":"TrafficLight.bin"
 		}
 	]

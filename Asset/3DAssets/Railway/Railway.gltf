@@ -15,18 +15,7 @@
 	"nodes":[
 		{
 			"mesh":0,
-			"name":"SM_Railway",
-			"rotation":[
-				0.7071068286895752,
-				0,
-				0,
-				0.7071068286895752
-			],
-			"scale":[
-				0.009999999776482582,
-				0.009999999776482582,
-				0.009999999776482582
-			]
+			"name":"SM_Railway"
 		}
 	],
 	"materials":[
@@ -44,7 +33,7 @@
 	],
 	"meshes":[
 		{
-			"name":"Scene",
+			"name":"Scene.005",
 			"primitives":[
 				{
 					"attributes":{
@@ -75,29 +64,29 @@
 		{
 			"bufferView":0,
 			"componentType":5126,
-			"count":174362,
+			"count":217126,
 			"max":[
-				27128.927734375,
-				18353.44140625,
-				-1910.097900390625
+				271.2892761230469,
+				21.40387725830078,
+				183.534423828125
 			],
 			"min":[
-				-11335.5986328125,
-				-2409.677734375,
-				-2140.38720703125
+				-113.35598754882812,
+				19.100955963134766,
+				-24.096776962280273
 			],
 			"type":"VEC3"
 		},
 		{
 			"bufferView":1,
 			"componentType":5126,
-			"count":174362,
+			"count":217126,
 			"type":"VEC3"
 		},
 		{
 			"bufferView":2,
 			"componentType":5126,
-			"count":174362,
+			"count":217126,
 			"type":"VEC2"
 		},
 		{
@@ -110,26 +99,26 @@
 	"bufferViews":[
 		{
 			"buffer":0,
-			"byteLength":2092344,
+			"byteLength":2605512,
 			"byteOffset":0,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":2092344,
-			"byteOffset":2092344,
+			"byteLength":2605512,
+			"byteOffset":2605512,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":1394896,
-			"byteOffset":4184688,
+			"byteLength":1737008,
+			"byteOffset":5211024,
 			"target":34962
 		},
 		{
 			"buffer":0,
 			"byteLength":1324272,
-			"byteOffset":5579584,
+			"byteOffset":6948032,
 			"target":34963
 		}
 	],
@@ -141,7 +130,7 @@
 	],
 	"buffers":[
 		{
-			"byteLength":6903856,
+			"byteLength":8272304,
 			"uri":"Railway.bin"
 		}
 	]
