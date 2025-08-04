@@ -65,7 +65,7 @@ public:
 	virtual bool IsRideable()	const { return false; }
 
 	// 視錐台範囲内に入っているかどうか
-	virtual bool CheckInScreen(const DirectX::BoundingFrustum&) const { return false; }
+	virtual bool CheckInScreen(const DirectX::BoundingFrustum& a_BoundingFrustum)const;
 
 	// カメラからの距離を計算
 	virtual void CalcDistSqrFromCamera(const Math::Vector3& camPos);

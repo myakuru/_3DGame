@@ -52,6 +52,25 @@ Math::Vector3 KdGameObject::GetScale() const
 	return Math::Vector3(m_mWorld.Right().Length(), m_mWorld.Up().Length(), m_mWorld.Backward().Length());
 }
 
+bool KdGameObject::CheckInScreen(const DirectX::BoundingFrustum& _BoundingFrustum) const
+{
+	if (!m_model) return false;
+
+	DirectX::BoundingBox combinedBox;
+
+	for (auto& nodeIdx : m_model->GetDrawMeshNodeIndices())
+	{
+		auto& node = m_model->GetOriginalNodes()[nodeIdx];
+		if (!node.m_spMesh) continue;
+
+		node.m_spMesh->GetBoundingBox().Transform(combinedBox, m_mWorld);
+
+		if (_BoundingFrustum.Intersects(combinedBox)) return true;
+	}
+
+	return false;
+}
+
 void KdGameObject::CalcDistSqrFromCamera(const Math::Vector3& camPos)
 {
 	m_distSqrFromCamera = (m_mWorld.Translation() - camPos).LengthSquared();

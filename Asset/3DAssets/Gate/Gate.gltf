@@ -21,18 +21,7 @@
 			"children":[
 				0
 			],
-			"name":"P_Gate",
-			"rotation":[
-				0.6408565640449524,
-				-0.2988361418247223,
-				0.2988363206386566,
-				0.6408562064170837
-			],
-			"scale":[
-				0.010000000707805157,
-				0.010000000707805157,
-				0.009999999776482582
-			]
+			"name":"P_Gate"
 		}
 	],
 	"materials":[
@@ -83,42 +72,42 @@
 		{
 			"bufferView":0,
 			"componentType":5126,
-			"count":34166,
+			"count":34192,
 			"max":[
-				543.8340454101562,
-				129.2249755859375,
-				2.4234275770140812e-05
+				4.304978847503662,
+				6.035647392272949,
+				4.785293102264404
 			],
 			"min":[
-				-543.8340454101562,
-				-129.22528076171875,
-				-603.5647583007812
+				-4.3049798011779785,
+				-1.9241463178332197e-07,
+				-4.78529167175293
 			],
 			"type":"VEC3"
 		},
 		{
 			"bufferView":1,
 			"componentType":5126,
-			"count":34166,
+			"count":34192,
 			"type":"VEC3"
 		},
 		{
 			"bufferView":2,
 			"componentType":5126,
-			"count":34166,
+			"count":34192,
 			"type":"VEC2"
 		},
 		{
 			"bufferView":3,
 			"componentType":5121,
-			"count":34166,
+			"count":34192,
 			"normalized":true,
 			"type":"VEC4"
 		},
 		{
 			"bufferView":4,
 			"componentType":5123,
-			"count":34166,
+			"count":34192,
 			"normalized":true,
 			"type":"VEC4"
 		},
@@ -132,38 +121,38 @@
 	"bufferViews":[
 		{
 			"buffer":0,
-			"byteLength":409992,
+			"byteLength":410304,
 			"byteOffset":0,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":409992,
-			"byteOffset":409992,
+			"byteLength":410304,
+			"byteOffset":410304,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":273328,
-			"byteOffset":819984,
+			"byteLength":273536,
+			"byteOffset":820608,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":136664,
-			"byteOffset":1093312,
+			"byteLength":136768,
+			"byteOffset":1094144,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":273328,
-			"byteOffset":1229976,
+			"byteLength":273536,
+			"byteOffset":1230912,
 			"target":34962
 		},
 		{
 			"buffer":0,
 			"byteLength":188220,
-			"byteOffset":1503304,
+			"byteOffset":1504448,
 			"target":34963
 		}
 	],
@@ -175,7 +164,7 @@
 	],
 	"buffers":[
 		{
-			"byteLength":1691524,
+			"byteLength":1692668,
 			"uri":"Gate.bin"
 		}
 	]

@@ -23,6 +23,71 @@ void Enemy::Update()
 	CharaBase::Update();
 }
 
+void Enemy::PostUpdate()
+{
+	// ====================================================
+	// レイの当り判定::::::::::::::::::::ここから::::::::::::::
+	// ====================================================
+
+	// レイ判定用に必要なParameter
+	KdCollider::RayInfo rayInfo;
+
+	// レイの何処から発射するか
+	rayInfo.m_pos = m_position;
+
+	// 段差の許容範囲を設定
+	static const float enableStepHigh = 0.2f;
+	rayInfo.m_pos.y += enableStepHigh;			// 0.2f までの段差は登れる
+
+	// レイの方向を設定
+	rayInfo.m_dir = { 0.0f,-1.0f,0.0f };
+
+	// レイの長さを設定
+	rayInfo.m_range = enableStepHigh + m_gravity;
+
+	// アタリ判定したいタイプを設定
+	rayInfo.m_type = KdCollider::TypeGround;
+
+	m_pDebugWire->AddDebugLine(rayInfo.m_pos, rayInfo.m_dir, rayInfo.m_range);
+
+	// レイに当たったオブジェクト情報を格納するリスト
+	std::list<KdCollider::CollisionResult> retRayList;
+	// 作成したレイ情報でオブジェクトリストと当たり判定をする
+	for (auto& obj : SceneManager::Instance().GetMapList())
+	{
+		obj->Intersects(rayInfo, &retRayList);
+	}
+
+	// レイに当たったリストから一番近いオブジェクトを検出
+	bool hit = false;
+	float maxOverLap = 0;
+	Math::Vector3 groundPos = {};	// レイが遮断された(Hitした)座標
+
+	for (auto& ret : retRayList)
+	{
+		// レイが当たったオブジェクトの中から
+		// 「m_overlapDistance = 貫通した長さ」が一番長いものを探す
+		// 「m_overlapDistance が一番長い = 一番近くで当たった」と判定できる
+		if (maxOverLap < ret.m_overlapDistance)
+		{
+			maxOverLap = ret.m_overlapDistance;
+			groundPos = ret.m_hitPos;
+			hit = true;
+		}
+	}
+
+	// 当たっていたら
+	if (hit)
+	{
+		m_gravity = 0.0f;	// 重力をリセット
+		m_position = groundPos;
+	}
+
+	//=====================================================
+	// レイ当り判定::::::::::::::::::::ここまで::::::::::::::::
+	//=====================================================
+}
+
 void Enemy::ImGuiInspector()
 {
 	CharaBase::ImGuiInspector();

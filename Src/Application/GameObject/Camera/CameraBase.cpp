@@ -69,6 +69,22 @@ void CameraBase::UpdateMoveKey()
 	m_position += move;
 }
 
+DirectX::BoundingFrustum CameraBase::CreateFrustum() const
+{
+	DirectX::BoundingFrustum frustum;
+	DirectX::BoundingFrustum::CreateFromMatrix(frustum, m_spCamera->GetProjMatrix());
+
+	frustum.Origin = m_mWorld.Translation();
+
+	// 視錐台の回転をクォータニオンで設定
+	frustum.Orientation = Math::Quaternion::CreateFromYawPitchRoll(
+		DirectX::XMConvertToRadians(m_degree.y),
+		DirectX::XMConvertToRadians(m_degree.x),
+		DirectX::XMConvertToRadians(m_degree.z));
+
+	return frustum;
+}
+
 void CameraBase::UpdateRotateByMouse()
 {
 	static bool prevTab = false; // 前フレームのTABキー状態

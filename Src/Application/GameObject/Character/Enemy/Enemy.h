@@ -11,6 +11,7 @@ public:
 
 	void Init() override;
 	void Update() override;
+	void PostUpdate() override;
 	void ImGuiInspector() override;
 	void JsonInput(const nlohmann::json& _json) override;
 	void JsonSave(nlohmann::json& _json) const override;

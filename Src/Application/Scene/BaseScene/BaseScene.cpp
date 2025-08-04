@@ -1,5 +1,7 @@
 ﻿#include "BaseScene.h"
 #include"../SceneManager.h"
+#include"../../GameObject/Camera/CameraBase.h"
+#include"../../GameObject/Camera/PlayerCamera/PlayerCamera.h"
 
 void BaseScene::PreUpdate()
 {
@@ -46,6 +48,9 @@ void BaseScene::PreUpdate()
 		obj->PreUpdate();
 	}
 
+	SceneManager::Instance().GetObjectWeakPtr(m_playerCamera);
+
+	if (m_playerCamera.expired()) return;
 
 }
 
@@ -101,6 +106,27 @@ void BaseScene::PreDraw()
 
 void BaseScene::Draw()
 {
+	auto playerCamera = m_playerCamera.lock();
+
+	// カメラからフラスタム生成
+	DirectX::BoundingFrustum frustum = playerCamera->CreateFrustum();
+
+	int cunter = 0;
+
+	// Mapリストからカリング
+	for (auto& obj : m_MapObjectList)
+	{
+		bool result = obj->CheckInScreen(frustum);
+		if (result)
+		{
+			cunter++;
+			m_drawObjectList.push_back(obj);
+		}
+	}
+
+	KdDebugGUI::Instance().AddLog("DrawObjectList Size: %d\n", cunter);
+
+
 	if (KdDebugGUI::Instance().ShowImGUiFlg())
 	{
 		m_renderTargetPack.ClearTexture();
@@ -115,7 +141,7 @@ void BaseScene::Draw()
 		{
 			obj->GenerateDepthMapFromLight();
 		}
-		for (auto& obj : m_MapObjectList)
+		for (auto& obj : m_drawObjectList)
 		{
 			obj->GenerateDepthMapFromLight();
 		}
@@ -130,11 +156,10 @@ void BaseScene::Draw()
 		{
 			obj->DrawUnLit();
 		}
-		for (auto& obj : m_MapObjectList)
+		for (auto& obj : m_drawObjectList)
 		{
 			obj->DrawUnLit();
 		}
-
 	}
 	KdShaderManager::Instance().m_StandardShader.EndUnLit();
 
@@ -146,7 +171,7 @@ void BaseScene::Draw()
 		{
 			obj->DrawLit();
 		}
-		for (auto& obj : m_MapObjectList)
+		for (auto& obj : m_drawObjectList)
 		{
 			obj->DrawLit();
 		}
@@ -161,7 +186,7 @@ void BaseScene::Draw()
 		{
 			obj->DrawEffect();
 		}
-		for (auto& obj : m_MapObjectList)
+		for (auto& obj : m_drawObjectList)
 		{
 			obj->DrawEffect();
 		}
@@ -176,7 +201,7 @@ void BaseScene::Draw()
 		{
 			obj->DrawBright();
 		}
-		for (auto& obj : m_MapObjectList)
+		for (auto& obj : m_drawObjectList)
 		{
 			obj->DrawBright();
 		}
@@ -190,7 +215,7 @@ void BaseScene::Draw()
 		{
 			obj->DrawToon();
 		}
-		for (auto& obj : m_MapObjectList)
+		for (auto& obj : m_drawObjectList)
 		{
 			obj->DrawToon();
 		}
@@ -198,6 +223,9 @@ void BaseScene::Draw()
 	KdShaderManager::Instance().m_StandardShader.EndToon();
 
 	m_renderTargetChanger.UndoRenderTarget();
+
+	m_drawObjectList.clear();
+
 }
 
 void BaseScene::DrawSprite()
@@ -224,6 +252,11 @@ void BaseScene::DrawSprite()
 
 void BaseScene::DrawDebug()
 {
+	if (KdDebugGUI::Instance().ShowImGUiFlg())
+	{
+		m_renderTargetChanger.ChangeRenderTarget(m_renderTargetPack);
+	}
+
 	// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 	// デバッグ情報の描画はこの間で行う
 	KdShaderManager::Instance().m_StandardShader.BeginUnLit();
@@ -232,8 +265,14 @@ void BaseScene::DrawDebug()
 		{
 			obj->DrawDebug();
 		}
+		for (auto& obj : m_MapObjectList)
+		{
+			obj->DrawDebug();
+		}
 	}
 	KdShaderManager::Instance().m_StandardShader.EndUnLit();
+
+	m_renderTargetChanger.UndoRenderTarget();
 }
 
 void BaseScene::Event()

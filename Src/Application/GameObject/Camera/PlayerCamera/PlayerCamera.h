@@ -17,6 +17,7 @@ public:
 	void ImGuiInspector()	override;
 	void JsonSave(nlohmann::json& _json) const override;
 	void JsonInput(const nlohmann::json& _json) override;
+	DirectX::BoundingFrustum CreateFrustum() const override;
 
 private:
 

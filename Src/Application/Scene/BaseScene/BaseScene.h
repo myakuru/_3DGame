@@ -1,5 +1,5 @@
 ﻿#pragma once
-
+class PlayerCamera;
 class BaseScene
 {
 public :
@@ -67,7 +67,8 @@ protected :
 	virtual void Event();
 	virtual void Init();
 
-	KdTexture m_defaultTexture;
+	std::weak_ptr<PlayerCamera> m_playerCamera;
+
 	KdRenderTargetChanger m_renderTargetChanger;
 	KdRenderTargetPack m_renderTargetPack;
 
@@ -75,4 +76,5 @@ protected :
 	std::list<std::shared_ptr<KdGameObject>> m_objList;
 	std::list<std::shared_ptr<KdGameObject>> m_CameraObjList;
 	std::list<std::shared_ptr<KdGameObject>> m_MapObjectList;
+	std::list<std::shared_ptr<KdGameObject>> m_drawObjectList;
 };

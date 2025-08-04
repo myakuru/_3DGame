@@ -11,8 +11,6 @@
 
 void PlayerState_Idle::StateStart()
 {
-	//float deltaTime = Application::Instance().GetDeltaTime();
-
 	auto anime = m_player->GetAnimeModel()->GetAnimation("Idle");
 	m_player->GetAnimator()->AnimationBlend(anime, 10.0f);
 	m_player->AnimeSetFlg() = true;

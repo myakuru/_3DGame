@@ -10,6 +10,8 @@ const uint32_t PlayerCamera::TypeID = KdGameObject::GenerateTypeID();
 void PlayerCamera::Init()
 {
 	CameraBase::Init();
+
+	m_pDebugWire = std::make_unique<KdDebugWireFrame>();
 	SetCursorPos(m_FixMousePos.x, m_FixMousePos.y);
 }
 
@@ -113,4 +115,43 @@ void PlayerCamera::JsonInput(const nlohmann::json& _json)
 {
 	KdGameObject::JsonInput(_json);
 	if(_json.contains("targetLookAt")) m_targetLookAt = JSON_MANAGER.JsonToVector(_json["targetLookAt"]);
+}
+
+DirectX::BoundingFrustum PlayerCamera::CreateFrustum() const
+{
+	DirectX::BoundingFrustum frustum;
+	DirectX::BoundingFrustum::CreateFromMatrix(frustum, m_spCamera->GetProjMatrix());
+
+	frustum.Origin = m_mWorld.Translation();
+
+	// 視錐台の回転をクォータニオンで設定
+	frustum.Orientation = Math::Quaternion::CreateFromYawPitchRoll(
+		DirectX::XMConvertToRadians(m_degree.y),
+		DirectX::XMConvertToRadians(m_degree.x),
+		DirectX::XMConvertToRadians(m_degree.z));
+
+	// 8つのコーナー座標を取得
+	DirectX::XMFLOAT3 corners[8];
+	frustum.GetCorners(corners);
+
+	// 視錐台の12本のエッジを線で描画
+	auto addLine = [this, &corners](int i0, int i1) {
+		m_pDebugWire->AddDebugLine(
+			Math::Vector3(corners[i0].x, corners[i0].y, corners[i0].z),
+			Math::Vector3(corners[i1].x, corners[i1].y, corners[i1].z),
+			Math::Color(1, 1, 0, 1) // 黄色など任意の色
+		);
+		};
+
+	// エッジのインデックス（Near面:0-3, Far面:4-7）
+	const int edgeIndices[12][2] = {
+		{0,1},{1,2},{2,3},{3,0}, // Near
+		{4,5},{5,6},{6,7},{7,4}, // Far
+		{0,4},{1,5},{2,6},{3,7}  // Side
+	};
+	for (const auto& edge : edgeIndices) {
+		addLine(edge[0], edge[1]);
+	}
+
+	return frustum;
 }
