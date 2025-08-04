@@ -22,14 +22,31 @@ void Katana::Update()
 	Math::Vector3 playerHipPos = m_swordData.m_weaponTranslationMatrix.Translation();
 	// プレイヤーの後ろにある剣の位置を計算(エディターでいじれるようになっている)
 	m_swordData.m_weaponTranslationMatrix.Translation(m_katanaOffset + playerHipPos);
-	m_swordData.m_weaponScaleMatrix = Math::Matrix::CreateScale(m_swordData.m_scale.x, m_swordData.m_scale.y, m_swordData.m_scale.z);
+	m_swordData.m_weaponScaleMatrix = Math::Matrix::CreateScale(m_swordData.m_scale);
 	// プレイヤーに追尾するように、プレイヤーの位置を取得して、剣の位置を更新
-	m_swordData.m_weaponMatrix *= m_swordData.m_weaponScaleMatrix * m_swordData.m_weaponTranslationMatrix * m_swordData.m_playerTranslationMatrix;
+	m_swordData.m_weaponMatrix = m_swordData.m_weaponScaleMatrix * m_swordData.m_weaponTranslationMatrix * m_swordData.m_playerTranslationMatrix;
+}
+
+void Katana::UpdateHand()
+{
+	m_swordHandData.m_weaponRotationMatrix = Math::Matrix::CreateFromYawPitchRoll
+	(
+		DirectX::XMConvertToRadians(m_swordData.m_weaponDeg.y),
+		DirectX::XMConvertToRadians(m_swordData.m_weaponDeg.x),
+		DirectX::XMConvertToRadians(m_swordData.m_weaponDeg.z)
+	);
+
+	m_swordHandData.m_weaponMatrix = m_swordHandData.m_weaponRotationMatrix;
+
+	m_swordHandData.m_weaponTranslationMatrix.Translation(m_katanaOffset + m_swordData.m_playerTranslationMatrix.Translation());
+	m_swordHandData.m_weaponScaleMatrix = Math::Matrix::CreateScale(m_swordData.m_scale);
+	m_swordHandData.m_weaponMatrix = m_swordHandData.m_weaponScaleMatrix * m_swordHandData.m_weaponTranslationMatrix * m_swordData.m_playerTranslationMatrix;
+
 }
 
 void Katana::ImGuiInspector()
 {
-	//KdGameObject::ImGuiInspector();
+	KdGameObject::ImGuiInspector();
 
 	ImGui::Text("Katana Inspector");
 

@@ -4,6 +4,16 @@
 #include"../../Scene/SceneManager.h"
 #include"../Camera/PlayerCamera/PlayerCamera.h"
 
+void CharaBase::Init()
+{
+	KdGameObject::Init();
+	m_pDebugWire = std::make_unique<KdDebugWireFrame>();
+
+	ModelLoad(m_path);
+
+	//m_trailPolygon.SetMaterial("Asset/Textures/System/WhiteNoise.png");
+}
+
 std::shared_ptr<KdModelWork> CharaBase::GetAnimeModel()
 {
 	return m_modelWork; 
@@ -31,16 +41,6 @@ void CharaBase::UpdateQuaternion(Math::Vector3& _moveVector)
 	// 滑らかに回転させるために、現在の回転と目標の回転を補間
 	m_rotation = Math::Quaternion::Slerp(m_rotation, targetRotation, deltaTime * m_fixedFrameRate);
 
-}
-
-void CharaBase::Init()
-{
-	KdGameObject::Init();
-	m_pDebugWire = std::make_unique<KdDebugWireFrame>();
-
-	ModelLoad(m_path);
-
-	//m_trailPolygon.SetMaterial("Asset/Textures/System/WhiteNoise.png");
 }
 
 void CharaBase::Update()
@@ -131,8 +131,6 @@ void CharaBase::PostUpdate()
 		m_gravity = 0.0f;	// 重力をリセット
 		m_position = groundPos;
 	}
-
-	return;
 
 	//=====================================================
 	// レイ当り判定::::::::::::::::::::ここまで::::::::::::::::

@@ -28,27 +28,12 @@ void Player::Init()
 
 void Player::PreUpdate()
 {
-	// アニメーション適用後にノード行列を再計算
-	m_modelWork->CalcNodeMatrices();
+	// カタナの取得
+	auto katana = m_katana.lock();
 
-	// 手のワークノードを取得
-	//handWorkNode = m_modelWork->FindWorkNode("ring_01_r");
-	backWorkNode = m_modelWork->FindWorkNode("Hips");
-	if (!backWorkNode) return;
+	if (!katana) return;
 
-	//手のワークノードを取得して、カタナのワールド変換を設定
-	{
-		SceneManager::Instance().GetObjectWeakPtr(m_katana);
-
-		if (m_katana.expired()) return;
-
-		// katanaが有効な場合は、katanaのポインタを取得
-		std::shared_ptr<Katana> katana = m_katana.lock();
-
-		// プレイヤーに追尾する刀にするためにワークノードとプレイヤーのワールド変換を設定
-		katana->SetKatanaMatrix(backWorkNode->m_worldTransform);
-		katana->SetPlayerMatrix(m_mWorld);
-	}
+	katana->SetPlayerMatrix(m_mWorld);
 }
 
 void Player::SkirtUpdate()
@@ -58,15 +43,12 @@ void Player::SkirtUpdate()
 void Player::Update()
 {
 	SceneManager::Instance().GetObjectWeakPtr(m_playerCamera);
+	SceneManager::Instance().GetObjectWeakPtr(m_katana);
 
 	if (m_playerCamera.expired()) return;
+	if (m_katana.expired()) return;
 
 	CharaBase::Update();
-
-	// 最終的なワールド行列計算
-	m_mWorld = Math::Matrix::CreateScale(m_scale);
-	m_mWorld *= Math::Matrix::CreateFromQuaternion(m_rotation);
-	m_mWorld.Translation(m_position);
 }
 
 void Player::ImGuiInspector()

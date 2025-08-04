@@ -1,4 +1,6 @@
 ﻿#include "Enemy.h"
+#include"../Player/Player.h"
+#include"../../../Scene/SceneManager.h"
 #include"EnemyState/EnemyState_Idle/EnemyState_Idle.h"
 
 const uint32_t Enemy::TypeID = KdGameObject::GenerateTypeID();
@@ -14,9 +16,12 @@ void Enemy::Init()
 
 void Enemy::Update()
 {
+	SceneManager::Instance().GetObjectWeakPtr(m_wpPlayer);
+
+	if (m_wpPlayer.expired()) return;
+
 	CharaBase::Update();
 }
-
 
 void Enemy::ImGuiInspector()
 {

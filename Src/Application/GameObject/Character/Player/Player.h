@@ -21,15 +21,11 @@ public:
 	void StateInit();
 	void ChangeState(std::shared_ptr<PlayerStateBase> _state);
 
+	KdModelWork* GetModelWork() { return m_modelWork.get(); }
+
+	const std::weak_ptr<Katana>& GetKatana() const { return m_katana; }
+
 private:
 
 	std::weak_ptr<Katana>	m_katana;
-	
-	// 腰のノード情報取得用変数
-	const struct KdModelWork::Node* backWorkNode = nullptr;
-	const struct KdModelWork::Node* handWorkNode = nullptr;
-	struct KdModelWork::Node* skirtWorkNode = nullptr;
-
-	Math::Matrix m_skirtMatrix = Math::Matrix::Identity;
-
 };

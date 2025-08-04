@@ -11,11 +11,15 @@ public:
 	~Katana() override = default;
 
 	// 刀の行列はPlayerで設定される
-	void SetKatanaMatrix(const Math::Matrix& matrix) { m_swordData.m_weaponTranslationMatrix = matrix; }
-	void SetPlayerMatrix(const Math::Matrix& matrix) { m_swordData.m_playerTranslationMatrix = matrix; }
+	void SetKatanaMatrix(const Math::Matrix& _matrix) { m_swordData.m_weaponTranslationMatrix = _matrix; }
+	void SetPlayerMatrix(const Math::Matrix& _matrix) { m_swordData.m_playerTranslationMatrix = _matrix; }
+
+	void SetHandKatanaMatrix(const Math::Matrix& _matrix) { m_swordHandData.m_weaponTranslationMatrix = _matrix; }
+	void SetHandPlayerMatrix(const Math::Matrix& _matrix) { m_swordHandData.m_playerTranslationMatrix = _matrix; }
 
 private:
 	void Update() override;
+	void UpdateHand();
 	void ImGuiInspector() override;
 	void JsonSave(nlohmann::json& _json) const override;
 	void JsonInput(const nlohmann::json& _json) override;

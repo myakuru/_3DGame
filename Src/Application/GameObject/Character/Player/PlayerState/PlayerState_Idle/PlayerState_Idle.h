@@ -10,6 +10,6 @@ public:
 	void StateUpdate() override;
 	void StateEnd() override;
 
-private:
+	void UpdateKatana();
 
 };

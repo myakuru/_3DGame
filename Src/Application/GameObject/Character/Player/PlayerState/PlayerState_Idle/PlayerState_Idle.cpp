@@ -3,8 +3,11 @@
 #include"../../../../../../MyFramework/Manager/KeyboardManager.h"
 #include"../../../../../main.h"
 
+#include"../../../../../Scene/SceneManager.h"
+
 #include"../PlayerState_Run/PlayerState_Run.h"
 #include"../PlayerState_Attack/PlayerState_Attack.h"
+#include"../../../../Weapon/Katana/Katana.h"
 
 void PlayerState_Idle::StateStart()
 {
@@ -18,6 +21,8 @@ void PlayerState_Idle::StateStart()
 void PlayerState_Idle::StateUpdate()
 {
 	m_player->SetAnimeSpeed(60.0f);
+
+	UpdateKatana();
 
 	// キーが押されたらRunステートへ
 	if (KeyboardManager::GetInstance().IsKeyPressed('W') ||
@@ -45,4 +50,20 @@ void PlayerState_Idle::StateUpdate()
 void PlayerState_Idle::StateEnd()
 {
 	m_player->AnimeSetFlg() = false;
+}
+
+void PlayerState_Idle::UpdateKatana()
+{
+	// Idle時はHipsノードをhandWorkNodeにセット
+	auto hipNode = m_player->GetModelWork()->FindDataNode("Hips");
+
+	if (!hipNode) return;
+
+	// カタナの取得
+	auto katana = m_player->GetKatana().lock();
+
+	if (!katana) return;
+
+	// プレイヤーに追尾する刀にするためにワークノードとプレイヤーのワールド変換を設定
+	katana->SetKatanaMatrix(hipNode->m_worldTransform);
 }

@@ -1,4 +1,5 @@
 ﻿#pragma once
+class Player;
 #include "../CharacterBase.h"
 class Enemy :public CharaBase
 {
@@ -17,8 +18,13 @@ public:
 	void StateInit();
 	void ChangeState(std::shared_ptr<EnemyStateBase> _state);
 
-
+	const std::weak_ptr<Player>& GetPlayerWeakPtr() const
+	{
+		return m_wpPlayer;
+	}
 
 private:
+
+	std::weak_ptr<Player> m_wpPlayer;
 
 };
