@@ -121,7 +121,7 @@ DirectX::BoundingFrustum PlayerCamera::CreateFrustum() const
 {
 	DirectX::BoundingFrustum frustum;
 	DirectX::BoundingFrustum::CreateFromMatrix(frustum, m_spCamera->GetProjMatrix());
-	// カメラのワールド行列で変換（ビュー行列の逆行列）
+	// カメラのワールド行列で変換
 	frustum.Transform(frustum, m_spCamera->GetCameraMatrix());
 
 	// 8つのコーナー座標を取得

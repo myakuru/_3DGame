@@ -61,13 +61,15 @@ void CharaBase::Update()
 	m_position.z += m_movement.z * m_moveSpeed * m_fixedFrameRate * deltaTime;
 	m_position.y += m_gravity;
 
-	// ステートで移動処理など管理
 	m_stateManager.Update();
 
 	// 最終的なワールド行列計算
 	m_mWorld = Math::Matrix::CreateScale(m_scale);
-	m_mWorld *= Math::Matrix::CreateFromQuaternion(m_rotation);
+	m_mWorld = Math::Matrix::CreateFromQuaternion(m_rotation);
 	m_mWorld.Translation(m_position);
+
+	// ステートで移動処理など管理
+
 	// トレイルポリゴンの更新
 	//m_trailPolygon.AddPoint(m_mWorld);
 }

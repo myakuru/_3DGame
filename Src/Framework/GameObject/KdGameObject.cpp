@@ -7,6 +7,7 @@
 void KdGameObject::Init()
 {
 	ModelLoad(m_path);
+	m_pDebugWire = std::make_unique<KdDebugWireFrame>();
 
 	m_mWorld = Math::Matrix::CreateScale(m_scale);
 	m_mWorld *= Math::Matrix::CreateFromYawPitchRoll(
@@ -67,6 +68,8 @@ bool KdGameObject::CheckInScreen(const DirectX::BoundingFrustum& _BoundingFrustu
 
 		if (_BoundingFrustum.Intersects(combinedBox)) return true;
 	}
+
+	m_pDebugWire->AddDebugSphere(combinedBox.Center, 2, kRedColor);
 
 	return false;
 }

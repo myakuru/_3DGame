@@ -19,21 +19,11 @@
 		},
 		{
 			"mesh":1,
-			"name":"SM_SupportAttachment",
-			"translation":[
-				0,
-				0,
-				539
-			]
+			"name":"SM_SupportAttachment"
 		},
 		{
 			"mesh":2,
-			"name":"SM_SupportAttachment__1_",
-			"translation":[
-				0,
-				0,
-				539
-			]
+			"name":"SM_SupportAttachment__1_"
 		},
 		{
 			"children":[
@@ -48,18 +38,7 @@
 				0,
 				3
 			],
-			"name":"RailwaySupports",
-			"rotation":[
-				0.1459215134382248,
-				0.6918864250183105,
-				-0.6918865442276001,
-				0.1459214985370636
-			],
-			"scale":[
-				0.009999999776482582,
-				0.009999999776482582,
-				0.009999999776482582
-			]
+			"name":"RailwaySupports"
 		}
 	],
 	"materials":[
@@ -167,14 +146,14 @@
 			"componentType":5126,
 			"count":476,
 			"max":[
-				173.32763671875,
-				238.8617706298828,
-				55.32643127441406
+				2.1983747482299805,
+				8.15178108215332,
+				2.5348658561706543
 			],
 			"min":[
-				-173.32763671875,
-				-238.8617706298828,
-				-815.1781005859375
+				-2.1983747482299805,
+				-0.5532639622688293,
+				-2.534865617752075
 			],
 			"type":"VEC3"
 		},
@@ -199,29 +178,29 @@
 		{
 			"bufferView":4,
 			"componentType":5126,
-			"count":571,
+			"count":651,
 			"max":[
-				815.7377319335938,
-				726.494140625,
-				-2679.9208984375
+				10.22059440612793,
+				24.61043357849121,
+				0.2742411196231842
 			],
 			"min":[
-				-815.7377319335938,
-				-13.8922119140625,
-				-3000.04345703125
+				-5.729841232299805,
+				21.40920639038086,
+				-9.763879776000977
 			],
 			"type":"VEC3"
 		},
 		{
 			"bufferView":5,
 			"componentType":5126,
-			"count":571,
+			"count":651,
 			"type":"VEC3"
 		},
 		{
 			"bufferView":6,
 			"componentType":5126,
-			"count":571,
+			"count":651,
 			"type":"VEC2"
 		},
 		{
@@ -233,29 +212,29 @@
 		{
 			"bufferView":8,
 			"componentType":5126,
-			"count":572,
+			"count":655,
 			"max":[
-				815.7379150390625,
-				1252.494140625,
-				-2679.920654296875
+				12.344817161560059,
+				24.610429763793945,
+				-4.537752628326416
 			],
 			"min":[
-				-815.73779296875,
-				512.1077880859375,
-				-3000.043212890625
+				-3.6056203842163086,
+				21.409204483032227,
+				-14.575875282287598
 			],
 			"type":"VEC3"
 		},
 		{
 			"bufferView":9,
 			"componentType":5126,
-			"count":572,
+			"count":655,
 			"type":"VEC3"
 		},
 		{
 			"bufferView":10,
 			"componentType":5126,
-			"count":572,
+			"count":655,
 			"type":"VEC2"
 		},
 		{
@@ -267,29 +246,29 @@
 		{
 			"bufferView":12,
 			"componentType":5126,
-			"count":293,
+			"count":303,
 			"max":[
-				57.67354965209961,
-				360.1035461425781,
-				546.9038696289062
+				1.9818739891052246,
+				24.59084701538086,
+				1.0033081769943237
 			],
 			"min":[
-				-57.67362594604492,
-				-99.24472045898438,
-				-2459.084716796875
+				-0.790889322757721,
+				-5.469038486480713,
+				-3.5272419452667236
 			],
 			"type":"VEC3"
 		},
 		{
 			"bufferView":13,
 			"componentType":5126,
-			"count":293,
+			"count":303,
 			"type":"VEC3"
 		},
 		{
 			"bufferView":14,
 			"componentType":5126,
-			"count":293,
+			"count":303,
 			"type":"VEC2"
 		},
 		{
@@ -326,74 +305,74 @@
 		},
 		{
 			"buffer":0,
-			"byteLength":6852,
+			"byteLength":7812,
 			"byteOffset":18328,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":6852,
-			"byteOffset":25180,
+			"byteLength":7812,
+			"byteOffset":26140,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":4568,
-			"byteOffset":32032,
-			"target":34962
-		},
-		{
-			"buffer":0,
-			"byteLength":2628,
-			"byteOffset":36600,
-			"target":34963
-		},
-		{
-			"buffer":0,
-			"byteLength":6864,
-			"byteOffset":39228,
-			"target":34962
-		},
-		{
-			"buffer":0,
-			"byteLength":6864,
-			"byteOffset":46092,
-			"target":34962
-		},
-		{
-			"buffer":0,
-			"byteLength":4576,
-			"byteOffset":52956,
+			"byteLength":5208,
+			"byteOffset":33952,
 			"target":34962
 		},
 		{
 			"buffer":0,
 			"byteLength":2628,
-			"byteOffset":57532,
+			"byteOffset":39160,
 			"target":34963
 		},
 		{
 			"buffer":0,
-			"byteLength":3516,
-			"byteOffset":60160,
+			"byteLength":7860,
+			"byteOffset":41788,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":3516,
-			"byteOffset":63676,
+			"byteLength":7860,
+			"byteOffset":49648,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":2344,
-			"byteOffset":67192,
+			"byteLength":5240,
+			"byteOffset":57508,
+			"target":34962
+		},
+		{
+			"buffer":0,
+			"byteLength":2628,
+			"byteOffset":62748,
+			"target":34963
+		},
+		{
+			"buffer":0,
+			"byteLength":3636,
+			"byteOffset":65376,
+			"target":34962
+		},
+		{
+			"buffer":0,
+			"byteLength":3636,
+			"byteOffset":69012,
+			"target":34962
+		},
+		{
+			"buffer":0,
+			"byteLength":2424,
+			"byteOffset":72648,
 			"target":34962
 		},
 		{
 			"buffer":0,
 			"byteLength":2292,
-			"byteOffset":69536,
+			"byteOffset":75072,
 			"target":34963
 		}
 	],
@@ -405,7 +384,7 @@
 	],
 	"buffers":[
 		{
-			"byteLength":71828,
+			"byteLength":77364,
 			"uri":"RailwaySupports.bin"
 		}
 	]
