@@ -175,6 +175,9 @@
     <Filter Include="Src\Application\GameObject\Character\Enemy\EnemyState\EnemyState_Attack2">
       <UniqueIdentifier>{4eef2391-179b-4f67-abce-f736af089c8c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\GameObject\HUD\AlpfaMoving">
+      <UniqueIdentifier>{afdd8912-e1a0-46ab-8c52-2335a72a5f83}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -450,6 +453,9 @@
     <ClInclude Include="Src\Application\GameObject\Character\Enemy\EnemyState\EnemyState_Attack2\EnemyState_Attack2.h">
       <Filter>Src\Application\GameObject\Character\Enemy\EnemyState\EnemyState_Attack2</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\HUD\AlpfaMoving\AlpfaMoving.h">
+      <Filter>Src\Application\GameObject\HUD\AlpfaMoving</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -667,6 +673,9 @@
     </ClCompile>
     <ClCompile Include="Src\Application\GameObject\Character\Enemy\EnemyState\EnemyState_Attack2\EnemyState_Attack2.cpp">
       <Filter>Src\Application\GameObject\Character\Enemy\EnemyState\EnemyState_Attack2</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\HUD\AlpfaMoving\AlpfaMoving.cpp">
+      <Filter>Src\Application\GameObject\HUD\AlpfaMoving</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

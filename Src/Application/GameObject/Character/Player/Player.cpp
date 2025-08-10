@@ -90,3 +90,17 @@ void Player::ChangeState(std::shared_ptr<PlayerStateBase> _state)
 	_state->SetPlayer(this);
 	m_stateManager.ChangeState(_state);
 }
+
+void Player::UpdateMoveDirectionFromInput()
+{
+	m_moveDirection = Math::Vector3::Zero;
+	if (KeyboardManager::GetInstance().IsKeyPressed('W')) m_moveDirection += Math::Vector3::Backward;
+	if (KeyboardManager::GetInstance().IsKeyPressed('S')) m_moveDirection += Math::Vector3::Forward;
+	if (KeyboardManager::GetInstance().IsKeyPressed('A')) m_moveDirection += Math::Vector3::Left;
+	if (KeyboardManager::GetInstance().IsKeyPressed('D')) m_moveDirection += Math::Vector3::Right;
+	if (m_moveDirection.LengthSquared() > 0.0f)
+	{
+		m_moveDirection.Normalize();
+		m_lastMoveDirection = m_moveDirection; // 入力があった時だけ更新
+	}
+}

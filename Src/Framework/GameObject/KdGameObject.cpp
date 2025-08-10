@@ -160,14 +160,11 @@ void KdGameObject::ImGuiInspector()
 	static std::string currentName = "Transform";
 
 	// ImGuiのコンボボックスを作成
-	if (ImGui::BeginCombo("##TransForm", currentName.data()))// 実際のIDは「&currentName + 'Class'」
-	{
-		ImGui::DragFloat3(U8("位置"), &m_position.x, 0.1f);
-		ImGui::DragFloat3(U8("拡大、縮小"), &m_scale.x, 0.1f);
-		ImGui::DragFloat3(U8("回転"), &m_degree.x, 0.1f);
+	
+	ImGui::DragFloat3(U8("位置"), &m_position.x, 0.1f);
+	ImGui::DragFloat3(U8("拡大、縮小"), &m_scale.x, 0.1f);
+	ImGui::DragFloat3(U8("回転"), &m_degree.x, 0.1f);
 
-		ImGui::EndCombo();
-	}
 
 	ImGui::ColorEdit4("color", &m_color.x);
 

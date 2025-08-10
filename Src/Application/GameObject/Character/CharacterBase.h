@@ -19,6 +19,8 @@ public:
 	Math::Matrix& GetRotationMatrix() { return m_mRotation; }
 	void SetRotation(const Math::Quaternion& rotation) { m_rotation = rotation; }
 	const bool & GetMoving() const { return m_isMoving; }
+	void SetPosition(const Math::Vector3& position) { m_position = position; }
+	const Math::Vector3& GetPosition() const { return m_position; }
 
 	/// <summary>
 	/// ステートで変更するアニメーションモデルを取得する関数

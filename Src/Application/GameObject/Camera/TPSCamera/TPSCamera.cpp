@@ -16,11 +16,14 @@ void TPSCamera::Init()
 
 void TPSCamera::PostUpdate()
 {
-	if (SceneManager::Instance().m_sceneCamera) return;
-
-	// カメラの回転
-	UpdateRotateByMouse();
-	m_mRotation = GetRotationMatrix();
-	UpdateMoveKey();
-	m_mWorld = m_mLocalPos * m_mRotation;
+	if (!SceneManager::Instance().m_sceneCamera)
+	{
+		// カメラの回転
+		UpdateRotateByMouse();
+		m_mRotation = GetRotationMatrix();
+		UpdateMoveKey();
+		m_mWorld = m_mLocalPos * m_mRotation;
+		m_mWorld.Translation(m_position);
+		m_spCamera->SetCameraMatrix(m_mWorld);
+	}
 }

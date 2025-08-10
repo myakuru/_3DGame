@@ -65,10 +65,20 @@ public:
 		return false;
 	}
 
+	float GetTime() const { return m_time; }
+
 	// アニメーションの更新
 	void AdvanceTime(std::vector<KdModelWork::Node>& rNodes, float speed = 1.0f);
 
 	void AnimationBlend(const std::shared_ptr<KdAnimationData>& nextAnim, float duration, bool nextIsLoop = true);
+
+	bool GetRootMotion(
+		const std::shared_ptr<KdAnimationData>& animData,
+		const std::vector<KdModelData::Node>& modelNodes,
+		const std::string& rootBoneName,
+		float time,
+		Math::Vector3& outTranslation
+	) const;
 
 private:
 

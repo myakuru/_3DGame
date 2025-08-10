@@ -20,12 +20,21 @@ public:
 
 	void StateInit();
 	void ChangeState(std::shared_ptr<PlayerStateBase> _state);
+	void UpdateMoveDirectionFromInput();
+
+	const Math::Vector3& GetMoveDirection() const { return m_moveDirection; }
+	Math::Vector3 GetLastMoveDirection() const { return m_lastMoveDirection; }
+	void SetMoveDirection(const Math::Vector3& _moveDirection) { m_moveDirection = _moveDirection; }
 
 	KdModelWork* GetModelWork() { return m_modelWork.get(); }
 
 	const std::weak_ptr<Katana>& GetKatana() const { return m_katana; }
 
 private:
+
+	Math::Vector3 m_moveDirection = Math::Vector3::Zero; // 移動方向
+	
+	Math::Vector3 m_lastMoveDirection = Math::Vector3::Zero;
 
 	std::weak_ptr<Katana>	m_katana;
 };

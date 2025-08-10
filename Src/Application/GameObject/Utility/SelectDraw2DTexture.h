@@ -19,9 +19,7 @@ public:
 	// ImGuiのインスペクターでDrawを変更できるようにする。
 	void ImGuiInspector() override
 	{
-		//KdGameObject::ImGuiInspector();
-
-		ImGuiSelectGltf();
+		KdGameObject::ImGuiInspector();
 
 		ImGui::Checkbox("Draw Texture", &m_bDrawTexture);
 	}
@@ -57,11 +55,6 @@ private:
 		}
 
 		return false;
-	}
-
-	void ImGuiSelectGltf() override
-	{
-		KdGameObject::ImGuiSelectGltf();
 	}
 
 	bool m_bDrawTexture = false;

@@ -102,30 +102,37 @@ void BaseScene::PreDraw()
 		}
 	}
 
+	auto playerCamera = m_playerCamera.lock();
+
+	if (playerCamera)
+	{
+		// カメラからフラスタム生成
+		DirectX::BoundingFrustum frustum = playerCamera->CreateFrustum();
+
+		int cunter = 0;
+
+		// Mapリストからカリング
+		for (auto& obj : m_MapObjectList)
+		{
+			bool result = obj->CheckInScreen(frustum);
+			if (result)
+			{
+				cunter++;
+				m_drawObjectList.push_back(obj);
+			}
+		}
+	}
+	else
+	{
+		for (auto& obj : m_MapObjectList)
+		{
+			m_drawObjectList.push_back(obj);
+		}
+	}
 }
 
 void BaseScene::Draw()
 {
-	auto playerCamera = m_playerCamera.lock();
-
-	// カメラからフラスタム生成
-	DirectX::BoundingFrustum frustum = playerCamera->CreateFrustum();
-
-	int cunter = 0;
-
-	// Mapリストからカリング
-	for (auto& obj : m_MapObjectList)
-	{
-		bool result = obj->CheckInScreen(frustum);
-		if (result)
-		{
-			cunter++;
-			m_drawObjectList.push_back(obj);
-		}
-	}
-
-	KdDebugGUI::Instance().AddLog("DrawObjectList Size: %d\n", cunter);
-
 
 	if (KdDebugGUI::Instance().ShowImGUiFlg())
 	{
@@ -257,20 +264,20 @@ void BaseScene::DrawDebug()
 		m_renderTargetChanger.ChangeRenderTarget(m_renderTargetPack);
 	}
 
-	// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
-	// デバッグ情報の描画はこの間で行う
-	KdShaderManager::Instance().m_StandardShader.BeginUnLit();
-	{
-		for (auto& obj : m_objList)
+		// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+		// デバッグ情報の描画はこの間で行う
+		KdShaderManager::Instance().m_StandardShader.BeginUnLit();
 		{
-			obj->DrawDebug();
+			for (auto& obj : m_objList)
+			{
+				obj->DrawDebug();
+			}
+			for (auto& obj : m_MapObjectList)
+			{
+				obj->DrawDebug();
+			}
 		}
-		for (auto& obj : m_MapObjectList)
-		{
-			obj->DrawDebug();
-		}
-	}
-	KdShaderManager::Instance().m_StandardShader.EndUnLit();
+		KdShaderManager::Instance().m_StandardShader.EndUnLit();
 
 	m_renderTargetChanger.UndoRenderTarget();
 }

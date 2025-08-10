@@ -241,3 +241,26 @@ void KdAnimator::AnimationBlend(const std::shared_ptr<KdAnimationData>& nextAnim
 	m_isBlending = true;
 	m_nextIsLoop = nextIsLoop;
 }
+
+bool KdAnimator::GetRootMotion(const std::shared_ptr<KdAnimationData>& animData, const std::vector<KdModelData::Node>& modelNodes, const std::string& rootBoneName, float time, Math::Vector3& outTranslation) const
+{
+	if (!animData) return false;
+
+	// ノードインデックス取得
+	int boneIndex = -1;
+	for (size_t i = 0; i < modelNodes.size(); ++i) {
+		if (modelNodes[i].m_name == rootBoneName) {
+			boneIndex = static_cast<int>(i);
+			break;
+		}
+	}
+	if (boneIndex == -1) return false;
+
+	// アニメーションノード取得
+	for (auto& node : animData->m_nodes) {
+		if (node.m_nodeOffset == boneIndex) {
+			return node.InterpolateTranslations(outTranslation, time);
+		}
+	}
+	return false;
+}
