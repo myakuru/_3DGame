@@ -15,7 +15,6 @@ void CameraBase::Init()
 void CameraBase::PreDraw()
 {
 	if (!m_spCamera) { return; }
-	m_spCamera->SetCameraMatrix(m_mWorld);
 	m_spCamera->SetToShader();
 }
 

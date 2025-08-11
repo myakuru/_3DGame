@@ -64,9 +64,11 @@ void CharaBase::Update()
 	m_stateManager.Update();
 
 	// 最終的なワールド行列計算
-	m_mWorld = Math::Matrix::CreateScale(m_scale);
-	m_mWorld = Math::Matrix::CreateFromQuaternion(m_rotation);
-	m_mWorld.Translation(m_position);
+	Math::Matrix scale = Math::Matrix::CreateScale(m_scale);
+	Math::Matrix quaternion = Math::Matrix::CreateFromQuaternion(m_rotation);
+	Math::Matrix translation = Math::Matrix::CreateTranslation(m_position);
+
+	m_mWorld = scale * quaternion * translation;
 
 	// ステートで移動処理など管理
 

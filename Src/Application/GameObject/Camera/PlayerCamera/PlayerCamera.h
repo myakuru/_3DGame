@@ -19,10 +19,13 @@ public:
 	void JsonInput(const nlohmann::json& _json) override;
 	DirectX::BoundingFrustum CreateFrustum() const override;
 
+	void DebugDraw(DirectX::BoundingFrustum _frustum);
+
 private:
 
 	std::weak_ptr<Player> m_player;
 	Math::Vector3 m_cameraPos = Math::Vector3::Zero; // カメラの現在位置
-	Math::Vector3 m_targetPos = Math::Vector3::Zero;
 	Math::Vector3 m_targetLookAt = Math::Vector3::Zero;
+
+	float m_smooth = 0.0f; // カメラ追従のスムージング係数
 };

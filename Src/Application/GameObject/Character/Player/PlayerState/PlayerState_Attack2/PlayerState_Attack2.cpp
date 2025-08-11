@@ -41,8 +41,8 @@ void PlayerState_Attack2::StateUpdate()
 	float deltaTime = Application::Instance().GetDeltaTime();
 	if (m_dashTimer < 0.2f)
 	{
-		float dashSpeed = 130.0f;
-		m_player->SetIsMoving(m_attackDirection * dashSpeed * deltaTime);
+		float dashSpeed = 1.0f;
+		m_player->SetIsMoving(m_attackDirection * dashSpeed);
 		m_dashTimer += deltaTime;
 	}
 	else

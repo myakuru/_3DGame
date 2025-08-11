@@ -55,6 +55,8 @@ void Player::ImGuiInspector()
 {
 	CharaBase::ImGuiInspector();
 
+	ImGui::Text(U8("プレイヤーの設定"));
+
 	ImGui::DragFloat(U8("重力の大きさ"), &m_gravitySpeed, 0.01f);
 	ImGui::DragFloat(U8("フレームレート制限"), &m_fixedFrameRate, 1.f);
 

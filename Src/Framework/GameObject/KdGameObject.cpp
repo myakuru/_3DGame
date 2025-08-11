@@ -172,7 +172,6 @@ void KdGameObject::ImGuiInspector()
 	
 	ImGuiSelectGltf();
 
-
 	m_mWorld = Math::Matrix::CreateScale(m_scale);
 	m_mWorld *= Math::Matrix::CreateFromYawPitchRoll(
 		DirectX::XMConvertToRadians(m_degree.y),

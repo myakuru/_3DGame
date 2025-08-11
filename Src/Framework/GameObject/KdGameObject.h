@@ -30,7 +30,16 @@ public:
 	// 生成される全てに共通するパラメータに対する初期化のみ
 	virtual void Init();
 
-	virtual void PreUpdate() {}
+	virtual void PreUpdate() 
+	{
+		m_mWorld = Math::Matrix::CreateScale(m_scale);
+		m_mWorld *= Math::Matrix::CreateFromYawPitchRoll(
+			DirectX::XMConvertToRadians(m_degree.y),
+			DirectX::XMConvertToRadians(m_degree.x),
+			DirectX::XMConvertToRadians(m_degree.z)
+		);
+		m_mWorld.Translation(m_position);
+	}
 	virtual void Update() {}
 	virtual void PostUpdate() {}
 	virtual void CameraUpdate() {}
