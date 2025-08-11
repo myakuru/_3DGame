@@ -8,10 +8,6 @@ public:
 
 	void StateStart() override;
 	void StateUpdate() override;
+	void RootMotionUpdate();
 	void StateEnd() override;
-
-private:
-	Math::Vector3 prevRootTranslation = Math::Vector3::Zero;
-	Math::Vector3 currentRootTranslation = Math::Vector3::Zero;
-	Math::Vector3 m_attackDirection = Math::Vector3::Zero;
 };

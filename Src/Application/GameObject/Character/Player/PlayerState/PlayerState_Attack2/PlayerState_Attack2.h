@@ -8,6 +8,7 @@ public:
 
 	void StateStart() override;
 	void StateUpdate() override;
+	void RootMotionUpdate();
 	void StateEnd() override;
 
 };

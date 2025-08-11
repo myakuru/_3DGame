@@ -31,7 +31,7 @@ void PlayerCamera::PostUpdate()
 	}
 
 	// カメラの位置をターゲットの位置に設定
-	m_mLocalPos = Math::Matrix::CreateTranslation(m_targetLookAt.x, m_targetLookAt.y, m_targetLookAt.z);
+	m_mLocalPos = Math::Matrix::CreateTranslation(m_targetLookAt);
 
 	// カメラの回転
 	UpdateRotateByMouse();

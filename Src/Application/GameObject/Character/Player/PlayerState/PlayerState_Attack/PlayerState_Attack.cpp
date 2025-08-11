@@ -18,13 +18,13 @@ void PlayerState_Attack::StateStart()
 	{
 		m_player->UpdateQuaternion(m_attackDirection);
 	}
+
+	m_dashTimer = 0.0f;
 }
 
 void PlayerState_Attack::StateUpdate()
 {
 	m_player->SetAnimeSpeed(120.0f);
-
-	float currentFrame = m_player->GetAnimator()->GetTime();
 
 	if (KeyboardManager::GetInstance().IsKeyJustPressed(VK_LBUTTON))
 	{
@@ -46,10 +46,27 @@ void PlayerState_Attack::StateUpdate()
 		return;
 	}
 
+	float deltaTime = Application::Instance().GetDeltaTime();
+	if (m_dashTimer < 0.2f)
+	{
+		float dashSpeed = 200.0f;
+		m_player->SetIsMoving(m_attackDirection * dashSpeed * deltaTime);
+		m_dashTimer += deltaTime;
+	}
+	else
+	{
+		// 移動を止める
+		m_player->SetIsMoving(Math::Vector3::Zero);
+	}
+}
+
+void PlayerState_Attack::RootMotionUpdate()
+{
 	// ルートモーション取得APIを利用
 	auto animeModel = m_player->GetAnimeModel();
 	auto attackRootAnime = animeModel->GetAnimation("AttackRoot");
 	const auto& modelNodes = animeModel->GetDataNodes();
+	float currentFrame = m_player->GetAnimator()->GetTime();
 
 	if (m_player->GetAnimator()->GetRootMotion(attackRootAnime, modelNodes, "Armature", currentFrame, currentRootTranslation))
 	{
@@ -64,17 +81,14 @@ void PlayerState_Attack::StateUpdate()
 		Math::Vector3 moveDelta = -m_attackDirection * forwardAmount;
 
 		static Math::Vector3 prevDelta = Math::Vector3::Zero;
-		float lerpFactor = 0.2f; // 補間係数
+		float lerpFactor = 0.5f; // 補間係数
 
 		Math::Vector3 smoothDelta = Math::Vector3::Lerp(prevDelta, moveDelta, lerpFactor);
 
-		m_player->SetPosition(m_player->GetPosition() + smoothDelta);
+		m_player->SetIsMoving(smoothDelta * 10.0f);
 		prevDelta = smoothDelta;
 		prevRootTranslation = currentRootTranslation;
 	}
-
-	m_player->SetIsMoving(Math::Vector3::Zero);
-
 }
 
 void PlayerState_Attack::StateEnd()

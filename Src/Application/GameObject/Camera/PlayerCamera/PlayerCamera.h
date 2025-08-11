@@ -22,6 +22,7 @@ public:
 private:
 
 	std::weak_ptr<Player> m_player;
+	Math::Vector3 m_cameraPos = Math::Vector3::Zero; // カメラの現在位置
 	Math::Vector3 m_targetPos = Math::Vector3::Zero;
 	Math::Vector3 m_targetLookAt = Math::Vector3::Zero;
 };
