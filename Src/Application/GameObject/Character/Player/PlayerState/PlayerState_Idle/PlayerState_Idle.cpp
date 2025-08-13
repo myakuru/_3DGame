@@ -50,10 +50,15 @@ void PlayerState_Idle::StateEnd()
 	m_player->AnimeSetFlg() = false;
 }
 
+void PlayerState_Idle::ImGuiInspector()
+{
+	ImGui::Text("PlayerState_Idle");
+}
+
 void PlayerState_Idle::UpdateKatana()
 {
 	// Idle時はHipsノードをhandWorkNodeにセット
-	auto hipNode = m_player->GetModelWork()->FindDataNode("Hips");
+	auto hipNode = m_player->GetModelWork()->FindWorkNode("Hips");
 
 	if (!hipNode) return;
 

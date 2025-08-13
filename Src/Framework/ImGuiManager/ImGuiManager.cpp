@@ -7,6 +7,14 @@
 #include"../../Application/Scene/BaseScene/BaseScene.h"
 #include"../RegisterObject/RegisterObject.h"
 
+void ImGuiManager::Init()
+{
+	KdCSVData windowData("Asset/Data/WindowSettings.csv");
+	const std::vector<std::string>& sizeData = windowData.GetLine(0);
+
+	m_gameSceneSize = ImVec2(atoi(sizeData[0].data()) / 2, atoi(sizeData[1].data()) / 2); // ゲームシーンのサイズを設定
+}
+
 void ImGuiManager::ImGuiUpdate()
 {
 	// ゲームシーンを表示
@@ -98,16 +106,7 @@ if (ImGui::BeginChild("Objects"))
 			className.erase(0, 6); // "class"の部分を削除
 		}
 
-		if (IsDroped("GameObjectInstance"))
-		{
-			std::shared_ptr<KdGameObject>* temp = nullptr;
-			GetDragData("GameObjectInstance", temp);
-			listSwap(obj, *temp);
-			ImGui::ClearDragDrop(); // 自作のドロップ処理のため自力で初期化
-		}
-
 		bool TreeNode = ImGui::TreeNode(className.data());
-		DragDropSource("GameObjectInstance", &obj);	//ゲームオブジェクトのポインターをドラック出来るようになる
 
         // ここからツリー形式で詳細情報を表示
         if (TreeNode) //className + "##" + std::to_string((int)obj.get()) <=こういう書き方もあるよ
@@ -155,16 +154,7 @@ if (ImGui::BeginChild("Objects"))
 			className.erase(0, 6); // "class"の部分を削除
 		}
 
-		if (IsDroped("GameObjectInstance"))
-		{
-			std::shared_ptr<KdGameObject>* temp = nullptr;
-			GetDragData("GameObjectInstance", temp);
-			listSwap(obj, *temp);
-			ImGui::ClearDragDrop(); // 自作のドロップ処理のため自力で初期化
-		}
-
 		bool TreeNode = ImGui::TreeNode(className.data());
-		DragDropSource("GameObjectInstance", &obj);	//ゲームオブジェクトのポインターをドラック出来るようになる
 
 		// ここからツリー形式で詳細情報を表示
 		if (TreeNode) //className + "##" + std::to_string((int)obj.get()) <=こういう書き方もあるよ
@@ -215,16 +205,7 @@ if (ImGui::BeginChild("Objects"))
 			className.erase(0, 6); // "class"の部分を削除
 		}
 
-		if (IsDroped("GameObjectInstance"))
-		{
-			std::shared_ptr<KdGameObject>* temp = nullptr;
-			GetDragData("GameObjectInstance", temp);
-			listSwap(obj, *temp);
-			ImGui::ClearDragDrop(); // 自作のドロップ処理のため自力で初期化
-		}
-
 		bool TreeNode = ImGui::TreeNode(className.data());
-		DragDropSource("GameObjectInstance", &obj);	//ゲームオブジェクトのポインターをドラック出来るようになる
 
 		// ここからツリー形式で詳細情報を表示
 		if (TreeNode) //className + "##" + std::to_string((int)obj.get()) <=こういう書き方もあるよ
@@ -286,6 +267,9 @@ void ImGuiManager::ShowGameScene()
 			return;
 		}
 
+		KdCSVData windowData("Asset/Data/WindowSettings.csv");
+		const std::vector<std::string>& sizeData = windowData.GetLine(0);
+
 		m_winSize = ImGui::GetWindowSize();
 
 		auto texID = (ImTextureID)(SceneManager::Instance().GetCurrentScene()->GetRenderTargetPack().m_RTTexture->WorkSRView());
@@ -311,8 +295,8 @@ void ImGuiManager::ShowGameScene()
 			POINT mouse;
 			if (offsetX >= 0 && offsetY >= 0 && offsetX < m_gameSceneSize.x && offsetY < m_gameSceneSize.y)
 			{
-				float gameX = offsetX * (1280.0f / m_gameSceneSize.x);
-				float gameY = offsetY * (720.0f / m_gameSceneSize.y);
+				float gameX = offsetX * (atoi(sizeData[0].data()) / m_gameSceneSize.x);
+				float gameY = offsetY * (atoi(sizeData[1].data()) / m_gameSceneSize.y);
 
 				mouse.x = static_cast<LONG>(gameX);
 				mouse.y = static_cast<LONG>(gameY);
@@ -413,18 +397,6 @@ void ImGuiManager::ImGuiSelecetCamera()
 	{
 		if (ImGui::Button(U8("ストップ", ImVec2(150, 20)))) SceneManager::Instance().m_sceneCamera = false;
 	}
-}
-
-void ImGuiManager::listSwap(std::shared_ptr<KdGameObject> _obj1, std::shared_ptr<KdGameObject> _obj2)
-{
-	auto& _list = SceneManager::Instance().GetCurrentScene()->WorkObjList();
-
-	auto it1 = std::find(_list.begin(), _list.end(), _obj1);
-	if (it1 == _list.end())return;
-	auto it2 = std::ranges::find(_list, _obj2);
-	if (it2 == _list.end())return;
-
-	std::swap(*it1, *it2);
 }
 
 std::shared_ptr<KdCamera> ImGuiManager::GetActiveCamera()

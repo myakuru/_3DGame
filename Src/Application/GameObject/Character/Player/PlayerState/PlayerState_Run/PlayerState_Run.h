@@ -9,5 +9,6 @@ public:
 	void StateStart() override;
 	void StateUpdate() override;
 	void StateEnd() override;
+	void UpdateKatanaPos();
 
 };

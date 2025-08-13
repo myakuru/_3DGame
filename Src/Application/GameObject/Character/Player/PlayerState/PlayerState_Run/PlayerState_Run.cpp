@@ -2,6 +2,7 @@
 #include"../../../CharacterBase.h"
 #include"../PlayerState_Idle/PlayerState_Idle.h"
 #include"../../../../Camera/PlayerCamera/PlayerCamera.h"
+#include"../../../../Weapon/Katana/Katana.h"
 
 void PlayerState_Run::StateStart()
 {
@@ -24,6 +25,8 @@ void PlayerState_Run::StateUpdate()
 		return;
 	}
 
+	UpdateKatanaPos();
+
 	if (!m_player->GetPlayerCamera()) return;
 
 	m_player->UpdateQuaternion(moveDir);
@@ -39,4 +42,20 @@ void PlayerState_Run::StateUpdate()
 
 void PlayerState_Run::StateEnd()
 {
+}
+
+void PlayerState_Run::UpdateKatanaPos()
+{
+	// Idle時はHipsノードをhandWorkNodeにセット
+	auto hipNode = m_player->GetModelWork()->FindDataNode("Hips");
+
+	if (!hipNode) return;
+
+	// カタナの取得
+	auto katana = m_player->GetKatana().lock();
+
+	if (!katana) return;
+
+	// プレイヤーに追尾する刀にするためにワークノードとプレイヤーのワールド変換を設定
+	katana->SetKatanaMatrix(hipNode->m_worldTransform);
 }

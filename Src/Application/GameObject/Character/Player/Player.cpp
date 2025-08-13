@@ -1,11 +1,10 @@
 ﻿#include "Player.h"
 #include"../../../Scene/SceneManager.h"
 #include"../../Weapon/Katana/Katana.h"
-#include"../Player/PlayerState/PlayerState.h"
-#include"../Player/PlayerState/PlayerState_Idle/PlayerState_Idle.h"
 #include"../../../main.h"
 #include"../../../../Framework/Json/Json.h"
 #include"../../Camera/PlayerCamera/PlayerCamera.h"
+#include"PlayerState/PlayerState_Idle/PlayerState_Idle.h"
 
 const uint32_t Player::TypeID = KdGameObject::GenerateTypeID();
 
@@ -23,7 +22,6 @@ void Player::Init()
 		DirectX::XMConvertToRadians(m_degree.x), // X軸回転
 		DirectX::XMConvertToRadians(m_degree.z)  // Z軸回転
 	);
-
 }
 
 void Player::PreUpdate()
@@ -34,6 +32,8 @@ void Player::PreUpdate()
 	if (!katana) return;
 
 	katana->SetPlayerMatrix(m_mWorld);
+
+
 }
 
 void Player::SkirtUpdate()
@@ -62,6 +62,9 @@ void Player::ImGuiInspector()
 
 	ImGui::Text(U8("プレイヤーの状態"));
 	ImGui::DragFloat(U8("移動速度"), &m_moveSpeed, 0.1f);
+
+	ImGui::Separator();
+	m_playerConfig.InGuiInspector();
 }
 
 void Player::JsonInput(const nlohmann::json& _json)
@@ -70,6 +73,8 @@ void Player::JsonInput(const nlohmann::json& _json)
 	if (_json.contains("GravitySpeed")) m_gravitySpeed = _json["GravitySpeed"].get<float>();
 	if (_json.contains("fixedFps")) m_fixedFrameRate = _json["fixedFps"].get<float>();
 	if (_json.contains("moveSpeed")) m_moveSpeed = _json["moveSpeed"].get<float>();
+
+	m_playerConfig.JsonInput(_json);
 }
 
 void Player::JsonSave(nlohmann::json& _json) const
@@ -78,6 +83,8 @@ void Player::JsonSave(nlohmann::json& _json) const
 	_json["GravitySpeed"] = m_gravitySpeed;
 	_json["fixedFps"] = m_fixedFrameRate;
 	_json["moveSpeed"] = m_moveSpeed;
+
+	m_playerConfig.JsonSave(_json);
 }
 
 void Player::StateInit()

@@ -286,6 +286,7 @@
     <ClInclude Include="Src\Application\GameObject\Character\Enemy\EnemyState\EnemyState_Idle\EnemyState_Idle.h" />
     <ClInclude Include="Src\Application\GameObject\Character\Enemy\EnemyState\EnemyState_Run\EnemyState_Run.h" />
     <ClInclude Include="Src\Application\GameObject\Character\Player\Player.h" />
+    <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerConfig.h" />
     <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState.h" />
     <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_Attack1\PlayerState_Attack1.h" />
     <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_Attack2\PlayerState_Attack2.h" />

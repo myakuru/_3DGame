@@ -3,6 +3,7 @@
 #include"../PlayerState_Attack1/PlayerState_Attack1.h"
 #include"../PlayerState_Idle/PlayerState_Idle.h"
 #include"../PlayerState_Run/PlayerState_Run.h"
+#include"../../../../Weapon/Katana/Katana.h"
 
 void PlayerState_Attack::StateStart()
 { 
@@ -19,7 +20,7 @@ void PlayerState_Attack::StateStart()
 		m_player->UpdateQuaternion(m_attackDirection);
 	}
 
-	m_dashTimer = 0.0f;
+	m_attackParam = m_player->GetPlayerConfig().GetAttackParam();
 }
 
 void PlayerState_Attack::StateUpdate()
@@ -46,12 +47,13 @@ void PlayerState_Attack::StateUpdate()
 		return;
 	}
 
+	UpdateKatanaPos();
+
 	float deltaTime = Application::Instance().GetDeltaTime();
-	if (m_dashTimer < 0.2f)
+	if (m_attackParam.m_dashTimer < 0.2f)
 	{
-		float dashSpeed = 1.5f;
-		m_player->SetIsMoving(m_attackDirection * dashSpeed);
-		m_dashTimer += deltaTime;
+		m_player->SetIsMoving(m_attackDirection * m_attackParam.m_dashTimer);
+		m_attackParam.m_dashTimer += deltaTime;
 	}
 	else
 	{
@@ -60,37 +62,22 @@ void PlayerState_Attack::StateUpdate()
 	}
 }
 
-void PlayerState_Attack::RootMotionUpdate()
-{
-	// ルートモーション取得APIを利用
-	auto animeModel = m_player->GetAnimeModel();
-	auto attackRootAnime = animeModel->GetAnimation("AttackRoot");
-	const auto& modelNodes = animeModel->GetDataNodes();
-	float currentFrame = m_player->GetAnimator()->GetTime();
-
-	if (m_player->GetAnimator()->GetRootMotion(attackRootAnime, modelNodes, "Armature", currentFrame, currentRootTranslation))
-	{
-		float rootMotionScale = 2.5f; // 移動量倍率
-		Math::Vector3 targetDelta = (currentRootTranslation - prevRootTranslation) * rootMotionScale;
-
-		// Y軸の移動は無視
-		targetDelta.y = 0.0f;
-
-		// プレイヤーの向きに「前進量」を乗せる
-		float forwardAmount = targetDelta.z;
-		Math::Vector3 moveDelta = -m_attackDirection * forwardAmount;
-
-		static Math::Vector3 prevDelta = Math::Vector3::Zero;
-		float lerpFactor = 0.5f; // 補間係数
-
-		Math::Vector3 smoothDelta = Math::Vector3::Lerp(prevDelta, moveDelta, lerpFactor);
-
-		m_player->SetIsMoving(smoothDelta * 10.0f);
-		prevDelta = smoothDelta;
-		prevRootTranslation = currentRootTranslation;
-	}
-}
-
 void PlayerState_Attack::StateEnd()
 {
+}
+
+void PlayerState_Attack::UpdateKatanaPos()
+{
+	// Idle時はHipsノードをhandWorkNodeにセット
+	auto handNode = m_player->GetModelWork()->FindWorkNode("VSB_10");
+
+	if (!handNode) return;
+
+	// カタナの取得
+	auto katana = m_player->GetKatana().lock();
+
+	if (!katana) return;
+
+	// プレイヤーに追尾する刀にするためにワークノードとプレイヤーのワールド変換を設定
+	katana->SetKatanaMatrix(handNode->m_worldTransform);
 }

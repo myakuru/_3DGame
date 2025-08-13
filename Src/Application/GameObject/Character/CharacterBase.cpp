@@ -1,5 +1,4 @@
 ﻿#include "CharacterBase.h"
-#include"Player/PlayerState/PlayerState.h"
 #include"../../main.h"
 #include"../../Scene/SceneManager.h"
 #include"../Camera/PlayerCamera/PlayerCamera.h"

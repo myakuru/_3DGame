@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "../CharacterBase.h"
+#include"PlayerConfig.h"
 class Katana;
 class Player :public CharaBase
 {
@@ -30,6 +31,8 @@ public:
 
 	const std::weak_ptr<Katana>& GetKatana() const { return m_katana; }
 
+	PlayerConfig& GetPlayerConfig() { return m_playerConfig; }
+
 private:
 
 	Math::Vector3 m_moveDirection = Math::Vector3::Zero; // 移動方向
@@ -37,4 +40,7 @@ private:
 	Math::Vector3 m_lastMoveDirection = Math::Vector3::Zero;
 
 	std::weak_ptr<Katana>	m_katana;
+
+	PlayerConfig m_playerConfig;
+
 };

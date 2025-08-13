@@ -24,7 +24,7 @@ protected:
 		Math::Matrix m_weaponRotationMatrix = Math::Matrix::Identity;	// 刀の回転行列
 		Math::Matrix m_weaponScaleMatrix = Math::Matrix::Identity;		// 刀の拡大縮小行列
 		Math::Vector3 m_weaponDeg = Math::Vector3::Zero;				// 刀の角度
-		Math::Vector3 m_scale = Math::Vector3::Zero;	// 刀の拡大縮小
+		Math::Vector3 m_scale = { 1.0f,1.0f,1.0f };	// 刀の拡大縮小
 	};
 
 	SwordData m_swordData;	// 刀のデータ

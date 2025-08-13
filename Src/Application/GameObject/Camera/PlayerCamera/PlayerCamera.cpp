@@ -107,7 +107,7 @@ void PlayerCamera::PostUpdate()
 
 void PlayerCamera::ImGuiInspector()
 {
-	KdGameObject::ImGuiInspector();
+	CameraBase::ImGuiInspector();
 
 	ImGui::Text(U8("プレイヤーとカメラの距離"));
 	ImGui::DragFloat3("offsetPos", &m_targetLookAt.x, 0.1f);
@@ -116,16 +116,16 @@ void PlayerCamera::ImGuiInspector()
 
 void PlayerCamera::JsonSave(nlohmann::json& _json) const
 {
-	KdGameObject::JsonSave(_json);
+	CameraBase::JsonSave(_json);
 	_json["targetLookAt"] = JSON_MANAGER.VectorToJson(m_targetLookAt);
 	_json["smooth"] = m_smooth;
 }
 
 void PlayerCamera::JsonInput(const nlohmann::json& _json)
 {
-	KdGameObject::JsonInput(_json);
+	CameraBase::JsonInput(_json);
 	if(_json.contains("targetLookAt")) m_targetLookAt = JSON_MANAGER.JsonToVector(_json["targetLookAt"]);
-	if (_json.contains("Camera Smooth")) m_smooth = _json["Camera Smooth"].get<float>();
+	if (_json.contains("smooth")) m_smooth = _json["smooth"].get<float>();
 }
 
 DirectX::BoundingFrustum PlayerCamera::CreateFrustum() const

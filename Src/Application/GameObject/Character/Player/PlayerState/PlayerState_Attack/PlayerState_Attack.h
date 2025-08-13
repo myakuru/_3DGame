@@ -8,6 +8,11 @@ public:
 
 	void StateStart() override;
 	void StateUpdate() override;
-	void RootMotionUpdate();
 	void StateEnd() override;
+
+
+private:
+
+	void UpdateKatanaPos();
+	PlayerState_AttackParameter m_attackParam;
 };

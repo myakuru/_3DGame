@@ -15,7 +15,7 @@ public:
 	void SetPlayerMatrix(const Math::Matrix& _matrix) { m_swordData.m_playerTranslationMatrix = _matrix; }
 
 	void SetHandKatanaMatrix(const Math::Matrix& _matrix) { m_swordHandData.m_weaponTranslationMatrix = _matrix; }
-	void SetHandPlayerMatrix(const Math::Matrix& _matrix) { m_swordHandData.m_playerTranslationMatrix = _matrix; }
+	void SetPlayerHandMatrix(const Math::Matrix& _matrix) { m_swordHandData.m_playerTranslationMatrix = _matrix; }
 
 private:
 	void Update() override;
@@ -25,4 +25,5 @@ private:
 	void JsonInput(const nlohmann::json& _json) override;
 
 	Math::Vector3 m_katanaOffset = Math::Vector3::Zero;
+	Math::Vector3 m_katanaHandOffset = Math::Vector3::Zero; // 手に持つ刀のオフセット
 };

@@ -9,7 +9,8 @@ public:
 
 	void StateStart() override;
 	void StateUpdate() override;
-	void RootMotionUpdate();
 	void StateEnd() override;
 
+private:
+	PlayerState_Attack1Parameter m_attackParam; // 攻撃パラメータ
 };

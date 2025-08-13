@@ -18,7 +18,8 @@ void PlayerState_Attack2::StateStart()
 		m_player->UpdateQuaternion(m_attackDirection);
 	}
 
-	m_dashTimer = 0.0f;
+	m_attackParam = m_player->GetPlayerConfig().GetAttack2Param();
+	m_attackParam.m_dashTimer = 0.0f;
 }
 
 void PlayerState_Attack2::StateUpdate()
@@ -39,46 +40,16 @@ void PlayerState_Attack2::StateUpdate()
 	}
 
 	float deltaTime = Application::Instance().GetDeltaTime();
-	if (m_dashTimer < 0.2f)
+	if (m_attackParam.m_dashTimer < 0.2f)
 	{
-		float dashSpeed = 1.0f;
+		float dashSpeed = 0.3f;
 		m_player->SetIsMoving(m_attackDirection * dashSpeed);
-		m_dashTimer += deltaTime;
+		m_attackParam.m_dashTimer += deltaTime;
 	}
 	else
 	{
 		// 移動を止める
 		m_player->SetIsMoving(Math::Vector3::Zero);
-	}
-}
-void PlayerState_Attack2::RootMotionUpdate()
-{
-	// ルートモーション取得APIを利用
-	auto animeModel = m_player->GetAnimeModel();
-	auto attackRootAnime = animeModel->GetAnimation("AttackRoot2");
-	const auto& modelNodes = animeModel->GetDataNodes();
-	float currentFrame = m_player->GetAnimator()->GetTime();
-
-	if (m_player->GetAnimator()->GetRootMotion(attackRootAnime, modelNodes, "Armature", currentFrame, currentRootTranslation))
-	{
-		float rootMotionScale = 2.5f; // 移動量倍率
-		Math::Vector3 targetDelta = (currentRootTranslation - prevRootTranslation) * rootMotionScale;
-
-		// Y軸の移動は無視
-		targetDelta.y = 0.0f;
-
-		// プレイヤーの向きに「前進量」を乗せる
-		float forwardAmount = targetDelta.z;
-		Math::Vector3 moveDelta = -m_attackDirection * forwardAmount;
-
-		static Math::Vector3 prevDelta = Math::Vector3::Zero;
-		float lerpFactor = 0.5f; // 補間係数
-
-		Math::Vector3 smoothDelta = Math::Vector3::Lerp(prevDelta, moveDelta, lerpFactor);
-
-		m_player->SetIsMoving(smoothDelta * 10.0f);
-		prevDelta = smoothDelta;
-		prevRootTranslation = currentRootTranslation;
 	}
 }
 

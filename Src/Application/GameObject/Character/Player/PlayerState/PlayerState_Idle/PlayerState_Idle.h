@@ -10,6 +10,8 @@ public:
 	void StateUpdate() override;
 	void StateEnd() override;
 
+	void ImGuiInspector() override;
+
 	void UpdateKatana();
 
 };

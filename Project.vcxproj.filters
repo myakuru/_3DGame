@@ -456,6 +456,9 @@
     <ClInclude Include="Src\Application\GameObject\HUD\AlpfaMoving\AlpfaMoving.h">
       <Filter>Src\Application\GameObject\HUD\AlpfaMoving</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerConfig.h">
+      <Filter>Src\Application\GameObject\Character\Player</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
