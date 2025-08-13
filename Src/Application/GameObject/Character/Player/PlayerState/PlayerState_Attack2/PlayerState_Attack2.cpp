@@ -2,6 +2,7 @@
 #include"../PlayerState_Idle/PlayerState_Idle.h"
 #include"../PlayerState_Run/PlayerState_Run.h"
 #include"../../../../../main.h"
+#include"../../../../Weapon/Katana/Katana.h"
 
 void PlayerState_Attack2::StateStart()
 {
@@ -39,6 +40,8 @@ void PlayerState_Attack2::StateUpdate()
 		return;
 	}
 
+	UpdateKatanaPos();
+
 	float deltaTime = Application::Instance().GetDeltaTime();
 	if (m_attackParam.m_dashTimer < 0.2f)
 	{
@@ -55,4 +58,29 @@ void PlayerState_Attack2::StateUpdate()
 
 void PlayerState_Attack2::StateEnd()
 {
+	m_player->AnimeSetFlg() = false;
+	// カタナの取得
+	auto katana = m_player->GetKatana().lock();
+
+	if (!katana) return;
+
+	// カタナの行列をリセット
+	katana->SetHandKatanaMatrix(Math::Matrix::Identity);
+
+}
+
+void PlayerState_Attack2::UpdateKatanaPos()
+{
+	// 手のワークノードを取得
+	auto handNode = m_player->GetModelWork()->FindWorkNode("VSB_10");
+
+	if (!handNode) return;
+
+	// カタナの取得
+	auto katana = m_player->GetKatana().lock();
+
+	if (!katana) return;
+
+	// プレイヤーに追尾する刀にするためにワークノードとプレイヤーのワールド変換を設定
+	katana->SetHandKatanaMatrix(handNode->m_worldTransform);
 }

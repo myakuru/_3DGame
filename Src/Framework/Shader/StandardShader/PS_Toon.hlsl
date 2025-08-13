@@ -14,6 +14,7 @@ static const float3 ToonRamp = (0.8, 0.8, 0.8);
 
 float4 main(VSOutput In) : SV_Target0
 {
+	
     // ベースカラー取得
 	float4 baseColor = g_baseTex.Sample(g_ss, In.UV) * g_BaseColor * In.Color;
 
@@ -22,8 +23,7 @@ float4 main(VSOutput In) : SV_Target0
 	toonColor = baseColor.rgb * ToonRamp;
 
     // 環境光加算
-	toonColor += g_AmbientLight.rgb * baseColor.rgb * baseColor.a * 1.0;
-
+	toonColor += g_AmbientLight.rgb * baseColor.rgb * baseColor.a;
 
 	//-------------------------------
 	// シャドウマッピング(影判定)

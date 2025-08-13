@@ -6,11 +6,14 @@ public:
 	PlayerState_Attack2() = default;
 	~PlayerState_Attack2() override = default;
 
+private:
+
 	void StateStart() override;
 	void StateUpdate() override;
 	void StateEnd() override;
 
-private:
+	void UpdateKatanaPos();
+
 	PlayerState_Attack2Parameter m_attackParam; // 攻撃パラメータ
 
 };

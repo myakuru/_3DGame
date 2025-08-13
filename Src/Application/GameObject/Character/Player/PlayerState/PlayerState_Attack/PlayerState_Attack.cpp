@@ -52,7 +52,8 @@ void PlayerState_Attack::StateUpdate()
 	float deltaTime = Application::Instance().GetDeltaTime();
 	if (m_attackParam.m_dashTimer < 0.2f)
 	{
-		m_player->SetIsMoving(m_attackDirection * m_attackParam.m_dashTimer);
+		float dashSpeed = 1.0f;
+		m_player->SetIsMoving(m_attackDirection * dashSpeed);
 		m_attackParam.m_dashTimer += deltaTime;
 	}
 	else
@@ -64,11 +65,16 @@ void PlayerState_Attack::StateUpdate()
 
 void PlayerState_Attack::StateEnd()
 {
+	// カタナの取得
+	auto katana = m_player->GetKatana().lock();
+
+	if (!katana) return;
+	katana->SetHandKatanaMatrix(Math::Matrix::Identity);
 }
 
 void PlayerState_Attack::UpdateKatanaPos()
 {
-	// Idle時はHipsノードをhandWorkNodeにセット
+	// 手のワークノードを取得
 	auto handNode = m_player->GetModelWork()->FindWorkNode("VSB_10");
 
 	if (!handNode) return;
@@ -79,5 +85,5 @@ void PlayerState_Attack::UpdateKatanaPos()
 	if (!katana) return;
 
 	// プレイヤーに追尾する刀にするためにワークノードとプレイヤーのワールド変換を設定
-	katana->SetKatanaMatrix(handNode->m_worldTransform);
+	katana->SetHandKatanaMatrix(handNode->m_worldTransform);
 }

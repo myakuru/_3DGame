@@ -32,8 +32,7 @@ void Player::PreUpdate()
 	if (!katana) return;
 
 	katana->SetPlayerMatrix(m_mWorld);
-
-
+	katana->SetPlayerHandMatrix(m_mWorld);
 }
 
 void Player::SkirtUpdate()

@@ -33,6 +33,9 @@
     "type": 32
   },
   {
+    "DashTime": 0.0,
+    "DashTime1": 0.0,
+    "DashTime2": 0.0,
     "GravitySpeed": 0.0,
     "Name": "class Player",
     "color": {
@@ -53,7 +56,7 @@
       "DrawUnLit": false,
       "GenerateDepthMapFromLight": false
     },
-    "fixedFps": 60.0,
+    "fixedFps": 120.0,
     "moveSpeed": 0.14000000059604645,
     "path": "Asset\\Models\\Player\\Perula\\Perula.gltf",
     "pos": {
@@ -88,10 +91,15 @@
       "DrawUnLit": false,
       "GenerateDepthMapFromLight": false
     },
+    "handWeaponDeg": {
+      "x": 52.0,
+      "y": -5.599999904632568,
+      "z": 150.0
+    },
     "katanaOffset": {
-      "x": -0.23999999463558197,
+      "x": -0.3100000023841858,
       "y": 0.08500000089406967,
-      "z": 0.14000000059604645
+      "z": 0.23000000417232513
     },
     "path": "Asset\\Models\\Sword\\scene.gltf",
     "pos": {
@@ -107,8 +115,8 @@
     "type": 32,
     "weaponDeg": {
       "x": 2.700000047683716,
-      "y": -19.399999618530273,
-      "z": 259.5
+      "y": 17.600000381469727,
+      "z": 262.5
     }
   },
   {
@@ -147,8 +155,8 @@
       "z": 1.0
     },
     "deg": {
-      "x": 13.950014114379883,
-      "y": 2422.94677734375,
+      "x": 3.000021457672119,
+      "y": 2248.338134765625,
       "z": 0.0
     },
     "moveSpeed": 50.0,
@@ -180,16 +188,16 @@
       "z": 1.0
     },
     "deg": {
-      "x": -1.500037431716919,
-      "y": 2864.2392578125,
+      "x": 14.849926948547363,
+      "y": 2678.2431640625,
       "z": 0.0
     },
     "moveSpeed": 10.0,
     "path": "Asset/Models/Sky/Sky.gltf",
     "pos": {
-      "x": 1.3358310461044312,
-      "y": 1.6868865489959717,
-      "z": -12.44251537322998
+      "x": 3.471569538116455,
+      "y": 1.338602900505066,
+      "z": -10.269105911254883
     },
     "scale": {
       "x": 1.0,
@@ -1863,8 +1871,8 @@
     },
     "drawFlags": {
       "DrawBright": false,
-      "DrawLit": true,
-      "DrawToon": false,
+      "DrawLit": false,
+      "DrawToon": true,
       "DrawUnLit": false,
       "GenerateDepthMapFromLight": true
     },
