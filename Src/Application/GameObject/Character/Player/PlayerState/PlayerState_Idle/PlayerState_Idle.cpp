@@ -7,6 +7,8 @@
 
 #include"../PlayerState_Run/PlayerState_Run.h"
 #include"../PlayerState_Attack/PlayerState_Attack.h"
+#include"../PlayerState_FowardAvoid/PlayerState_FowardAvoid.h"
+#include"../PlayerState_ChargeAttack/PlayerState_ChargeAttack.h"
 #include"../../../../Weapon/Katana/Katana.h"
 
 void PlayerState_Idle::StateStart()
@@ -33,10 +35,41 @@ void PlayerState_Idle::StateUpdate()
 		return;
 	}
 
+	// 左ボタンの押下時間取得
+	float lButtonDuration = KeyboardManager::GetInstance().GetKeyPressDuration(VK_LBUTTON);
+
+	// 押し始めたらフラグON
 	if (KeyboardManager::GetInstance().IsKeyJustPressed(VK_LBUTTON))
 	{
-		auto attackState = std::make_shared<PlayerState_Attack>();
-		m_player->ChangeState(attackState);
+		m_lButtonPressing = true;
+	}
+
+	// 押し続けている間に0.3秒超えたらチャージ攻撃
+	if (m_lButtonPressing && lButtonDuration >= 0.13f)
+	{
+		m_lButtonPressing = false;
+		auto chargeAttackState = std::make_shared<PlayerState_ChargeAttack>();
+		m_player->ChangeState(chargeAttackState);
+		return;
+	}
+
+	// 離した瞬間に0.3秒未満なら通常攻撃
+	if (m_lButtonPressing && KeyboardManager::GetInstance().IsKeyJustReleased(VK_LBUTTON))
+	{
+		m_lButtonPressing = false;
+		if (lButtonDuration < 0.3f)
+		{
+			auto attackState = std::make_shared<PlayerState_Attack>();
+			m_player->ChangeState(attackState);
+			return;
+		}
+	}
+
+	// 前方回避
+	if (KeyboardManager::GetInstance().IsKeyJustPressed(VK_RBUTTON))
+	{
+		auto fowardAvoidState = std::make_shared<PlayerState_ForwardAvoid>();
+		m_player->ChangeState(fowardAvoidState);
 		return;
 	}
 

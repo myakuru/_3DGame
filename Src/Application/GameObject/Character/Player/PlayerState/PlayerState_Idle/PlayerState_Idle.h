@@ -6,6 +6,8 @@ public:
 	PlayerState_Idle() = default;
 	~PlayerState_Idle() override = default;
 
+private:
+
 	void StateStart() override;
 	void StateUpdate() override;
 	void StateEnd() override;
@@ -13,5 +15,7 @@ public:
 	void ImGuiInspector() override;
 
 	void UpdateKatana();
+
+	bool m_lButtonPressing = false;
 
 };

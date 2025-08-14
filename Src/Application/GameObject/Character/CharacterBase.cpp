@@ -48,6 +48,8 @@ void CharaBase::Update()
 
 	float deltaTime = Application::Instance().GetDeltaTime();
 
+	m_stateManager.Update();
+
 	m_animator->AdvanceTime(m_modelWork->WorkNodes(), m_fixedFrameRate * deltaTime);
 
 	m_isMoving = m_movement.LengthSquared() > 0;
@@ -59,8 +61,6 @@ void CharaBase::Update()
 	m_position.x += m_movement.x * m_moveSpeed * m_fixedFrameRate * deltaTime;
 	m_position.z += m_movement.z * m_moveSpeed * m_fixedFrameRate * deltaTime;
 	m_position.y += m_gravity;
-
-	m_stateManager.Update();
 
 	// 最終的なワールド行列計算
 	Math::Matrix scale = Math::Matrix::CreateScale(m_scale);

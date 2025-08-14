@@ -248,7 +248,7 @@ void Application::Execute()
 		m_fpsController.UpdateStartTime();
 
 		// 入力関係の更新
-		KeyboardManager::GetInstance().Update();
+		KeyboardManager::GetInstance().Update(m_fpsController.m_deltaTime);
 		XInputManager::GetInstance().Update();
 
 		// ゲーム終了指定があるときはループ終了

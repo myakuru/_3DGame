@@ -61,6 +61,8 @@ void BaseScene::Update()
 		// シーン毎のイベント処理
 		Event();
 
+		KdEffekseerManager::GetInstance().Update();
+
 		// KdGameObjectを継承した全てのオブジェクトの更新 (ポリモーフィズム)
 		for (auto& obj : m_objList)
 		{
@@ -226,6 +228,7 @@ void BaseScene::Draw()
 		{
 			obj->DrawToon();
 		}
+		KdEffekseerManager::GetInstance().Draw();
 	}
 	KdShaderManager::Instance().m_StandardShader.EndToon();
 
@@ -289,6 +292,10 @@ void BaseScene::Event()
 
 void BaseScene::Init()
 {
-	m_renderTargetPack.CreateRenderTarget(1280, 720, true);
+	KdCSVData windowData("Asset/Data/WindowSettings.csv");
+	const std::vector<std::string>& sizeData = windowData.GetLine(0);
+
+	m_renderTargetPack.CreateRenderTarget(atoi(sizeData[0].data()), atoi(sizeData[1].data()), true);
+	KdEffekseerManager::GetInstance().Create(atoi(sizeData[0].data()), atoi(sizeData[1].data()));
 	// 各シーンで必要な内容を実装(オーバーライド)する
 }

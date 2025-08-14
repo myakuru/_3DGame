@@ -15,13 +15,6 @@ void Player::Init()
 	m_animator->SetAnimation(m_modelWork->GetData()->GetAnimation("Idle"));
 
 	StateInit();
-
-	m_mRotation = Math::Matrix::CreateFromYawPitchRoll
-	(
-		DirectX::XMConvertToRadians(m_degree.y), // Y軸回転
-		DirectX::XMConvertToRadians(m_degree.x), // X軸回転
-		DirectX::XMConvertToRadians(m_degree.z)  // Z軸回転
-	);
 }
 
 void Player::PreUpdate()
@@ -48,6 +41,7 @@ void Player::Update()
 	if (m_katana.expired()) return;
 
 	CharaBase::Update();
+
 }
 
 void Player::ImGuiInspector()

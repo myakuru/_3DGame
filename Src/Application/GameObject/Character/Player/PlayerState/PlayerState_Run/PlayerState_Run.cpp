@@ -1,6 +1,7 @@
 ﻿#include "PlayerState_Run.h"
 #include"../../../CharacterBase.h"
 #include"../PlayerState_Idle/PlayerState_Idle.h"
+#include"../PlayerState_BackWordAvoid/PlayerState_BackWordAvoid.h"
 #include"../../../../Camera/PlayerCamera/PlayerCamera.h"
 #include"../../../../Weapon/Katana/Katana.h"
 
@@ -25,6 +26,13 @@ void PlayerState_Run::StateUpdate()
 		return;
 	}
 
+	if (KeyboardManager::GetInstance().IsKeyJustPressed(VK_RBUTTON))
+	{
+		auto state = std::make_shared<PlayerState_BackWordAvoid>();
+		m_player->ChangeState(state);
+		return; 
+	}
+
 	UpdateKatanaPos();
 
 	if (!m_player->GetPlayerCamera()) return;
@@ -42,6 +50,11 @@ void PlayerState_Run::StateUpdate()
 
 void PlayerState_Run::StateEnd()
 {
+	// カタナの取得
+	auto katana = m_player->GetKatana().lock();
+
+	if (!katana) return;
+	katana->SetHandKatanaMatrix(Math::Matrix::Identity);
 }
 
 void PlayerState_Run::UpdateKatanaPos()

@@ -10,6 +10,8 @@ const uint32_t PlayerCamera::TypeID = KdGameObject::GenerateTypeID();
 void PlayerCamera::Init()
 {
 	CameraBase::Init();
+	// エフェクシアのカメラをセット
+	KdEffekseerManager::GetInstance().SetCamera(m_spCamera);
 
 	m_pDebugWire = std::make_unique<KdDebugWireFrame>();
 	SetCursorPos(m_FixMousePos.x, m_FixMousePos.y);

@@ -2,6 +2,7 @@
 #include "../CharacterBase.h"
 #include"PlayerConfig.h"
 class Katana;
+class PlayerStateBase;
 class Player :public CharaBase
 {
 public:
@@ -32,6 +33,7 @@ public:
 	const std::weak_ptr<Katana>& GetKatana() const { return m_katana; }
 
 	PlayerConfig& GetPlayerConfig() { return m_playerConfig; }
+	const Math::Vector3& GetPosition() const { return m_position; }
 
 private:
 

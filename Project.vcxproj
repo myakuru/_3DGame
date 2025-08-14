@@ -291,6 +291,9 @@
     <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_Attack1\PlayerState_Attack1.h" />
     <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_Attack2\PlayerState_Attack2.h" />
     <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_Attack\PlayerState_Attack.h" />
+    <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_BackWordAvoid\PlayerState_BackWordAvoid.h" />
+    <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_ChargeAttack\PlayerState_ChargeAttack.h" />
+    <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_FowardAvoid\PlayerState_FowardAvoid.h" />
     <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_Idle\PlayerState_Idle.h" />
     <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_Run\PlayerState_Run.h" />
     <ClInclude Include="Src\Application\GameObject\HUD\AlpfaMoving\AlpfaMoving.h" />
@@ -376,6 +379,9 @@
     <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_Attack1\PlayerState_Attack1.cpp" />
     <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_Attack2\PlayerState_Attack2.cpp" />
     <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_Attack\PlayerState_Attack.cpp" />
+    <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_BackWordAvoid\PlayerState_BackWordAvoid.cpp" />
+    <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_ChargeAttack\PlayerState_ChargeAttack.cpp" />
+    <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_FowardAvoid\PlayerState_FowardAvoid.cpp" />
     <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_Idle\PlayerState_Idle.cpp" />
     <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_Run\PlayerState_Run.cpp" />
     <ClCompile Include="Src\Application\GameObject\HUD\AlpfaMoving\AlpfaMoving.cpp" />

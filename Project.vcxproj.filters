@@ -178,6 +178,15 @@
     <Filter Include="Src\Application\GameObject\HUD\AlpfaMoving">
       <UniqueIdentifier>{afdd8912-e1a0-46ab-8c52-2335a72a5f83}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_ChargeAttack">
+      <UniqueIdentifier>{ee914cbf-0f9d-4e4e-8dea-00441697583b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_BackWordAvoid">
+      <UniqueIdentifier>{732548b6-5c25-4155-8fe7-06844cb41e02}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_FowardAvoid">
+      <UniqueIdentifier>{9a24f795-5465-4cbb-b8c2-2ee2f1ad9067}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -459,6 +468,15 @@
     <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerConfig.h">
       <Filter>Src\Application\GameObject\Character\Player</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_ChargeAttack\PlayerState_ChargeAttack.h">
+      <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_ChargeAttack</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_BackWordAvoid\PlayerState_BackWordAvoid.h">
+      <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_BackWordAvoid</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_FowardAvoid\PlayerState_FowardAvoid.h">
+      <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_FowardAvoid</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -679,6 +697,15 @@
     </ClCompile>
     <ClCompile Include="Src\Application\GameObject\HUD\AlpfaMoving\AlpfaMoving.cpp">
       <Filter>Src\Application\GameObject\HUD\AlpfaMoving</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_ChargeAttack\PlayerState_ChargeAttack.cpp">
+      <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_ChargeAttack</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_BackWordAvoid\PlayerState_BackWordAvoid.cpp">
+      <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_BackWordAvoid</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_FowardAvoid\PlayerState_FowardAvoid.cpp">
+      <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_FowardAvoid</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

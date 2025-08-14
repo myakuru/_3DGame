@@ -1,7 +1,6 @@
 ﻿#pragma once
 #include"../Utility/SelectDraw3dModel.h"
 #include"../../../MyFramework/State/StateManager/StateManager.h"
-class PlayerStateBase;
 class EnemyStateBase;
 class PlayerCamera;
 class CharaBase:public SelectDraw3dModel
@@ -18,9 +17,11 @@ public:
 	const Math::Vector3 &GetMovement() const { return m_movement; }
 	Math::Matrix& GetRotationMatrix() { return m_mRotation; }
 	void SetRotation(const Math::Quaternion& rotation) { m_rotation = rotation; }
+	Math::Quaternion& GetRotation() { return m_rotation; }
+
 	const bool & GetMoving() const { return m_isMoving; }
 	void SetPosition(const Math::Vector3& position) { m_position = position; }
-	const Math::Vector3& GetPosition() const { return m_position; }
+	//const Math::Vector3& GetPosition() const { return m_position; }
 
 	/// <summary>
 	/// ステートで変更するアニメーションモデルを取得する関数

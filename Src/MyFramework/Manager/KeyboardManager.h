@@ -1,48 +1,65 @@
-#pragma once
+ï»¿#pragma once
+#include <array>
+#include <chrono>
 
 class KeyboardManager
 {
 public:
-    // ƒVƒ“ƒOƒ‹ƒgƒ“ƒCƒ“ƒXƒ^ƒ“ƒX‚ğæ“¾i‘¼‚ÌƒNƒ‰ƒX‚ÅƒCƒ“ƒXƒ^ƒ“ƒXì¬‚Å‚«‚È‚­‚·‚éj
-    static KeyboardManager& GetInstance()
-    {
-        static KeyboardManager instance;
-        return instance;
-    }
+	static KeyboardManager& GetInstance()
+	{
+		static KeyboardManager instance;
+		return instance;
+	}
 
-    // ƒL[ƒ{[ƒh‚Ìó‘Ô‚ğXV
-    void Update()
-    {
-        for (int i = 0; i < 256; ++i)
-        {
-            mOldKeyState[i] = mNowKeyState[i];
-            mNowKeyState[i] = GetAsyncKeyState(i) & 0x8000;
-        }
-    }
+	// æ¯ãƒ•ãƒ¬ãƒ¼ãƒ å‘¼ã³å‡ºã—
+	void Update(float deltaTime)
+	{
+		for (int i = 0; i < 256; ++i)
+		{
+			mOldKeyState[i] = mNowKeyState[i];
+			mNowKeyState[i] = GetAsyncKeyState(i) & 0x8000;
 
-    // “Á’è‚ÌƒL[‚ª‰Ÿ‚³‚ê‚Ä‚¢‚é‚©ƒ`ƒFƒbƒN
-    bool IsKeyPressed(int key) const
-    {
-        return mNowKeyState[key];
-    }
+			if (IsKeyJustPressed(i))
+			{
+				mKeyPressDuration[i] = 0.0f;
+			}
+			else if (IsKeyPressed(i))
+			{
+				mKeyPressDuration[i] += deltaTime;
+			}
+			// IsKeyJustReleasedã®ãƒ•ãƒ¬ãƒ¼ãƒ ã§ã¯ãƒªã‚»ãƒƒãƒˆã—ãªã„
+			else if (!mNowKeyState[i] && !mOldKeyState[i])
+			{
+				mKeyPressDuration[i] = 0.0f;
+			}
+		}
+	}
 
-    // “Á’è‚ÌƒL[‚ª‰Ÿ‚³‚ê‚½uŠÔ‚ğƒ`ƒFƒbƒN
-    bool IsKeyJustPressed(int key) const
-    {
-        return mNowKeyState[key] && !mOldKeyState[key];
-    }
+	bool IsKeyPressed(int key) const
+	{
+		return mNowKeyState[key];
+	}
 
-    // “Á’è‚ÌƒL[‚ª—£‚³‚ê‚½uŠÔ‚ğƒ`ƒFƒbƒN
-    bool IsKeyJustReleased(int key) const
-    {
-        return !mNowKeyState[key] && mOldKeyState[key];
-    }
+	bool IsKeyJustPressed(int key) const
+	{
+		return mNowKeyState[key] && !mOldKeyState[key];
+	}
+
+	bool IsKeyJustReleased(int key) const
+	{
+		return !mNowKeyState[key] && mOldKeyState[key];
+	}
+
+	// æŠ¼ã—ãŸæ™‚é–“ã‚’å–å¾—
+	float GetKeyPressDuration(int key) const
+	{
+		return mKeyPressDuration[key];
+	}
 
 private:
-    // ƒRƒ“ƒXƒgƒ‰ƒNƒ^‚ğƒvƒ‰ƒCƒx[ƒg‚É‚µ‚ÄƒVƒ“ƒOƒ‹ƒgƒ“‚É‚·‚é
-    KeyboardManager() : mNowKeyState{}, mOldKeyState{} {}
+	KeyboardManager() : mNowKeyState{}, mOldKeyState{}, mKeyPressDuration{} {}
 
-	// GetAsyncKeyState‚ªSHORTŒ^‚Ì”z—ñ‚ğg—p‚·‚é‚½‚ßA256ƒL[•ª‚Ìó‘Ô‚ğ•Û
-    std::array<SHORT, 256> mNowKeyState;
-    std::array<SHORT, 256> mOldKeyState;
+	std::array<SHORT, 256> mNowKeyState;
+	std::array<SHORT, 256> mOldKeyState;
+	std::array<float, 256> mKeyPressDuration;
 };
