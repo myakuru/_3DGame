@@ -22,7 +22,7 @@ bool KdPostProcessShader::Init()
 
 		if (FAILED(KdDirect3D::Instance().WorkDev()->CreateInputLayout(
 			&layout[0], (UINT)layout.size(), compiledBuffer,
-			sizeof(compiledBuffer), &m_inputLayout)) ) 
+			sizeof(compiledBuffer), &m_inputLayout)))
 		{
 			assert(0 && "CreateInputLayout失敗");
 			Release();
@@ -35,11 +35,11 @@ bool KdPostProcessShader::Init()
 #include "KdPostProcessShader_PS_Blur.shaderInc"
 
 		if (FAILED(KdDirect3D::Instance().WorkDev()->CreatePixelShader(
-			compiledBuffer, sizeof(compiledBuffer), nullptr, &m_PS_Blur))) 
+			compiledBuffer, sizeof(compiledBuffer), nullptr, &m_PS_Blur)))
 		{
 			assert(0 && "ピクセルシェーダー作成失敗");
 			Release();
-			
+
 			return false;
 		}
 
@@ -49,7 +49,7 @@ bool KdPostProcessShader::Init()
 #include "KdPostProcessShader_PS_DoF.shaderInc"
 
 		if (FAILED(KdDirect3D::Instance().WorkDev()->CreatePixelShader(
-			compiledBuffer, sizeof(compiledBuffer), nullptr, &m_PS_DoF))) 
+			compiledBuffer, sizeof(compiledBuffer), nullptr, &m_PS_DoF)))
 		{
 			assert(0 && "ピクセルシェーダー作成失敗");
 			Release();
@@ -62,7 +62,7 @@ bool KdPostProcessShader::Init()
 #include "KdPostProcessShader_PS_Bright.shaderInc"
 
 		if (FAILED(KdDirect3D::Instance().WorkDev()->CreatePixelShader(
-			compiledBuffer, sizeof(compiledBuffer), nullptr, &m_PS_Bright))) 
+			compiledBuffer, sizeof(compiledBuffer), nullptr, &m_PS_Bright)))
 		{
 			assert(0 && "ピクセルシェーダー作成失敗");
 			Release();
@@ -77,22 +77,18 @@ bool KdPostProcessShader::Init()
 
 	m_cb0_BrightInfo.Create();
 
-	const std::shared_ptr<KdTexture>& backBuffer = KdDirect3D::Instance().GetBackBuffer();
-	
-	// ポストプロセス用のシーンの全描画用画像
-	m_postEffectRTPack.CreateRenderTarget(backBuffer->GetWidth(), backBuffer->GetHeight(), true);
+	// 1440pでレンダーターゲット生成
+	const int renderWidth = 2560;
+	const int renderHeight = 1440;
 
-	// ぼかし画像
-	m_blurRTPack.CreateRenderTarget(backBuffer->GetWidth(), backBuffer->GetHeight());
-	m_strongBlurRTPack.CreateRenderTarget(backBuffer->GetWidth() / 2, backBuffer->GetHeight() / 2);
+	m_postEffectRTPack.CreateRenderTarget(renderWidth, renderHeight, true);
+	m_blurRTPack.CreateRenderTarget(renderWidth, renderHeight);
+	m_strongBlurRTPack.CreateRenderTarget(renderWidth / 2, renderHeight / 2);
+	m_depthOfFieldRTPack.CreateRenderTarget(renderWidth, renderHeight);
+	m_brightEffectRTPack.CreateRenderTarget(renderWidth, renderHeight); 
 
-	// 被写界深度画像
-	m_depthOfFieldRTPack.CreateRenderTarget(backBuffer->GetWidth(), backBuffer->GetHeight());
-	
-	m_brightEffectRTPack.CreateRenderTarget(backBuffer->GetWidth(), backBuffer->GetHeight());
-
-	int lightBloomWidth = m_brightEffectRTPack.m_RTTexture->GetWidth();
-	int lightBloomHeight = m_brightEffectRTPack.m_RTTexture->GetHeight();
+	int lightBloomWidth = renderWidth;
+	int lightBloomHeight = renderHeight;
 
 	// 光源ぼかし画像
 	for (int i = 0; i < kLightBloomNum; ++i)
@@ -109,7 +105,7 @@ bool KdPostProcessShader::Init()
 	m_screenVert[2] = { { 1,-1,0}, {1, 1} };
 	m_screenVert[3] = { { 1, 1,0}, {1, 0} };
 
-	SetBrightThreshold( 1.2f );
+	SetBrightThreshold(1.2f);
 
 	return true;
 }
@@ -185,7 +181,11 @@ void KdPostProcessShader::PostEffectProcess()
 	BlurProcess();
 	DepthOfFieldProcess();
 
-	KdShaderManager::Instance().m_spriteShader.DrawTex(m_depthOfFieldRTPack.m_RTTexture.get(), 0, 0);
+	KdCSVData windowData("Asset/Data/WindowSettings.csv");
+	const std::vector<std::string>& sizeData = windowData.GetLine(0);
+
+	KdShaderManager::Instance().m_spriteShader.DrawTex(m_depthOfFieldRTPack.m_RTTexture.get(), 0, 0, atoi(sizeData[0].data()), atoi(sizeData[1].data()));
+
 }
 
 void KdPostProcessShader::LightBloomProcess()
@@ -207,7 +207,7 @@ void KdPostProcessShader::LightBloomProcess()
 	for (int i = 0; i < kLightBloomNum; ++i)
 	{
 		GenerateBlurTexture(srcRTTex, m_lightBloomRTPack[i].m_RTTexture, m_lightBloomRTPack[i].m_viewPort, kBlurSamplingRadius);
-			
+
 		srcRTTex = m_lightBloomRTPack[i].m_RTTexture;
 	}
 

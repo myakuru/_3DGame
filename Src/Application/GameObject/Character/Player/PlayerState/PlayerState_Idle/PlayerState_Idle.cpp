@@ -45,7 +45,7 @@ void PlayerState_Idle::StateUpdate()
 	}
 
 	// 押し続けている間に0.3秒超えたらチャージ攻撃
-	if (m_lButtonPressing && lButtonDuration >= 0.13f)
+	if (m_lButtonPressing && lButtonDuration >= 0.3f)
 	{
 		m_lButtonPressing = false;
 		auto chargeAttackState = std::make_shared<PlayerState_ChargeAttack>();

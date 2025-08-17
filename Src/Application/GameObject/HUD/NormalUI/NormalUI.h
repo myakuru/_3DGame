@@ -9,4 +9,7 @@ public:
 	NormalUI();
 	~NormalUI() override = default;
 
+	void DrawSprite() override;
+	void Update() override;
+
 };

@@ -162,8 +162,8 @@ void KdGameObject::ImGuiInspector()
 	// ImGuiのコンボボックスを作成
 	
 	ImGui::DragFloat3(U8("位置"), &m_position.x, 0.1f);
-	ImGui::DragFloat3(U8("拡大、縮小"), &m_scale.x, 0.1f);
-	ImGui::DragFloat3(U8("回転"), &m_degree.x, 0.1f);
+	ImGui::DragFloat3(U8("拡大、縮小"), &m_scale.x, 0.01f);
+	ImGui::DragFloat3(U8("回転"), &m_degree.x, 0.001f);
 
 
 	ImGui::ColorEdit4("color", &m_color.x);

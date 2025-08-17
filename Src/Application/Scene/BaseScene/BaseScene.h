@@ -61,6 +61,11 @@ public :
 		return m_renderTargetPack;
 	}
 
+	const KdRenderTargetPack& GetRenderTargetSpritePack() const
+	{
+		return m_renderTargetSpritePack;
+	}
+
 protected :
 
 	// 継承先シーンで必要ならオーバーライドする
@@ -71,6 +76,9 @@ protected :
 
 	KdRenderTargetChanger m_renderTargetChanger;
 	KdRenderTargetPack m_renderTargetPack;
+
+	KdRenderTargetChanger m_renderTargetSpriteChanger;
+	KdRenderTargetPack m_renderTargetSpritePack;
 
 	// 全オブジェクトのアドレスをリストで管理
 	std::list<std::shared_ptr<KdGameObject>> m_objList;

@@ -14,6 +14,9 @@ private:
 
 	void UpdateKatanaPos();
 
-	PlayerState_Attack2Parameter m_attackParam; // 攻撃パラメータ
+	PlayerState_AttackParameter m_attackParam;
+
+
+	bool m_flag = false; // 攻撃フラグ
 
 };

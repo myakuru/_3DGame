@@ -20,19 +20,13 @@ void PlayerState_Attack::StateStart()
 		m_player->UpdateQuaternion(m_attackDirection);
 	}
 
-	m_attackParam = m_player->GetPlayerConfig().GetAttackParam();
+	m_attackParam = m_player->GetPlayerConfig().GetAttack2Param();
+	m_attackParam.m_dashTimer = 0.0f;
 }
 
 void PlayerState_Attack::StateUpdate()
 {
 	m_player->SetAnimeSpeed(120.0f);
-
-	if (KeyboardManager::GetInstance().IsKeyJustPressed(VK_LBUTTON))
-	{
-		auto attack1state = std::make_shared<PlayerState_Attack1>();
-		m_player->ChangeState(attack1state);
-		return;
-	}
 
 	if (m_player->GetAnimator()->IsAnimationEnd())
 	{
@@ -47,12 +41,39 @@ void PlayerState_Attack::StateUpdate()
 		return;
 	}
 
+	if (KeyboardManager::GetInstance().IsKeyJustPressed(VK_LBUTTON))
+	{
+		auto attack1state = std::make_shared<PlayerState_Attack1>();
+		m_player->ChangeState(attack1state);
+		return;
+	}
+
+	if (!m_flag)
+	{
+		// エフェクトの表示位置（前方0.5f）
+		Math::Vector3 effectPos = m_player->GetPosition() + m_attackDirection * 3.0f;
+
+		// プレイヤーの回転行列
+		Math::Matrix rotationMat = Math::Matrix::CreateFromQuaternion(m_player->GetRotation());
+
+		// エフェクトのワールド行列（回転＋位置）
+		Math::Matrix effectWorld = rotationMat * Math::Matrix::CreateTranslation(effectPos);
+
+		// Effekseerエフェクト再生
+		auto effect = KdEffekseerManager::GetInstance().Play("Attack.efkefc", { effectPos }, 1.0f, 0.3f, false);
+		if (auto spEffect = effect.lock())
+		{
+			KdEffekseerManager::GetInstance().SetWorldMatrix(spEffect->GetHandle(), effectWorld);
+		}
+		m_flag = true;
+	}
+
 	UpdateKatanaPos();
 
 	float deltaTime = Application::Instance().GetDeltaTime();
 	if (m_attackParam.m_dashTimer < 0.2f)
 	{
-		float dashSpeed = 1.0f;
+		float dashSpeed = 0.3f;
 		m_player->SetIsMoving(m_attackDirection * dashSpeed);
 		m_attackParam.m_dashTimer += deltaTime;
 	}

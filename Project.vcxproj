@@ -298,11 +298,15 @@
     <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_Run\PlayerState_Run.h" />
     <ClInclude Include="Src\Application\GameObject\HUD\AlpfaMoving\AlpfaMoving.h" />
     <ClInclude Include="Src\Application\GameObject\HUD\NormalUI\NormalUI.h" />
+    <ClInclude Include="Src\Application\GameObject\HUD\ScaleMoving\ScaleMoving.h" />
+    <ClInclude Include="Src\Application\GameObject\HUD\Scoring\Scoring.h" />
+    <ClInclude Include="Src\Application\GameObject\HUD\Timer\Timer.h" />
     <ClInclude Include="Src\Application\GameObject\Map\Map.h" />
     <ClInclude Include="Src\Application\GameObject\SkySphere\SkySphere.h" />
     <ClInclude Include="Src\Application\GameObject\Utility\SelectDraw2DTexture.h" />
     <ClInclude Include="Src\Application\GameObject\Utility\SelectDraw3dModel.h" />
     <ClInclude Include="Src\Application\GameObject\Utility\SelectDraw3dPolygon.h" />
+    <ClInclude Include="Src\Application\GameObject\Utility\Time.h" />
     <ClInclude Include="Src\Application\GameObject\Weapon\Katana\Katana.h" />
     <ClInclude Include="Src\Application\GameObject\Weapon\WeaponBase.h" />
     <ClInclude Include="Src\Application\main.h" />
@@ -386,6 +390,9 @@
     <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_Run\PlayerState_Run.cpp" />
     <ClCompile Include="Src\Application\GameObject\HUD\AlpfaMoving\AlpfaMoving.cpp" />
     <ClCompile Include="Src\Application\GameObject\HUD\NormalUI\NormalUI.cpp" />
+    <ClCompile Include="Src\Application\GameObject\HUD\ScaleMoving\ScaleMoving.cpp" />
+    <ClCompile Include="Src\Application\GameObject\HUD\Scoring\Scoring.cpp" />
+    <ClCompile Include="Src\Application\GameObject\HUD\Timer\Timer.cpp" />
     <ClCompile Include="Src\Application\GameObject\Map\Map.cpp" />
     <ClCompile Include="Src\Application\GameObject\SkySphere\SkySphere.cpp" />
     <ClCompile Include="Src\Application\GameObject\Weapon\Katana\Katana.cpp" />

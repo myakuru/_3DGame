@@ -7,13 +7,16 @@ public:
 
 	void DrawSprite() override
 	{
+		KdShaderManager::Instance().m_spriteShader.SetMatrix(m_mWorld);
 		if (m_bDrawTexture)
 			KdShaderManager::Instance().m_spriteShader.DrawTex(
 				m_texture,
 				static_cast<int>(m_position.x),
 				static_cast<int>(m_position.y),
 				nullptr,
-				&m_color);
+				&m_color
+			);
+		KdShaderManager::Instance().m_spriteShader.SetMatrix(Math::Matrix::Identity);
 	}
 
 	// ImGuiのインスペクターでDrawを変更できるようにする。

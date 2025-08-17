@@ -187,6 +187,15 @@
     <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_FowardAvoid">
       <UniqueIdentifier>{9a24f795-5465-4cbb-b8c2-2ee2f1ad9067}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\GameObject\HUD\ScaleMoving">
+      <UniqueIdentifier>{1cde9a39-cb43-4e47-ab92-eaadbcf4bea8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\HUD\Scoring">
+      <UniqueIdentifier>{3796293c-e14d-413e-9f8a-b0d9cc57625b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\HUD\Timer">
+      <UniqueIdentifier>{7db9a1bd-3000-4be4-b383-b9eb864ba4c0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -378,9 +387,6 @@
     <ClInclude Include="Src\Application\GameObject\SkySphere\SkySphere.h">
       <Filter>Src\Application\GameObject\SkySphere</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Application\GameObject\HUD\NormalUI\NormalUI.h">
-      <Filter>Src\Application\GameObject\HUD\NormalUI</Filter>
-    </ClInclude>
     <ClInclude Include="Src\Framework\Utility\KdDebugWireFrame.h">
       <Filter>Src\Framework\Utility</Filter>
     </ClInclude>
@@ -476,6 +482,21 @@
     </ClInclude>
     <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_FowardAvoid\PlayerState_FowardAvoid.h">
       <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_FowardAvoid</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\HUD\ScaleMoving\ScaleMoving.h">
+      <Filter>Src\Application\GameObject\HUD\ScaleMoving</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\HUD\Scoring\Scoring.h">
+      <Filter>Src\Application\GameObject\HUD\Scoring</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\HUD\NormalUI\NormalUI.h">
+      <Filter>Src\Application\GameObject\HUD\NormalUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Utility\Time.h">
+      <Filter>Src\Application\GameObject\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\HUD\Timer\Timer.h">
+      <Filter>Src\Application\GameObject\HUD\Timer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -662,9 +683,6 @@
     <ClCompile Include="Src\Application\GameObject\Camera\PlayerCamera\PlayerCamera.cpp">
       <Filter>Src\Application\GameObject\Camera\PlayerCamera</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Application\GameObject\Map\Map.cpp">
-      <Filter>Src\Application\GameObject\Map</Filter>
-    </ClCompile>
     <ClCompile Include="Src\Application\GameObject\HUD\NormalUI\NormalUI.cpp">
       <Filter>Src\Application\GameObject\HUD\NormalUI</Filter>
     </ClCompile>
@@ -706,6 +724,18 @@
     </ClCompile>
     <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_FowardAvoid\PlayerState_FowardAvoid.cpp">
       <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_FowardAvoid</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\HUD\ScaleMoving\ScaleMoving.cpp">
+      <Filter>Src\Application\GameObject\HUD\ScaleMoving</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\HUD\Scoring\Scoring.cpp">
+      <Filter>Src\Application\GameObject\HUD\Scoring</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Map\Map.cpp">
+      <Filter>Src\Application\GameObject\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\HUD\Timer\Timer.cpp">
+      <Filter>Src\Application\GameObject\HUD\Timer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

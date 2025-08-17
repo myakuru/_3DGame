@@ -13,5 +13,8 @@ private:
 	void StateEnd() override;
 
 	void UpdateKatanaPos();
-	PlayerState_AttackParameter m_attackParam;
+	PlayerState_Attack2Parameter m_attackParam;
+
+
+	bool m_flag = false; // 攻撃フラグ
 };

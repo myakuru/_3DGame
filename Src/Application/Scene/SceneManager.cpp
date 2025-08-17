@@ -21,6 +21,9 @@
 #include"../GameObject/Weapon/Katana/Katana.h"
 #include"../GameObject/Camera/PlayerCamera/PlayerCamera.h"
 #include"../GameObject/Character/Enemy/Enemy.h"
+#include"../GameObject/HUD/ScaleMoving/ScaleMoving.h"
+#include"../GameObject/HUD/Scoring/Scoring.h"
+#include"../GameObject/HUD/Timer/Timer.h"
 
 void SceneManager::Init()
 {
@@ -41,6 +44,9 @@ void SceneManager::Register() const
 	RegisterObject::GetInstance().Register<Player>();
 	RegisterObject::GetInstance().Register<Katana>();
 	RegisterObject::GetInstance().Register<Enemy>();
+	RegisterObject::GetInstance().Register<ScaleMoving>();
+	RegisterObject::GetInstance().Register<Scoring>();
+	RegisterObject::GetInstance().Register<Timer>();
 }
 
 void SceneManager::PreUpdate()

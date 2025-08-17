@@ -43,6 +43,8 @@ private:
 
 	std::weak_ptr<Katana>	m_katana;
 
+	struct KdModelWork::Node* m_armatureNode = nullptr; // ヒップノード
+
 	PlayerConfig m_playerConfig;
 
 };
