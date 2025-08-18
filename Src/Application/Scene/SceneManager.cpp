@@ -24,6 +24,10 @@
 #include"../GameObject/HUD/ScaleMoving/ScaleMoving.h"
 #include"../GameObject/HUD/Scoring/Scoring.h"
 #include"../GameObject/HUD/Timer/Timer.h"
+#include"../GameObject/HUD/HpBar/HpBar.h"
+#include"../GameObject/HUD/Number/NumBer.h"
+#include"../GameObject/HUD/NowHp/NowHp.h"
+#include"../GameObject/HUD/SpecialMove/SpecialMove.h"
 
 void SceneManager::Init()
 {
@@ -47,6 +51,10 @@ void SceneManager::Register() const
 	RegisterObject::GetInstance().Register<ScaleMoving>();
 	RegisterObject::GetInstance().Register<Scoring>();
 	RegisterObject::GetInstance().Register<Timer>();
+	RegisterObject::GetInstance().Register<HpBar>();
+	RegisterObject::GetInstance().Register<NumBer>();
+	RegisterObject::GetInstance().Register<NowHp>();
+	RegisterObject::GetInstance().Register<SpecialMove>();
 }
 
 void SceneManager::PreUpdate()

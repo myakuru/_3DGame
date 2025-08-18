@@ -16,4 +16,6 @@ private:
 
 	Math::Rectangle m_srcRect;	// スコアの表示位置
 
+	int m_displayTime = 0;
+
 };

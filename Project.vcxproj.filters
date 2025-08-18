@@ -193,8 +193,20 @@
     <Filter Include="Src\Application\GameObject\HUD\Scoring">
       <UniqueIdentifier>{3796293c-e14d-413e-9f8a-b0d9cc57625b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\GameObject\HUD\HpBar">
+      <UniqueIdentifier>{bf5cba98-830e-4927-a7a5-1e59290d7b8e}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Src\Application\GameObject\HUD\Timer">
       <UniqueIdentifier>{7db9a1bd-3000-4be4-b383-b9eb864ba4c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\HUD\Number">
+      <UniqueIdentifier>{bd98edcf-c2ac-47d7-8562-f604732961f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\HUD\NowHp">
+      <UniqueIdentifier>{a388cffc-764a-4f2b-ae71-cb51af467809}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\HUD\SpecialMove">
+      <UniqueIdentifier>{e59524b7-917c-45fc-943b-c782905dfd33}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -498,6 +510,18 @@
     <ClInclude Include="Src\Application\GameObject\HUD\Timer\Timer.h">
       <Filter>Src\Application\GameObject\HUD\Timer</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\HUD\HpBar\HpBar.h">
+      <Filter>Src\Application\GameObject\HUD\HpBar</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\HUD\Number\NumBer.h">
+      <Filter>Src\Application\GameObject\HUD\Number</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\HUD\NowHp\NowHp.h">
+      <Filter>Src\Application\GameObject\HUD\NowHp</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\HUD\SpecialMove\SpecialMove.h">
+      <Filter>Src\Application\GameObject\HUD\SpecialMove</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -736,6 +760,18 @@
     </ClCompile>
     <ClCompile Include="Src\Application\GameObject\HUD\Timer\Timer.cpp">
       <Filter>Src\Application\GameObject\HUD\Timer</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\HUD\HpBar\HpBar.cpp">
+      <Filter>Src\Application\GameObject\HUD\HpBar</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\HUD\Number\NumBer.cpp">
+      <Filter>Src\Application\GameObject\HUD\Number</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\HUD\NowHp\NowHp.cpp">
+      <Filter>Src\Application\GameObject\HUD\NowHp</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\HUD\SpecialMove\SpecialMove.cpp">
+      <Filter>Src\Application\GameObject\HUD\SpecialMove</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

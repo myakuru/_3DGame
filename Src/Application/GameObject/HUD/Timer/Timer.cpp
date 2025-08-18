@@ -26,7 +26,7 @@ void Timer::Update()
 		Time::Instance().StartCountdown(m_time);
 	}
 
-	// 秒をフレーム数に変換（1秒=60フレーム）
+	// 秒をフレーム数に変換
 	m_displayTime = static_cast<int>(timeLeft);
 }
 
@@ -34,7 +34,7 @@ void Timer::DrawSprite()
 {
 	KdShaderManager::Instance().m_spriteShader.SetMatrix(m_mWorld);
 
-	int time = std::min(m_displayTime, 99 * 60 * 60 + 99 * 60 + 99);
+	int time = std::min(m_displayTime, 99 * 60 * 60 + 99 * 60 + 99); //99:99:99
 
 	int hours = time / 3600;
 	int minutes = (time / 60) % 100;

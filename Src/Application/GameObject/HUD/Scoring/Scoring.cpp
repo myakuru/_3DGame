@@ -1,4 +1,5 @@
 ﻿#include "Scoring.h"
+#include"../../Utility/Time.h"
 
 const uint32_t Scoring::TypeID = KdGameObject::GenerateTypeID();
 
@@ -25,17 +26,22 @@ void Scoring::DrawSprite()
 
 void Scoring::Update()
 {
-	if (KeyboardManager::GetInstance().IsKeyJustPressed('1'))
+	// 残り秒数を取得
+	float timeLeft = Time::Instance().GetCountdownTimeLeft();
+
+	m_displayTime = static_cast<int>(timeLeft);
+
+	if (m_displayTime >= 60)
 	{
 		m_srcRect = { 0,0,50,50 };
 		m_color = { 1.0f, 0.43f, 0.04f, 1.0f };
 	}
-	if (KeyboardManager::GetInstance().IsKeyJustPressed('2'))
+	else if (m_displayTime >= 30)
 	{
 		m_srcRect = { 50,0,50,50 };
 		m_color = { 0.71f, 0.24f, 1.0f, 1.0f };
 	}
-	if (KeyboardManager::GetInstance().IsKeyJustPressed('3'))
+	else
 	{
 		m_srcRect = { 100,0,50,50 };
 		m_color = { 0.19f, 0.62f, 1.0f, 1.0f };
