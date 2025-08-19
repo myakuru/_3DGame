@@ -16,6 +16,13 @@ public:
 
 	void SetBrightThreshold(float threshold) { m_cb0_BrightInfo.Work().Threshold = threshold; }
 
+	void SetEnableNoise(bool enable) { m_enableNoise = enable; }
+	bool IsEnableNoise() const { return m_enableNoise; }
+
+	// ノイズの強さを設定
+	void SetNoiseStrength(float strength) { m_cb0_NoiseInfo.Work().NoiseStrength = strength; }
+
+
 	struct Vertex
 	{
 		Math::Vector3 Pos;
@@ -40,6 +47,8 @@ private:
 	void BlurProcess();
 	void LightBloomProcess();
 	void DepthOfFieldProcess();
+	// ノイズ処理(自分で追加)
+	void NoiseProcess();
 
 	void CreateBlurOffsetList(std::vector<Math::Vector3>& dstInfo, const std::shared_ptr<KdTexture>& spSrcTex, int samplingSize, const Math::Vector2& dir);
 
@@ -98,6 +107,9 @@ private:
 	KdRenderTargetPack	m_strongBlurRTPack;
 
 	KdRenderTargetPack	m_depthOfFieldRTPack;
+	
+	// 自分で追加
+	KdRenderTargetPack	m_noiseRTPack;
 
 	KdRenderTargetPack	m_brightEffectRTPack;
 	static const int	kLightBloomNum = 4;
@@ -107,4 +119,19 @@ private:
 	KdRenderTargetChanger m_brightRTChanger;
 
 	Vertex m_screenVert[4];
+
+
+	// 自分で追加
+	ID3D11PixelShader* m_PS_Noise = nullptr;
+
+	struct cbNoise
+	{
+		float NoiseStrength = 0.0f;
+		float Time = 0.0f;
+		int _blank[2] = { 0, 0 };
+	};
+	KdConstantBuffer<cbNoise> m_cb0_NoiseInfo;
+
+	// 自分で追加
+	bool m_enableNoise = false; // ノイズ処理のオンオフ
 };

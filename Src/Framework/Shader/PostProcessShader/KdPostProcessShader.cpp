@@ -1,4 +1,6 @@
 ﻿#include "KdPostProcessShader.h"
+#include"../../../Application/GameObject/Utility/Time.h"
+#include"../../../Application/main.h"
 
 // ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// /////
 // シェーダー本体の生成、定数バッファの生成
@@ -70,6 +72,17 @@ bool KdPostProcessShader::Init()
 			return false;
 		}
 	}
+	{
+#include "PS_Noise.shaderInc"
+		if (FAILED(KdDirect3D::Instance().WorkDev()->CreatePixelShader(
+			compiledBuffer, sizeof(compiledBuffer), nullptr, &m_PS_Noise)))
+		{
+			assert(0 && "ノイズピクセルシェーダー作成失敗");
+			Release();
+			return false;
+		}
+	}
+	m_cb0_NoiseInfo.Create();
 
 	m_cb0_BlurInfo.Create();
 
@@ -85,7 +98,9 @@ bool KdPostProcessShader::Init()
 	m_blurRTPack.CreateRenderTarget(renderWidth, renderHeight);
 	m_strongBlurRTPack.CreateRenderTarget(renderWidth / 2, renderHeight / 2);
 	m_depthOfFieldRTPack.CreateRenderTarget(renderWidth, renderHeight);
-	m_brightEffectRTPack.CreateRenderTarget(renderWidth, renderHeight); 
+	m_brightEffectRTPack.CreateRenderTarget(renderWidth, renderHeight);
+
+	m_noiseRTPack.CreateRenderTarget(renderWidth, renderHeight);
 
 	int lightBloomWidth = renderWidth;
 	int lightBloomHeight = renderHeight;
@@ -122,11 +137,13 @@ void KdPostProcessShader::Release()
 	KdSafeRelease(m_PS_Blur);
 	KdSafeRelease(m_PS_DoF);
 	KdSafeRelease(m_PS_Bright);
+	KdSafeRelease(m_PS_Noise);
 
 
 	m_cb0_BlurInfo.Release();
 	m_cb0_DoFInfo.Release();
 	m_cb0_BrightInfo.Release();
+	m_cb0_NoiseInfo.Release();
 }
 
 // ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// /////
@@ -179,13 +196,23 @@ void KdPostProcessShader::PostEffectProcess()
 
 	LightBloomProcess();
 	BlurProcess();
+
 	DepthOfFieldProcess();
+
+	// ノイズ処理(自分で追加)
+	NoiseProcess();
 
 	KdCSVData windowData("Asset/Data/WindowSettings.csv");
 	const std::vector<std::string>& sizeData = windowData.GetLine(0);
 
-	KdShaderManager::Instance().m_spriteShader.DrawTex(m_depthOfFieldRTPack.m_RTTexture.get(), 0, 0, atoi(sizeData[0].data()), atoi(sizeData[1].data()));
-
+	if (m_enableNoise)
+	{
+		KdShaderManager::Instance().m_spriteShader.DrawTex(m_noiseRTPack.m_RTTexture.get(), 0, 0, atoi(sizeData[0].data()), atoi(sizeData[1].data()));
+	}
+	else
+	{
+		KdShaderManager::Instance().m_spriteShader.DrawTex(m_depthOfFieldRTPack.m_RTTexture.get(), 0, 0, atoi(sizeData[0].data()), atoi(sizeData[1].data()));
+	}
 }
 
 void KdPostProcessShader::LightBloomProcess()
@@ -253,6 +280,29 @@ void KdPostProcessShader::DepthOfFieldProcess()
 	};
 
 	DrawTexture(srcTexList, 4, m_depthOfFieldRTPack.m_RTTexture, &m_depthOfFieldRTPack.m_viewPort);
+}
+
+void KdPostProcessShader::NoiseProcess()
+{
+	if (!m_enableNoise) return;
+
+	// 定数バッファセット
+	//m_cb0_NoiseInfo.Work().NoiseStrength = 0.07f;
+	m_cb0_NoiseInfo.Work().Time = Time::Instance().GetElapsedTime();
+	m_cb0_NoiseInfo.Write();
+
+	ID3D11DeviceContext* DevCon = KdDirect3D::Instance().WorkDevContext();
+	DevCon->PSSetConstantBuffers(3, 1, m_cb0_NoiseInfo.GetAddress());
+
+	KdShaderManager& shaderMgr = KdShaderManager::Instance();
+	if (shaderMgr.SetVertexShader(m_VS))
+	{
+		DevCon->IASetInputLayout(m_inputLayout);
+	}
+	shaderMgr.SetPixelShader(m_PS_Noise);
+
+	// ポストエフェクトテクスチャにノイズを描画
+	DrawTexture(&m_depthOfFieldRTPack.m_RTTexture, 1, m_noiseRTPack.m_RTTexture, &m_noiseRTPack.m_viewPort);
 }
 
 void KdPostProcessShader::CreateBlurOffsetList(std::vector<Math::Vector3>& dstInfo, const std::shared_ptr<KdTexture>& spSrcTex, int samplingRadius, const Math::Vector2& dir)

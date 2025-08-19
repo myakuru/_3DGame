@@ -72,6 +72,13 @@ protected :
 	virtual void Event();
 	virtual void Init();
 
+	// PostProcess用パラメータ
+	float m_brightThreshold = 0.9f;
+	bool m_fogEnable = true;
+	bool m_fogUseRange = false;
+	Math::Vector3 m_fogColor = { 0.7f, 0.7f, 0.7f };
+	float m_fogDensity = 0.005f;
+
 	std::weak_ptr<PlayerCamera> m_playerCamera;
 
 	KdRenderTargetChanger m_renderTargetChanger;

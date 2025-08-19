@@ -61,6 +61,42 @@ float4 main(VSOutput In) : SV_Target0
 		shadow = shadow * 0.8f + 0.3f;
 	}
 
+	// カメラへの方向
+	float3 vCam = g_CamPos - In.wPos;
+	float camDist = length(vCam); // カメラ - ピクセル距離
+	vCam = normalize(vCam);
+
+	//------------------------------------------
+	// 高さフォグ
+	//------------------------------------------
+	if (g_HeightFogEnable && g_FogEnable)
+	{
+		if (In.wPos.y < g_HeightFogTopValue)
+		{
+			float distRate = length(In.wPos - g_CamPos);
+			distRate = saturate(distRate / g_HeightFogDistance);
+			distRate = pow(distRate, 2.0);
+			
+			float heightRange = g_HeightFogTopValue - g_HeightFogBottomValue;
+			float heightRate = 1 - saturate((In.wPos.y - g_HeightFogBottomValue) / heightRange);
+			
+			float fogRate = heightRate * distRate;
+			toonColor = lerp(toonColor, g_HeightFogColor, fogRate);
+		}
+	}
+	
+	//------------------------------------------
+	// 距離フォグ
+	//------------------------------------------
+	if (g_DistanceFogEnable && g_FogEnable)
+	{
+		// フォグ 1(近い)～0(遠い)
+		float f = saturate(1.0 / exp(camDist * g_DistanceFogDensity));
+		
+		// 適用
+		toonColor = lerp(g_DistanceFogColor, toonColor, f);
+	}
+
 	toonColor *= shadow;
 	
     // 出力
