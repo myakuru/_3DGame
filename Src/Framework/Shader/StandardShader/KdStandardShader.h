@@ -32,6 +32,15 @@ public:
 		float			DissolveEdgeRange = 0.03f;	// 0 ～ 1
 
 		Math::Vector3	DissolveEmissive = { 0.0f, 1.0f, 1.0f };
+
+		// パディング（DirectX定数バッファは16バイト単位推奨）
+		int _padding[3] = { 0, 0, 0 };
+
+		// グラデーション用フラグとカラー
+		int enableGradient = 0;           // グラデーション有効フラグ（0:無効, 1:有効）
+
+		Math::Color gradientColor = { 1.0f, 1.0f, 1.0f, 1.0f }; // グラデーションカラー
+
 		//float			_blank2 = 0.0f; //スキンメッシュには必要ないので削除
 	};
 
@@ -161,6 +170,10 @@ public:
 	void BeginToon();
 	void EndToon();
 
+	// グラデーションを有効にする
+	void BeginGradient();
+	void EndGradient();
+
 	//================================================
 	// 描画関数
 	//================================================
@@ -199,6 +212,19 @@ public:
 	}
 
 	std::shared_ptr<KdTexture>& GetDepthTex() { return m_depthMapFromLightRTPack.m_RTTexture; }
+
+	// 自分で追加
+	bool IsEnableGradient() const { return m_enableGradient; }
+	void SetEnableGradient(bool enable)
+	{ 
+		m_enableGradient = enable; 
+		m_cb0_Obj.Work().enableGradient = enable ? 1 : 0; // 0:無効, 1:有効
+		m_dirtyCBObj = true; 
+	}
+	void SetGradientColor(const Math::Color& color)
+	{
+		m_gradientColor = color;
+	}
 
 private:
 
@@ -248,6 +274,8 @@ private:
 
 	ID3D11PixelShader* m_PS_Toon = nullptr;					// トゥーン用ピクセルシェーダー
 
+	ID3D11PixelShader* m_PS_Gradation = nullptr;				// ノイズ用ピクセルシェーダー
+
 	// テクスチャ
 	std::shared_ptr<KdTexture>	m_dissolveTex = nullptr;	// ディゾルブで使用するデフォルトテクスチャ
 
@@ -261,4 +289,10 @@ private:
 	KdRenderTargetChanger m_depthMapFromLightRTChanger;
 
 	bool		m_dirtyCBObj = false;						// 定数バッファのオブジェクトに変更があったかどうか
+
+
+	// 自分で追加
+	//　グラデーション用フラグとカラー
+	bool m_enableGradient = false;
+	Math::Color m_gradientColor{1.0f,1.0f,1.0f,1.0f};
 };

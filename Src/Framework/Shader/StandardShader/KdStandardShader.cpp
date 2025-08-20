@@ -162,6 +162,33 @@ void KdStandardShader::EndToon()
 	KdDirect3D::Instance().WorkDevContext()->PSSetShaderResources(10, 1, &pNullSRV);
 }
 
+void KdStandardShader::BeginGradient()
+{
+	// 頂点シェーダーのパイプライン変更
+	if (KdShaderManager::Instance().SetVertexShader(m_VS_Lit))
+	{
+		KdShaderManager::Instance().SetInputLayout(m_inputLayout);
+
+		KdShaderManager::Instance().SetVSConstantBuffer(0, m_cb0_Obj.GetAddress());
+		KdShaderManager::Instance().SetVSConstantBuffer(1, m_cb1_Mesh.GetAddress());
+	}
+
+	// ピクセルシェーダーのパイプライン変更
+	if (KdShaderManager::Instance().SetPixelShader(m_PS_Gradation))
+	{
+		// ここでグラデーション情報をセット
+		m_cb0_Obj.Work().enableGradient = m_enableGradient ? 1 : 0;
+		m_cb0_Obj.Work().gradientColor = m_gradientColor;
+		m_cb0_Obj.Write();
+		KdShaderManager::Instance().SetPSConstantBuffer(0, m_cb0_Obj.GetAddress());
+		KdShaderManager::Instance().SetPSConstantBuffer(2, m_cb2_Material.GetAddress());
+	}
+}
+
+void KdStandardShader::EndGradient()
+{
+}
+
 
 //================================================
 // 描画関数
@@ -549,6 +576,15 @@ bool KdStandardShader::Init()
 		}
 	}
 
+	{
+#include"PS_Gradation.shaderInc"
+		if (FAILED(KdDirect3D::Instance().WorkDev()->CreatePixelShader(compiledBuffer, sizeof(compiledBuffer), nullptr, &m_PS_Gradation))) {
+			assert(0 && "ピクセルシェーダー作成失敗");
+			Release();
+			return false;
+		}
+	}
+
 	//-------------------------------------
 	// 定数バッファ作成
 	//-------------------------------------
@@ -572,7 +608,6 @@ bool KdStandardShader::Init()
 
 	SetDissolveTexture(*KdAssets::Instance().m_textures.GetData("Asset/Textures/System/WhiteNoise.png"));
 
-
 	return true;
 }
 
@@ -592,6 +627,7 @@ void KdStandardShader::Release()
 	KdSafeRelease(m_PS_GenDepthFromLight);
 	KdSafeRelease(m_PS_UnLit);
 	KdSafeRelease(m_PS_Toon);
+	KdSafeRelease(m_PS_Gradation);
 
 	m_cb0_Obj.Release();
 	m_cb1_Mesh.Release();

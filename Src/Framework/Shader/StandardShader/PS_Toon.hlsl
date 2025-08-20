@@ -15,7 +15,7 @@ static const float3 ToonRamp = (0.8, 0.8, 0.8);
 float4 main(VSOutput In) : SV_Target0
 {
 	
-    // ベースカラー取得
+  // ベースカラー取得
 	float4 baseColor = g_baseTex.Sample(g_ss, In.UV) * g_BaseColor * In.Color;
 
 	float3 toonColor;

@@ -25,6 +25,16 @@ public:
 		if (m_bDrawBright) KdShaderManager::Instance().m_StandardShader.DrawPolygon(*m_polygon, m_mWorld, m_color);
 	}
 
+	void DrawToon() override
+	{
+		if (m_bDrawToon) KdShaderManager::Instance().m_StandardShader.DrawPolygon(*m_polygon, m_mWorld, m_color);
+	}
+
+	void DrawGradation() override
+	{
+		if (m_bDrawGradation) KdShaderManager::Instance().m_StandardShader.DrawPolygon(*m_polygon, m_mWorld, m_color);
+	}
+
 	// ImGuiのインスペクターでDrawを変更できるようにする。
 	void ImGuiInspector() override
 	{
@@ -71,17 +81,37 @@ public:
 
 private:
 
+	bool ModelLoad(std::string _path) override
+	{
+		// .~ 以降の拡張子を識別するために部分文字列を取得
+		std::string ext = _path.substr(_path.find_last_of('.') + 1);
+
+		if (ext == "png" || ext == "PNG")
+		{
+			_path = m_path;
+			// テクスチャ読み込み
+			m_polygon->SetMaterial(m_path);
+			return true;
+		}
+
+		return false;
+	}
+
 	bool m_bGenerateDepthMapFromLight = false;	// ライトからの深度マップを生成するかどうか
 	bool m_bDrawLit = false;					// ライトの影響を受ける描画を行うかどうか
 	bool m_bDrawUnLit = false;					// ライトの影響を受けない描画を行うかどうか
 	bool m_bDrawBright = false;					// ブライト描画を行うかどうか
+	bool m_bDrawToon = false;					// トゥーンシェーダーで描画するかどうか
+	bool m_bDrawGradation = false;				// グラデーション描画を行うかどうか
 
 	std::map<std::string, bool*, std::less<void>> m_drawFlg =
 	{
 			{"GenerateDepthMapFromLight", &m_bGenerateDepthMapFromLight},
 			{"DrawLit", &m_bDrawLit},
 			{"DrawUnLit", &m_bDrawUnLit},
-			{"DrawBright", &m_bDrawBright}
+			{"DrawBright", &m_bDrawBright},
+			{"DrawToon", &m_bDrawToon},
+			{"DrawGradation", &m_bDrawGradation}
 	};
 
 };

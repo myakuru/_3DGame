@@ -28,6 +28,7 @@
 #include"../GameObject/HUD/Number/NumBer.h"
 #include"../GameObject/HUD/NowHp/NowHp.h"
 #include"../GameObject/HUD/SpecialMove/SpecialMove.h"
+#include"../GameObject/Winner/Winner.h"
 
 void SceneManager::Init()
 {
@@ -55,6 +56,7 @@ void SceneManager::Register() const
 	RegisterObject::GetInstance().Register<NumBer>();
 	RegisterObject::GetInstance().Register<NowHp>();
 	RegisterObject::GetInstance().Register<SpecialMove>();
+	RegisterObject::GetInstance().Register<Winner>();
 }
 
 void SceneManager::PreUpdate()

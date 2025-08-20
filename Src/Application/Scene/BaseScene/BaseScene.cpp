@@ -232,6 +232,20 @@ void BaseScene::Draw()
 	}
 	KdShaderManager::Instance().m_StandardShader.EndToon();
 
+	// グラデーションの描画
+	KdShaderManager::Instance().m_StandardShader.BeginGradient();
+	{
+		for (auto& obj : m_objList)
+		{
+			obj->DrawGradation();
+		}
+		for (auto& obj : m_drawObjectList)
+		{
+			obj->DrawGradation();
+		}
+	}
+	KdShaderManager::Instance().m_StandardShader.EndGradient();
+
 	m_renderTargetChanger.UndoRenderTarget();
 
 	m_drawObjectList.clear();
