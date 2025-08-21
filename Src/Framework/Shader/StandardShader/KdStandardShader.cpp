@@ -183,10 +183,45 @@ void KdStandardShader::BeginGradient()
 		KdShaderManager::Instance().SetPSConstantBuffer(0, m_cb0_Obj.GetAddress());
 		KdShaderManager::Instance().SetPSConstantBuffer(2, m_cb2_Material.GetAddress());
 	}
+
+	// シャドウマップのテクスチャをセット
+	KdDirect3D::Instance().WorkDevContext()->PSSetShaderResources(10, 1, m_depthMapFromLightRTPack.m_RTTexture->WorkSRViewAddress());
+
+	// 通常テクスチャ用サンプラーのセット
+	KdShaderManager::Instance().ChangeSamplerState(KdSamplerState::Anisotropic_Wrap, 0);
+
+	// 影ぼかし用の比較機能付きサンプラーのセット
+	KdShaderManager::Instance().ChangeSamplerState(KdSamplerState::Linear_Clamp_Cmp, 1);
 }
 
 void KdStandardShader::EndGradient()
 {
+	ID3D11ShaderResourceView* pNullSRV = nullptr;
+	KdDirect3D::Instance().WorkDevContext()->PSSetShaderResources(10, 1, &pNullSRV);
+}
+
+void KdStandardShader::BeginGrayscale()
+{
+	// 頂点シェーダーのパイプライン変更
+	if (KdShaderManager::Instance().SetVertexShader(m_VS_Lit))
+	{
+		KdShaderManager::Instance().SetInputLayout(m_inputLayout);
+
+		KdShaderManager::Instance().SetVSConstantBuffer(0, m_cb0_Obj.GetAddress());
+		KdShaderManager::Instance().SetVSConstantBuffer(1, m_cb1_Mesh.GetAddress());
+	}
+
+	// ピクセルシェーダーのパイプライン変更
+	if (KdShaderManager::Instance().SetPixelShader(m_PS_GrayScale))
+	{
+		KdShaderManager::Instance().SetPSConstantBuffer(0, m_cb0_Obj.GetAddress());
+		KdShaderManager::Instance().SetPSConstantBuffer(2, m_cb2_Material.GetAddress());
+	}
+}
+
+void KdStandardShader::EndGrayscale()
+{
+
 }
 
 
@@ -584,6 +619,14 @@ bool KdStandardShader::Init()
 			return false;
 		}
 	}
+	{
+#include"PS_GrayScale.shaderInc"
+		if (FAILED(KdDirect3D::Instance().WorkDev()->CreatePixelShader(compiledBuffer, sizeof(compiledBuffer), nullptr, &m_PS_GrayScale))) {
+			assert(0 && "ピクセルシェーダー作成失敗");
+			Release();
+			return false;
+		}
+	}
 
 	//-------------------------------------
 	// 定数バッファ作成
@@ -628,6 +671,7 @@ void KdStandardShader::Release()
 	KdSafeRelease(m_PS_UnLit);
 	KdSafeRelease(m_PS_Toon);
 	KdSafeRelease(m_PS_Gradation);
+	KdSafeRelease(m_PS_GrayScale);
 
 	m_cb0_Obj.Release();
 	m_cb1_Mesh.Release();

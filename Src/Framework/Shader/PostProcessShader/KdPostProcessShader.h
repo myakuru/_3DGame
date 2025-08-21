@@ -19,6 +19,9 @@ public:
 	void SetEnableNoise(bool enable) { m_enableNoise = enable; }
 	bool IsEnableNoise() const { return m_enableNoise; }
 
+	void SetEnableGray(bool enable) { m_enableGray = enable; }
+	bool IsEnableGray() const { return m_enableGray; }
+
 	// ノイズの強さを設定
 	void SetNoiseStrength(float strength) { m_cb0_NoiseInfo.Work().NoiseStrength = strength; }
 
@@ -126,12 +129,15 @@ private:
 
 	struct cbNoise
 	{
-		float NoiseStrength = 0.0f;
-		float Time = 0.0f;
-		int _blank[2] = { 0, 0 };
+		float NoiseStrength;
+		float Time;
+		int EnableGray; // 追加
+		int EnableNoise;
+		//int pad;        // 16バイト揃え用
 	};
 	KdConstantBuffer<cbNoise> m_cb0_NoiseInfo;
 
 	// 自分で追加
 	bool m_enableNoise = false; // ノイズ処理のオンオフ
+	bool m_enableGray = false; // グレースケール処理のオンオフ
 };

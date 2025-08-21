@@ -1,0 +1,491 @@
+[
+  {
+    "Name": "class SkySphere",
+    "color": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "deg": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawLit": false,
+      "DrawToon": false,
+      "DrawUnLit": true,
+      "GenerateDepthMapFromLight": false
+    },
+    "path": "Asset/Models/Sky/Sky.gltf",
+    "pos": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "scale": {
+      "x": 15.0,
+      "y": 15.0,
+      "z": 15.0
+    },
+    "type": 32
+  },
+  {
+    "Name": "class FPSCamera",
+    "color": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "deg": {
+      "x": 0.0,
+      "y": -90.0,
+      "z": 0.0
+    },
+    "moveSpeed": 50.0,
+    "path": "Asset/Models/Sky/Sky.gltf",
+    "pos": {
+      "x": -24.299999237060547,
+      "y": 60.0,
+      "z": 50.0
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "type": 32
+  },
+  {
+    "Name": "class Map",
+    "color": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "deg": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawLit": false,
+      "DrawToon": true,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "path": "Asset\\3DAssets\\Buildong7\\Building7.gltf",
+    "pos": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "type": 32
+  },
+  {
+    "Name": "class Map",
+    "color": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "deg": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawLit": false,
+      "DrawToon": true,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "path": "Asset\\3DAssets\\Buildong7\\Building7.gltf",
+    "pos": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 100.0
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "type": 32
+  },
+  {
+    "Name": "class Map",
+    "color": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "deg": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawLit": true,
+      "DrawToon": true,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "path": "Asset\\3DAssets\\Buildong7\\Building7.gltf",
+    "pos": {
+      "x": -98.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "type": 32
+  },
+  {
+    "Name": "class Map",
+    "color": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "deg": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawLit": false,
+      "DrawToon": true,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "path": "Asset\\3DAssets\\Buildong7\\Building7.gltf",
+    "pos": {
+      "x": -98.0999984741211,
+      "y": 0.0,
+      "z": 100.0
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "type": 32
+  },
+  {
+    "Name": "class Map",
+    "color": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "deg": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawLit": false,
+      "DrawToon": true,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "path": "Asset\\3DAssets\\Buildong7\\Building7.gltf",
+    "pos": {
+      "x": -240.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "type": 32
+  },
+  {
+    "Name": "class Map",
+    "color": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "deg": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawLit": false,
+      "DrawToon": true,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "path": "Asset\\3DAssets\\Buildong7\\Building7.gltf",
+    "pos": {
+      "x": -240.0,
+      "y": 0.0,
+      "z": 100.0
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "type": 32
+  },
+  {
+    "Name": "class Map",
+    "color": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "deg": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawLit": false,
+      "DrawToon": false,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "path": "Asset/Models/Sky/Sky.gltf",
+    "pos": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "type": 32
+  },
+  {
+    "Name": "class Map",
+    "color": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "deg": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawLit": false,
+      "DrawToon": true,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "path": "Asset\\3DAssets\\Buildong7\\Building7.gltf",
+    "pos": {
+      "x": -380.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "type": 32
+  },
+  {
+    "Name": "class Map",
+    "color": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "deg": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawLit": false,
+      "DrawToon": true,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "path": "Asset\\3DAssets\\Buildong7\\Building7.gltf",
+    "pos": {
+      "x": -380.0,
+      "y": 0.0,
+      "z": 100.0
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "type": 32
+  },
+  {
+    "Name": "class Map",
+    "color": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "deg": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawLit": false,
+      "DrawToon": true,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "path": "Asset\\3DAssets\\Buildong7\\Building7.gltf",
+    "pos": {
+      "x": -550.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "type": 32
+  },
+  {
+    "Name": "class Map",
+    "color": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "deg": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawLit": false,
+      "DrawToon": true,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "path": "Asset\\3DAssets\\Buildong7\\Building7.gltf",
+    "pos": {
+      "x": -550.0,
+      "y": 0.0,
+      "z": 100.0
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "type": 32
+  },
+  {
+    "Name": "class Map",
+    "color": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "deg": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawLit": false,
+      "DrawToon": true,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "path": "Asset\\3DAssets\\Buildong7\\Building7.gltf",
+    "pos": {
+      "x": -650.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "type": 32
+  },
+  {
+    "Name": "class Map",
+    "color": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "deg": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawLit": false,
+      "DrawToon": true,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "path": "Asset\\3DAssets\\Buildong7\\Building7.gltf",
+    "pos": {
+      "x": -650.0,
+      "y": 0.0,
+      "z": 100.0
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "type": 32
+  }
+]

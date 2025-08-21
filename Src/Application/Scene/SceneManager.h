@@ -9,6 +9,7 @@ public :
 	{
 		Title,
 		Game,
+		Result,
 	};
 
 	// シーンの初期化
@@ -102,6 +103,8 @@ public :
 
 	// シーンカメラかどうか
 	bool m_sceneCamera = true;
+
+	bool m_gameClear = false; // ゲームクリアフラグ
 
 private :
 

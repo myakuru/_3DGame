@@ -317,6 +317,7 @@
     <ClInclude Include="Src\Application\main.h" />
     <ClInclude Include="Src\Application\Scene\BaseScene\BaseScene.h" />
     <ClInclude Include="Src\Application\Scene\GameScene\GameScene.h" />
+    <ClInclude Include="Src\Application\Scene\ResultScene\ResultScene.h" />
     <ClInclude Include="Src\Application\Scene\SceneManager.h" />
     <ClInclude Include="Src\Application\Scene\TitleScene\TitleScene.h" />
     <ClInclude Include="Src\Framework\Direct3D\KdMaterial.h" />
@@ -410,6 +411,7 @@
     <ClCompile Include="Src\Application\main.cpp" />
     <ClCompile Include="Src\Application\Scene\BaseScene\BaseScene.cpp" />
     <ClCompile Include="Src\Application\Scene\GameScene\GameScene.cpp" />
+    <ClCompile Include="Src\Application\Scene\ResultScene\ResultScene.cpp" />
     <ClCompile Include="Src\Application\Scene\SceneManager.cpp" />
     <ClCompile Include="Src\Application\Scene\TitleScene\TitleScene.cpp" />
     <ClCompile Include="Src\Framework\Direct3D\KdMaterial.cpp">
@@ -548,6 +550,12 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Src\Framework\Shader\StandardShader\PS_GrayScale.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
     </FxCompile>
     <FxCompile Include="Src\Framework\Shader\StandardShader\PS_Toon.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>

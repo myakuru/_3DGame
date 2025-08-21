@@ -209,6 +209,10 @@ void KdPostProcessShader::PostEffectProcess()
 	{
 		KdShaderManager::Instance().m_spriteShader.DrawTex(m_noiseRTPack.m_RTTexture.get(), 0, 0, atoi(sizeData[0].data()), atoi(sizeData[1].data()));
 	}
+	else if (m_enableGray)
+	{
+		KdShaderManager::Instance().m_spriteShader.DrawTex(m_noiseRTPack.m_RTTexture.get(), 0, 0, atoi(sizeData[0].data()), atoi(sizeData[1].data()));
+	}
 	else
 	{
 		KdShaderManager::Instance().m_spriteShader.DrawTex(m_depthOfFieldRTPack.m_RTTexture.get(), 0, 0, atoi(sizeData[0].data()), atoi(sizeData[1].data()));
@@ -284,11 +288,11 @@ void KdPostProcessShader::DepthOfFieldProcess()
 
 void KdPostProcessShader::NoiseProcess()
 {
-	if (!m_enableNoise) return;
-
 	// 定数バッファセット
 	//m_cb0_NoiseInfo.Work().NoiseStrength = 0.07f;
 	m_cb0_NoiseInfo.Work().Time = Time::Instance().GetElapsedTime();
+	m_cb0_NoiseInfo.Work().EnableGray = m_enableGray ? 1 : 0;
+	m_cb0_NoiseInfo.Work().EnableNoise = m_enableNoise ? 1 : 0;
 	m_cb0_NoiseInfo.Write();
 
 	ID3D11DeviceContext* DevCon = KdDirect3D::Instance().WorkDevContext();

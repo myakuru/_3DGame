@@ -54,6 +54,7 @@ public:
 	virtual void DrawSprite() {}
 	virtual void DrawToon() {}
 	virtual void DrawGradation() {}
+	virtual void DrawGrayScale() {}
 	virtual void DrawDebug();
 
 	virtual void SetAsset(const std::string&) {}

@@ -211,6 +211,9 @@
     <Filter Include="Src\Application\GameObject\Winner">
       <UniqueIdentifier>{9db1bb98-277b-45f8-8fce-1bc39c49a5a7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\Scene\Result">
+      <UniqueIdentifier>{ccad56d0-0a76-4a85-9e63-63d0a1a3fbd4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -528,6 +531,9 @@
     <ClInclude Include="Src\Application\GameObject\Winner\Winner.h">
       <Filter>Src\Application\GameObject\Winner</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\Scene\ResultScene\ResultScene.h">
+      <Filter>Src\Application\Scene\Result</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -782,6 +788,9 @@
     <ClCompile Include="Src\Application\GameObject\Winner\Winner.cpp">
       <Filter>Src\Application\GameObject\Winner</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Application\Scene\ResultScene\ResultScene.cpp">
+      <Filter>Src\Application\Scene\Result</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Src\Framework\Shader\inc_KdCommon.hlsli">
@@ -841,6 +850,9 @@
       <Filter>Src\Framework\Shader\PostProcessShader</Filter>
     </FxCompile>
     <FxCompile Include="Src\Framework\Shader\StandardShader\PS_Gradation.hlsl">
+      <Filter>Src\Framework\Shader\StandardShader</Filter>
+    </FxCompile>
+    <FxCompile Include="Src\Framework\Shader\StandardShader\PS_GrayScale.hlsl">
       <Filter>Src\Framework\Shader\StandardShader</Filter>
     </FxCompile>
   </ItemGroup>

@@ -4,6 +4,7 @@
 #include "BaseScene/BaseScene.h"
 #include "GameScene/GameScene.h"
 #include "TitleScene/TitleScene.h"
+#include "ResultScene/ResultScene.h"
 
 // フレームワークのインクルード
 #include"../../Framework/RegisterObject/RegisterObject.h"
@@ -130,6 +131,9 @@ void SceneManager::ChangeScene(SceneType _sceneType)
 		break;
 	case SceneType::Game:
 		m_currentScene = std::make_shared<GameScene>();
+		break;
+	case SceneType::Result:
+		m_currentScene = std::make_shared<ResultScene>();
 		break;
 	}
 

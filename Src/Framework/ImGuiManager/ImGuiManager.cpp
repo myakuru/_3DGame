@@ -369,7 +369,8 @@ void ImGuiManager::InGuiSceneSelect() const
 	std::map<std::string,SceneManager::SceneType,std::less<>> sceneType =
 	{
 		{"Title",SceneManager::SceneType::Title},
-		{"Game",SceneManager::SceneType::Game}
+		{"Game",SceneManager::SceneType::Game},
+		{"Result",SceneManager::SceneType::Result}
 	};
 
 	// こいつと比較して、シーンが異なるかどうかを確認する

@@ -14,6 +14,7 @@ public:
 
 	void Init() override;
 	void PostUpdate() override;
+	void UpdateWinnerCamera();
 	void ImGuiInspector()	override;
 	void JsonSave(nlohmann::json& _json) const override;
 	void JsonInput(const nlohmann::json& _json) override;
@@ -23,7 +24,7 @@ public:
 
 private:
 
-	std::weak_ptr<Player> m_player;
+	//std::weak_ptr<Player> m_player;
 	Math::Vector3 m_cameraPos = Math::Vector3::Zero; // カメラの現在位置
 	Math::Vector3 m_targetLookAt = Math::Vector3::Zero;
 

@@ -174,6 +174,10 @@ public:
 	void BeginGradient();
 	void EndGradient();
 
+	// グレースケール
+	void BeginGrayscale();
+	void EndGrayscale();
+
 	//================================================
 	// 描画関数
 	//================================================
@@ -274,7 +278,8 @@ private:
 
 	ID3D11PixelShader* m_PS_Toon = nullptr;					// トゥーン用ピクセルシェーダー
 
-	ID3D11PixelShader* m_PS_Gradation = nullptr;				// ノイズ用ピクセルシェーダー
+	ID3D11PixelShader* m_PS_Gradation = nullptr;				// グラーデーション用ピクセルシェーダー
+	ID3D11PixelShader* m_PS_GrayScale = nullptr;				// グレースケール用ピクセルシェーダー
 
 	// テクスチャ
 	std::shared_ptr<KdTexture>	m_dissolveTex = nullptr;	// ディゾルブで使用するデフォルトテクスチャ

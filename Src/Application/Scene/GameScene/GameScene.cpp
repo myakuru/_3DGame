@@ -3,9 +3,6 @@
 
 void GameScene::Event()
 {
-	KdShaderManager::Instance().m_postProcessShader.SetBrightThreshold(m_brightThreshold);
-	KdShaderManager::Instance().WorkAmbientController().SetFogEnable(m_fogEnable, m_fogUseRange);
-	KdShaderManager::Instance().WorkAmbientController().SetDistanceFog({ m_fogColor }, m_fogDensity);
 
 	if (KeyboardManager::GetInstance().IsKeyPressed('P'))
 	{
@@ -29,4 +26,7 @@ void GameScene::Event()
 
 void GameScene::Init()
 {
+	KdShaderManager::Instance().m_postProcessShader.SetBrightThreshold(m_brightThreshold);
+	KdShaderManager::Instance().WorkAmbientController().SetFogEnable(m_fogEnable, m_fogUseRange);
+	KdShaderManager::Instance().WorkAmbientController().SetDistanceFog({ m_fogColor }, m_fogDensity);
 }

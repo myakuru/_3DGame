@@ -246,6 +246,20 @@ void BaseScene::Draw()
 	}
 	KdShaderManager::Instance().m_StandardShader.EndGradient();
 
+	// グレースケールの描画
+	KdShaderManager::Instance().m_StandardShader.BeginGrayscale();
+	{
+		for (auto& obj : m_objList)
+		{
+			obj->DrawGrayScale();
+		}
+		for (auto& obj : m_drawObjectList)
+		{
+			obj->DrawGrayScale();
+		}
+	}
+	KdShaderManager::Instance().m_StandardShader.EndGrayscale();
+
 	m_renderTargetChanger.UndoRenderTarget();
 
 	m_drawObjectList.clear();

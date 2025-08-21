@@ -33,6 +33,18 @@ public:
 		if (m_bDrawToon) KdShaderManager::Instance().m_StandardShader.DrawModel(*m_modelWork, m_mWorld, m_color);
 	}
 
+	void DrawGradation() override
+	{
+		if (m_bDrawGradation) KdShaderManager::Instance().m_StandardShader.DrawModel(*m_model, m_mWorld, m_color);
+		if (m_bDrawGradation) KdShaderManager::Instance().m_StandardShader.DrawModel(*m_modelWork, m_mWorld, m_color);
+	}
+
+	void DrawGrayScale() override
+	{
+		if (m_bDrawGrayScale) KdShaderManager::Instance().m_StandardShader.DrawModel(*m_model, m_mWorld, m_color);
+		if (m_bDrawGrayScale) KdShaderManager::Instance().m_StandardShader.DrawModel(*m_modelWork, m_mWorld, m_color);
+	}
+
 	// ImGuiのインスペクターでDrawを変更できるようにする。
 	void ImGuiInspector() override
 	{
@@ -81,6 +93,8 @@ private:
 	bool m_bDrawUnLit = false;					// ライトの影響を受けない描画を行うかどうか
 	bool m_bDrawBright = false;					// ブライト描画を行うかどうか
 	bool m_bDrawToon = false;					// トゥーンシェーダーで描画するかどうか
+	bool m_bDrawGradation = false;				// グラデーション描画を行うかどうか
+	bool m_bDrawGrayScale = false;				// グレースケール描画を行うかどうか
 
 	std::map<std::string, bool*, std::less<void>> m_drawFlg =
 	{
@@ -88,6 +102,8 @@ private:
 			{"DrawLit", &m_bDrawLit},
 			{"DrawUnLit", &m_bDrawUnLit},
 			{"DrawBright", &m_bDrawBright},
-			{"DrawToon", &m_bDrawToon}
+			{"DrawToon", &m_bDrawToon},
+			{"DrawGradation", &m_bDrawGradation},
+			{"DrawGrayScale", &m_bDrawGrayScale}
 	};
 };

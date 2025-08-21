@@ -5,6 +5,7 @@
 #include"../../Character/Player/Player.h"
 #include"../../../../Framework/Json/Json.h"
 
+
 const uint32_t PlayerCamera::TypeID = KdGameObject::GenerateTypeID();
 
 void PlayerCamera::Init()
@@ -29,12 +30,19 @@ void PlayerCamera::PostUpdate()
 	SceneManager::Instance().GetObjectWeakPtr(m_Player);
 	auto _spTarget = m_Player.lock();
 
+	if (!_spTarget) return;
+
+
+	if (SceneManager::Instance().m_gameClear)
+	{
+		UpdateWinnerCamera();
+		return;
+	}
+
 	// カメラの回転
 	UpdateRotateByMouse();
 	m_mRotation = GetRotationMatrix();
 
-
-	if (!_spTarget) return;
 	
 	// カメラの位置をターゲットの位置に設定
 	m_mWorld = Math::Matrix::CreateTranslation(m_targetLookAt);
@@ -104,7 +112,69 @@ void PlayerCamera::PostUpdate()
 			}
 		}
 	}
+}
 
+void PlayerCamera::UpdateWinnerCamera()
+{
+	Application::Instance().SetFpsScale(0.0);
+
+	enum Step { ToDeg60, ToDeg180, ToDeg0, End };
+	static Step step = ToDeg60;
+	static float timer = 0.0f;
+	static Math::Vector3 camOffset = { 0, 1.0f, -3.0f };
+	float deltaTime = Application::Instance().GetUnscaledDeltaTime();
+	timer += deltaTime;
+
+	Math::Vector3 playerPos = m_Player.lock()->GetPos();
+
+	switch (step)
+	{
+	case ToDeg60:
+	{
+		// -60度の位置へLerp
+		float targetDeg = -60.0f;
+		Math::Matrix targetRot = Math::Matrix::CreateRotationY(DirectX::XMConvertToRadians(targetDeg));
+		Math::Vector3 targetPos = playerPos + camOffset;
+		m_cameraPos = Math::Vector3::Lerp(m_cameraPos, targetPos, 2.0f * deltaTime); // 0.1fで滑らかに
+		m_mRotation = targetRot;
+		if ((m_cameraPos - targetPos).Length() < 0.01f)
+		{
+			step = ToDeg180;
+			timer = 0.0f;
+		}
+		break;
+	}
+	case ToDeg180:
+		m_degree.y = 180.0f;
+		m_mRotation = Math::Matrix::CreateRotationY(DirectX::XMConvertToRadians(m_degree.y));
+		if (timer > 1.5f) { step = ToDeg0; timer = 0.0f; }
+		break;
+	case ToDeg0:
+		m_degree.y = 0.0f;
+		m_mRotation = Math::Matrix::CreateRotationY(DirectX::XMConvertToRadians(m_degree.y));
+		if (timer > 1.5f) { step = End; timer = 0.0f; }
+		break;
+	case End:
+		// カメラの向いている方向に向かって移動
+	{
+		Math::Vector3 targetOffset = Math::Vector3::Up;
+		camOffset = Math::Vector3::Lerp(camOffset, targetOffset, 5.0f * deltaTime);
+		m_cameraPos = playerPos + camOffset;
+		if ((camOffset - targetOffset).Length() < 0.1f)
+		{
+			camOffset = targetOffset;
+			Application::Instance().SetFpsScale(1.0);
+			SceneManager::Instance().m_gameClear = false;
+			SceneManager::Instance().SetNextScene(SceneManager::SceneType::Result);
+		}
+		break;
+	}
+	}
+
+	// カメラのワールド行列を更新
+	m_mWorld = Math::Matrix::CreateTranslation(m_cameraPos - playerPos) * m_mRotation;
+	m_mWorld.Translation(playerPos + m_mWorld.Translation());
+	m_spCamera->SetCameraMatrix(m_mWorld);
 }
 
 void PlayerCamera::ImGuiInspector()
