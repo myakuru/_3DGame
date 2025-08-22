@@ -9,6 +9,7 @@ public:
 	Map();
 	~Map() override = default;
 
+	void DrawToon() override;
 	void DrawGrayScale() override;
 
 	uint32_t GetTypeID() const override { return m_typeID; }

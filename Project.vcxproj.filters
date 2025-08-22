@@ -79,9 +79,6 @@
     <Filter Include="Src\Framework\ImGuiManager">
       <UniqueIdentifier>{3cecc1d9-10ab-40ac-800d-799e54011217}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Src\Application\GameObject\SkySphere">
-      <UniqueIdentifier>{0ba4043a-65dd-4987-9e59-1fa53fe229e3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Src\Application\GameObject\HUD">
       <UniqueIdentifier>{d12fd14d-8dc5-485c-933f-da047cc3281e}</UniqueIdentifier>
     </Filter>
@@ -213,6 +210,21 @@
     </Filter>
     <Filter Include="Src\Application\Scene\Result">
       <UniqueIdentifier>{ccad56d0-0a76-4a85-9e63-63d0a1a3fbd4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\HUD\InvestigationComplete">
+      <UniqueIdentifier>{dcb033df-16d5-49b6-84aa-c79795e639f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\SkySphere">
+      <UniqueIdentifier>{fff0ee3e-4eec-4b3f-8ff0-7ff298a99c63}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\HUD\BlackBanner">
+      <UniqueIdentifier>{25e5d58f-af08-4a68-a5cf-6a1d3f19c448}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\ResultScore">
+      <UniqueIdentifier>{0d184726-8899-44f0-a248-cd2920a8391e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\Scene\TestStage">
+      <UniqueIdentifier>{050e7bb7-ebf5-410f-9cd0-b065c6a649e4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -402,9 +414,6 @@
     <ClInclude Include="Src\Framework\ImGuiManager\ImGuiManager.h">
       <Filter>Src\Framework\ImGuiManager</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Application\GameObject\SkySphere\SkySphere.h">
-      <Filter>Src\Application\GameObject\SkySphere</Filter>
-    </ClInclude>
     <ClInclude Include="Src\Framework\Utility\KdDebugWireFrame.h">
       <Filter>Src\Framework\Utility</Filter>
     </ClInclude>
@@ -533,6 +542,21 @@
     </ClInclude>
     <ClInclude Include="Src\Application\Scene\ResultScene\ResultScene.h">
       <Filter>Src\Application\Scene\Result</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\HUD\InvestigationComplete\InvestigationComplete.h">
+      <Filter>Src\Application\GameObject\HUD\InvestigationComplete</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\SkySphere\SkySphere.h">
+      <Filter>Src\Application\GameObject\SkySphere</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\HUD\BlackBanner\BlackBanner.h">
+      <Filter>Src\Application\GameObject\HUD\BlackBanner</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\ResultScore\ResultScore.h">
+      <Filter>Src\Application\GameObject\ResultScore</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\Scene\TestStage\TestStage.h">
+      <Filter>Src\Application\Scene\TestStage</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -689,9 +713,6 @@
     <ClCompile Include="Src\Framework\ImGuiManager\ImGuiManager.cpp">
       <Filter>Src\Framework\ImGuiManager</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Application\GameObject\SkySphere\SkySphere.cpp">
-      <Filter>Src\Application\GameObject\SkySphere</Filter>
-    </ClCompile>
     <ClCompile Include="Src\Framework\Utility\KdDebugWireFrame.cpp">
       <Filter>Src\Framework\Utility</Filter>
     </ClCompile>
@@ -790,6 +811,21 @@
     </ClCompile>
     <ClCompile Include="Src\Application\Scene\ResultScene\ResultScene.cpp">
       <Filter>Src\Application\Scene\Result</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\HUD\InvestigationComplete\InvestigationComplete.cpp">
+      <Filter>Src\Application\GameObject\HUD\InvestigationComplete</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\SkySphere\SkySphere.cpp">
+      <Filter>Src\Application\GameObject\SkySphere</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\HUD\BlackBanner\BlackBanner.cpp">
+      <Filter>Src\Application\GameObject\HUD\BlackBanner</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\ResultScore\ResultScore.cpp">
+      <Filter>Src\Application\GameObject\ResultScore</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Scene\TestStage\TestStage.cpp">
+      <Filter>Src\Application\Scene\TestStage</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -10,6 +10,7 @@ public :
 		Title,
 		Game,
 		Result,
+		Test, // テストシーン
 	};
 
 	// シーンの初期化
@@ -106,6 +107,35 @@ public :
 
 	bool m_gameClear = false; // ゲームクリアフラグ
 
+	void SetResultFlag(bool _result)
+	{
+		m_nowResult = _result;
+	}
+
+	bool GetResultFlag() const
+	{
+		return m_nowResult;
+	}
+
+	void SetScore(int _score)
+	{
+		m_score = _score;
+	}
+
+	int GetScore() const
+	{
+		return m_score;
+	}
+
+	void SetDrawGrayScale(bool _draw)
+	{
+		m_drawGrayScale = _draw;
+	}
+	bool GetDrawGrayScale() const
+	{
+		return m_drawGrayScale;
+	}
+
 private :
 
 	// RegisterObjectからオブジェクトを登録する関数
@@ -125,6 +155,13 @@ private :
 
 	SceneManager() = default;
 	~SceneManager() = default;
+
+	bool m_nowResult = false; // 現在のシーンがResultかどうか
+	
+	int m_score = 0; // スコア
+
+	bool m_drawGrayScale = false; // グレースケール描画フラグ
+
 
 public:
 

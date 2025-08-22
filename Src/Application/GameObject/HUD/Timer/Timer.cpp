@@ -1,5 +1,6 @@
 ﻿#include "Timer.h"
 #include"../../Utility/Time.h"
+#include"../../../Scene/SceneManager.h"
 const uint32_t Timer::TypeID = KdGameObject::GenerateTypeID();
 
 Timer::Timer()
@@ -12,26 +13,67 @@ void Timer::Init()
 	m_srcRect = { 0, 0, 128, 256 }; // 1
 	//m_srcRect = { 128, 0, 128, 256 }; // 2
 	m_texture = KdAssets::Instance().m_textures.GetData("Asset/Textures/Time/Digit01.png");
+	m_resultTexture = KdAssets::Instance().m_textures.GetData("Asset/Textures/Time/ResultTime.png");
 	m_time = 120.0f; // 初期時間300秒
+	m_lastTime = m_time; // 最後の時間を初期化
+	m_notDraw = false; // 描画しないフラグを初期化
+	m_displayTime = 0; // 初期表示時間を0に設定
 }
 
 void Timer::Update()
 {
-	Time::Instance().Update();
-	// 残り秒数を取得
-	float timeLeft = Time::Instance().GetCountdownTimeLeft();
 
 	if (KeyboardManager::GetInstance().IsKeyJustPressed('4'))
 	{
 		Time::Instance().StartCountdown(m_time);
 	}
 
+	// 残り秒数を取得
+	float timeLeft = Time::Instance().GetCountdownTimeLeft();
+
+	if (SceneManager::Instance().m_gameClear)
+	{
+		m_lastTime = m_time;
+		return; // ゲームクリア時はタイマーを更新しない
+	}
+
 	// 秒をフレーム数に変換
 	m_displayTime = static_cast<int>(timeLeft);
+
+	ResultTimerUpdate();
+
+}
+
+void Timer::ResultTimerUpdate()
+{
+	if (SceneManager::Instance().GetResultFlag())
+	{
+		float time = Time::Instance().GetElapsedTime();
+
+		if (time >= 0.0f && time <= 2.0f)
+		{
+			// ランダムな秒数を設定
+			m_displayTime = KdRandom::GetInt(3600, 36000);
+		}
+		else if (time >= 3.0f && time <= 5.0f)
+		{
+			m_displayTime = static_cast<int>(m_lastTime);
+		}
+		else if (time >= 5.0f)
+		{
+			m_notDraw = true;
+		}
+	}
+	else
+	{
+		m_notDraw = false; // ゲームクリア時以外は描画フラグをリセット
+	}
 }
 
 void Timer::DrawSprite()
 {
+	if (m_notDraw) return; // 描画しないフラグが立っている場合は何もしない
+
 	KdShaderManager::Instance().m_spriteShader.SetMatrix(m_mWorld);
 
 	int time = std::min(m_displayTime, 99 * 60 * 60 + 99 * 60 + 99); //99:99:99
@@ -52,35 +94,61 @@ void Timer::DrawSprite()
 	int baseX = static_cast<int>(m_position.x);
 	int baseY = static_cast<int>(m_position.y);
 
-	// 数字とコロンの合計表示数（数字6＋コロン2＝8）
-	for (int i = 0; i < 8; ++i)
+	if (SceneManager::Instance().GetResultFlag())
 	{
-		if (i == 2 || i == 5)
+		// コロン無しで数字6桁を連続表示（h, m, sの間に余白を追加）
+		const int digitGap = 750;      // 通常の数字間隔
+		const int extraGap = 200;       // 区切りごとの追加余白
+		int offsetX = 0;
+
+		for (int i = 0; i < 6; ++i)
 		{
-			// コロンの描画（2桁目と4桁目の後）
-			Math::Rectangle colonRect = { 128 * 10, 0, 128, 256 };
+			int n = digits[i];
+			int texIndex = n;
+			Math::Rectangle srcRect = { 100 * texIndex, 0, 100, 100 };
 			KdShaderManager::Instance().m_spriteShader.DrawTex(
-				m_texture,
-				baseX + 1280 * i,
-				baseY,
-				&colonRect,
-				&m_color
-			);
-		}
-		else
-		{
-			// 数字の描画
-			int digitIdx = i - (i > 2 ? 1 : 0) - (i > 5 ? 1 : 0); // コロン分インデックス調整
-			int n = digits[digitIdx];
-			int texIndex = (n == 0) ? 9 : n - 1; // 0はインデックス9
-			Math::Rectangle srcRect = { 128 * texIndex, 0, 128, 256 };
-			KdShaderManager::Instance().m_spriteShader.DrawTex(
-				m_texture,
-				baseX + 1280 * i,
+				m_resultTexture,
+				baseX + offsetX,
 				baseY,
 				&srcRect,
 				&m_color
 			);
+			offsetX += digitGap;
+			if (i == 1 || i == 3) offsetX += extraGap; // h→m, m→sの間に余白
+		}
+	}
+	else
+	{
+		// 通常通りコロン含めて表示
+		for (int i = 0; i < 8; ++i)
+		{
+			if (i == 2 || i == 5)
+			{
+				// コロンの描画（2桁目と4桁目の後）
+				Math::Rectangle colonRect = { 128 * 10, 0, 128, 256 };
+				KdShaderManager::Instance().m_spriteShader.DrawTex(
+					m_texture,
+					baseX + 1280 * i,
+					baseY,
+					&colonRect,
+					&m_color
+				);
+			}
+			else
+			{
+				// 数字の描画
+				int digitIdx = i - (i > 2 ? 1 : 0) - (i > 5 ? 1 : 0); // コロン分インデックス調整
+				int n = digits[digitIdx];
+				int texIndex = (n == 0) ? 9 : n - 1; // 0はインデックス9
+				Math::Rectangle srcRect = { 128 * texIndex, 0, 128, 256 };
+				KdShaderManager::Instance().m_spriteShader.DrawTex(
+					m_texture,
+					baseX + 1280 * i,
+					baseY,
+					&srcRect,
+					&m_color
+				);
+			}
 		}
 	}
 

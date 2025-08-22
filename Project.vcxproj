@@ -297,7 +297,9 @@
     <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_Idle\PlayerState_Idle.h" />
     <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_Run\PlayerState_Run.h" />
     <ClInclude Include="Src\Application\GameObject\HUD\AlpfaMoving\AlpfaMoving.h" />
+    <ClInclude Include="Src\Application\GameObject\HUD\BlackBanner\BlackBanner.h" />
     <ClInclude Include="Src\Application\GameObject\HUD\HpBar\HpBar.h" />
+    <ClInclude Include="Src\Application\GameObject\HUD\InvestigationComplete\InvestigationComplete.h" />
     <ClInclude Include="Src\Application\GameObject\HUD\NormalUI\NormalUI.h" />
     <ClInclude Include="Src\Application\GameObject\HUD\NowHp\NowHp.h" />
     <ClInclude Include="Src\Application\GameObject\HUD\Number\NumBer.h" />
@@ -306,6 +308,7 @@
     <ClInclude Include="Src\Application\GameObject\HUD\SpecialMove\SpecialMove.h" />
     <ClInclude Include="Src\Application\GameObject\HUD\Timer\Timer.h" />
     <ClInclude Include="Src\Application\GameObject\Map\Map.h" />
+    <ClInclude Include="Src\Application\GameObject\ResultScore\ResultScore.h" />
     <ClInclude Include="Src\Application\GameObject\SkySphere\SkySphere.h" />
     <ClInclude Include="Src\Application\GameObject\Utility\SelectDraw2DTexture.h" />
     <ClInclude Include="Src\Application\GameObject\Utility\SelectDraw3dModel.h" />
@@ -319,6 +322,7 @@
     <ClInclude Include="Src\Application\Scene\GameScene\GameScene.h" />
     <ClInclude Include="Src\Application\Scene\ResultScene\ResultScene.h" />
     <ClInclude Include="Src\Application\Scene\SceneManager.h" />
+    <ClInclude Include="Src\Application\Scene\TestStage\TestStage.h" />
     <ClInclude Include="Src\Application\Scene\TitleScene\TitleScene.h" />
     <ClInclude Include="Src\Framework\Direct3D\KdMaterial.h" />
     <ClInclude Include="Src\Framework\Direct3D\Polygon\KdPolygon.h" />
@@ -395,7 +399,9 @@
     <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_Idle\PlayerState_Idle.cpp" />
     <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_Run\PlayerState_Run.cpp" />
     <ClCompile Include="Src\Application\GameObject\HUD\AlpfaMoving\AlpfaMoving.cpp" />
+    <ClCompile Include="Src\Application\GameObject\HUD\BlackBanner\BlackBanner.cpp" />
     <ClCompile Include="Src\Application\GameObject\HUD\HpBar\HpBar.cpp" />
+    <ClCompile Include="Src\Application\GameObject\HUD\InvestigationComplete\InvestigationComplete.cpp" />
     <ClCompile Include="Src\Application\GameObject\HUD\NormalUI\NormalUI.cpp" />
     <ClCompile Include="Src\Application\GameObject\HUD\NowHp\NowHp.cpp" />
     <ClCompile Include="Src\Application\GameObject\HUD\Number\NumBer.cpp" />
@@ -404,6 +410,7 @@
     <ClCompile Include="Src\Application\GameObject\HUD\SpecialMove\SpecialMove.cpp" />
     <ClCompile Include="Src\Application\GameObject\HUD\Timer\Timer.cpp" />
     <ClCompile Include="Src\Application\GameObject\Map\Map.cpp" />
+    <ClCompile Include="Src\Application\GameObject\ResultScore\ResultScore.cpp" />
     <ClCompile Include="Src\Application\GameObject\SkySphere\SkySphere.cpp" />
     <ClCompile Include="Src\Application\GameObject\Weapon\Katana\Katana.cpp" />
     <ClCompile Include="Src\Application\GameObject\Weapon\WeaponBase.cpp" />
@@ -413,6 +420,7 @@
     <ClCompile Include="Src\Application\Scene\GameScene\GameScene.cpp" />
     <ClCompile Include="Src\Application\Scene\ResultScene\ResultScene.cpp" />
     <ClCompile Include="Src\Application\Scene\SceneManager.cpp" />
+    <ClCompile Include="Src\Application\Scene\TestStage\TestStage.cpp" />
     <ClCompile Include="Src\Application\Scene\TitleScene\TitleScene.cpp" />
     <ClCompile Include="Src\Framework\Direct3D\KdMaterial.cpp">
       <SubType>

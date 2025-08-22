@@ -14,6 +14,8 @@
     },
     "drawFlags": {
       "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
       "DrawLit": false,
       "DrawToon": false,
       "DrawUnLit": true,
@@ -26,9 +28,158 @@
       "z": 0.0
     },
     "scale": {
+      "x": 20.0,
+      "y": 20.0,
+      "z": 20.0
+    },
+    "type": 32
+  },
+  {
+    "Name": "class TPSCamera",
+    "color": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "deg": {
+      "x": 2.400001287460327,
+      "y": -89.55001831054688,
+      "z": 0.0
+    },
+    "moveSpeed": 50.0,
+    "path": "Asset/Models/Sky/Sky.gltf",
+    "pos": {
+      "x": 67.86339569091797,
+      "y": 95.81145477294922,
+      "z": 99.78569030761719
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "type": 32
+  },
+  {
+    "Name": "class BlackBanner",
+    "color": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "deg": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "drawFlags": true,
+    "path": "Asset\\Textures\\Title\\GameStart.png",
+    "pos": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.2999999523162842,
+      "z": 1.0
+    },
+    "type": 7
+  },
+  {
+    "Name": "class Timer",
+    "color": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 0.7347173690795898,
+      "z": 0.09803920984268188
+    },
+    "deg": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "drawFlags": false,
+    "path": "Asset/Models/Sky/Sky.gltf",
+    "pos": {
+      "x": -517.9000244140625,
+      "y": 0.699999988079071,
+      "z": 0.0
+    },
+    "scale": {
+      "x": 0.3499999940395355,
+      "y": 3.5,
+      "z": 1.0
+    },
+    "type": 32
+  },
+  {
+    "Name": "class ResultScore",
+    "color": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 0.4300000071525574,
+      "z": 0.03999999910593033
+    },
+    "deg": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
+      "DrawLit": false,
+      "DrawToon": false,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "gradientColor": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "path": "Asset/Models/Sky/Sky.gltf",
+    "pos": {
+      "x": 53.27202606201172,
+      "y": 95.18331909179688,
+      "z": 99.90338897705078
+    },
+    "scale": {
       "x": 15.0,
       "y": 15.0,
-      "z": 15.0
+      "z": 1.0
+    },
+    "type": 32
+  },
+  {
+    "Name": "class InvestigationComplete",
+    "color": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "deg": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "drawFlags": true,
+    "path": "Asset\\Textures\\GameUI\\INVESTIGATION COMPLETE.png",
+    "pos": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
     },
     "type": 32
   },
@@ -41,16 +192,16 @@
       "z": 1.0
     },
     "deg": {
-      "x": 0.0,
-      "y": -90.0,
+      "x": -1.8000017404556274,
+      "y": -92.24991607666016,
       "z": 0.0
     },
     "moveSpeed": 50.0,
     "path": "Asset/Models/Sky/Sky.gltf",
     "pos": {
-      "x": -24.299999237060547,
-      "y": 60.0,
-      "z": 50.0
+      "x": 145.5,
+      "y": 99.4000015258789,
+      "z": 104.5999984741211
     },
     "scale": {
       "x": 1.0,
@@ -74,6 +225,8 @@
     },
     "drawFlags": {
       "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
       "DrawLit": false,
       "DrawToon": true,
       "DrawUnLit": false,
@@ -86,9 +239,9 @@
       "z": 0.0
     },
     "scale": {
-      "x": 1.0,
-      "y": 1.0,
-      "z": 1.0
+      "x": 2.0,
+      "y": 2.0,
+      "z": 2.0
     },
     "type": 32
   },
@@ -107,6 +260,8 @@
     },
     "drawFlags": {
       "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
       "DrawLit": false,
       "DrawToon": true,
       "DrawUnLit": false,
@@ -116,12 +271,12 @@
     "pos": {
       "x": 0.0,
       "y": 0.0,
-      "z": 100.0
+      "z": 200.0
     },
     "scale": {
-      "x": 1.0,
-      "y": 1.0,
-      "z": 1.0
+      "x": 2.0,
+      "y": 2.0,
+      "z": 2.0
     },
     "type": 32
   },
@@ -140,6 +295,8 @@
     },
     "drawFlags": {
       "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
       "DrawLit": true,
       "DrawToon": true,
       "DrawUnLit": false,
@@ -147,14 +304,14 @@
     },
     "path": "Asset\\3DAssets\\Buildong7\\Building7.gltf",
     "pos": {
-      "x": -98.0,
+      "x": -300.0,
       "y": 0.0,
       "z": 0.0
     },
     "scale": {
-      "x": 1.0,
-      "y": 1.0,
-      "z": 1.0
+      "x": 2.0,
+      "y": 2.0,
+      "z": 2.0
     },
     "type": 32
   },
@@ -173,6 +330,8 @@
     },
     "drawFlags": {
       "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
       "DrawLit": false,
       "DrawToon": true,
       "DrawUnLit": false,
@@ -180,14 +339,14 @@
     },
     "path": "Asset\\3DAssets\\Buildong7\\Building7.gltf",
     "pos": {
-      "x": -98.0999984741211,
+      "x": -150.0,
       "y": 0.0,
-      "z": 100.0
+      "z": 200.0
     },
     "scale": {
-      "x": 1.0,
-      "y": 1.0,
-      "z": 1.0
+      "x": 2.0,
+      "y": 2.0,
+      "z": 2.0
     },
     "type": 32
   },
@@ -206,6 +365,8 @@
     },
     "drawFlags": {
       "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
       "DrawLit": false,
       "DrawToon": true,
       "DrawUnLit": false,
@@ -213,14 +374,14 @@
     },
     "path": "Asset\\3DAssets\\Buildong7\\Building7.gltf",
     "pos": {
-      "x": -240.0,
+      "x": -150.0,
       "y": 0.0,
       "z": 0.0
     },
     "scale": {
-      "x": 1.0,
-      "y": 1.0,
-      "z": 1.0
+      "x": 2.0,
+      "y": 2.0,
+      "z": 2.0
     },
     "type": 32
   },
@@ -239,6 +400,8 @@
     },
     "drawFlags": {
       "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
       "DrawLit": false,
       "DrawToon": true,
       "DrawUnLit": false,
@@ -246,14 +409,14 @@
     },
     "path": "Asset\\3DAssets\\Buildong7\\Building7.gltf",
     "pos": {
-      "x": -240.0,
+      "x": -300.0,
       "y": 0.0,
-      "z": 100.0
+      "z": 200.0
     },
     "scale": {
-      "x": 1.0,
-      "y": 1.0,
-      "z": 1.0
+      "x": 2.0,
+      "y": 2.0,
+      "z": 2.0
     },
     "type": 32
   },
@@ -272,39 +435,8 @@
     },
     "drawFlags": {
       "DrawBright": false,
-      "DrawLit": false,
-      "DrawToon": false,
-      "DrawUnLit": false,
-      "GenerateDepthMapFromLight": false
-    },
-    "path": "Asset/Models/Sky/Sky.gltf",
-    "pos": {
-      "x": 0.0,
-      "y": 0.0,
-      "z": 0.0
-    },
-    "scale": {
-      "x": 1.0,
-      "y": 1.0,
-      "z": 1.0
-    },
-    "type": 32
-  },
-  {
-    "Name": "class Map",
-    "color": {
-      "w": 1.0,
-      "x": 1.0,
-      "y": 1.0,
-      "z": 1.0
-    },
-    "deg": {
-      "x": 0.0,
-      "y": 0.0,
-      "z": 0.0
-    },
-    "drawFlags": {
-      "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
       "DrawLit": false,
       "DrawToon": true,
       "DrawUnLit": false,
@@ -312,14 +444,14 @@
     },
     "path": "Asset\\3DAssets\\Buildong7\\Building7.gltf",
     "pos": {
-      "x": -380.0,
+      "x": -450.0,
       "y": 0.0,
       "z": 0.0
     },
     "scale": {
-      "x": 1.0,
-      "y": 1.0,
-      "z": 1.0
+      "x": 2.0,
+      "y": 2.0,
+      "z": 2.0
     },
     "type": 32
   },
@@ -338,6 +470,8 @@
     },
     "drawFlags": {
       "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
       "DrawLit": false,
       "DrawToon": true,
       "DrawUnLit": false,
@@ -345,14 +479,14 @@
     },
     "path": "Asset\\3DAssets\\Buildong7\\Building7.gltf",
     "pos": {
-      "x": -380.0,
+      "x": -450.0,
       "y": 0.0,
-      "z": 100.0
+      "z": 200.0
     },
     "scale": {
-      "x": 1.0,
-      "y": 1.0,
-      "z": 1.0
+      "x": 2.0,
+      "y": 2.0,
+      "z": 2.0
     },
     "type": 32
   },
@@ -371,6 +505,8 @@
     },
     "drawFlags": {
       "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
       "DrawLit": false,
       "DrawToon": true,
       "DrawUnLit": false,
@@ -378,14 +514,14 @@
     },
     "path": "Asset\\3DAssets\\Buildong7\\Building7.gltf",
     "pos": {
-      "x": -550.0,
+      "x": -600.0,
       "y": 0.0,
       "z": 0.0
     },
     "scale": {
-      "x": 1.0,
-      "y": 1.0,
-      "z": 1.0
+      "x": 2.0,
+      "y": 2.0,
+      "z": 2.0
     },
     "type": 32
   },
@@ -404,6 +540,8 @@
     },
     "drawFlags": {
       "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
       "DrawLit": false,
       "DrawToon": true,
       "DrawUnLit": false,
@@ -411,14 +549,14 @@
     },
     "path": "Asset\\3DAssets\\Buildong7\\Building7.gltf",
     "pos": {
-      "x": -550.0,
+      "x": -600.0,
       "y": 0.0,
-      "z": 100.0
+      "z": 200.0
     },
     "scale": {
-      "x": 1.0,
-      "y": 1.0,
-      "z": 1.0
+      "x": 2.0,
+      "y": 2.0,
+      "z": 2.0
     },
     "type": 32
   },
@@ -437,6 +575,8 @@
     },
     "drawFlags": {
       "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
       "DrawLit": false,
       "DrawToon": true,
       "DrawUnLit": false,
@@ -444,14 +584,14 @@
     },
     "path": "Asset\\3DAssets\\Buildong7\\Building7.gltf",
     "pos": {
-      "x": -650.0,
+      "x": -750.0,
       "y": 0.0,
       "z": 0.0
     },
     "scale": {
-      "x": 1.0,
-      "y": 1.0,
-      "z": 1.0
+      "x": 2.0,
+      "y": 2.0,
+      "z": 2.0
     },
     "type": 32
   },
@@ -470,6 +610,8 @@
     },
     "drawFlags": {
       "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
       "DrawLit": false,
       "DrawToon": true,
       "DrawUnLit": false,
@@ -477,14 +619,14 @@
     },
     "path": "Asset\\3DAssets\\Buildong7\\Building7.gltf",
     "pos": {
-      "x": -650.0,
+      "x": -750.0,
       "y": 0.0,
-      "z": 100.0
+      "z": 200.0
     },
     "scale": {
-      "x": 1.0,
-      "y": 1.0,
-      "z": 1.0
+      "x": 2.0,
+      "y": 2.0,
+      "z": 2.0
     },
     "type": 32
   }

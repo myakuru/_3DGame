@@ -17,21 +17,32 @@
 			"mesh":0,
 			"name":"\u30c6\u30ad\u30b9\u30c8",
 			"rotation":[
-				0.7071068286895752,
+				0.7078837752342224,
 				0,
 				0,
-				0.7071068286895752
-			],
-			"scale":[
-				2.310572862625122,
-				2.310572862625122,
-				2.310572862625122
+				0.7063289880752563
 			],
 			"translation":[
-				-0.3100000023841858,
-				0,
+				-0.13921140134334564,
+				0.008394867181777954,
 				0
 			]
+		}
+	],
+	"materials":[
+		{
+			"doubleSided":true,
+			"name":"\u30de\u30c6\u30ea\u30a2\u30eb",
+			"pbrMetallicRoughness":{
+				"baseColorFactor":[
+					0.988951563835144,
+					1,
+					0.9433988928794861,
+					1
+				],
+				"metallicFactor":0,
+				"roughnessFactor":0.536697268486023
+			}
 		}
 	],
 	"meshes":[
@@ -44,7 +55,8 @@
 						"NORMAL":1,
 						"TEXCOORD_0":2
 					},
-					"indices":3
+					"indices":3,
+					"material":0
 				}
 			]
 		}
@@ -53,68 +65,68 @@
 		{
 			"bufferView":0,
 			"componentType":5126,
-			"count":148,
+			"count":1946,
 			"max":[
-				0.4754754900932312,
-				0.05000000074505806,
+				0.26528212428092957,
+				0.10000000149011612,
 				0
 			],
 			"min":[
-				0.00333667011000216,
-				-0.05000000074505806,
-				-0.47847849130630493
+				0.023510972037911415,
+				-0.10000000149011612,
+				-0.2821316421031952
 			],
 			"type":"VEC3"
 		},
 		{
 			"bufferView":1,
 			"componentType":5126,
-			"count":148,
+			"count":1946,
 			"type":"VEC3"
 		},
 		{
 			"bufferView":2,
 			"componentType":5126,
-			"count":148,
+			"count":1946,
 			"type":"VEC2"
 		},
 		{
 			"bufferView":3,
 			"componentType":5123,
-			"count":432,
+			"count":5724,
 			"type":"SCALAR"
 		}
 	],
 	"bufferViews":[
 		{
 			"buffer":0,
-			"byteLength":1776,
+			"byteLength":23352,
 			"byteOffset":0,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":1776,
-			"byteOffset":1776,
+			"byteLength":23352,
+			"byteOffset":23352,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":1184,
-			"byteOffset":3552,
+			"byteLength":15568,
+			"byteOffset":46704,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":864,
-			"byteOffset":4736,
+			"byteLength":11448,
+			"byteOffset":62272,
 			"target":34963
 		}
 	],
 	"buffers":[
 		{
-			"byteLength":5600,
-			"uri":"A.bin"
+			"byteLength":73720,
+			"uri":"X.bin"
 		}
 	]
 }

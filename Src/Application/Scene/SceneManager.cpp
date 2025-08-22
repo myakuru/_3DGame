@@ -5,11 +5,13 @@
 #include "GameScene/GameScene.h"
 #include "TitleScene/TitleScene.h"
 #include "ResultScene/ResultScene.h"
+#include "TestStage/TestStage.h"
 
 // フレームワークのインクルード
 #include"../../Framework/RegisterObject/RegisterObject.h"
 #include"../main.h"
 #include"../../Framework/Json/Json.h"
+#include"../GameObject/Utility/Time.h"
 
 // ゲームオブジェクトのインクルード
 #include"../GameObject/Camera/TPSCamera/TPSCamera.h"
@@ -30,6 +32,9 @@
 #include"../GameObject/HUD/NowHp/NowHp.h"
 #include"../GameObject/HUD/SpecialMove/SpecialMove.h"
 #include"../GameObject/Winner/Winner.h"
+#include"../GameObject/HUD/InvestigationComplete/InvestigationComplete.h"
+#include"../GameObject/HUD/BlackBanner/BlackBanner.h"
+#include"../GameObject/ResultScore/ResultScore.h"
 
 void SceneManager::Init()
 {
@@ -58,6 +63,9 @@ void SceneManager::Register() const
 	RegisterObject::GetInstance().Register<NowHp>();
 	RegisterObject::GetInstance().Register<SpecialMove>();
 	RegisterObject::GetInstance().Register<Winner>();
+	RegisterObject::GetInstance().Register<InvestigationComplete>();
+	RegisterObject::GetInstance().Register<BlackBanner>();
+	RegisterObject::GetInstance().Register<ResultScore>();
 }
 
 void SceneManager::PreUpdate()
@@ -135,7 +143,12 @@ void SceneManager::ChangeScene(SceneType _sceneType)
 	case SceneType::Result:
 		m_currentScene = std::make_shared<ResultScene>();
 		break;
+	case SceneType::Test:
+		m_currentScene = std::make_shared<TestScene>();
+		break;
 	}
+
+	Time::Instance().Reset(); // 時間をリセット
 
 	// 現在のシーン情報を更新
 	m_currentSceneType = _sceneType;

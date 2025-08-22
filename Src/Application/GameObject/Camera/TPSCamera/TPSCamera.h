@@ -14,4 +14,11 @@ public:
 
 	void Init()				override;
 	void PostUpdate()		override;
+	void UpdateResultCamera();
+
+	Math::Matrix GetMatrix() const
+	{
+		return m_mWorld;
+	}
+
 };

@@ -54,11 +54,6 @@ public:
 		if (m_startTimerActive)
 		{
 			m_startTimerElapsed = elapsedTime - m_startTimerBegin;
-			if (m_startTimerElapsed >= m_startTimerDuration)
-			{
-				m_startTimerFinished = true;
-				m_startTimerActive = false;
-			}
 		}
 
 		// カウントダウン処理
@@ -75,19 +70,11 @@ public:
 	}
 
 	// スタートタイマー開始
-	void StartTimer(float duration)
+	void StartTimer()
 	{
-		m_startTimerDuration = duration;
 		m_startTimerBegin = m_elapsedTime;
 		m_startTimerElapsed = 0.0f;
-		m_startTimerFinished = false;
 		m_startTimerActive = true;
-	}
-
-	// スタートタイマーが終了したか
-	bool IsStartTimerFinished() const
-	{
-		return m_startTimerFinished;
 	}
 
 	// カウントダウン開始
@@ -115,7 +102,7 @@ public:
 private:
 	// コンストラクタ
 	Time() : m_startTime(std::chrono::steady_clock::now()), m_elapsedTime(0.0f), m_isResetDone(false),
-		m_startTimerActive(false), m_startTimerFinished(false), m_startTimerDuration(0.0f), m_startTimerBegin(0.0f), m_startTimerElapsed(0.0f),
+		m_startTimerActive(false), m_startTimerBegin(0.0f), m_startTimerElapsed(0.0f),
 		m_countdownActive(false), m_countdownFinished(false), m_countdownDuration(0.0f), m_countdownBegin(0.0f), m_countdownTimeLeft(0.0f)
 	{
 	}
@@ -135,8 +122,6 @@ private:
 
 	// スタートタイマー用
 	bool  m_startTimerActive;
-	bool  m_startTimerFinished;
-	float m_startTimerDuration;
 	float m_startTimerBegin;
 	float m_startTimerElapsed;
 

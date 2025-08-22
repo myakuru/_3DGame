@@ -111,7 +111,7 @@ if (ImGui::BeginChild("Objects"))
         // ここからツリー形式で詳細情報を表示
         if (TreeNode) //className + "##" + std::to_string((int)obj.get()) <=こういう書き方もあるよ
         {
-            ImGui::SameLine(120);
+            ImGui::SameLine(200);
 
 			// クリックされたらこのノードを開く
 			if (ImGui::IsItemClicked())
@@ -370,7 +370,8 @@ void ImGuiManager::InGuiSceneSelect() const
 	{
 		{"Title",SceneManager::SceneType::Title},
 		{"Game",SceneManager::SceneType::Game},
-		{"Result",SceneManager::SceneType::Result}
+		{"Result",SceneManager::SceneType::Result},
+		{"Test",SceneManager::SceneType::Test},
 	};
 
 	// こいつと比較して、シーンが異なるかどうかを確認する
