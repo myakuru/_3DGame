@@ -7,9 +7,11 @@
 
 void PlayerState_Attack::StateStart()
 { 
-	auto anime = m_player->GetAnimeModel()->GetAnimation("Attack0");
+	auto anime = m_player->GetAnimeModel()->GetAnimation("Attack3");
 	m_player->GetAnimator()->AnimationBlend(anime, 10.0f, false);
 	m_player->AnimeSetFlg() = true;
+
+	m_player->m_onceEffect = false;
 
 	// 攻撃開始時に直前の移動方向を保存
 	m_attackDirection = m_player->GetLastMoveDirection();
@@ -26,6 +28,17 @@ void PlayerState_Attack::StateStart()
 
 void PlayerState_Attack::StateUpdate()
 {
+	float deltaTime = Application::Instance().GetDeltaTime();
+
+	m_time += deltaTime;
+
+	// 0.5秒間当たり判定有効
+	if (m_time <= 1.0 / 2)
+	{
+		m_player->UpdateAttack();
+		m_time = 0.0f;
+	}
+
 	m_player->SetAnimeSpeed(120.0f);
 
 	if (m_player->GetAnimator()->IsAnimationEnd())
@@ -48,32 +61,11 @@ void PlayerState_Attack::StateUpdate()
 		return;
 	}
 
-	if (!m_flag)
-	{
-		// エフェクトの表示位置（前方0.5f）
-		Math::Vector3 effectPos = m_player->GetPosition() + m_attackDirection * 3.0f;
-
-		// プレイヤーの回転行列
-		Math::Matrix rotationMat = Math::Matrix::CreateFromQuaternion(m_player->GetRotation());
-
-		// エフェクトのワールド行列（回転＋位置）
-		Math::Matrix effectWorld = rotationMat * Math::Matrix::CreateTranslation(effectPos);
-
-		// Effekseerエフェクト再生
-		auto effect = KdEffekseerManager::GetInstance().Play("Attack.efkefc", { effectPos }, 1.0f, 0.3f, false);
-		if (auto spEffect = effect.lock())
-		{
-			KdEffekseerManager::GetInstance().SetWorldMatrix(spEffect->GetHandle(), effectWorld);
-		}
-		m_flag = true;
-	}
-
 	UpdateKatanaPos();
 
-	float deltaTime = Application::Instance().GetDeltaTime();
 	if (m_attackParam.m_dashTimer < 0.2f)
 	{
-		float dashSpeed = 0.3f;
+		float dashSpeed = 0.7f;
 		m_player->SetIsMoving(m_attackDirection * dashSpeed);
 		m_attackParam.m_dashTimer += deltaTime;
 	}

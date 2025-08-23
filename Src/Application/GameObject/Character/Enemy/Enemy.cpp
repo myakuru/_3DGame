@@ -2,6 +2,7 @@
 #include"../Player/Player.h"
 #include"../../../Scene/SceneManager.h"
 #include"EnemyState/EnemyState_Idle/EnemyState_Idle.h"
+#include"EnemyState/EnemyState_Hit/EnemyState_Hit.h"
 
 const uint32_t Enemy::TypeID = KdGameObject::GenerateTypeID();
 
@@ -10,6 +11,9 @@ void Enemy::Init()
 	CharaBase::Init();
 
 	m_animator->SetAnimation(m_modelWork->GetData()->GetAnimation("Idle"));
+
+	m_pCollider = std::make_unique<KdCollider>();
+	m_pCollider->RegisterCollisionShape("EnemyMesh", std::make_unique<KdModelCollision>(m_modelWork, KdCollider::TypeDamage));
 
 	StateInit();
 }
@@ -20,72 +24,69 @@ void Enemy::Update()
 
 	if (m_wpPlayer.expired()) return;
 
+	// ヒット処理。
+	if (m_isHit)
+	{
+		// ダメージステートに変更
+		auto spDamageState = std::make_shared<EnemyState_Hit>();
+		ChangeState(spDamageState);
+		m_isHit = false;	// ダメージフラグをリセット
+		return;
+	}
+
 	CharaBase::Update();
 }
 
 void Enemy::PostUpdate()
 {
-	// ====================================================
-	// レイの当り判定::::::::::::::::::::ここから::::::::::::::
-	// ====================================================
+	// 球判定
+	// 球判定用の変数
+	KdCollider::SphereInfo sphereInfo;
+	// 球の中心座標を設定
+	sphereInfo.m_sphere.Center = m_position + Math::Vector3(0.0f, 0.5f, 0.0f);
+	// 球の半径を設定
+	sphereInfo.m_sphere.Radius = 0.5f;
+	// アタリ判定をしたいタイプを設定
+	sphereInfo.m_type = KdCollider::TypeGround; // 敵のアタリ判定
 
-	// レイ判定用に必要なParameter
-	KdCollider::RayInfo rayInfo;
+	m_pDebugWire->AddDebugSphere(sphereInfo.m_sphere.Center, sphereInfo.m_sphere.Radius);
 
-	// レイの何処から発射するか
-	rayInfo.m_pos = m_position;
+	// 球に当たったオブジェクト情報を格納するリスト
+	std::list<KdCollider::CollisionResult> retSpherelist;
 
-	// 段差の許容範囲を設定
-	static const float enableStepHigh = 0.2f;
-	rayInfo.m_pos.y += enableStepHigh;			// 0.2f までの段差は登れる
-
-	// レイの方向を設定
-	rayInfo.m_dir = { 0.0f,-1.0f,0.0f };
-
-	// レイの長さを設定
-	rayInfo.m_range = enableStepHigh + m_gravity;
-
-	// アタリ判定したいタイプを設定
-	rayInfo.m_type = KdCollider::TypeGround;
-
-	m_pDebugWire->AddDebugLine(rayInfo.m_pos, rayInfo.m_dir, rayInfo.m_range);
-
-	// レイに当たったオブジェクト情報を格納するリスト
-	std::list<KdCollider::CollisionResult> retRayList;
-	// 作成したレイ情報でオブジェクトリストと当たり判定をする
-	for (auto& obj : SceneManager::Instance().GetMapList())
+	// 球とアタリ判定を行う
+	for (auto& obj : SceneManager::Instance().GetObjList())
 	{
-		obj->Intersects(rayInfo, &retRayList);
+		obj->Intersects(sphereInfo, &retSpherelist);
 	}
 
-	// レイに当たったリストから一番近いオブジェクトを検出
+	// 球にあたったリストから一番近いオブジェクトを探す
+	// オーバーした長さが1番長いものを探す。
+	// 使いまわしの変数を使う
+	float maxOverLap = 0.0f;
 	bool hit = false;
-	float maxOverLap = 0;
-	Math::Vector3 groundPos = {};	// レイが遮断された(Hitした)座標
+	// 当たった方向を格納する変数
+	Math::Vector3 hitDir;
 
-	for (auto& ret : retRayList)
+	for (auto& ret : retSpherelist)
 	{
-		// レイが当たったオブジェクトの中から
-		// 「m_overlapDistance = 貫通した長さ」が一番長いものを探す
-		// 「m_overlapDistance が一番長い = 一番近くで当たった」と判定できる
+		// 球からはみ出た長さが１番長いものを探す。
 		if (maxOverLap < ret.m_overlapDistance)
 		{
 			maxOverLap = ret.m_overlapDistance;
-			groundPos = ret.m_hitPos;
+			hitDir = ret.m_hitDir;
 			hit = true;
 		}
 	}
 
-	// 当たっていたら
 	if (hit)
 	{
-		m_gravity = 0.0f;	// 重力をリセット
-		m_position = groundPos;
-	}
+		// 正規化して押し出す方向を求める
+		hitDir.Normalize();
 
-	//=====================================================
-	// レイ当り判定::::::::::::::::::::ここまで::::::::::::::::
-	//=====================================================
+		//当たってたらその方向から押し出す
+		m_position += hitDir * maxOverLap;
+	}
 }
 
 void Enemy::ImGuiInspector()
@@ -126,4 +127,13 @@ void Enemy::ChangeState(std::shared_ptr<EnemyStateBase> _state)
 {
 	_state->SetEnemy(this);
 	m_stateManager.ChangeState(_state);
+}
+
+void Enemy::Damage(int _damage)
+{
+	m_status.hp -= _damage;
+	if (m_status.hp <= 0)
+	{
+		m_Expired = true;
+	}
 }

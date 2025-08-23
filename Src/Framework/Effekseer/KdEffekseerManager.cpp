@@ -1,4 +1,6 @@
-﻿
+﻿#include"../../Application/main.h"
+
+
 void KdEffekseerManager::Create(int w, int h)
 {
 	// エフェクトのレンダラーの作成
@@ -180,6 +182,8 @@ const bool KdEffekseerManager::IsPlaying(const int handle) const
 
 std::weak_ptr<KdEffekseerObject> KdEffekseerManager::Play(const PlayEfkInfo& info)
 {
+	float deltaTime = Application::Instance().GetDeltaTime();
+
 	// 渡された座標をEffekseerの座標に置き換え
 	Effekseer::Vector3D efkPos = GetEfkVec3D(info.Pos);
 
@@ -217,7 +221,7 @@ std::weak_ptr<KdEffekseerObject> KdEffekseerManager::Play(const PlayEfkInfo& inf
 	}
 
 	m_efkManager->SetScale(handle, info.Size.x, info.Size.y, info.Size.z);
-	m_efkManager->SetSpeed(handle, info.Speed);
+	m_efkManager->SetSpeed(handle, info.Speed * deltaTime);
 	Math::Vector3 rotate = ConvertToRadian(info.Rotate);
 	m_efkManager->SetRotation(handle, rotate.x, rotate.y, rotate.z);
 	spEfkObject->SetParentManager(m_efkManager);

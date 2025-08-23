@@ -49,6 +49,26 @@ void PlayerState_Attack1::StateUpdate()
 		return;
 	}
 
+	if (!m_flag)
+	{
+		// エフェクトの表示位置（前方0.5f）
+		Math::Vector3 effectPos = m_player->GetPosition() + m_attackDirection * 3.0f;
+
+		// プレイヤーの回転行列
+		Math::Matrix rotationMat = Math::Matrix::CreateFromQuaternion(m_player->GetRotation());
+
+		// エフェクトのワールド行列（回転＋位置）
+		Math::Matrix effectWorld = rotationMat * Math::Matrix::CreateTranslation(effectPos);
+
+		// Effekseerエフェクト再生
+		auto effect = KdEffekseerManager::GetInstance().Play("Attack.efkefc", { effectPos }, 1.0f, 300.0f, false);
+		if (auto spEffect = effect.lock())
+		{
+			KdEffekseerManager::GetInstance().SetWorldMatrix(spEffect->GetHandle(), effectWorld);
+		}
+		m_flag = true;
+	}
+
 	UpdateKatanaPos();
 
 	float deltaTime = Application::Instance().GetDeltaTime();

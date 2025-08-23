@@ -64,16 +64,16 @@
     "moveSpeed": 0.14000000059604645,
     "path": "Asset\\Models\\Player\\Perula\\Perula.gltf",
     "pos": {
-      "x": -0.25858283042907715,
-      "y": 0.9995833039283752,
-      "z": 3.8820688724517822
+      "x": 14.891639709472656,
+      "y": 0.999615490436554,
+      "z": 5.020904541015625
     },
     "scale": {
       "x": 0.800000011920929,
       "y": 0.800000011920929,
       "z": 0.800000011920929
     },
-    "type": 33
+    "type": 47
   },
   {
     "Name": "class Katana",
@@ -134,8 +134,8 @@
       "z": 1.0
     },
     "deg": {
-      "x": 28.5000057220459,
-      "y": 2251.045654296875,
+      "x": 9.449995994567871,
+      "y": 2314.937744140625,
       "z": 0.0
     },
     "moveSpeed": 50.0,
@@ -684,7 +684,7 @@
       "z": 0.41960784792900085
     },
     "deg": {
-      "x": -0.09399999678134918,
+      "x": -0.06104590743780136,
       "y": -0.03200000151991844,
       "z": 0.0
     },
@@ -706,8 +706,8 @@
     "Name": "class Scoring",
     "color": {
       "w": 1.0,
-      "x": 0.1899999976158142,
-      "y": 0.6200000047683716,
+      "x": 0.7099999785423279,
+      "y": 0.23999999463558197,
       "z": 1.0
     },
     "deg": {
@@ -1095,6 +1095,44 @@
     "type": 18
   },
   {
+    "GravitySpeed": 0.0,
+    "Name": "class Enemy",
+    "color": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "deg": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
+      "DrawLit": true,
+      "DrawToon": false,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "fixedFps": 120.0,
+    "moveSpeed": 0.05000000074505806,
+    "path": "Asset\\Models\\Enemy\\Enemy.gltf",
+    "pos": {
+      "x": 13.14494800567627,
+      "y": 1.000001311302185,
+      "z": 4.137883186340332
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "type": 36
+  },
+  {
     "Name": "class FPSCamera",
     "color": {
       "w": 1.0,
@@ -1103,16 +1141,16 @@
       "z": 1.0
     },
     "deg": {
-      "x": 19.049997329711914,
-      "y": -2843.741455078125,
+      "x": 29.999900817871094,
+      "y": -2483.4521484375,
       "z": 0.0
     },
     "moveSpeed": 50.0,
     "path": "Asset/Models/Sky/Sky.gltf",
     "pos": {
-      "x": 13.456271171569824,
-      "y": 13.958569526672363,
-      "z": 8.983845710754395
+      "x": 5.42281436920166,
+      "y": 4.44321870803833,
+      "z": -1.347316026687622
     },
     "scale": {
       "x": 1.0,
@@ -1138,8 +1176,8 @@
       "DrawBright": false,
       "DrawGradation": false,
       "DrawGrayScale": false,
-      "DrawLit": false,
-      "DrawToon": true,
+      "DrawLit": true,
+      "DrawToon": false,
       "DrawUnLit": false,
       "GenerateDepthMapFromLight": true
     },
@@ -1154,6 +1192,6 @@
       "y": 1.0,
       "z": 1.0
     },
-    "type": 32
+    "type": 33
   }
 ]

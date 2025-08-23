@@ -6,7 +6,7 @@
 
 void PlayerState_Attack2::StateStart()
 {
-	auto anime = m_player->GetAnimeModel()->GetAnimation("Attack0");
+	auto anime = m_player->GetAnimeModel()->GetAnimation("Attack2");
 	m_player->GetAnimator()->AnimationBlend(anime, 10.0f, false);
 	m_player->AnimeSetFlg() = true;
 
@@ -30,21 +30,8 @@ void PlayerState_Attack2::StateUpdate()
 
 	if (!m_flag)
 	{
-		// エフェクトの表示位置（前方0.5f）
-		Math::Vector3 effectPos = m_player->GetPosition() + m_attackDirection * 3.0f;
-
-		// プレイヤーの回転行列
-		Math::Matrix rotationMat = Math::Matrix::CreateFromQuaternion(m_player->GetRotation());
-
-		// エフェクトのワールド行列（回転＋位置）
-		Math::Matrix effectWorld = rotationMat * Math::Matrix::CreateTranslation(effectPos);
-
 		// Effekseerエフェクト再生
-		auto effect = KdEffekseerManager::GetInstance().Play("Attack.efkefc", { effectPos }, 1.0f, 0.3f, false);
-		if (auto spEffect = effect.lock())
-		{
-			KdEffekseerManager::GetInstance().SetWorldMatrix(spEffect->GetHandle(), effectWorld);
-		}
+		auto effect = KdEffekseerManager::GetInstance().Play("NA_slash_008.efkefc", {m_player->GetPos().x,m_player->GetPos().y + 1.0f,m_player->GetPos().z}, 0.1f, 100.0f, false);
 		m_flag = true;
 	}
 
@@ -66,7 +53,7 @@ void PlayerState_Attack2::StateUpdate()
 	float deltaTime = Application::Instance().GetDeltaTime();
 	if (m_attackParam.m_dashTimer < 0.2f)
 	{
-		float dashSpeed = 1.0f;
+		float dashSpeed = 0.5f;
 		m_player->SetIsMoving(m_attackDirection * dashSpeed);
 		m_attackParam.m_dashTimer += deltaTime;
 	}

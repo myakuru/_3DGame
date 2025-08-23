@@ -6,6 +6,8 @@
 #include"../../Camera/PlayerCamera/PlayerCamera.h"
 #include"PlayerState/PlayerState_Idle/PlayerState_Idle.h"
 
+#include"../Enemy/Enemy.h"
+
 const uint32_t Player::TypeID = KdGameObject::GenerateTypeID();
 
 void Player::Init()
@@ -15,6 +17,8 @@ void Player::Init()
 	m_animator->SetAnimation(m_modelWork->GetData()->GetAnimation("Idle"));
 
 	StateInit();
+
+	m_onceEffect = false;
 }
 
 void Player::PreUpdate()
@@ -42,6 +46,48 @@ void Player::Update()
 
 	CharaBase::Update();
 
+}
+
+void Player::UpdateAttack()
+{
+	float deltaTime = Application::Instance().GetDeltaTime();
+
+	// 前方向ベクトル
+	Math::Vector3 forward = m_mRotation.Forward();
+	forward.Normalize();
+
+	// 球の当たり判定情報作成
+	KdCollider::SphereInfo attackSphere;
+	// 球の中心座標を設定
+	attackSphere.m_sphere.Center = m_position + Math::Vector3(0.0f, 0.5f, 0.0f) + forward * 1.1f;
+	// 球の半径を設定
+	attackSphere.m_sphere.Radius = m_attackBossEnemyRadius;
+	// アタリ判定をしたいタイプを設定
+	attackSphere.m_type = KdCollider::TypeDamage;
+
+	m_pDebugWire->AddDebugSphere(attackSphere.m_sphere.Center, attackSphere.m_sphere.Radius); // デバッグ用の球を追加
+
+
+	SceneManager::Instance().GetObjectWeakPtr(m_enemy);
+
+	auto enemy = m_enemy.lock();
+
+	if (!enemy) return;
+
+	
+	// 当たり判定
+	std::list<KdCollider::CollisionResult> results;
+	if (enemy->Intersects(attackSphere, &results))
+	{
+		if (!m_onceEffect)
+		{
+			// 敵にダメージを与える処理
+			enemy->Damage(m_status.attack); // ダメージを与える
+			enemy->SetEnemyHit(true);		// ヒットチェックを行う
+			m_onceEffect = true;			// 1回だけ再生
+
+		}
+	}
 }
 
 void Player::ImGuiInspector()

@@ -229,6 +229,12 @@
     <Filter Include="Src\Application\GameObject\Collition">
       <UniqueIdentifier>{9f81d21b-842f-45bb-8b68-fb4a35802cbc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_Skill">
+      <UniqueIdentifier>{96eb8903-ac9b-4f8e-9ed3-d1d9d5409cfa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Character\Enemy\EnemyState\EnemyState_Hit">
+      <UniqueIdentifier>{2eb56152-91d7-456d-bb91-ccc365a466ed}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -564,6 +570,12 @@
     <ClInclude Include="Src\Application\GameObject\Collition\Collition.h">
       <Filter>Src\Application\GameObject\Collition</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_Skill\PlayerState_Skill.h">
+      <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Character\Enemy\EnemyState\EnemyState_Hit\EnemyState_Hit.h">
+      <Filter>Src\Application\GameObject\Character\Enemy\EnemyState\EnemyState_Hit</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -835,6 +847,12 @@
     </ClCompile>
     <ClCompile Include="Src\Application\GameObject\Collition\Collition.cpp">
       <Filter>Src\Application\GameObject\Collition</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_Skill\PlayerState_Skill.cpp">
+      <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Character\Enemy\EnemyState\EnemyState_Hit\EnemyState_Hit.cpp">
+      <Filter>Src\Application\GameObject\Character\Enemy\EnemyState\EnemyState_Hit</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -9,6 +9,7 @@
 #include"../PlayerState_Attack/PlayerState_Attack.h"
 #include"../PlayerState_FowardAvoid/PlayerState_FowardAvoid.h"
 #include"../PlayerState_ChargeAttack/PlayerState_ChargeAttack.h"
+#include"../PlayerState_Skill/PlayerState_Skill.h"
 #include"../../../../Weapon/Katana/Katana.h"
 
 void PlayerState_Idle::StateStart()
@@ -70,6 +71,14 @@ void PlayerState_Idle::StateUpdate()
 	{
 		auto fowardAvoidState = std::make_shared<PlayerState_ForwardAvoid>();
 		m_player->ChangeState(fowardAvoidState);
+		return;
+	}
+
+	// Eスキル
+	if (KeyboardManager::GetInstance().IsKeyJustPressed('E'))
+	{
+		auto skillState = std::make_shared<PlayerState_Skill>();
+		m_player->ChangeState(skillState);
 		return;
 	}
 
