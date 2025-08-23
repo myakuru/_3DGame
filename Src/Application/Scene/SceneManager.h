@@ -136,6 +136,16 @@ public :
 		return m_drawGrayScale;
 	}
 
+	float GetTime() const
+	{
+		return m_time;
+	}
+
+	void SetTime(float _time)
+	{
+		m_time = _time;
+	}
+
 private :
 
 	// RegisterObjectからオブジェクトを登録する関数
@@ -148,7 +158,7 @@ private :
 	std::shared_ptr<BaseScene> m_currentScene = nullptr;
 
 	// 現在のシーンの種類を保持している変数
-	SceneType m_currentSceneType = SceneType::Game;
+	SceneType m_currentSceneType = SceneType::Test;
 	
 	// 次のシーンの種類を保持している変数
 	SceneType m_nextSceneType = m_currentSceneType;
@@ -161,6 +171,8 @@ private :
 	int m_score = 0; // スコア
 
 	bool m_drawGrayScale = false; // グレースケール描画フラグ
+
+	float m_time = 0.0f; // カウントダウンタイマー
 
 
 public:

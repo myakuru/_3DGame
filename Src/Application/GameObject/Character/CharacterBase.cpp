@@ -48,8 +48,6 @@ void CharaBase::Update()
 
 	float deltaTime = Application::Instance().GetDeltaTime();
 
-	m_stateManager.Update();
-
 	m_animator->AdvanceTime(m_modelWork->WorkNodes(), m_fixedFrameRate * deltaTime);
 
 	m_isMoving = m_movement.LengthSquared() > 0;
@@ -61,6 +59,8 @@ void CharaBase::Update()
 	m_position.x += m_movement.x * m_moveSpeed * m_fixedFrameRate * deltaTime;
 	m_position.z += m_movement.z * m_moveSpeed * m_fixedFrameRate * deltaTime;
 	m_position.y += m_gravity;
+
+	m_stateManager.Update();
 
 	// 最終的なワールド行列計算
 	Math::Matrix scale = Math::Matrix::CreateScale(m_scale);
@@ -105,7 +105,7 @@ void CharaBase::PostUpdate()
 	// レイに当たったオブジェクト情報を格納するリスト
 	std::list<KdCollider::CollisionResult> retRayList;
 	// 作成したレイ情報でオブジェクトリストと当たり判定をする
-	for (auto& obj : SceneManager::Instance().GetMapList())
+	for (auto& obj : SceneManager::Instance().GetObjList())
 	{
 		obj->Intersects(rayInfo, &retRayList);
 	}
@@ -143,7 +143,7 @@ void CharaBase::PostUpdate()
 	// 球判定用の変数
 	KdCollider::SphereInfo sphereInfo;
 	// 球の中心座標を設定
-	sphereInfo.m_sphere.Center = m_position + Math::Vector3(0.0f, 0.2f, 0.0f);
+	sphereInfo.m_sphere.Center = m_position + Math::Vector3(0.0f, 0.3f, 0.0f);
 	// 球の半径を設定
 	sphereInfo.m_sphere.Radius = 0.2f;
 	// アタリ判定をしたいタイプを設定
@@ -155,7 +155,7 @@ void CharaBase::PostUpdate()
 	std::list<KdCollider::CollisionResult> retSpherelist;
 
 	// 球とアタリ判定を行う
-	for (auto& obj : SceneManager::Instance().GetMapList())
+	for (auto& obj : SceneManager::Instance().GetObjList())
 	{
 		obj->Intersects(sphereInfo, &retSpherelist);
 	}

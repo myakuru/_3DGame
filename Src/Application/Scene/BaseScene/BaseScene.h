@@ -91,5 +91,6 @@ protected :
 	std::list<std::shared_ptr<KdGameObject>> m_objList;
 	std::list<std::shared_ptr<KdGameObject>> m_CameraObjList;
 	std::list<std::shared_ptr<KdGameObject>> m_MapObjectList;
+	std::list<std::shared_ptr<KdGameObject>> m_CollisionList;
 	std::list<std::shared_ptr<KdGameObject>> m_drawObjectList;
 };

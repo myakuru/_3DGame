@@ -35,6 +35,7 @@
 #include"../GameObject/HUD/InvestigationComplete/InvestigationComplete.h"
 #include"../GameObject/HUD/BlackBanner/BlackBanner.h"
 #include"../GameObject/ResultScore/ResultScore.h"
+#include"../GameObject/Collition/Collition.h"
 
 void SceneManager::Init()
 {
@@ -66,6 +67,7 @@ void SceneManager::Register() const
 	RegisterObject::GetInstance().Register<InvestigationComplete>();
 	RegisterObject::GetInstance().Register<BlackBanner>();
 	RegisterObject::GetInstance().Register<ResultScore>();
+	RegisterObject::GetInstance().Register<Collision>();
 }
 
 void SceneManager::PreUpdate()

@@ -1,0 +1,1159 @@
+[
+  {
+    "Name": "class SkySphere",
+    "color": {
+      "w": 1.0,
+      "x": 0.0,
+      "y": 0.29411765933036804,
+      "z": 1.0
+    },
+    "deg": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
+      "DrawLit": false,
+      "DrawToon": false,
+      "DrawUnLit": true,
+      "GenerateDepthMapFromLight": false
+    },
+    "path": "Asset/Models/Sky/Sky.gltf",
+    "pos": {
+      "x": 0.0,
+      "y": 5.199999809265137,
+      "z": 0.0
+    },
+    "scale": {
+      "x": 10.0,
+      "y": 10.0,
+      "z": 10.0
+    },
+    "type": 33
+  },
+  {
+    "DashTime": 0.0,
+    "DashTime1": 0.0,
+    "DashTime2": 0.0,
+    "GravitySpeed": -0.05000000074505806,
+    "Name": "class Player",
+    "color": {
+      "w": 1.9607843160629272,
+      "x": 0.5882353186607361,
+      "y": 0.5882353186607361,
+      "z": 0.5882353186607361
+    },
+    "deg": {
+      "x": 0.0,
+      "y": -16.799999237060547,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
+      "DrawLit": true,
+      "DrawToon": true,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "fixedFps": 120.0,
+    "moveSpeed": 0.14000000059604645,
+    "path": "Asset\\Models\\Player\\Perula\\Perula.gltf",
+    "pos": {
+      "x": -0.25858283042907715,
+      "y": 0.9995833039283752,
+      "z": 3.8820688724517822
+    },
+    "scale": {
+      "x": 0.800000011920929,
+      "y": 0.800000011920929,
+      "z": 0.800000011920929
+    },
+    "type": 33
+  },
+  {
+    "Name": "class Katana",
+    "color": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "deg": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
+      "DrawLit": false,
+      "DrawToon": false,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "handWeaponDeg": {
+      "x": 52.0,
+      "y": -5.599999904632568,
+      "z": 150.0
+    },
+    "katanaOffset": {
+      "x": -0.3100000023841858,
+      "y": 0.08500000089406967,
+      "z": 0.23000000417232513
+    },
+    "path": "Asset\\Models\\Sword\\scene.gltf",
+    "pos": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "scale": {
+      "x": 0.5,
+      "y": 0.5,
+      "z": 0.5
+    },
+    "type": 32,
+    "weaponDeg": {
+      "x": 2.700000047683716,
+      "y": 17.600000381469727,
+      "z": 262.5
+    }
+  },
+  {
+    "Name": "class PlayerCamera",
+    "color": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "deg": {
+      "x": 28.5000057220459,
+      "y": 2251.045654296875,
+      "z": 0.0
+    },
+    "moveSpeed": 50.0,
+    "path": "Asset/Models/Sky/Sky.gltf",
+    "pos": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "smooth": 10.15999984741211,
+    "targetLookAt": {
+      "x": 0.0,
+      "y": 0.8999999761581421,
+      "z": -2.4000000953674316
+    },
+    "type": 32
+  },
+  {
+    "Name": "class Collision",
+    "color": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 0.0117647061124444,
+      "z": 1.0
+    },
+    "deg": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
+      "DrawLit": false,
+      "DrawToon": false,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "path": "Asset\\Collition\\Collition.gltf",
+    "pos": {
+      "x": 13.0,
+      "y": 1.0,
+      "z": 3.0999999046325684
+    },
+    "scale": {
+      "x": 2.2699999809265137,
+      "y": 1.0,
+      "z": 3.259999990463257
+    },
+    "type": 33
+  },
+  {
+    "Name": "class Collision",
+    "color": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "deg": {
+      "x": 0.30000001192092896,
+      "y": 0.0,
+      "z": -90.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
+      "DrawLit": false,
+      "DrawToon": false,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "path": "Asset\\Collition\\Collition.gltf",
+    "pos": {
+      "x": 2.200000047683716,
+      "y": 3.5,
+      "z": 22.600000381469727
+    },
+    "scale": {
+      "x": 0.5,
+      "y": 0.5,
+      "z": 1.3899999856948853
+    },
+    "type": 33
+  },
+  {
+    "Name": "class Collision",
+    "color": {
+      "w": 0.3921568691730499,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "deg": {
+      "x": 0.05400000140070915,
+      "y": 60.0,
+      "z": -90.0009994506836
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
+      "DrawLit": false,
+      "DrawToon": false,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "path": "Asset\\Collition\\Collition.gltf",
+    "pos": {
+      "x": 0.30000001192092896,
+      "y": 2.0,
+      "z": 7.599999904632568
+    },
+    "scale": {
+      "x": 0.10000000149011612,
+      "y": 0.10000000149011612,
+      "z": 0.2199999988079071
+    },
+    "type": 33
+  },
+  {
+    "Name": "class Collision",
+    "color": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "deg": {
+      "x": 0.0,
+      "y": 90.0,
+      "z": -90.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
+      "DrawLit": false,
+      "DrawToon": false,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "path": "Asset\\Collition\\Collition.gltf",
+    "pos": {
+      "x": -4.099999904632568,
+      "y": 1.0,
+      "z": 6.5
+    },
+    "scale": {
+      "x": 0.10000000149011612,
+      "y": 0.10000000149011612,
+      "z": 0.25
+    },
+    "type": 33
+  },
+  {
+    "Name": "class Collision",
+    "color": {
+      "w": 0.3921568691730499,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "deg": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": -90.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
+      "DrawLit": false,
+      "DrawToon": false,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "path": "Asset\\Collition\\Collition.gltf",
+    "pos": {
+      "x": -6.099999904632568,
+      "y": 1.899999976158142,
+      "z": 4.0
+    },
+    "scale": {
+      "x": 0.10000000149011612,
+      "y": 0.10000000149011612,
+      "z": 0.33000001311302185
+    },
+    "type": 33
+  },
+  {
+    "Name": "class Collision",
+    "color": {
+      "w": 0.3921568691730499,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "deg": {
+      "x": 0.0,
+      "y": -60.0,
+      "z": -90.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
+      "DrawLit": false,
+      "DrawToon": false,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "path": "Asset\\Collition\\Collition.gltf",
+    "pos": {
+      "x": -4.699999809265137,
+      "y": 2.0,
+      "z": 2.200000047683716
+    },
+    "scale": {
+      "x": 0.10000000149011612,
+      "y": 0.10000000149011612,
+      "z": 0.30000001192092896
+    },
+    "type": 33
+  },
+  {
+    "Name": "class Collision",
+    "color": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "deg": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": -90.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
+      "DrawLit": false,
+      "DrawToon": false,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "path": "Asset\\Collition\\Collition.gltf",
+    "pos": {
+      "x": 0.6000000238418579,
+      "y": 0.0,
+      "z": -9.5
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "type": 33
+  },
+  {
+    "Name": "class Collision",
+    "color": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "deg": {
+      "x": 0.0,
+      "y": -75.0,
+      "z": -90.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
+      "DrawLit": false,
+      "DrawToon": false,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "path": "Asset\\Collition\\Collition.gltf",
+    "pos": {
+      "x": -1.5,
+      "y": 1.899999976158142,
+      "z": 1.0
+    },
+    "scale": {
+      "x": 0.10000000149011612,
+      "y": 1.4500000476837158,
+      "z": 0.2199999988079071
+    },
+    "type": 33
+  },
+  {
+    "Name": "class Collision",
+    "color": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "deg": {
+      "x": 0.0,
+      "y": -90.0,
+      "z": -90.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
+      "DrawLit": false,
+      "DrawToon": false,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "path": "Asset\\Collition\\Collition.gltf",
+    "pos": {
+      "x": 13.800000190734863,
+      "y": 0.0,
+      "z": -21.299999237060547
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "type": 33
+  },
+  {
+    "Name": "class Collision",
+    "color": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "deg": {
+      "x": 0.0,
+      "y": -50.0,
+      "z": -90.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
+      "DrawLit": false,
+      "DrawToon": false,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "path": "Asset\\Collition\\Collition.gltf",
+    "pos": {
+      "x": 2.5999999046325684,
+      "y": 1.0,
+      "z": -20.200000762939453
+    },
+    "scale": {
+      "x": 0.41999998688697815,
+      "y": 0.12999999523162842,
+      "z": 0.3499999940395355
+    },
+    "type": 33
+  },
+  {
+    "Name": "class Collision",
+    "color": {
+      "w": 0.3921568691730499,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "deg": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 90.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
+      "DrawLit": false,
+      "DrawToon": false,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "path": "Asset\\Collition\\Collition.gltf",
+    "pos": {
+      "x": 30.100000381469727,
+      "y": 5.199999809265137,
+      "z": 4.599999904632568
+    },
+    "scale": {
+      "x": 0.5,
+      "y": 0.10000000149011612,
+      "z": 2.2200000286102295
+    },
+    "type": 33
+  },
+  {
+    "Name": "class Collision",
+    "color": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "deg": {
+      "x": 0.0,
+      "y": 90.0,
+      "z": -90.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
+      "DrawLit": false,
+      "DrawToon": false,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "path": "Asset\\Collition\\Collition.gltf",
+    "pos": {
+      "x": 20.700000762939453,
+      "y": 0.0,
+      "z": 29.600000381469727
+    },
+    "scale": {
+      "x": 0.6600000262260437,
+      "y": 0.9700000286102295,
+      "z": 2.0899999141693115
+    },
+    "type": 33
+  },
+  {
+    "Name": "class Collision",
+    "color": {
+      "w": 0.3921568691730499,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "deg": {
+      "x": 0.0,
+      "y": -130.0,
+      "z": -90.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
+      "DrawLit": false,
+      "DrawToon": false,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "path": "Asset\\Collition\\Collition.gltf",
+    "pos": {
+      "x": 27.100000381469727,
+      "y": 5.099999904632568,
+      "z": -18.399999618530273
+    },
+    "scale": {
+      "x": 0.4000000059604645,
+      "y": 1.0,
+      "z": 0.6700000166893005
+    },
+    "type": 33
+  },
+  {
+    "Name": "class Collision",
+    "color": {
+      "w": 0.3921568691730499,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "deg": {
+      "x": 0.0,
+      "y": -50.0,
+      "z": 90.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
+      "DrawLit": false,
+      "DrawToon": false,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "path": "Asset\\Collition\\Collition.gltf",
+    "pos": {
+      "x": 26.600000381469727,
+      "y": 5.900000095367432,
+      "z": 26.899999618530273
+    },
+    "scale": {
+      "x": 0.5,
+      "y": 0.5,
+      "z": 0.5
+    },
+    "type": 33
+  },
+  {
+    "Name": "class NormalUI",
+    "color": {
+      "w": 3.9215686321258545,
+      "x": 0.8588235378265381,
+      "y": 0.8588235378265381,
+      "z": 0.8588235378265381
+    },
+    "deg": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "drawFlags": true,
+    "path": "Asset\\Textures\\GameUI\\Designer.png",
+    "pos": {
+      "x": 333.5,
+      "y": 226.8000030517578,
+      "z": 0.0
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "type": 32
+  },
+  {
+    "Name": "class ScaleMoving",
+    "color": {
+      "w": 1.0,
+      "x": 0.9725490212440491,
+      "y": 0.9450980424880981,
+      "z": 0.41960784792900085
+    },
+    "deg": {
+      "x": -0.09399999678134918,
+      "y": -0.03200000151991844,
+      "z": 0.0
+    },
+    "drawFlags": true,
+    "path": "Asset\\Textures\\GameUI\\Bar.png",
+    "pos": {
+      "x": 365.70001220703125,
+      "y": 308.3999938964844,
+      "z": 0.0
+    },
+    "scale": {
+      "x": 0.699999988079071,
+      "y": 0.5,
+      "z": 0.0
+    },
+    "type": 32
+  },
+  {
+    "Name": "class Scoring",
+    "color": {
+      "w": 1.0,
+      "x": 0.1899999976158142,
+      "y": 0.6200000047683716,
+      "z": 1.0
+    },
+    "deg": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "drawFlags": false,
+    "path": "Asset/Models/Sky/Sky.gltf",
+    "pos": {
+      "x": 654.2000122070313,
+      "y": 223.3000030517578,
+      "z": 0.0
+    },
+    "scale": {
+      "x": 0.30000001192092896,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "type": 32
+  },
+  {
+    "Name": "class Timer",
+    "color": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "deg": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "drawFlags": false,
+    "path": "Asset/Models/Sky/Sky.gltf",
+    "pos": {
+      "x": 643.5,
+      "y": 371.29998779296875,
+      "z": 0.0
+    },
+    "scale": {
+      "x": 0.014999999664723873,
+      "y": 0.15000000596046448,
+      "z": 1.0
+    },
+    "type": 32
+  },
+  {
+    "Name": "class NormalUI",
+    "color": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "deg": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "drawFlags": true,
+    "path": "Asset\\Textures\\GameUI\\PlayerUI.png",
+    "pos": {
+      "x": -360.0,
+      "y": 300.0,
+      "z": 0.0
+    },
+    "scale": {
+      "x": 0.5,
+      "y": 0.5,
+      "z": 1.0
+    },
+    "type": 32
+  },
+  {
+    "Name": "class HpBar",
+    "color": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "deg": {
+      "x": 0.009999999776482582,
+      "y": 0.1289999932050705,
+      "z": 0.0
+    },
+    "drawFlags": true,
+    "path": "Asset\\Textures\\GameUI\\HpBar.png",
+    "pos": {
+      "x": -240.10000610351563,
+      "y": 236.39999389648438,
+      "z": 0.0
+    },
+    "scale": {
+      "x": 0.8799999952316284,
+      "y": 0.8999999761581421,
+      "z": 1.0
+    },
+    "type": 7
+  },
+  {
+    "Name": "class NumBer",
+    "color": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "deg": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "drawFlags": true,
+    "path": "Asset/Models/Sky/Sky.gltf",
+    "pos": {
+      "x": -537.0,
+      "y": 276.1000061035156,
+      "z": 0.0
+    },
+    "scale": {
+      "x": 0.05000000074505806,
+      "y": 0.5,
+      "z": 1.0
+    },
+    "type": 32
+  },
+  {
+    "Name": "class NormalUI",
+    "color": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "deg": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "drawFlags": true,
+    "path": "Asset\\Textures\\Time\\sura.png",
+    "pos": {
+      "x": -404.3999938964844,
+      "y": 277.20001220703125,
+      "z": 0.0
+    },
+    "scale": {
+      "x": 0.5,
+      "y": 0.5,
+      "z": 1.0
+    },
+    "type": 32
+  },
+  {
+    "Name": "class NowHp",
+    "color": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "deg": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "drawFlags": false,
+    "path": "Asset\\Textures\\Time\\Hp.png",
+    "pos": {
+      "x": -608.2000122070313,
+      "y": 276.20001220703125,
+      "z": 0.0
+    },
+    "scale": {
+      "x": 0.05000000074505806,
+      "y": 0.5,
+      "z": 1.0
+    },
+    "type": 32
+  },
+  {
+    "Name": "class SpecialMove",
+    "color": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "deg": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "drawFlags": false,
+    "path": "Asset/Models/Sky/Sky.gltf",
+    "pos": {
+      "x": -612.7000122070313,
+      "y": 153.6999969482422,
+      "z": 0.0
+    },
+    "scale": {
+      "x": 0.10000000149011612,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "type": 32
+  },
+  {
+    "Name": "class NormalUI",
+    "color": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "deg": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "drawFlags": true,
+    "path": "Asset\\Textures\\Time\\PTS.png",
+    "pos": {
+      "x": -346.5,
+      "y": 178.10000610351563,
+      "z": 0.0
+    },
+    "scale": {
+      "x": 0.7099999785423279,
+      "y": 0.699999988079071,
+      "z": 1.0
+    },
+    "type": 32
+  },
+  {
+    "Name": "class NormalUI",
+    "color": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "deg": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "drawFlags": true,
+    "path": "Asset\\Textures\\GameUI\\Panti.png",
+    "pos": {
+      "x": 235.1999969482422,
+      "y": -200.0,
+      "z": 0.0
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "type": 32
+  },
+  {
+    "Name": "class NormalUI",
+    "color": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "deg": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "drawFlags": true,
+    "path": "Asset\\Textures\\GameUI\\nonSkile.png",
+    "pos": {
+      "x": 357.79998779296875,
+      "y": -200.0,
+      "z": 0.0
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "type": 32
+  },
+  {
+    "Name": "class NormalUI",
+    "color": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "deg": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "drawFlags": true,
+    "path": "Asset\\Textures\\GameUI\\Avoid.png",
+    "pos": {
+      "x": 295.20001220703125,
+      "y": -200.0,
+      "z": 0.0
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "type": 32
+  },
+  {
+    "Name": "class NormalUI",
+    "color": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "deg": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "drawFlags": true,
+    "path": "Asset\\Textures\\GameUI\\SpecialMove.png",
+    "pos": {
+      "x": 412.5,
+      "y": -135.60000610351563,
+      "z": 0.0
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "type": 32
+  },
+  {
+    "Name": "class Winner",
+    "color": {
+      "w": 1.0,
+      "x": 0.9607843160629272,
+      "y": 0.8780871033668518,
+      "z": 0.02354861982166767
+    },
+    "deg": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "distance": 5.0,
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawGradation": true,
+      "DrawLit": false,
+      "DrawToon": false,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "gradientColor": {
+      "w": 1.0,
+      "x": 0.970588207244873,
+      "y": 0.39461633563041687,
+      "z": 0.03806228190660477
+    },
+    "path": "Asset\\Textures\\GameUI\\WINNER.png",
+    "pos": {
+      "x": 2.0974631309509277,
+      "y": 1.2113871574401855,
+      "z": -11.485113143920898
+    },
+    "scale": {
+      "x": 10.0,
+      "y": 6.0,
+      "z": 1.0
+    },
+    "type": 18
+  },
+  {
+    "Name": "class FPSCamera",
+    "color": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "deg": {
+      "x": 19.049997329711914,
+      "y": -2843.741455078125,
+      "z": 0.0
+    },
+    "moveSpeed": 50.0,
+    "path": "Asset/Models/Sky/Sky.gltf",
+    "pos": {
+      "x": 13.456271171569824,
+      "y": 13.958569526672363,
+      "z": 8.983845710754395
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "type": 32
+  },
+  {
+    "Name": "class Map",
+    "color": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "deg": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
+      "DrawLit": false,
+      "DrawToon": true,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": true
+    },
+    "path": "Asset\\Field\\Test.gltf",
+    "pos": {
+      "x": 0.0,
+      "y": 1.0,
+      "z": 0.0
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "type": 32
+  }
+]

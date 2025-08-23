@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include"../BaseScene/BaseScene.h"
+class Player;
 class TestScene : public BaseScene
 {
 public:	
@@ -12,5 +13,11 @@ public:
 private:
 	void Event() override;
 	void Init()  override;
+
+	bool m_isCountDown = false; // カウントダウン中かどうか
+
+	float m_countDownTimer = 0.0f; // カウントダウンタイマー
+
+	std::weak_ptr<Player> m_player;
 
 };

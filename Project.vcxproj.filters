@@ -226,6 +226,9 @@
     <Filter Include="Src\Application\Scene\TestStage">
       <UniqueIdentifier>{050e7bb7-ebf5-410f-9cd0-b065c6a649e4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\GameObject\Collition">
+      <UniqueIdentifier>{9f81d21b-842f-45bb-8b68-fb4a35802cbc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -558,6 +561,9 @@
     <ClInclude Include="Src\Application\Scene\TestStage\TestStage.h">
       <Filter>Src\Application\Scene\TestStage</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Collition\Collition.h">
+      <Filter>Src\Application\GameObject\Collition</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -826,6 +832,9 @@
     </ClCompile>
     <ClCompile Include="Src\Application\Scene\TestStage\TestStage.cpp">
       <Filter>Src\Application\Scene\TestStage</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Collition\Collition.cpp">
+      <Filter>Src\Application\GameObject\Collition</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

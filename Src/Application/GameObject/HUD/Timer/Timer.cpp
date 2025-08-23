@@ -1,6 +1,8 @@
 ﻿#include "Timer.h"
 #include"../../Utility/Time.h"
 #include"../../../Scene/SceneManager.h"
+#include"../../../main.h"
+
 const uint32_t Timer::TypeID = KdGameObject::GenerateTypeID();
 
 Timer::Timer()
@@ -14,31 +16,25 @@ void Timer::Init()
 	//m_srcRect = { 128, 0, 128, 256 }; // 2
 	m_texture = KdAssets::Instance().m_textures.GetData("Asset/Textures/Time/Digit01.png");
 	m_resultTexture = KdAssets::Instance().m_textures.GetData("Asset/Textures/Time/ResultTime.png");
-	m_time = 120.0f; // 初期時間300秒
-	m_lastTime = m_time; // 最後の時間を初期化
 	m_notDraw = false; // 描画しないフラグを初期化
 	m_displayTime = 0; // 初期表示時間を0に設定
+	m_lastTime = 0.0f; // 最後の時間を初期化
 }
 
 void Timer::Update()
 {
-
-	if (KeyboardManager::GetInstance().IsKeyJustPressed('4'))
-	{
-		Time::Instance().StartCountdown(m_time);
-	}
-
 	// 残り秒数を取得
 	float timeLeft = Time::Instance().GetCountdownTimeLeft();
 
 	if (SceneManager::Instance().m_gameClear)
 	{
-		m_lastTime = m_time;
+		m_lastTime = timeLeft;
 		return; // ゲームクリア時はタイマーを更新しない
 	}
 
-	// 秒をフレーム数に変換
+	
 	m_displayTime = static_cast<int>(timeLeft);
+	
 
 	ResultTimerUpdate();
 
@@ -49,6 +45,7 @@ void Timer::ResultTimerUpdate()
 	if (SceneManager::Instance().GetResultFlag())
 	{
 		float time = Time::Instance().GetElapsedTime();
+		float deltaTime = Application::Instance().GetDeltaTime();
 
 		if (time >= 0.0f && time <= 2.0f)
 		{
@@ -57,11 +54,19 @@ void Timer::ResultTimerUpdate()
 		}
 		else if (time >= 3.0f && time <= 5.0f)
 		{
-			m_displayTime = static_cast<int>(m_lastTime);
-		}
-		else if (time >= 5.0f)
-		{
-			m_notDraw = true;
+
+			if (time >= 4.6f)
+			{
+				if (m_scale.y >= 0.0f)
+				{
+					m_scale.y -= 50.0f * deltaTime;
+				}
+				else
+				{
+					m_scale.y = 0.0f;
+					m_notDraw = true;
+				}
+			}
 		}
 	}
 	else

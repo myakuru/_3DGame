@@ -17,8 +17,6 @@ private:
 
 	void DrawSprite() override;
 
-	float m_time = 0.0;	// 経過時間
-
 	float m_lastTime = 0.0;	// 最後に更新した時間
 
 	Math::Rectangle m_srcRect;
