@@ -20,7 +20,7 @@ std::shared_ptr<KdModelWork> CharaBase::GetAnimeModel()
 
 void CharaBase::UpdateQuaternion(Math::Vector3& _moveVector)
 {
-	float deltaTime = Application::Instance().GetDeltaTime();
+	float deltaTime = Application::Instance().GetUnscaledDeltaTime();
 
 	if (_moveVector == Math::Vector3::Zero) return;
 

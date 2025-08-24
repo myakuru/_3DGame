@@ -3,6 +3,7 @@
 #include"../PlayerState_Idle/PlayerState_Idle.h"
 #include"../PlayerState_BackWordAvoid/PlayerState_BackWordAvoid.h"
 #include"../../../../Camera/PlayerCamera/PlayerCamera.h"
+#include"../PlayerState_Hit/PlayerState_Hit.h"
 #include"../../../../Weapon/Katana/Katana.h"
 
 void PlayerState_Run::StateStart()
@@ -33,6 +34,14 @@ void PlayerState_Run::StateUpdate()
 		return; 
 	}
 
+	// ダメージを受けたらHitステートへ
+	if (m_player->m_isHit)
+	{
+		auto spHitState = std::make_shared<PlayerState_Hit>();
+		m_player->ChangeState(spHitState);
+		return;
+	}
+
 	UpdateKatanaPos();
 
 	if (!m_player->GetPlayerCamera()) return;
@@ -55,6 +64,8 @@ void PlayerState_Run::StateEnd()
 
 	if (!katana) return;
 	katana->SetHandKatanaMatrix(Math::Matrix::Identity);
+
+	m_player->m_isHit = false; // ダメージフラグをリセット
 }
 
 void PlayerState_Run::UpdateKatanaPos()

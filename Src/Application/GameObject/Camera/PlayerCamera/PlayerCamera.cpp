@@ -16,6 +16,8 @@ void PlayerCamera::Init()
 
 	m_pDebugWire = std::make_unique<KdDebugWireFrame>();
 	SetCursorPos(m_FixMousePos.x, m_FixMousePos.y);
+
+	m_cameraPos = Math::Vector3(-4.0f, 1.2f, 4.0f);
 }
 
 void PlayerCamera::PostUpdate()
@@ -31,6 +33,12 @@ void PlayerCamera::PostUpdate()
 	auto _spTarget = m_Player.lock();
 
 	if (!_spTarget) return;
+
+	if (SceneManager::Instance().IsIntroCamera())
+	{
+		UpdateIntroCamera();
+		return;
+	}
 
 
 	if (SceneManager::Instance().m_gameClear)
@@ -132,11 +140,10 @@ void PlayerCamera::UpdateWinnerCamera()
 	case ToDeg60:
 	{
 		// -60度の位置へLerp
-		float targetDeg = -60.0f;
-		Math::Matrix targetRot = Math::Matrix::CreateRotationY(DirectX::XMConvertToRadians(targetDeg));
+		m_degree.y = 60.0f;
+		m_mRotation = Math::Matrix::CreateRotationY(DirectX::XMConvertToRadians(m_degree.y));
 		Math::Vector3 targetPos = playerPos + camOffset;
 		m_cameraPos = Math::Vector3::Lerp(m_cameraPos, targetPos, 2.0f * deltaTime); // 0.1fで滑らかに
-		m_mRotation = targetRot;
 		if ((m_cameraPos - targetPos).Length() < 0.01f)
 		{
 			step = ToDeg180;
@@ -174,6 +181,52 @@ void PlayerCamera::UpdateWinnerCamera()
 	// カメラのワールド行列を更新
 	m_mWorld = Math::Matrix::CreateTranslation(m_cameraPos - playerPos) * m_mRotation;
 	m_mWorld.Translation(playerPos + m_mWorld.Translation());
+	m_spCamera->SetCameraMatrix(m_mWorld);
+}
+
+void PlayerCamera::UpdateIntroCamera()
+{
+	float deltaTime = Application::Instance().GetDeltaTime();
+	m_introTimer += deltaTime;
+
+	// 回転速度
+	constexpr float ROTATE_SPEED = 40.0f; // 1秒で40度回転
+
+	// 目標相対位置
+	const Math::Vector3 startPos(0.0f, 1.0f, -1.2f);
+	const Math::Vector3 endPos(0.0f, 1.3f, -3.0f);
+
+	// 初回のみ初期化
+	if (m_introTimer == deltaTime) {
+		m_degree = { 0.0f, -20.0f, 0.0f };
+		m_introCamPos = startPos;
+	}
+
+	// 目標角度まで加算
+	m_degree.y -= ROTATE_SPEED * deltaTime;
+
+	// 目標位置に十分近づいたら終了
+	if (m_degree.y >= -261.0f && m_degree.y <= -240.0f)
+	{
+		// カメラ位置を補間
+		constexpr float LERP_SPEED = 3.0f; // 1秒で1.0進む
+		m_introCamPos = Math::Vector3::Lerp(m_introCamPos, endPos, LERP_SPEED * deltaTime);
+	}
+	else if (m_degree.y <= -261.0f)
+	{
+		m_introCamPos = endPos;
+		m_degree.y = -261.0f;
+		SceneManager::Instance().SetIntroCamera(false); // カメラのイントロを終了
+		m_introTimer = 0.0f;
+	}
+
+	m_mRotation = Math::Matrix::CreateRotationY(DirectX::XMConvertToRadians(m_degree.y));
+
+	// カメラのワールド行列を更新
+	m_mWorld = Math::Matrix::CreateTranslation(m_introCamPos); // プレイヤーからの相対位置
+	m_mWorld *= m_mRotation; // 回転
+	m_mWorld.Translation(m_mWorld.Translation() + m_Player.lock()->GetPos());
+
 	m_spCamera->SetCameraMatrix(m_mWorld);
 }
 

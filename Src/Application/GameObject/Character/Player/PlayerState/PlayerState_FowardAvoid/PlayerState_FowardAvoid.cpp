@@ -1,5 +1,6 @@
 ﻿#include "PlayerState_FowardAvoid.h"
 #include"../PlayerState_Idle/PlayerState_Idle.h"
+#include"../../../../../main.h"
 
 #include"../../../../Weapon/Katana/Katana.h"
 
@@ -17,6 +18,10 @@ void PlayerState_ForwardAvoid::StateStart()
 	{
 		m_player->UpdateQuaternion(m_attackDirection);
 	}
+
+	m_player->SetAvoidFlg(true);
+	m_player->SetAvoidStartTime(Application::Instance().GetDeltaTime()); // 現在の時間を記録
+
 }
 
 void PlayerState_ForwardAvoid::StateUpdate()
@@ -44,6 +49,10 @@ void PlayerState_ForwardAvoid::StateEnd()
 
 	if (!katana) return;
 	katana->SetHandKatanaMatrix(Math::Matrix::Identity);
+
+	m_player->SetAvoidFlg(false);
+	m_player->SetAvoidStartTime(0.0f);
+
 }
 
 void PlayerState_ForwardAvoid::UpdateKatana()

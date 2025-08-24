@@ -7,7 +7,7 @@ void TestScene::Event()
 {
 	KdShaderManager::Instance().m_postProcessShader.SetBrightThreshold(m_brightThreshold);
 	KdShaderManager::Instance().WorkAmbientController().SetFogEnable(m_fogEnable, m_fogUseRange);
-	KdShaderManager::Instance().WorkAmbientController().SetDistanceFog({ m_fogColor }, m_fogDensity);
+	//KdShaderManager::Instance().WorkAmbientController().SetDistanceFog({ m_fogColor }, m_fogDensity);
 	KdShaderManager::Instance().WorkAmbientController().SetheightFog({ 0.7f, 0.7f, 0.7f }, 0.0f, -50.0f, 0.0f);
 
 	KdShaderManager::Instance().WorkAmbientController().SetDirLight({ -0.01f, -0.03f, 0.0f }, { 0,0,0 });
@@ -45,11 +45,11 @@ void TestScene::Event()
 
 void TestScene::Init()
 {
-	KdShaderManager::Instance().m_postProcessShader.SetEnableGray(false);
+	//KdShaderManager::Instance().m_postProcessShader.SetEnableGray(true);
 
 	// PostProcess用パラメータ
 	m_brightThreshold = 0.9f;
-	m_fogEnable = true;
+	m_fogEnable = false;
 	m_fogUseRange = true;
 	m_fogColor = { 0.3f, 0.3f, 0.3f };
 	m_fogDensity = 0.005f;
@@ -57,6 +57,8 @@ void TestScene::Init()
 	m_isCountDown = false;	// カウントダウンフラグを初期化
 
 	m_countDownTimer = 120.0f; // カウントダウンタイマーを120秒に設定
+
+	SceneManager::Instance().SetIntroCamera(true); // カメラのイントロを開始
 
 	KdShaderManager::Instance().m_postProcessShader.SetBrightThreshold(m_brightThreshold);
 	KdShaderManager::Instance().WorkAmbientController().SetFogEnable(m_fogEnable, m_fogUseRange);

@@ -24,6 +24,16 @@ void Enemy::Update()
 
 	if (m_wpPlayer.expired()) return;
 
+	float deltaTime = Application::Instance().GetUnscaledDeltaTime();
+
+	m_attackFrame += deltaTime;
+
+	if (m_attackFrame >= 1.0f) {
+		Application::Instance().SetFpsScale(1.f); // スローモーションにする
+		SceneManager::Instance().SetDrawGrayScale(false);
+		m_attackFrame = 0.0f; // 必要ならリセット
+	}
+
 	// ヒット処理。
 	if (m_isHit)
 	{
@@ -34,7 +44,80 @@ void Enemy::Update()
 		return;
 	}
 
+	if (m_Expired)
+	{
+		if (m_dissever < 1.0f)
+		{
+			m_dissever += 5.0f * deltaTime;
+		}
+		else
+		{
+			m_isExpired = true;	// 破棄フラグを立てる
+			SceneManager::Instance().m_gameClear = true;
+		}
+	}
+
 	CharaBase::Update();
+}
+
+void Enemy::DrawLit()
+{
+	//ディゾルブ処理
+	KdShaderManager::Instance().m_StandardShader.SetDissolve(m_dissever);
+	SelectDraw3dModel::DrawLit();
+}
+
+void Enemy::UpdateAttack()
+{
+	m_isAtkPlayer = false;
+
+	// クォータニオンから前方向ベクトルを取得
+	Math::Vector3 forward = Math::Vector3::TransformNormal(Math::Vector3::Forward, Math::Matrix::CreateFromQuaternion(m_rotation));
+	forward.Normalize();
+
+	// 球の当たり判定情報作成
+	KdCollider::SphereInfo attackSphere;
+	// 球の中心座標を設定
+	attackSphere.m_sphere.Center = m_position + Math::Vector3(0.0f, 0.5f, 0.0f) + forward * 1.1f;
+	// 球の半径を設定
+	attackSphere.m_sphere.Radius = m_attackRadius;
+	// アタリ判定をしたいタイプを設定
+	attackSphere.m_type = KdCollider::TypeDamage;
+
+	m_pDebugWire->AddDebugSphere(attackSphere.m_sphere.Center, attackSphere.m_sphere.Radius); // デバッグ用の球を追加
+
+
+	auto player = m_wpPlayer.lock();
+
+	if (!player) return;
+
+	// プレイヤーが回避中か判定
+	if (player->GetAvoidFlg())
+	{
+		int avoidFrame = Application::Instance().GetDeltaTime() - player->GetAvoidStartTime();
+		if (avoidFrame >= 0 && avoidFrame <= 30) // 3フレーム以内ならジャスト回避
+		{
+			Application::Instance().SetFpsScale(0.5f); // スローモーションにする
+			SceneManager::Instance().SetDrawGrayScale(true);
+			return; // ダメージ処理をスキップ
+		}
+	}
+
+
+	// 当たり判定
+	std::list<KdCollider::CollisionResult> results;
+	if (player->Intersects(attackSphere, &results))
+	{
+		if (!m_onceEffect)
+		{
+			// 敵にダメージを与える処理
+			player->TakeDamage(m_status.attack); // ダメージを与える
+			m_isAtkPlayer = true;				 // ヒットチェックを行う
+			player->m_isHit = true;				 // プレイヤーのヒットフラグを立てる
+			m_onceEffect = true;				 // 1回だけ再生
+
+		}
+	}
 }
 
 void Enemy::PostUpdate()

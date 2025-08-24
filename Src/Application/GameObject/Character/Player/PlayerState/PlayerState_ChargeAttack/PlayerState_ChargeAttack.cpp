@@ -41,8 +41,8 @@ void PlayerState_ChargeAttack::StateUpdate()
 
 	if (time >= 0.0f && !m_isCharging)
 	{
-		KdEffekseerManager::GetInstance().Play("o-ra.efkefc", { m_player->GetPosition().x,m_player->GetPosition().y + 0.2f,m_player->GetPosition().z }, 0.3f, 1.0f, false);
-		KdEffekseerManager::GetInstance().Play("Charge2.efkefc", { m_player->GetPosition().x,m_player->GetPosition().y + 0.2f,m_player->GetPosition().z }, 0.3f, 1.0f, false);
+		KdEffekseerManager::GetInstance().Play("o-ra.efkefc", { m_player->GetPosition().x,m_player->GetPosition().y + 0.2f,m_player->GetPosition().z }, 0.3f, 100.0f, false);
+		KdEffekseerManager::GetInstance().Play("Charge2.efkefc", { m_player->GetPosition().x,m_player->GetPosition().y + 0.2f,m_player->GetPosition().z }, 0.3f, 100.0f, false);
 		
 		m_isCharging = true;
 	}
@@ -60,7 +60,7 @@ void PlayerState_ChargeAttack::StateUpdate()
 		Math::Matrix effectWorld = rotationMat * Math::Matrix::CreateTranslation(effectPos);
 
 		// Effekseerエフェクト再生
-		auto effect = KdEffekseerManager::GetInstance().Play("ClawStrike.efkefc", effectPos, 0.1f, 0.1f, false);
+		auto effect = KdEffekseerManager::GetInstance().Play("ClawStrike.efkefc", effectPos, 0.1f, 10.0f, false);
 		if (auto spEffect = effect.lock())
 		{
 			KdEffekseerManager::GetInstance().SetWorldMatrix(spEffect->GetHandle(), effectWorld);

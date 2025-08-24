@@ -36,7 +36,7 @@ void NumBer::DrawSprite()
 	int baseX = static_cast<int>(m_position.x);
 	int baseY = static_cast<int>(m_position.y);
 
-	// 桁ごとの幅（1桁50px、間隔500pxで描画しているので、1桁分の描画幅は500px）
+	// 桁ごとの幅
 	const int digitWidth = 250;
 	const int totalWidth = static_cast<int>(numStr.size()) * digitWidth;
 

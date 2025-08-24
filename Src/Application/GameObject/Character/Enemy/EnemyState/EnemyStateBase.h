@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include"../../../../../MyFramework/State/StateBase/StateBase.h"
+#include"../../../../../main.h"
 #include"../Enemy.h"
 class EnemyStateBase : public StateBase
 {
@@ -11,5 +12,6 @@ public:
 
 protected:
 	Enemy* m_enemy = nullptr;
+	float m_time = 0.0f;
 
 };

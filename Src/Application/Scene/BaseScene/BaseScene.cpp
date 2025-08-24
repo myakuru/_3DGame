@@ -290,10 +290,13 @@ void BaseScene::DrawSprite()
 
 void BaseScene::DrawDebug()
 {
-	if (KdDebugGUI::Instance().ShowImGUiFlg())
+	if (KdDebugGUI::Instance().ShowImGUiFlg() == true)
 	{
-		m_renderTargetChanger.ChangeRenderTarget(m_renderTargetPack);
-	}
+
+		if (KdDebugGUI::Instance().ShowImGUiFlg())
+		{
+			m_renderTargetChanger.ChangeRenderTarget(m_renderTargetPack);
+		}
 
 		// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 		// デバッグ情報の描画はこの間で行う
@@ -310,7 +313,8 @@ void BaseScene::DrawDebug()
 		}
 		KdShaderManager::Instance().m_StandardShader.EndUnLit();
 
-	m_renderTargetChanger.UndoRenderTarget();
+		m_renderTargetChanger.UndoRenderTarget();
+	}
 }
 
 void BaseScene::Event()

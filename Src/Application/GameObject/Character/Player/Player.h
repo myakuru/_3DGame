@@ -51,12 +51,15 @@ public:
 		if (m_status.hp < 0) m_status.hp = 0;
 	}
 
-	void HitCheck(bool _isHit)
-	{
-		m_isHit = _isHit;
-	}
-
 	bool m_onceEffect = false;
+
+	void SetAvoidFlg(bool _flg) { m_nowAvoid = _flg; }
+	bool GetAvoidFlg() const { return m_nowAvoid; }
+
+	void SetAvoidStartTime(float time) { m_avoidStartTime = time; }
+	float GetAvoidStartTime() const { return m_avoidStartTime; }
+
+	bool m_isHit = false;						// ヒット判定用
 
 private:
 
@@ -70,9 +73,11 @@ private:
 	struct KdModelWork::Node* m_armatureNode = nullptr; // ヒップノード
 
 	PlayerStatus m_status;
-	bool m_isHit = false;						// ヒット判定用
+
+	bool m_nowAvoid = false;				// 回避中かどうか
 
 	float m_attackBossEnemyRadius = 1.0f;
+	float m_avoidStartTime = 0.0f; // 回避開始タイム
 
 	PlayerConfig m_playerConfig;
 

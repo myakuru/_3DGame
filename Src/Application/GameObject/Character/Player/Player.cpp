@@ -6,6 +6,8 @@
 #include"../../Camera/PlayerCamera/PlayerCamera.h"
 #include"PlayerState/PlayerState_Idle/PlayerState_Idle.h"
 
+#include"PlayerState/PlayerState_Hit/PlayerState_Hit.h"
+
 #include"../Enemy/Enemy.h"
 
 const uint32_t Player::TypeID = KdGameObject::GenerateTypeID();
@@ -17,6 +19,15 @@ void Player::Init()
 	m_animator->SetAnimation(m_modelWork->GetData()->GetAnimation("Idle"));
 
 	StateInit();
+
+	m_position = Math::Vector3(-4.0f, 1.2f, 4.0f);
+
+	// 初期向きを-90度（Y軸）に設定
+	m_rotation = Math::Quaternion::CreateFromAxisAngle(Math::Vector3::Up, DirectX::XMConvertToRadians(-90.0f));
+
+
+	m_pCollider = std::make_unique<KdCollider>();
+	m_pCollider->RegisterCollisionShape("PlayerMesh", std::make_unique<KdModelCollision>(m_modelWork, KdCollider::TypeDamage));
 
 	m_onceEffect = false;
 }
@@ -44,16 +55,38 @@ void Player::Update()
 	if (m_playerCamera.expired()) return;
 	if (m_katana.expired()) return;
 
-	CharaBase::Update();
+
+	KdGameObject::Update();
+
+	float deltaTime = Application::Instance().GetDeltaTime();
+
+	m_animator->AdvanceTime(m_modelWork->WorkNodes(), m_fixedFrameRate * deltaTime);
+
+	m_isMoving = m_movement.LengthSquared() > 0;
+
+	// 移動関係
+	m_gravity += m_gravitySpeed * deltaTime;
+
+	// 最終的な移動量
+	m_position.x += m_movement.x * m_moveSpeed * m_fixedFrameRate * deltaTime;
+	m_position.z += m_movement.z * m_moveSpeed * m_fixedFrameRate * deltaTime;
+	m_position.y += m_gravity;
+
+	m_stateManager.Update();
+
+	// 最終的なワールド行列計算
+	Math::Matrix scale = Math::Matrix::CreateScale(m_scale);
+	Math::Matrix quaternion = Math::Matrix::CreateFromQuaternion(m_rotation);
+	Math::Matrix translation = Math::Matrix::CreateTranslation(m_position);
+
+	m_mWorld = scale * quaternion * translation;
 
 }
 
 void Player::UpdateAttack()
 {
-	float deltaTime = Application::Instance().GetDeltaTime();
-
-	// 前方向ベクトル
-	Math::Vector3 forward = m_mRotation.Forward();
+	// クォータニオンから前方向ベクトルを取得
+	Math::Vector3 forward = Math::Vector3::TransformNormal(Math::Vector3::Forward, Math::Matrix::CreateFromQuaternion(m_rotation));
 	forward.Normalize();
 
 	// 球の当たり判定情報作成
@@ -73,7 +106,6 @@ void Player::UpdateAttack()
 	auto enemy = m_enemy.lock();
 
 	if (!enemy) return;
-
 	
 	// 当たり判定
 	std::list<KdCollider::CollisionResult> results;

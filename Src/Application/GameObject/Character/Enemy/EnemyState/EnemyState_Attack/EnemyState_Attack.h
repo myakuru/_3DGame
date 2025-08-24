@@ -6,6 +6,7 @@ public:
 	EnemyState_Attack() = default;
 	~EnemyState_Attack()override = default;
 
+private:
 	void StateStart() override;
 	void StateUpdate() override;
 	void StateEnd() override;

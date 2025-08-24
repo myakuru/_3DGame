@@ -146,6 +146,17 @@ public :
 		m_time = _time;
 	}
 
+	void SetIntroCamera(bool _isIntro)
+	{
+		m_isIntro = _isIntro;
+	}
+
+	bool IsIntroCamera() const
+	{
+		return m_isIntro;
+	}
+
+
 private :
 
 	// RegisterObjectからオブジェクトを登録する関数
@@ -173,6 +184,8 @@ private :
 	bool m_drawGrayScale = false; // グレースケール描画フラグ
 
 	float m_time = 0.0f; // カウントダウンタイマー
+
+	bool m_isIntro = false;		// Introカメラかどうか
 
 
 public:

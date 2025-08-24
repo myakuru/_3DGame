@@ -4,16 +4,25 @@
 void EnemyState_Attack::StateStart()
 {
 	auto anime = m_enemy->GetAnimeModel()->GetAnimation("Attack0");
-	m_enemy->GetAnimator()->AnimationBlend(anime, 10.0f, false);
+	m_enemy->GetAnimator()->SetAnimation(anime, false);
 	m_enemy->AnimeSetFlg() = true;
+
+	m_enemy->m_onceEffect = false;
 }
 
 void EnemyState_Attack::StateUpdate()
 {
-	m_enemy->SetAnimeSpeed(120.0f);
+	//m_enemy->SetAnimeSpeed(120.0f);
 
-	// 移動量リセット
-	m_enemy->SetIsMoving(Math::Vector3::Zero);
+	float deltaTime = Application::Instance().GetDeltaTime();
+
+	m_time += deltaTime;
+
+	// 0.5秒間当たり判定有効
+	if (m_time >= 0.5 && m_time <= 0.7)
+	{
+		m_enemy->UpdateAttack();
+	}
 
 	if (m_enemy->GetAnimator()->IsAnimationEnd())
 	{
@@ -21,6 +30,9 @@ void EnemyState_Attack::StateUpdate()
 		m_enemy->ChangeState(attack1);
 		return;
 	}
+
+	// 移動量リセット
+	m_enemy->SetIsMoving(Math::Vector3::Zero);
 
 }
 

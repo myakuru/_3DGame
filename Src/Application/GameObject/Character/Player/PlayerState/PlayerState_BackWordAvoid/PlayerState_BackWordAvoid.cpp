@@ -19,6 +19,9 @@ void PlayerState_BackWordAvoid::StateStart()
 		m_player->UpdateQuaternion(m_attackDirection);
 	}
 
+	m_player->SetAvoidFlg(true);
+	m_player->SetAvoidStartTime(Application::Instance().GetDeltaTime()); // 現在の時間を記録
+
 }
 
 void PlayerState_BackWordAvoid::StateUpdate()
@@ -62,4 +65,7 @@ void PlayerState_BackWordAvoid::StateEnd()
 
 	if (!katana) return;
 	katana->SetHandKatanaMatrix(Math::Matrix::Identity);
+
+	m_player->SetAvoidFlg(false);
+	m_player->SetAvoidStartTime(0.0f); // 現在の時間を記録
 }

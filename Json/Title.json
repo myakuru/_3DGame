@@ -14,6 +14,8 @@
     },
     "drawFlags": {
       "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
       "DrawLit": false,
       "DrawToon": false,
       "DrawUnLit": true,
@@ -68,8 +70,8 @@
       "z": 1.0
     },
     "deg": {
-      "x": -4.349986553192139,
-      "y": 415.2001647949219,
+      "x": -1.4999881982803345,
+      "y": 418.0505676269531,
       "z": 0.0
     },
     "moveSpeed": 50.0,
@@ -89,7 +91,7 @@
   {
     "Name": "class AlpfaMoving",
     "color": {
-      "w": 0.8652907609939575,
+      "w": 0.35417211055755615,
       "x": 1.0,
       "y": 1.0,
       "z": 1.0
@@ -149,16 +151,16 @@
       "z": 1.0
     },
     "deg": {
-      "x": -1.0499346256256104,
-      "y": 2923.64990234375,
+      "x": -4.350029468536377,
+      "y": 2944.48779296875,
       "z": 0.0
     },
     "moveSpeed": 10.0,
     "path": "Asset/Models/Sky/Sky.gltf",
     "pos": {
-      "x": 8.608631134033203,
-      "y": 3.974085807800293,
-      "z": -5.658248424530029
+      "x": -32.5258674621582,
+      "y": 19.702922821044922,
+      "z": -22.290950775146484
     },
     "scale": {
       "x": 1.0,
@@ -182,6 +184,8 @@
     },
     "drawFlags": {
       "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
       "DrawLit": false,
       "DrawToon": true,
       "DrawUnLit": false,
@@ -215,6 +219,8 @@
     },
     "drawFlags": {
       "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
       "DrawLit": false,
       "DrawToon": true,
       "DrawUnLit": false,
@@ -248,6 +254,8 @@
     },
     "drawFlags": {
       "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
       "DrawLit": false,
       "DrawToon": true,
       "DrawUnLit": false,
@@ -281,6 +289,8 @@
     },
     "drawFlags": {
       "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
       "DrawLit": false,
       "DrawToon": true,
       "DrawUnLit": false,
@@ -314,6 +324,8 @@
     },
     "drawFlags": {
       "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
       "DrawLit": false,
       "DrawToon": true,
       "DrawUnLit": false,
@@ -347,6 +359,8 @@
     },
     "drawFlags": {
       "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
       "DrawLit": false,
       "DrawToon": true,
       "DrawUnLit": false,
@@ -380,6 +394,8 @@
     },
     "drawFlags": {
       "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
       "DrawLit": false,
       "DrawToon": true,
       "DrawUnLit": false,
@@ -413,6 +429,8 @@
     },
     "drawFlags": {
       "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
       "DrawLit": false,
       "DrawToon": true,
       "DrawUnLit": false,
@@ -446,6 +464,8 @@
     },
     "drawFlags": {
       "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
       "DrawLit": false,
       "DrawToon": true,
       "DrawUnLit": false,
@@ -479,6 +499,8 @@
     },
     "drawFlags": {
       "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
       "DrawLit": false,
       "DrawToon": true,
       "DrawUnLit": false,
@@ -512,6 +534,8 @@
     },
     "drawFlags": {
       "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
       "DrawLit": false,
       "DrawToon": true,
       "DrawUnLit": false,
@@ -545,6 +569,8 @@
     },
     "drawFlags": {
       "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
       "DrawLit": false,
       "DrawToon": true,
       "DrawUnLit": false,
@@ -578,6 +604,8 @@
     },
     "drawFlags": {
       "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
       "DrawLit": false,
       "DrawToon": true,
       "DrawUnLit": false,
@@ -611,6 +639,8 @@
     },
     "drawFlags": {
       "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
       "DrawLit": false,
       "DrawToon": true,
       "DrawUnLit": false,
@@ -644,6 +674,8 @@
     },
     "drawFlags": {
       "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
       "DrawLit": false,
       "DrawToon": true,
       "DrawUnLit": false,
@@ -677,6 +709,8 @@
     },
     "drawFlags": {
       "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
       "DrawLit": false,
       "DrawToon": true,
       "DrawUnLit": false,
@@ -710,6 +744,8 @@
     },
     "drawFlags": {
       "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
       "DrawLit": false,
       "DrawToon": true,
       "DrawUnLit": false,
@@ -743,6 +779,8 @@
     },
     "drawFlags": {
       "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
       "DrawLit": false,
       "DrawToon": true,
       "DrawUnLit": false,
@@ -776,6 +814,8 @@
     },
     "drawFlags": {
       "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
       "DrawLit": false,
       "DrawToon": true,
       "DrawUnLit": false,
@@ -809,6 +849,8 @@
     },
     "drawFlags": {
       "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
       "DrawLit": false,
       "DrawToon": true,
       "DrawUnLit": false,
@@ -842,6 +884,8 @@
     },
     "drawFlags": {
       "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
       "DrawLit": false,
       "DrawToon": true,
       "DrawUnLit": false,
@@ -875,6 +919,8 @@
     },
     "drawFlags": {
       "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
       "DrawLit": false,
       "DrawToon": true,
       "DrawUnLit": false,
@@ -908,6 +954,8 @@
     },
     "drawFlags": {
       "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
       "DrawLit": false,
       "DrawToon": true,
       "DrawUnLit": false,
@@ -941,6 +989,8 @@
     },
     "drawFlags": {
       "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
       "DrawLit": false,
       "DrawToon": true,
       "DrawUnLit": false,
@@ -974,6 +1024,8 @@
     },
     "drawFlags": {
       "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
       "DrawLit": false,
       "DrawToon": true,
       "DrawUnLit": false,
@@ -1007,6 +1059,8 @@
     },
     "drawFlags": {
       "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
       "DrawLit": false,
       "DrawToon": true,
       "DrawUnLit": false,
@@ -1040,6 +1094,8 @@
     },
     "drawFlags": {
       "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
       "DrawLit": false,
       "DrawToon": true,
       "DrawUnLit": false,
@@ -1073,6 +1129,8 @@
     },
     "drawFlags": {
       "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
       "DrawLit": false,
       "DrawToon": true,
       "DrawUnLit": false,
@@ -1106,6 +1164,8 @@
     },
     "drawFlags": {
       "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
       "DrawLit": false,
       "DrawToon": true,
       "DrawUnLit": false,
@@ -1139,6 +1199,8 @@
     },
     "drawFlags": {
       "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
       "DrawLit": false,
       "DrawToon": true,
       "DrawUnLit": false,
@@ -1172,6 +1234,8 @@
     },
     "drawFlags": {
       "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
       "DrawLit": false,
       "DrawToon": true,
       "DrawUnLit": false,
@@ -1205,6 +1269,8 @@
     },
     "drawFlags": {
       "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
       "DrawLit": false,
       "DrawToon": true,
       "DrawUnLit": false,
@@ -1238,6 +1304,8 @@
     },
     "drawFlags": {
       "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
       "DrawLit": false,
       "DrawToon": true,
       "DrawUnLit": false,
@@ -1271,6 +1339,8 @@
     },
     "drawFlags": {
       "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
       "DrawLit": false,
       "DrawToon": true,
       "DrawUnLit": false,
@@ -1304,6 +1374,8 @@
     },
     "drawFlags": {
       "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
       "DrawLit": false,
       "DrawToon": true,
       "DrawUnLit": false,
@@ -1337,6 +1409,8 @@
     },
     "drawFlags": {
       "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
       "DrawLit": false,
       "DrawToon": true,
       "DrawUnLit": false,
@@ -1370,6 +1444,8 @@
     },
     "drawFlags": {
       "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
       "DrawLit": false,
       "DrawToon": true,
       "DrawUnLit": false,
@@ -1403,6 +1479,8 @@
     },
     "drawFlags": {
       "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
       "DrawLit": false,
       "DrawToon": true,
       "DrawUnLit": false,
@@ -1436,6 +1514,8 @@
     },
     "drawFlags": {
       "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
       "DrawLit": false,
       "DrawToon": true,
       "DrawUnLit": false,
@@ -1469,6 +1549,8 @@
     },
     "drawFlags": {
       "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
       "DrawLit": false,
       "DrawToon": true,
       "DrawUnLit": false,
@@ -1502,6 +1584,8 @@
     },
     "drawFlags": {
       "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
       "DrawLit": false,
       "DrawToon": true,
       "DrawUnLit": false,
@@ -1535,6 +1619,8 @@
     },
     "drawFlags": {
       "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
       "DrawLit": true,
       "DrawToon": false,
       "DrawUnLit": false,
@@ -1568,6 +1654,8 @@
     },
     "drawFlags": {
       "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
       "DrawLit": false,
       "DrawToon": true,
       "DrawUnLit": false,
@@ -1601,6 +1689,8 @@
     },
     "drawFlags": {
       "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
       "DrawLit": false,
       "DrawToon": true,
       "DrawUnLit": false,
@@ -1634,6 +1724,8 @@
     },
     "drawFlags": {
       "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
       "DrawLit": false,
       "DrawToon": true,
       "DrawUnLit": false,
@@ -1667,6 +1759,8 @@
     },
     "drawFlags": {
       "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
       "DrawLit": false,
       "DrawToon": true,
       "DrawUnLit": false,
@@ -1700,6 +1794,8 @@
     },
     "drawFlags": {
       "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
       "DrawLit": false,
       "DrawToon": true,
       "DrawUnLit": false,
@@ -1733,6 +1829,8 @@
     },
     "drawFlags": {
       "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
       "DrawLit": false,
       "DrawToon": true,
       "DrawUnLit": false,
@@ -1766,6 +1864,8 @@
     },
     "drawFlags": {
       "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
       "DrawLit": true,
       "DrawToon": false,
       "DrawUnLit": false,
@@ -1799,6 +1899,8 @@
     },
     "drawFlags": {
       "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
       "DrawLit": true,
       "DrawToon": false,
       "DrawUnLit": false,
@@ -1832,6 +1934,8 @@
     },
     "drawFlags": {
       "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
       "DrawLit": true,
       "DrawToon": false,
       "DrawUnLit": false,
@@ -1865,6 +1969,8 @@
     },
     "drawFlags": {
       "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
       "DrawLit": false,
       "DrawToon": true,
       "DrawUnLit": false,
@@ -1898,6 +2004,8 @@
     },
     "drawFlags": {
       "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
       "DrawLit": false,
       "DrawToon": true,
       "DrawUnLit": false,
@@ -1931,6 +2039,8 @@
     },
     "drawFlags": {
       "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
       "DrawLit": false,
       "DrawToon": true,
       "DrawUnLit": false,

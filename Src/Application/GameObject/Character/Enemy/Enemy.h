@@ -11,6 +11,7 @@ public:
 
 	void Init() override;
 	void Update() override;
+	void DrawLit() override;
 	void PostUpdate() override;
 	void ImGuiInspector() override;
 	void JsonInput(const nlohmann::json& _json) override;
@@ -24,6 +25,7 @@ public:
 		return m_wpPlayer;
 	}
 
+	void UpdateAttack();
 
 	// ダメージを受ける
 	void Damage(int _damage);
@@ -56,12 +58,18 @@ public:
 		int attack = 10;			// 攻撃力
 	};
 
+	bool m_onceEffect = false;
+
 private:
 
 	std::weak_ptr<Player> m_wpPlayer;
 	bool m_Expired = false;				// 敵を消滅させるかどうか
 	bool m_isHit = false;				// ヒット判定
 	bool m_isAtkPlayer = false;
+	float m_dissever = 0.0f;			// 敵のディゾルブ値
+
+	float m_attackRadius = 1.5f;	// 攻撃判定の半径
+	float m_attackFrame = 0.0f;	// 攻撃判定フレーム
 
 	EnemyStatus m_status;			// 敵のステータス
 };

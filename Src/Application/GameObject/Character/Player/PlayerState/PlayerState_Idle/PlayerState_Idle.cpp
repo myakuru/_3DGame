@@ -9,6 +9,7 @@
 #include"../PlayerState_Attack/PlayerState_Attack.h"
 #include"../PlayerState_FowardAvoid/PlayerState_FowardAvoid.h"
 #include"../PlayerState_ChargeAttack/PlayerState_ChargeAttack.h"
+#include"../PlayerState_Hit/PlayerState_Hit.h"
 #include"../PlayerState_Skill/PlayerState_Skill.h"
 #include"../../../../Weapon/Katana/Katana.h"
 
@@ -82,6 +83,14 @@ void PlayerState_Idle::StateUpdate()
 		return;
 	}
 
+	// ダメージを受けたらHitステートへ
+	if (m_player->m_isHit)
+	{
+		auto spHitState = std::make_shared<PlayerState_Hit>();
+		m_player->ChangeState(spHitState);
+		return;
+	}
+
 	// 移動量リセット
 	m_player->SetIsMoving(Math::Vector3::Zero);
 
@@ -90,6 +99,7 @@ void PlayerState_Idle::StateUpdate()
 void PlayerState_Idle::StateEnd()
 {
 	m_player->AnimeSetFlg() = false;
+	m_player->m_isHit = false; // ダメージフラグをリセット
 }
 
 void PlayerState_Idle::ImGuiInspector()
