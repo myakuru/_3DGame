@@ -27,13 +27,19 @@ void Player::Init()
 
 
 	m_pCollider = std::make_unique<KdCollider>();
-	m_pCollider->RegisterCollisionShape("PlayerMesh", std::make_unique<KdModelCollision>(m_modelWork, KdCollider::TypeDamage));
+
+	m_pCollider->RegisterCollisionShape("PlayerSphere", sphere, KdCollider::TypeDamage);
+	m_pCollider->RegisterCollisionShape("PlayerSphere", sphere, KdCollider::TypeGround);
 
 	m_onceEffect = false;
 }
 
 void Player::PreUpdate()
 {
+	sphere.Center = m_position + Math::Vector3(0.0f, 0.5f, 0.0f); // 敵の位置＋オフセット
+	sphere.Radius = 0.2f; // 半径0.5
+	m_pDebugWire->AddDebugSphere(sphere.Center, sphere.Radius,kRedColor);
+
 	// カタナの取得
 	auto katana = m_katana.lock();
 
@@ -50,9 +56,11 @@ void Player::SkirtUpdate()
 void Player::Update()
 {
 	SceneManager::Instance().GetObjectWeakPtr(m_playerCamera);
+	SceneManager::Instance().GetObjectWeakPtr(m_enemy);
 	SceneManager::Instance().GetObjectWeakPtr(m_katana);
 
 	if (m_playerCamera.expired()) return;
+	if (m_enemy.expired()) return;
 	if (m_katana.expired()) return;
 
 
@@ -117,6 +125,12 @@ void Player::UpdateAttack()
 			enemy->Damage(m_status.attack); // ダメージを与える
 			enemy->SetEnemyHit(true);		// ヒットチェックを行う
 			m_onceEffect = true;			// 1回だけ再生
+
+			// カメラシェイク
+			if (auto camera = m_playerCamera.lock(); camera)
+			{
+				camera->StartShake(0.5f, 0.1f);
+			}
 
 		}
 	}

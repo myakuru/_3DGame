@@ -13,13 +13,24 @@ void Enemy::Init()
 	m_animator->SetAnimation(m_modelWork->GetData()->GetAnimation("Idle"));
 
 	m_pCollider = std::make_unique<KdCollider>();
-	m_pCollider->RegisterCollisionShape("EnemyMesh", std::make_unique<KdModelCollision>(m_modelWork, KdCollider::TypeDamage));
+
+	m_pCollider->RegisterCollisionShape("EnemySphere", sphere, KdCollider::TypeDamage);
+
+	m_pCollider->RegisterCollisionShape("PlayerSphere", sphere, KdCollider::TypeGround);
 
 	StateInit();
 }
 
 void Enemy::Update()
 {
+	m_position.y = 1.0f;
+
+	// 球の中心座標と半径を設定
+	sphere.Center = m_position + Math::Vector3(0.0f, 0.7f, 0.0f); // 敵の位置＋オフセット
+	sphere.Radius = 0.2f; // 半径0.5
+
+	m_pDebugWire->AddDebugSphere(sphere.Center, sphere.Radius,kBlueColor);
+
 	SceneManager::Instance().GetObjectWeakPtr(m_wpPlayer);
 
 	if (m_wpPlayer.expired()) return;
@@ -28,7 +39,7 @@ void Enemy::Update()
 
 	m_attackFrame += deltaTime;
 
-	if (m_attackFrame >= 1.0f) {
+	if (m_attackFrame >= 3.5f) {
 		Application::Instance().SetFpsScale(1.f); // スローモーションにする
 		SceneManager::Instance().SetDrawGrayScale(false);
 		m_attackFrame = 0.0f; // 必要ならリセット
@@ -128,7 +139,7 @@ void Enemy::PostUpdate()
 	// 球の中心座標を設定
 	sphereInfo.m_sphere.Center = m_position + Math::Vector3(0.0f, 0.5f, 0.0f);
 	// 球の半径を設定
-	sphereInfo.m_sphere.Radius = 0.5f;
+	sphereInfo.m_sphere.Radius = 0.2f;
 	// アタリ判定をしたいタイプを設定
 	sphereInfo.m_type = KdCollider::TypeGround; // 敵のアタリ判定
 
@@ -162,14 +173,18 @@ void Enemy::PostUpdate()
 		}
 	}
 
-	if (hit)
-	{
-		// 正規化して押し出す方向を求める
-		hitDir.Normalize();
+	 if (hit)
+    {
+        // 正規化して押し出す方向を求める
+        hitDir.Normalize();
 
-		//当たってたらその方向から押し出す
-		m_position += hitDir * maxOverLap;
-	}
+        // Y方向の押し出しを無効化（XZ平面のみ）
+        hitDir.y = 0.0f;
+        hitDir.Normalize();
+
+        //当たってたらその方向から押し出す
+        m_position += hitDir * maxOverLap;
+    }
 }
 
 void Enemy::ImGuiInspector()
@@ -197,6 +212,21 @@ void Enemy::JsonSave(nlohmann::json& _json) const
 	_json["GravitySpeed"] = m_gravitySpeed;
 	_json["fixedFps"] = m_fixedFrameRate;
 	_json["moveSpeed"] = m_moveSpeed;
+}
+
+void Enemy::UpdateQuaternion(Math::Vector3& _moveVector)
+{
+	float deltaTime = Application::Instance().GetUnscaledDeltaTime();
+
+	if (_moveVector == Math::Vector3::Zero) return;
+
+	_moveVector.Normalize();
+
+	// 敵方向ベクトルからクォータニオンを作成
+	Math::Quaternion targetRotation = Math::Quaternion::LookRotation(_moveVector, Math::Vector3::Up);
+
+	// 滑らかに回転させる
+	m_rotation = Math::Quaternion::Slerp(m_rotation, targetRotation, deltaTime * m_fixedFrameRate);
 }
 
 void Enemy::StateInit()

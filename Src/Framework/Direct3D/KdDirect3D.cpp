@@ -171,7 +171,7 @@ bool KdDirect3D::Init(HWND hWnd, int w, int h, bool deviceDebug, std::string& er
 
 	pBackBuffer->Release();
 
-	/*
+	
 	// ALT+Enterでフルスクリーン不可にする
 	{
 		IDXGIDevice* pDXGIDevice;
@@ -189,7 +189,7 @@ bool KdDirect3D::Init(HWND hWnd, int w, int h, bool deviceDebug, std::string& er
 		pDXGIAdapter->Release();
 		pIDXGIFactory->Release();
 	}
-	*/
+
 
 	//=========================================================
 	// Zバッファ作成

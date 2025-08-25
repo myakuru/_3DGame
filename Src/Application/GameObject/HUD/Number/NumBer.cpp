@@ -1,4 +1,7 @@
 ﻿#include "NumBer.h"
+#include"../../../Scene/SceneManager.h"
+#include"../../Character/Player/Player.h"
+
 const uint32_t NumBer::TypeID = KdGameObject::GenerateTypeID();
 
 void NumBer::Init()
@@ -12,18 +15,15 @@ void NumBer::Init()
 
 void NumBer::Update()
 {
-	if (KeyboardManager::GetInstance().IsKeyPressed('7'))
-	{
-		m_displayTime = 0; // 0から開始
-		m_isIncreasing = true;
-	}
+	SceneManager::Instance().GetObjectWeakPtr(m_player);
 
-	// 増加中なら徐々に値を増やす
-	if (m_isIncreasing)
-	{
-		m_displayTime += 1; // 1フレームごとに1増加（速度調整はお好みで）
-		m_isIncreasing = (m_displayTime < 99999); // 最大値9999まで増加
-	}
+	auto player = m_player.lock();
+
+	if (!player) return;
+
+	int hp = player->GetPlayerStatus().hpMax;
+
+	m_displayTime = hp;
 }
 
 void NumBer::DrawSprite()

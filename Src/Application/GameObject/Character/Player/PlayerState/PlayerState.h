@@ -2,6 +2,8 @@
 #include"../../../../../MyFramework/State/StateBase/StateBase.h"
 #include"../PlayerConfig.h"
 #include"../Player.h"
+#include"../../../Enemy/Enemy.h"
+
 class PlayerStateBase : public StateBase
 {
 public:
@@ -16,5 +18,7 @@ protected:
 	Math::Vector3 prevRootTranslation = Math::Vector3::Zero;
 	Math::Vector3 currentRootTranslation = Math::Vector3::Zero;
 	Math::Vector3 m_attackDirection = Math::Vector3::Zero;
+
+	float m_time = 0.0f;
 
 };

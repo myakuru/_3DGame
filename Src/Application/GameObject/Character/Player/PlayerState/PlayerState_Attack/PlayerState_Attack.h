@@ -17,5 +17,4 @@ private:
 
 
 	bool m_flag = false; // 攻撃フラグ
-	float m_time = 0.0f;
 };

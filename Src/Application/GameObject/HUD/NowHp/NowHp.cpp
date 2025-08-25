@@ -1,4 +1,7 @@
 ﻿#include "NowHp.h"
+#include"../../../Scene/SceneManager.h"
+#include"../../Character/Player/Player.h"
+
 const uint32_t NowHp::TypeID = KdGameObject::GenerateTypeID();
 
 void NowHp::Init()
@@ -9,6 +12,11 @@ void NowHp::Init()
 
 void NowHp::Update()
 {
+	SceneManager::Instance().GetObjectWeakPtr(m_player);
+	auto player = m_player.lock();
+	if (!player) return;
+	int hp = player->GetPlayerStatus().hp;
+	m_displayTime = hp;
 }
 
 void NowHp::DrawSprite()

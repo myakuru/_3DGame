@@ -35,7 +35,9 @@ public:
 	/// ムーブベクトルに基づいてクォータニオンを更新
 	/// </summary>
 	/// <param name="_moveVector">クォータニオンの更新に使用するVector3の移動ベクトル。</param>
-	void UpdateQuaternion(Math::Vector3& _moveVector);
+	virtual void UpdateQuaternion(Math::Vector3& _moveVector);
+
+	void UpdateQuaternionDirect(const Math::Vector3& direction);
 
 	std::shared_ptr<PlayerCamera> GetPlayerCamera() const { return m_playerCamera.lock(); }
 
@@ -86,6 +88,8 @@ protected:
 
 	// カメラへの参照
 	std::weak_ptr<PlayerCamera> m_playerCamera;
+
+	DirectX::BoundingSphere sphere;
 
 	KdTrailPolygon m_trailPolygon; // トレイルポリゴン
 

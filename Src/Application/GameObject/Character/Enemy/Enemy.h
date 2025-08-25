@@ -17,6 +17,8 @@ public:
 	void JsonInput(const nlohmann::json& _json) override;
 	void JsonSave(nlohmann::json& _json) const override;
 
+	void UpdateQuaternion(Math::Vector3& _moveVector) override;
+
 	void StateInit();
 	void ChangeState(std::shared_ptr<EnemyStateBase> _state);
 

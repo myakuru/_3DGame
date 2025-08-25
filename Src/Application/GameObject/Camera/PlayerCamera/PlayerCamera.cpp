@@ -51,12 +51,30 @@ void PlayerCamera::PostUpdate()
 	UpdateRotateByMouse();
 	m_mRotation = GetRotationMatrix();
 
+	// シェイク用オフセット
+	Math::Vector3 shakeOffset = Math::Vector3::Zero;
+	if (m_shakeTime > 0.0f)
+	{
+		shakeOffset.x = KdRandom::GetFloat(-m_shakePower, m_shakePower);
+		shakeOffset.y = KdRandom::GetFloat(-m_shakePower, m_shakePower);
+		m_shakeTime -= deltaTime;
+		if (m_shakeTime <= 0.0f)
+		{
+			m_shakeTime = 0.0f;
+			shakeOffset = Math::Vector3::Zero;
+		}
+	}
+	else
+	{
+		shakeOffset = Math::Vector3::Zero;
+	}
+
 	
 	// カメラの位置をターゲットの位置に設定
 	m_mWorld = Math::Matrix::CreateTranslation(m_targetLookAt);
 	m_mWorld = m_mWorld * m_mRotation;
 
-	Math::Vector3 targetPos = _spTarget->GetPosition();
+	Math::Vector3 targetPos = _spTarget->GetPosition() + shakeOffset;
 
 	m_cameraPos = Math::Vector3::Lerp(m_cameraPos, targetPos, m_smooth * deltaTime);
 

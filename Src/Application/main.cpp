@@ -324,7 +324,7 @@ void Application::Execute()
 		m_fpsController.Update();
 
 		// タイトルバーにFPS表示
-		std::string titleBar = "ZERO:プロトタイプ FPS:" + std::to_string(m_fpsController.m_nowfps);
+		std::string titleBar = "ZERO:a版 FPS:" + std::to_string(m_fpsController.m_nowfps);
 
 		SetWindowTextA(m_window.GetWndHandle(), titleBar.c_str());
 

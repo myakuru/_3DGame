@@ -7,10 +7,20 @@ void TestScene::Event()
 {
 	KdShaderManager::Instance().m_postProcessShader.SetBrightThreshold(m_brightThreshold);
 	KdShaderManager::Instance().WorkAmbientController().SetFogEnable(m_fogEnable, m_fogUseRange);
-	//KdShaderManager::Instance().WorkAmbientController().SetDistanceFog({ m_fogColor }, m_fogDensity);
+	KdShaderManager::Instance().WorkAmbientController().SetDistanceFog({ m_fogColor }, m_fogDensity);
 	KdShaderManager::Instance().WorkAmbientController().SetheightFog({ 0.7f, 0.7f, 0.7f }, 0.0f, -50.0f, 0.0f);
 
 	KdShaderManager::Instance().WorkAmbientController().SetDirLight({ -0.01f, -0.03f, 0.0f }, { 0,0,0 });
+
+	if (SceneManager::Instance().m_gameClear)
+	{
+		KdShaderManager::Instance().WorkAmbientController().SetheightFog({1,1,1}, 2.0f, 0.0f, 0.0f);
+		m_brightThreshold = 1.0f;
+		m_fogEnable = true;
+		m_fogUseRange = true;
+		m_fogColor = { 0.93f, 0.86f, 0.0f };
+		m_fogDensity = 0.001f;
+	}
 
 	if (KeyboardManager::GetInstance().IsKeyPressed('P'))
 	{
@@ -45,7 +55,7 @@ void TestScene::Event()
 
 void TestScene::Init()
 {
-	//KdShaderManager::Instance().m_postProcessShader.SetEnableGray(true);
+	KdShaderManager::Instance().m_postProcessShader.SetEnableGray(false);
 
 	// PostProcess用パラメータ
 	m_brightThreshold = 0.9f;
@@ -66,7 +76,7 @@ void TestScene::Init()
 	KdShaderManager::Instance().WorkAmbientController().SetheightFog({ 0.7f, 0.7f, 0.7f }, 0.0f, -50.0f, 0.0f);
 
 	SceneManager::Instance().SetDrawGrayScale(false);
-	SceneManager::Instance().m_gameClear = false; // ゲームクリアフラグを初期化
-	SceneManager::Instance().SetResultFlag(false); // 結果フラグを初期化
+	SceneManager::Instance().m_gameClear = false;	// ゲームクリアフラグを初期化
+	SceneManager::Instance().SetResultFlag(false);	// 結果フラグを初期化
 
 }

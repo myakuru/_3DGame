@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "../../Utility/SelectDraw2DTexture.h"
+class Player;
 class NumBer :public SelectDraw2DTexture
 {
 public:
@@ -17,4 +18,6 @@ private:
 
 	int m_displayTime = 0;
 	bool m_isIncreasing = false;
+
+	std::weak_ptr<Player> m_player;
 };

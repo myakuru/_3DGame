@@ -42,6 +42,18 @@ void CharaBase::UpdateQuaternion(Math::Vector3& _moveVector)
 
 }
 
+void CharaBase::UpdateQuaternionDirect(const Math::Vector3& direction)
+{
+	float deltaTime = Application::Instance().GetUnscaledDeltaTime();
+	if (direction == Math::Vector3::Zero) return;
+
+	Math::Vector3 dir = direction;
+	dir.Normalize();
+
+	Math::Quaternion targetRotation = Math::Quaternion::LookRotation(dir, Math::Vector3::Up);
+	m_rotation = Math::Quaternion::Slerp(m_rotation, targetRotation, deltaTime * m_fixedFrameRate);
+}
+
 void CharaBase::Update()
 {
 	KdGameObject::Update();
@@ -182,6 +194,10 @@ void CharaBase::PostUpdate()
 	if (hit)
 	{
 		// 正規化して押し出す方向を求める
+		hitDir.Normalize();
+
+		// Y方向の押し出しを無効化（XZ平面のみ）
+		hitDir.y = 0.0f;
 		hitDir.Normalize();
 
 		//当たってたらその方向から押し出す

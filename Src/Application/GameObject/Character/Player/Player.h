@@ -4,6 +4,12 @@
 class Enemy;
 class Katana;
 class PlayerStateBase;
+struct PlayerStatus
+{
+	int hp = 1000;		// ヒットポイント
+	int attack = 20;	// 攻撃力
+	int hpMax = 1000;	// 最大ヒットポイント
+};
 class Player :public CharaBase
 {
 public:
@@ -33,16 +39,10 @@ public:
 	KdModelWork* GetModelWork() { return m_modelWork.get(); }
 
 	const std::weak_ptr<Katana>& GetKatana() const { return m_katana; }
+	const std::weak_ptr<Enemy>& GetEnemy() const { return m_enemy; }
 
 	PlayerConfig& GetPlayerConfig() { return m_playerConfig; }
 	const Math::Vector3& GetPosition() const { return m_position; }
-
-	struct PlayerStatus
-	{
-		int hp = 100;		// ヒットポイント
-		int attack = 20;	// 攻撃力
-		int hpMax = 100;	// 最大ヒットポイント
-	};
 
 	// ダメージを受けた時の処理
 	void TakeDamage(int damage)
@@ -61,14 +61,16 @@ public:
 
 	bool m_isHit = false;						// ヒット判定用
 
+	PlayerStatus& GetPlayerStatus() { return m_status; }
+
 private:
 
 	Math::Vector3 m_moveDirection = Math::Vector3::Zero; // 移動方向
 	
 	Math::Vector3 m_lastMoveDirection = Math::Vector3::Zero;
 
-	std::weak_ptr<Katana>	m_katana;
-	std::weak_ptr<Enemy>	m_enemy; // 敵の参照
+	std::weak_ptr<Katana>	m_katana;	// カタナの参照
+	std::weak_ptr<Enemy>	m_enemy;	// 敵の参照
 
 	struct KdModelWork::Node* m_armatureNode = nullptr; // ヒップノード
 
@@ -76,7 +78,7 @@ private:
 
 	bool m_nowAvoid = false;				// 回避中かどうか
 
-	float m_attackBossEnemyRadius = 1.0f;
+	float m_attackBossEnemyRadius = 2.0f;
 	float m_avoidStartTime = 0.0f; // 回避開始タイム
 
 	PlayerConfig m_playerConfig;

@@ -10,6 +10,8 @@ void EnemyState_Hit::StateStart()
 
 void EnemyState_Hit::StateUpdate()
 {
+	m_enemy->SetAnimeSpeed(60.0f);
+
 	if (m_enemy->GetAnimator()->IsAnimationEnd())
 	{
 		// Idleステートに移行
@@ -23,4 +25,5 @@ void EnemyState_Hit::StateUpdate()
 
 void EnemyState_Hit::StateEnd()
 {
+	m_enemy->SetAnimeSpeed(120.0f);
 }

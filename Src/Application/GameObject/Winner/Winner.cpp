@@ -26,13 +26,13 @@ void Winner::Update()
 
 		// カメラのワールド座標を取得
 		Math::Vector3 cameraPos = _spCamera->GetCamera()->GetCameraMatrix().Translation();
-		Math::Matrix cameraForward = _spCamera->GetRotationMatrix();
+		Math::Matrix cameraForward = _spCamera->GetRotationYMatrix();
 		Math::Vector3 cameraDir = cameraForward.Backward();
 
 		m_position = cameraPos + cameraDir * m_distance;
 
 		// --- ビルボード処理 ---
-		Math::Matrix cameraRot = _spCamera->GetRotationMatrix();
+		Math::Matrix cameraRot = _spCamera->GetRotationYMatrix();
 
 		m_mWorld =
 			Math::Matrix::CreateScale(m_scale) *
