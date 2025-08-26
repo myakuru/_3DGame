@@ -33,6 +33,8 @@ void PlayerState_Hit::StateUpdate()
 		return;
 	}
 
+	UpdateKatana();
+
 	if (KeyboardManager::GetInstance().IsKeyJustPressed(VK_LBUTTON))
 	{
 		auto attack1state = std::make_shared<PlayerState_Attack>();

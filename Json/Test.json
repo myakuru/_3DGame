@@ -55,18 +55,18 @@
       "DrawBright": false,
       "DrawGradation": false,
       "DrawGrayScale": false,
-      "DrawLit": true,
+      "DrawLit": false,
       "DrawToon": true,
       "DrawUnLit": false,
-      "GenerateDepthMapFromLight": false
+      "GenerateDepthMapFromLight": true
     },
-    "fixedFps": 120.0,
+    "fixedFps": 60.0,
     "moveSpeed": 0.14000000059604645,
     "path": "Asset\\Models\\Player\\Perula\\Perula.gltf",
     "pos": {
-      "x": -4.0,
-      "y": 1.2000000476837158,
-      "z": 4.0
+      "x": 4.887903213500977,
+      "y": 0.9995827674865723,
+      "z": -3.103161334991455
     },
     "scale": {
       "x": 0.800000011920929,
@@ -134,8 +134,8 @@
       "z": 1.0
     },
     "deg": {
-      "x": -0.44999822974205017,
-      "y": 0.0,
+      "x": 31.79999351501465,
+      "y": -186.45008850097656,
       "z": 0.0
     },
     "moveSpeed": 50.0,
@@ -684,7 +684,7 @@
       "z": 0.41960784792900085
     },
     "deg": {
-      "x": -0.04722701385617256,
+      "x": -0.007008356042206287,
       "y": -0.03200000151991844,
       "z": 0.0
     },
@@ -792,7 +792,7 @@
       "z": 1.0
     },
     "deg": {
-      "x": 0.009999999776482582,
+      "x": 0.009999990463256836,
       "y": 0.1289999932050705,
       "z": 0.0
     },
@@ -1115,14 +1115,14 @@
       "DrawLit": true,
       "DrawToon": false,
       "DrawUnLit": false,
-      "GenerateDepthMapFromLight": false
+      "GenerateDepthMapFromLight": true
     },
     "fixedFps": 120.0,
     "moveSpeed": 0.05000000074505806,
     "path": "Asset\\Models\\Enemy\\Enemy.gltf",
     "pos": {
       "x": 14.057794570922852,
-      "y": 1.000001311302185,
+      "y": 1.0,
       "z": 4.599361896514893
     },
     "scale": {
@@ -1141,16 +1141,16 @@
       "z": 1.0
     },
     "deg": {
-      "x": 10.499996185302734,
-      "y": -2417.447265625,
+      "x": 27.899951934814453,
+      "y": -2409.05126953125,
       "z": 0.0
     },
     "moveSpeed": 3.0,
     "path": "Asset/Models/Sky/Sky.gltf",
     "pos": {
-      "x": -5.44144344329834,
-      "y": 3.5633506774902344,
-      "z": 3.9343042373657227
+      "x": -6.335272789001465,
+      "y": 3.9880690574645996,
+      "z": 4.302071571350098
     },
     "scale": {
       "x": 1.0,
@@ -1176,8 +1176,8 @@
       "DrawBright": false,
       "DrawGradation": false,
       "DrawGrayScale": false,
-      "DrawLit": false,
-      "DrawToon": true,
+      "DrawLit": true,
+      "DrawToon": false,
       "DrawUnLit": false,
       "GenerateDepthMapFromLight": true
     },

@@ -3,6 +3,7 @@
 #include"../../../Scene/SceneManager.h"
 #include"EnemyState/EnemyState_Idle/EnemyState_Idle.h"
 #include"EnemyState/EnemyState_Hit/EnemyState_Hit.h"
+#include"../../Camera/PlayerCamera/PlayerCamera.h"
 
 const uint32_t Enemy::TypeID = KdGameObject::GenerateTypeID();
 
@@ -39,7 +40,8 @@ void Enemy::Update()
 
 	m_attackFrame += deltaTime;
 
-	if (m_attackFrame >= 3.5f) {
+	if (m_attackFrame >= 3.5f)
+	{
 		Application::Instance().SetFpsScale(1.f); // スローモーションにする
 		SceneManager::Instance().SetDrawGrayScale(false);
 		m_attackFrame = 0.0f; // 必要ならリセット
@@ -51,6 +53,13 @@ void Enemy::Update()
 		// ダメージステートに変更
 		auto spDamageState = std::make_shared<EnemyState_Hit>();
 		ChangeState(spDamageState);
+
+		// HitDamage生成・初期化
+		m_spHitDamage = std::make_shared<HitDamage>();
+		m_spHitDamage->Init();
+		m_spHitDamage->SetDamage(m_getDamage);
+		SceneManager::Instance().AddObject(m_spHitDamage);
+
 		m_isHit = false;	// ダメージフラグをリセット
 		return;
 	}
@@ -244,6 +253,7 @@ void Enemy::ChangeState(std::shared_ptr<EnemyStateBase> _state)
 
 void Enemy::Damage(int _damage)
 {
+	m_getDamage = _damage;
 	m_status.hp -= _damage;
 	if (m_status.hp <= 0)
 	{

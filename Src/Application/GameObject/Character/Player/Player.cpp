@@ -25,7 +25,6 @@ void Player::Init()
 	// 初期向きを-90度（Y軸）に設定
 	m_rotation = Math::Quaternion::CreateFromAxisAngle(Math::Vector3::Up, DirectX::XMConvertToRadians(-90.0f));
 
-
 	m_pCollider = std::make_unique<KdCollider>();
 
 	m_pCollider->RegisterCollisionShape("PlayerSphere", sphere, KdCollider::TypeDamage);
@@ -37,7 +36,7 @@ void Player::Init()
 void Player::PreUpdate()
 {
 	sphere.Center = m_position + Math::Vector3(0.0f, 0.5f, 0.0f); // 敵の位置＋オフセット
-	sphere.Radius = 0.2f; // 半径0.5
+	sphere.Radius = 0.2f;
 	m_pDebugWire->AddDebugSphere(sphere.Center, sphere.Radius,kRedColor);
 
 	// カタナの取得
@@ -129,7 +128,7 @@ void Player::UpdateAttack()
 			// カメラシェイク
 			if (auto camera = m_playerCamera.lock(); camera)
 			{
-				camera->StartShake(0.5f, 0.1f);
+				camera->StartShake(0.3f, 0.2f);
 			}
 
 		}

@@ -6,6 +6,18 @@
 // TypeIDの定義と初期化
 const uint32_t Katana::TypeID = KdGameObject::GenerateTypeID();
 
+void Katana::Init()
+{
+	WeaponBase::Init();
+	m_trailPolygon = std::make_shared<KdTrailPolygon>();
+	m_trailPolygon->ClearPoints();
+	m_trailPolygon->SetLength(80);
+
+	m_trailTex->Load("Asset/Textures/NA_Basic hit_006.png");
+	m_trailPolygon->SetMaterial(m_trailTex);
+	m_trailPolygon->SetPattern(KdTrailPolygon::Trail_Pattern::eBillboard);
+}
+
 void Katana::Update()
 {
 	if (m_swordHandData.m_weaponTranslationMatrix != Math::Matrix::Identity)
@@ -28,9 +40,24 @@ void Katana::Update()
 		m_swordData.m_weaponScaleMatrix = Math::Matrix::CreateScale(m_swordData.m_scale);
 		// プレイヤーに追尾するように、プレイヤーの位置を取得して、剣の位置を更新
 		m_swordData.m_weaponMatrix = m_swordData.m_weaponScaleMatrix * m_swordData.m_weaponRotationMatrix * m_swordData.m_weaponTranslationMatrix * m_swordData.m_playerTranslationMatrix;
-
+		m_trailOffset = m_swordData.m_weaponScaleMatrix * m_swordData.m_weaponRotationMatrix * m_swordData.m_playerTranslationMatrix;
 	}
 
+}
+
+void Katana::DrawUnLit()
+{
+	KdShaderManager::Instance().m_StandardShader.DrawPolygon(*m_trailPolygon, Math::Matrix::Identity, { 0.0f,1.0f,1.0f,1.0f });
+}
+
+void Katana::DrawToon()
+{
+	//KdShaderManager::Instance().m_StandardShader.DrawPolygon(*m_trailPolygon);
+}
+
+void Katana::DrawBright()
+{
+	KdShaderManager::Instance().m_StandardShader.DrawPolygon(*m_trailPolygon, Math::Matrix::Identity, { 0.0f,1.0f,1.0f,1.0f });
 }
 
 void Katana::UpdateHand()
@@ -44,6 +71,18 @@ void Katana::UpdateHand()
 
 	m_swordHandData.m_weaponTranslationMatrix.Translation(m_swordHandData.m_weaponTranslationMatrix.Translation());
 	m_swordData.m_weaponMatrix = m_swordData.m_weaponScaleMatrix * m_swordHandData.m_weaponRotationMatrix *m_swordHandData.m_weaponTranslationMatrix * m_swordData.m_playerTranslationMatrix;
+
+
+	Math::Vector3 sakkityo = m_swordData.m_weaponMatrix.Translation() + m_swordData.m_weaponMatrix.Up() * 5.0f;
+
+	Math::Matrix sakkityoMat = Math::Matrix::CreateTranslation(sakkityo);
+
+	Math::Matrix inv = Math::Matrix::CreateRotationY(DirectX::XMConvertToRadians(90.0f));
+
+	Math::Matrix scale = Math::Matrix::CreateScale(1.0f);
+
+
+	m_trailPolygon->AddPoint(scale * inv * (m_swordData.m_weaponRotationMatrix * sakkityoMat));
 
 }
 

@@ -1,6 +1,7 @@
 ﻿#pragma once
 class Player;
 #include "../CharacterBase.h"
+#include"../../HitDamage/HitDamage.h"
 class Enemy :public CharaBase
 {
 public:
@@ -52,11 +53,14 @@ public:
 	{
 		m_isHit = _hit;
 	}
+	int GetDamage() const
+	{
+		return m_getDamage;
+	}
 
 	struct EnemyStatus
 	{
-		int hp = 100;				// 体力
-		int maxHp = 100;			// 最大体力
+		int hp = 20000;				// 体力
 		int attack = 10;			// 攻撃力
 	};
 
@@ -65,13 +69,18 @@ public:
 private:
 
 	std::weak_ptr<Player> m_wpPlayer;
+
 	bool m_Expired = false;				// 敵を消滅させるかどうか
 	bool m_isHit = false;				// ヒット判定
 	bool m_isAtkPlayer = false;
 	float m_dissever = 0.0f;			// 敵のディゾルブ値
 
-	float m_attackRadius = 1.5f;	// 攻撃判定の半径
-	float m_attackFrame = 0.0f;	// 攻撃判定フレーム
+	int m_getDamage = 0;				// 受けるダメージ量
 
-	EnemyStatus m_status;			// 敵のステータス
+	float m_attackRadius = 1.5f;		// 攻撃判定の半径
+	float m_attackFrame = 0.0f;			// 攻撃判定フレーム
+
+	EnemyStatus m_status;				// 敵のステータス
+
+	std::shared_ptr<HitDamage> m_spHitDamage;
 };

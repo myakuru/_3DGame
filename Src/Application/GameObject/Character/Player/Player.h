@@ -7,7 +7,7 @@ class PlayerStateBase;
 struct PlayerStatus
 {
 	int hp = 1000;		// ヒットポイント
-	int attack = 20;	// 攻撃力
+	int attack = 2000;	// 攻撃力
 	int hpMax = 1000;	// 最大ヒットポイント
 };
 class Player :public CharaBase

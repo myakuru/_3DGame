@@ -11,6 +11,7 @@ const uint32_t PlayerCamera::TypeID = KdGameObject::GenerateTypeID();
 void PlayerCamera::Init()
 {
 	CameraBase::Init();
+
 	// エフェクシアのカメラをセット
 	KdEffekseerManager::GetInstance().SetCamera(m_spCamera);
 
