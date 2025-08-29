@@ -66,6 +66,7 @@ public:
 	}
 
 	float GetTime() const { return m_time; }
+	void SetTime(float time) { m_blendTime = time; }
 
 	// アニメーションの更新
 	void AdvanceTime(std::vector<KdModelWork::Node>& rNodes, float speed = 1.0f);

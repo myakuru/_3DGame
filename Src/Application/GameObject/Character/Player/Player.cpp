@@ -22,6 +22,8 @@ void Player::Init()
 
 	m_position = Math::Vector3(-4.0f, 1.2f, 4.0f);
 
+	m_position.y = 1.0f;
+
 	// 初期向きを-90度（Y軸）に設定
 	m_rotation = Math::Quaternion::CreateFromAxisAngle(Math::Vector3::Up, DirectX::XMConvertToRadians(-90.0f));
 
@@ -131,6 +133,69 @@ void Player::UpdateAttack()
 				camera->StartShake(0.3f, 0.2f);
 			}
 
+		}
+	}
+}
+
+void Player::UpdateChargeAttack()
+{
+	// クォータニオンから前方向ベクトルを取得
+	Math::Vector3 forward = Math::Vector3::TransformNormal(Math::Vector3::Forward, Math::Matrix::CreateFromQuaternion(m_rotation));
+	forward.Normalize();
+
+	// 球の当たり判定情報作成
+	KdCollider::SphereInfo attackSphere;
+	attackSphere.m_sphere.Center = m_position + Math::Vector3(0.0f, 0.5f, 0.0f) + forward * 1.1f;
+	attackSphere.m_sphere.Radius = 10.0f;
+	attackSphere.m_type = KdCollider::TypeDamage;
+
+	m_pDebugWire->AddDebugSphere(attackSphere.m_sphere.Center, attackSphere.m_sphere.Radius);
+
+	SceneManager::Instance().GetObjectWeakPtr(m_enemy);
+	auto enemy = m_enemy.lock();
+	if (!enemy) return;
+
+	float deltaTime = Application::Instance().GetDeltaTime();
+
+	// 0.3秒間隔で5回ダメージを与える処理
+	if (m_isChargeAttackActive)
+	{
+		m_chargeAttackTimer += deltaTime;
+
+		if (m_chargeAttackCount < 5 && m_chargeAttackTimer >= 0.3f)
+		{
+			std::list<KdCollider::CollisionResult> results;
+			if (enemy->Intersects(attackSphere, &results))
+			{
+				// 毎回ダメージを与える
+				enemy->Damage(m_status.attack);
+				enemy->SetEnemyHit(true);
+
+				// カメラシェイク
+				if (auto camera = m_playerCamera.lock(); camera)
+				{
+					camera->StartShake(0.3f, 0.3f);
+				}
+			}
+			m_chargeAttackCount++;
+			m_chargeAttackTimer = 0.0f;
+		}
+
+		// 5回終わったら終了
+		if (m_chargeAttackCount >= 5)
+		{
+			m_isChargeAttackActive = false;
+		}
+	}
+	else
+	{
+		// 初回起動条件（m_onceEffectがfalseのとき）
+		if (!m_onceEffect)
+		{
+			m_isChargeAttackActive = true;
+			m_chargeAttackCount = 0;
+			m_chargeAttackTimer = 0.3f; // 最初のダメージを即時発生させたい場合は0.3f
+			m_onceEffect = true;
 		}
 	}
 }

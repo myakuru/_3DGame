@@ -4,6 +4,7 @@
 #include"../../../Scene/SceneManager.h"
 #include"../../Character/Player/Player.h"
 #include"../../../../Framework/Json/Json.h"
+#include"../../Utility/Time.h"
 
 
 const uint32_t PlayerCamera::TypeID = KdGameObject::GenerateTypeID();
@@ -35,11 +36,11 @@ void PlayerCamera::PostUpdate()
 
 	if (!_spTarget) return;
 
-	if (SceneManager::Instance().IsIntroCamera())
+	/*if (SceneManager::Instance().IsIntroCamera())
 	{
 		UpdateIntroCamera();
 		return;
-	}
+	}*/
 
 
 	if (SceneManager::Instance().m_gameClear)
@@ -69,7 +70,6 @@ void PlayerCamera::PostUpdate()
 	{
 		shakeOffset = Math::Vector3::Zero;
 	}
-
 	
 	// カメラの位置をターゲットの位置に設定
 	m_mWorld = Math::Matrix::CreateTranslation(m_targetLookAt);
@@ -145,6 +145,25 @@ void PlayerCamera::UpdateWinnerCamera()
 {
 	Application::Instance().SetFpsScale(0.0);
 
+	float time = Time::Instance().GetElapsedTime();
+	int sec = static_cast<int>(time);
+
+	if (sec == 0 || sec % 2 == 1)
+	{
+		// ランダムでノイズON/OFF
+		bool enableNoise = KdRandom::GetInt(0, 5) == 1;
+		KdShaderManager::Instance().m_postProcessShader.SetEnableNoise(enableNoise);
+		if (enableNoise)
+		{
+			float noiseStrength = KdRandom::GetFloat(0.01f, 0.2f);
+			KdShaderManager::Instance().m_postProcessShader.SetNoiseStrength(noiseStrength);
+		}
+	}
+	else
+	{
+		KdShaderManager::Instance().m_postProcessShader.SetEnableNoise(false); // ノイズOFF
+	}
+
 	enum Step { ToDeg60, ToDeg180, ToDeg0, End };
 	static Step step = ToDeg60;
 	static float timer = 0.0f;
@@ -173,16 +192,20 @@ void PlayerCamera::UpdateWinnerCamera()
 	case ToDeg180:
 		m_degree.y = 180.0f;
 		m_mRotation = Math::Matrix::CreateRotationY(DirectX::XMConvertToRadians(m_degree.y));
+		SceneManager::Instance().SetDrawGrayScale(true);
+		KdShaderManager::Instance().m_postProcessShader.SetEnableGray(true);
 		if (timer > 1.5f) { step = ToDeg0; timer = 0.0f; }
 		break;
 	case ToDeg0:
 		m_degree.y = 0.0f;
+		KdShaderManager::Instance().m_postProcessShader.SetEnableGray(false);
 		m_mRotation = Math::Matrix::CreateRotationY(DirectX::XMConvertToRadians(m_degree.y));
 		if (timer > 1.5f) { step = End; timer = 0.0f; }
 		break;
 	case End:
 		// カメラの向いている方向に向かって移動
 	{
+		KdShaderManager::Instance().m_postProcessShader.SetEnableGray(true);
 		Math::Vector3 targetOffset = Math::Vector3::Up;
 		camOffset = Math::Vector3::Lerp(camOffset, targetOffset, 5.0f * deltaTime);
 		m_cameraPos = playerPos + camOffset;

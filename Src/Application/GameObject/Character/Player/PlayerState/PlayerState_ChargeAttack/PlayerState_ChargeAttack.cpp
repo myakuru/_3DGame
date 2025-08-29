@@ -3,6 +3,7 @@
 
 #include"../PlayerState_Idle/PlayerState_Idle.h"
 #include"../../../../Weapon/Katana/Katana.h"
+#include"../../../../../Scene/SceneManager.h"
 
 void PlayerState_ChargeAttack::StateStart()
 {
@@ -10,23 +11,43 @@ void PlayerState_ChargeAttack::StateStart()
 	m_player->GetAnimator()->AnimationBlend(anime, 10.0f,false);
 	m_player->AnimeSetFlg() = true;
 
-	// 攻撃開始時に直前の移動方向を保存
-	m_attackDirection = m_player->GetLastMoveDirection();
-
-	// 攻撃開始時に向きを合わせる
-	if (m_attackDirection != Math::Vector3::Zero)
+	// 敵の方向ベクトルを計算
+	auto enemy = m_player->GetEnemy().lock();
+	if (enemy)
 	{
-		m_player->UpdateQuaternion(m_attackDirection);
+		Math::Vector3 playerPos = m_player->GetPosition();
+		Math::Vector3 enemyPos = enemy->GetPos();
+		m_attackDirection = enemyPos - playerPos;
+		m_attackDirection.y = 0.0f;
+		if (m_attackDirection != Math::Vector3::Zero)
+		{
+			m_attackDirection.Normalize();
+			m_player->UpdateQuaternionDirect(m_attackDirection); // カメラ回転を掛けない
+		}
+	}
+	else
+	{
+		// 敵がいない場合は直前の移動方向
+		m_attackDirection = m_player->GetLastMoveDirection();
+		if (m_attackDirection != Math::Vector3::Zero)
+		{
+			m_player->UpdateQuaternionDirect(m_attackDirection);
+		}
 	}
 
 	m_chargeTime = 0.0f;
 	m_isCharging = false;
 	m_isCharged = false;
+
+	m_flag = false; // エフェクトフラグ
+
 }
 
 void PlayerState_ChargeAttack::StateUpdate()
 {
-	m_player->SetAnimeSpeed(120.0f);
+	m_player->SetAnimeSpeed(180.0f);
+
+	float deltaTime = Application::Instance().GetDeltaTime();
 
 	if (m_player->GetAnimator()->IsAnimationEnd())
 	{
@@ -41,46 +62,55 @@ void PlayerState_ChargeAttack::StateUpdate()
 
 	if (time >= 0.0f && !m_isCharging)
 	{
-		KdEffekseerManager::GetInstance().Play("o-ra.efkefc", { m_player->GetPosition().x,m_player->GetPosition().y + 0.2f,m_player->GetPosition().z }, 0.3f, 100.0f, false);
-		KdEffekseerManager::GetInstance().Play("Charge2.efkefc", { m_player->GetPosition().x,m_player->GetPosition().y + 0.2f,m_player->GetPosition().z }, 0.3f, 100.0f, false);
-		
+		KdEffekseerManager::GetInstance().Play("ZZZshine.efkefc", { m_player->GetPosition().x,m_player->GetPosition().y + 0.5f,m_player->GetPosition().z }, 0.2f, 100.0f, false);
 		m_isCharging = true;
 	}
 
-	if (time >= 30.5f && !m_isCharged)
+	// 攻撃中の移動方向で回転を更新
+	if (m_player->GetMovement() != Math::Vector3::Zero)
 	{
+		Math::Vector3 moveDir = m_player->GetMovement();
+		moveDir.y = 0.0f;
+		moveDir.Normalize();
+		m_player->UpdateQuaternionDirect(moveDir);
+	}
 
-		// エフェクトの表示位置（前方0.5f）
-		Math::Vector3 effectPos = m_player->GetPosition() + m_attackDirection * -3.0f;
+	if (time >= 60.5f && !m_isCharged)
+	{
+		SceneManager::Instance().SetEffectActive(true);
 
-		// プレイヤーの回転行列
-		Math::Matrix rotationMat = Math::Matrix::CreateFromQuaternion(m_player->GetRotation());
-
-		// エフェクトのワールド行列（回転＋位置）
-		Math::Matrix effectWorld = rotationMat * Math::Matrix::CreateTranslation(effectPos);
-
-		// Effekseerエフェクト再生
-		auto effect = KdEffekseerManager::GetInstance().Play("ClawStrike.efkefc", effectPos, 0.1f, 10.0f, false);
-		if (auto spEffect = effect.lock())
+		if (m_time <= 1.0 / 2)
 		{
-			KdEffekseerManager::GetInstance().SetWorldMatrix(spEffect->GetHandle(), effectWorld);
+			for (int i = 0; i < 5; ++i)
+			{
+				m_player->UpdateChargeAttack();
+			}
+			m_time = 0.0f;
 		}
-		m_isCharged = true;
+
+		float deltaTime = Application::Instance().GetDeltaTime();
+
+		if (m_chargeTime < 0.3f)
+		{
+			float dashSpeed = 0.0f;
+			m_player->SetIsMoving(m_attackDirection * dashSpeed);
+			m_chargeTime += deltaTime;
+
+			if (!m_flag)
+			{
+				m_forwardEffect->Init();
+				SceneManager::Instance().AddObject(m_forwardEffect);
+				m_flag = true;
+			}
+
+		}
+		else
+		{
+			// 移動を止める
+			m_player->SetIsMoving(Math::Vector3::Zero);
+		}
 	}
 
-
-	float deltaTime = Application::Instance().GetDeltaTime();
-	if (m_chargeTime < 0.3f)
-	{
-		float dashSpeed = -0.2f;
-		m_player->SetIsMoving(m_attackDirection * dashSpeed);
-		m_chargeTime += deltaTime;
-	}
-	else
-	{
-		// 移動を止める
-		m_player->SetIsMoving(Math::Vector3::Zero);
-	}
 }
 
 void PlayerState_ChargeAttack::StateEnd()

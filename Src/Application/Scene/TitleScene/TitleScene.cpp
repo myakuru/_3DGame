@@ -7,7 +7,7 @@ void TitleScene::Event()
 	{
 		SceneManager::Instance().SetNextScene
 		(
-			SceneManager::SceneType::Game
+			SceneManager::SceneType::Test
 		);
 	}
 }

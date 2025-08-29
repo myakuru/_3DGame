@@ -7,7 +7,7 @@ class PlayerStateBase;
 struct PlayerStatus
 {
 	int hp = 1000;		// ヒットポイント
-	int attack = 2000;	// 攻撃力
+	int attack = 2500;	// 攻撃力
 	int hpMax = 1000;	// 最大ヒットポイント
 };
 class Player :public CharaBase
@@ -16,7 +16,7 @@ public:
 
 	// クラスごとに一意なTypeIDを持たせる
 	static const uint32_t TypeID;
-	Player() { m_typeID = TypeID; };
+	Player() { m_typeID = TypeID; }
 	~Player() override = default;
 
 	void Init() override;
@@ -24,6 +24,7 @@ public:
 	void SkirtUpdate();
 	void Update() override;
 	void UpdateAttack();
+	void UpdateChargeAttack();
 	void ImGuiInspector() override;
 	void JsonInput(const nlohmann::json& _json) override;
 	void JsonSave(nlohmann::json& _json) const override;
@@ -80,6 +81,10 @@ private:
 
 	float m_attackBossEnemyRadius = 2.0f;
 	float m_avoidStartTime = 0.0f; // 回避開始タイム
+
+	int m_chargeAttackCount = 0;      // 何回ダメージを与えたか
+	float m_chargeAttackTimer = 0.0f; // 経過時間
+	bool m_isChargeAttackActive = false; // 連続攻撃中か
 
 	PlayerConfig m_playerConfig;
 

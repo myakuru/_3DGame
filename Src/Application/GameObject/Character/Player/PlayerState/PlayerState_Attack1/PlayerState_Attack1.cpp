@@ -128,6 +128,7 @@ void PlayerState_Attack1::StateEnd()
 
 	// カタナの行列をリセット
 	katana->SetHandKatanaMatrix(Math::Matrix::Identity);
+
 }
 
 void PlayerState_Attack1::UpdateKatanaPos()

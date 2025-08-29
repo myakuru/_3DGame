@@ -36,6 +36,8 @@
 #include"../GameObject/HUD/BlackBanner/BlackBanner.h"
 #include"../GameObject/ResultScore/ResultScore.h"
 #include"../GameObject/Collition/Collition.h"
+#include"../GameObject/Effect/FowardEffect/ForwardEffect.h"
+#include"../GameObject/Effect/CurvesEffect/CurvesEffect.h"
 
 void SceneManager::Init()
 {
@@ -68,6 +70,8 @@ void SceneManager::Register() const
 	RegisterObject::GetInstance().Register<BlackBanner>();
 	RegisterObject::GetInstance().Register<ResultScore>();
 	RegisterObject::GetInstance().Register<Collision>();
+	RegisterObject::GetInstance().Register<ForwardEffect>();
+	RegisterObject::GetInstance().Register<CurvesEffect>();
 }
 
 void SceneManager::PreUpdate()

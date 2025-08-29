@@ -62,6 +62,7 @@ bool KdGameObject::CheckInScreen(const DirectX::BoundingFrustum& _BoundingFrustu
 	for (auto& nodeIdx : m_model->GetDrawMeshNodeIndices())
 	{
 		auto& node = m_model->GetOriginalNodes()[nodeIdx];
+
 		if (!node.m_spMesh) continue;
 
 		node.m_spMesh->GetBoundingBox().Transform(combinedBox, m_mWorld);

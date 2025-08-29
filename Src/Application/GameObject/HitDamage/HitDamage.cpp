@@ -15,7 +15,7 @@ void HitDamage::Init()
 
 	// ここで一度だけランダムオフセット生成
 	float angle = KdRandom::GetFloat(0.0f, DirectX::XM_2PI);
-	float radiusY = KdRandom::GetFloat(0.5f, 0.1f);
+	float radiusY = KdRandom::GetFloat(-0.2f, 0.1f);
 	m_offset = Math::Vector3(std::cos(angle) * radiusY, 0.0f, std::sin(angle) * radiusY);
 }
 
@@ -46,14 +46,12 @@ void HitDamage::Update()
 	}
 
 	// m_scale.yをバウンドさせて1.0fに収束
-	// 減衰サイン波でバウンド
 	static float bounceTime = 0.0f;
 	bounceTime += 0.2f; // バウンド速度
 
 	float amplitude = (m_scale.x - 0.1f) * 2.0f; // xが小さくなるほどバウンド幅も小さく
 	m_scale.y = 1.0f + amplitude * std::sin(bounceTime);
 
-	// ...既存のコード...
 	m_mWorld = Math::Matrix::CreateScale(m_scale);
 	m_mWorld *= Math::Matrix::CreateFromYawPitchRoll(
 		DirectX::XMConvertToRadians(m_degree.y),

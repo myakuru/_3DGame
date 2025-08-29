@@ -10,54 +10,134 @@ void Katana::Init()
 {
 	WeaponBase::Init();
 	m_trailPolygon = std::make_shared<KdTrailPolygon>();
-	m_trailPolygon->ClearPoints();
-	m_trailPolygon->SetLength(80);
+	m_trailPolygon2 = std::make_shared<KdTrailPolygon>();
+	m_trailPolygon3 = std::make_shared<KdTrailPolygon>();
 
-	m_trailTex->Load("Asset/Textures/NA_Basic hit_006.png");
+	m_trailPolygon->ClearPoints();
+	m_trailPolygon2->ClearPoints();
+	m_trailPolygon3->ClearPoints();
+
+	m_trailPolygon->SetLength(100);
+	m_trailPolygon2->SetLength(100);
+	m_trailPolygon3->SetLength(100);
+
+	m_trailModel->Load("Asset/Models/Goast/nani.gltf");
+
+	m_trailTex->Load("Asset/Textures/NA_ball of light_006.png");
+	m_trailTex2->Load("Asset/Textures/NA_Basic hit_006.png");
+	m_trailTex3->Load("Asset/Textures/nailGlow.png");
+
 	m_trailPolygon->SetMaterial(m_trailTex);
+	m_trailPolygon2->SetMaterial(m_trailTex);
+	m_trailPolygon3->SetMaterial(m_trailTex3);
+
 	m_trailPolygon->SetPattern(KdTrailPolygon::Trail_Pattern::eBillboard);
+	m_trailPolygon2->SetPattern(KdTrailPolygon::Trail_Pattern::eBillboard);
+	m_trailPolygon3->SetPattern(KdTrailPolygon::Trail_Pattern::eBillboard);
 }
 
 void Katana::Update()
 {
+	// 剣の行列計算（元の処理そのまま）
 	if (m_swordHandData.m_weaponTranslationMatrix != Math::Matrix::Identity)
 	{
 		UpdateHand();
 	}
 	else
 	{
-		m_swordData.m_weaponRotationMatrix = Math::Matrix::CreateFromYawPitchRoll
-		(
+		m_swordData.m_weaponRotationMatrix = Math::Matrix::CreateFromYawPitchRoll(
 			DirectX::XMConvertToRadians(m_swordData.m_weaponDeg.y),
 			DirectX::XMConvertToRadians(m_swordData.m_weaponDeg.x),
 			DirectX::XMConvertToRadians(m_swordData.m_weaponDeg.z)
 		);
 
-		// 移動行列はPlayer側から手の位置を取得しているので、下記で最終的に行列に入れてる。
 		Math::Vector3 playerHipPos = m_swordData.m_weaponTranslationMatrix.Translation();
-		// プレイヤーの後ろにある剣の位置を計算(エディターでいじれるようになっている)
 		m_swordData.m_weaponTranslationMatrix.Translation(m_katanaOffset + playerHipPos);
 		m_swordData.m_weaponScaleMatrix = Math::Matrix::CreateScale(m_swordData.m_scale);
-		// プレイヤーに追尾するように、プレイヤーの位置を取得して、剣の位置を更新
 		m_swordData.m_weaponMatrix = m_swordData.m_weaponScaleMatrix * m_swordData.m_weaponRotationMatrix * m_swordData.m_weaponTranslationMatrix * m_swordData.m_playerTranslationMatrix;
 		m_trailOffset = m_swordData.m_weaponScaleMatrix * m_swordData.m_weaponRotationMatrix * m_swordData.m_playerTranslationMatrix;
 	}
 
+	// 軌跡の先端位置を計算
+	Math::Vector3 tip1, tip2, tip3;
+	if (m_swordHandData.m_weaponTranslationMatrix != Math::Matrix::Identity)
+	{
+		tip1 = m_swordData.m_weaponMatrix.Translation() + m_swordData.m_weaponMatrix.Up() * 4.0f;
+		tip2 = m_swordData.m_weaponMatrix.Translation() + m_swordData.m_weaponMatrix.Up() * 4.0f;
+		tip3 = m_swordData.m_weaponMatrix.Translation() + m_swordData.m_weaponMatrix.Up() * 4.0f;
+	}
+	else
+	{
+		//tip1 = m_swordData.m_weaponMatrix.Translation() + m_swordData.m_weaponMatrix.Up();
+		//tip2 = m_swordData.m_weaponMatrix.Translation() + m_swordData.m_weaponMatrix.Up();
+		//tip3 = m_swordData.m_weaponMatrix.Translation() + m_swordData.m_weaponMatrix.Up();
+
+		// 軌跡をクリア
+		m_trailPolygon->ClearPoints();
+		m_trailPolygon2->ClearPoints();
+		m_trailPolygon3->ClearPoints();
+	}
+
+	// 軌跡点リスト（staticでフレーム間保持）
+	static std::deque<Math::Vector3> trailPoints1, trailPoints2, trailPoints3;
+	trailPoints1.push_back(tip1);
+	trailPoints2.push_back(tip2);
+	trailPoints3.push_back(tip3);
+
+	// 最大数制限
+	const size_t maxTrailLen = 100;
+	if (trailPoints1.size() > maxTrailLen) trailPoints1.pop_front();
+	if (trailPoints2.size() > maxTrailLen) trailPoints2.pop_front();
+	if (trailPoints3.size() > maxTrailLen) trailPoints3.pop_front();
+
+	// Catmull-Rom補間で滑らかな軌跡を生成
+	auto addCatmullTrail = [&](std::deque<Math::Vector3>& points, std::shared_ptr<KdTrailPolygon>& trail, float scaleVal)
+		{
+			Math::Matrix inv = Math::Matrix::CreateRotationY(DirectX::XMConvertToRadians(90.0f));
+			Math::Matrix scale = Math::Matrix::CreateScale(scaleVal);
+
+			if (points.size() >= 4)
+			{
+				size_t start = points.size() - 4;
+				for (float t = 0.0f; t < 1.0f; t += 0.25f)
+				{
+					Math::Vector3 interp = CatmullRom(
+						points[start], points[start + 1], points[start + 2], points[start + 3], t
+					);
+					Math::Matrix mat = Math::Matrix::CreateTranslation(interp);
+					m_finalMat = scale * inv * (m_swordData.m_weaponRotationMatrix * mat);
+					trail->AddPoint(m_finalMat);
+				}
+			}
+			else
+			{
+				// 点が足りない場合はそのまま追加
+				Math::Matrix mat = Math::Matrix::CreateTranslation(points.back());
+				m_finalMat = scale * inv * (m_swordData.m_weaponRotationMatrix * mat);
+				trail->AddPoint(m_finalMat);
+			}
+		};
+
+	addCatmullTrail(trailPoints1, m_trailPolygon, 0.4f);
+	addCatmullTrail(trailPoints2, m_trailPolygon2, 0.4f);
+	addCatmullTrail(trailPoints3, m_trailPolygon3, 0.4f);
+}
+
+void Katana::DrawLit()
+{
+	KdShaderManager::Instance().m_StandardShader.DrawModel(*m_trailModel);
 }
 
 void Katana::DrawUnLit()
 {
-	KdShaderManager::Instance().m_StandardShader.DrawPolygon(*m_trailPolygon, Math::Matrix::Identity, { 0.0f,1.0f,1.0f,1.0f });
-}
-
-void Katana::DrawToon()
-{
-	//KdShaderManager::Instance().m_StandardShader.DrawPolygon(*m_trailPolygon);
+	//KdShaderManager::Instance().m_StandardShader.DrawPolygon(*m_trailPolygon3, Math::Matrix::Identity, { 1.0f,1.0f,1.0f,0.7f });
 }
 
 void Katana::DrawBright()
 {
-	KdShaderManager::Instance().m_StandardShader.DrawPolygon(*m_trailPolygon, Math::Matrix::Identity, { 0.0f,1.0f,1.0f,1.0f });
+	KdShaderManager::Instance().m_StandardShader.DrawPolygon(*m_trailPolygon, Math::Matrix::Identity, { 0.0f,1.0f,1.0f,0.5f });
+	KdShaderManager::Instance().m_StandardShader.DrawPolygon(*m_trailPolygon2, Math::Matrix::Identity, { 1.0f,1.0f,1.0f,0.7f });
+	KdShaderManager::Instance().m_StandardShader.DrawPolygon(*m_trailPolygon3, Math::Matrix::Identity, { 1.0f,1.0f,1.0f,0.7f });
 }
 
 void Katana::UpdateHand()
@@ -70,19 +150,7 @@ void Katana::UpdateHand()
 	);
 
 	m_swordHandData.m_weaponTranslationMatrix.Translation(m_swordHandData.m_weaponTranslationMatrix.Translation());
-	m_swordData.m_weaponMatrix = m_swordData.m_weaponScaleMatrix * m_swordHandData.m_weaponRotationMatrix *m_swordHandData.m_weaponTranslationMatrix * m_swordData.m_playerTranslationMatrix;
-
-
-	Math::Vector3 sakkityo = m_swordData.m_weaponMatrix.Translation() + m_swordData.m_weaponMatrix.Up() * 5.0f;
-
-	Math::Matrix sakkityoMat = Math::Matrix::CreateTranslation(sakkityo);
-
-	Math::Matrix inv = Math::Matrix::CreateRotationY(DirectX::XMConvertToRadians(90.0f));
-
-	Math::Matrix scale = Math::Matrix::CreateScale(1.0f);
-
-
-	m_trailPolygon->AddPoint(scale * inv * (m_swordData.m_weaponRotationMatrix * sakkityoMat));
+	m_swordData.m_weaponMatrix = m_swordData.m_weaponScaleMatrix * m_swordHandData.m_weaponRotationMatrix *m_swordHandData.m_weaponTranslationMatrix * m_swordData.m_playerTranslationMatrix; 
 
 }
 

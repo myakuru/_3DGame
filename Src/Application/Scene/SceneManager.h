@@ -103,7 +103,7 @@ public :
 	}
 
 	// シーンカメラかどうか
-	bool m_sceneCamera = true;
+	bool m_sceneCamera = false;
 
 	bool m_gameClear = false; // ゲームクリアフラグ
 
@@ -156,6 +156,16 @@ public :
 		return m_isIntro;
 	}
 
+	bool IsEffectActive() const
+	{
+		return m_effectActive;
+	}
+
+	void SetEffectActive(bool _active)
+	{
+		m_effectActive = _active;
+	}
+
 
 private :
 
@@ -186,6 +196,8 @@ private :
 	float m_time = 0.0f; // カウントダウンタイマー
 
 	bool m_isIntro = false;		// Introカメラかどうか
+
+	bool m_effectActive = true; // 最初のUpdateかどうか
 
 
 public:

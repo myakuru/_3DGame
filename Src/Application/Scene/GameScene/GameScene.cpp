@@ -18,6 +18,7 @@ void GameScene::Event()
 		KdShaderManager::Instance().m_postProcessShader.SetEnableNoise(false); // ノイズON
 	}
 
+	Time::Instance().Update();
 
 	if (GetAsyncKeyState('T') & 0x8000)
 	{
@@ -41,6 +42,8 @@ void GameScene::Init()
 	m_fogDensity = 0.005f;
 
 	SceneManager::Instance().SetDrawGrayScale(false);
+
+	Time::Instance().StartTimer();
 
 	SceneManager::Instance().m_gameClear = false; // ゲームクリアフラグを初期化
 	SceneManager::Instance().SetResultFlag(false); // 結果フラグを初期化

@@ -173,7 +173,7 @@ bool KdDirect3D::Init(HWND hWnd, int w, int h, bool deviceDebug, std::string& er
 
 	
 	// ALT+Enterでフルスクリーン不可にする
-	{
+	/*{
 		IDXGIDevice* pDXGIDevice;
 		m_pDevice->QueryInterface<IDXGIDevice>(&pDXGIDevice);
 
@@ -188,7 +188,7 @@ bool KdDirect3D::Init(HWND hWnd, int w, int h, bool deviceDebug, std::string& er
 		pDXGIDevice->Release();
 		pDXGIAdapter->Release();
 		pIDXGIFactory->Release();
-	}
+	}*/
 
 
 	//=========================================================

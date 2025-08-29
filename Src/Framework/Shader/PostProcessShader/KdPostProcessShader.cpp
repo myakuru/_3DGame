@@ -196,14 +196,33 @@ void KdPostProcessShader::PostEffectProcess()
 
 	LightBloomProcess();
 	BlurProcess();
-
 	DepthOfFieldProcess();
-
-	// ノイズ処理(自分で追加)
 	NoiseProcess();
 
 	KdCSVData windowData("Asset/Data/WindowSettings.csv");
 	const std::vector<std::string>& sizeData = windowData.GetLine(0);
+
+	// --- 合成用RenderTargetに切り替え ---
+	KdRenderTargetPack m_finalRTPack;
+	m_finalRTPack.CreateRenderTarget(atoi(sizeData[0].data()), atoi(sizeData[1].data()));
+
+	KdRenderTargetChanger RTChanger;
+	RTChanger.ChangeRenderTarget(m_finalRTPack);
+
+	// まずBright（LightBloom）を描画
+	KdShaderManager::Instance().m_spriteShader.DrawTex(m_brightEffectRTPack.m_RTTexture.get(), 0, 0, atoi(sizeData[0].data()), atoi(sizeData[1].data()));
+
+	// 次にノイズをAddブレンドで合成
+	KdShaderManager::Instance().ChangeBlendState(KdBlendState::Add);
+	KdShaderManager::Instance().m_spriteShader.DrawTex(m_noiseRTPack.m_RTTexture.get(), 0, 0, atoi(sizeData[0].data()), atoi(sizeData[1].data()));
+	KdShaderManager::Instance().UndoBlendState();
+
+	RTChanger.UndoRenderTarget();
+
+	// --- 最終合成結果を画面に出力 ---
+	KdShaderManager::Instance().m_spriteShader.DrawTex(m_finalRTPack.m_RTTexture.get(), 0, 0, atoi(sizeData[0].data()), atoi(sizeData[1].data()));
+
+
 
 	if (m_enableNoise)
 	{
@@ -215,7 +234,7 @@ void KdPostProcessShader::PostEffectProcess()
 	}
 	else
 	{
-		KdShaderManager::Instance().m_spriteShader.DrawTex(m_depthOfFieldRTPack.m_RTTexture.get(), 0, 0, atoi(sizeData[0].data()), atoi(sizeData[1].data()));
+		KdShaderManager::Instance().m_spriteShader.DrawTex(m_finalRTPack.m_RTTexture.get(), 0, 0, atoi(sizeData[0].data()), atoi(sizeData[1].data()));
 	}
 }
 

@@ -39,6 +39,7 @@ void PlayerState_Attack2::StateStart()
 	m_player->m_onceEffect = false;
 
 	m_flag = false; // 攻撃フラグ
+
 }
 
 void PlayerState_Attack2::StateUpdate()
@@ -117,7 +118,6 @@ void PlayerState_Attack2::StateEnd()
 	auto katana = m_player->GetKatana().lock();
 
 	if (!katana) return;
-
 	// カタナの行列をリセット
 	katana->SetHandKatanaMatrix(Math::Matrix::Identity);
 }

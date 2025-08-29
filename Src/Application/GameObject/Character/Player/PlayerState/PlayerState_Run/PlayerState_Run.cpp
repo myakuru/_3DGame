@@ -49,6 +49,7 @@ void PlayerState_Run::StateUpdate()
 	m_player->UpdateQuaternion(moveDir);
 	m_player->SetIsMoving(moveDir);
 
+
 	KdDebugGUI::Instance().AddLog(std::to_string(moveDir.x).data());
 	KdDebugGUI::Instance().AddLog(", ");
 	KdDebugGUI::Instance().AddLog(std::to_string(moveDir.y).data());

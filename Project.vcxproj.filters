@@ -244,6 +244,18 @@
     <Filter Include="Src\Application\GameObject\HUD\EnemyHp">
       <UniqueIdentifier>{4060fbd0-7e96-414a-a854-f29f1f041b59}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\GameObject\Effect">
+      <UniqueIdentifier>{6c9d97b4-333a-407b-bd2e-96652aac3477}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Effect\FowardEffect">
+      <UniqueIdentifier>{12560ba8-29c4-4c50-ab46-6d27db4fb2b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Effect\CurvesEffect">
+      <UniqueIdentifier>{72ca1ba5-d553-4d33-a865-5a7321a1fa93}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_ChargeAttack2">
+      <UniqueIdentifier>{65260c95-3cbf-4c16-94fb-310ee8c7d9a8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -594,6 +606,15 @@
     <ClInclude Include="Src\Application\GameObject\HUD\EnemyHp\EnemyHp.h">
       <Filter>Src\Application\GameObject\HUD\EnemyHp</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Effect\FowardEffect\ForwardEffect.h">
+      <Filter>Src\Application\GameObject\Effect\FowardEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Effect\CurvesEffect\CurvesEffect.h">
+      <Filter>Src\Application\GameObject\Effect\CurvesEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_ChargeAttack2\PlayerState_ChaegeAttack2.h">
+      <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_ChargeAttack2</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -880,6 +901,15 @@
     </ClCompile>
     <ClCompile Include="Src\Application\GameObject\HUD\EnemyHp\EnemyHp.cpp">
       <Filter>Src\Application\GameObject\HUD\EnemyHp</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Effect\FowardEffect\ForwardEffect.cpp">
+      <Filter>Src\Application\GameObject\Effect\FowardEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Effect\CurvesEffect\CurvesEffect.cpp">
+      <Filter>Src\Application\GameObject\Effect\CurvesEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_ChargeAttack2\PlayerState_ChaegeAttack2.cpp">
+      <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_ChargeAttack2</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
