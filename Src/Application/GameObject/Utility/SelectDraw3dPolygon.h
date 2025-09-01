@@ -40,7 +40,7 @@ public:
 	{
 		KdGameObject::ImGuiInspector();
 
-		ImGui::BeginTable("DrawFlags", 2); // 3列
+		ImGui::BeginTable("DrawFlags", 2); // 2列
 		int col = 0;
 		for (const auto& [name, flg] : m_drawFlg)
 		{

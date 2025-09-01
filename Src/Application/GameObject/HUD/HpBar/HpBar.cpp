@@ -5,6 +5,23 @@
 
 const uint32_t HpBar::TypeID = KdGameObject::GenerateTypeID();
 
+void HpBar::DrawSprite()
+{
+	KdShaderManager::Instance().m_spriteShader.SetMatrix(m_mWorld);
+
+		KdShaderManager::Instance().m_spriteShader.DrawTex(
+			m_texture,
+			0,
+			0,
+			m_rect.width,
+			m_rect.height,
+			&m_rect,
+			&m_color,
+			{0.0f,0.5f}
+		);
+	KdShaderManager::Instance().m_spriteShader.SetMatrix(Math::Matrix::Identity);
+}
+
 void HpBar::Update()
 {
 	SceneManager::Instance().GetObjectWeakPtr(m_player);
@@ -27,9 +44,18 @@ void HpBar::Update()
 	m_mWorld = Math::Matrix::CreateScale(m_scale);
 	m_mWorld *= Math::Matrix::CreateFromYawPitchRoll
 	(
-		DirectX::XMConvertToRadians(m_degree.y),
-		DirectX::XMConvertToRadians(m_degree.x),
-		DirectX::XMConvertToRadians(m_degree.z)
+		m_degree.y,
+		m_degree.x,
+		m_degree.z
 	);
 	m_mWorld.Translation(m_position);
+}
+
+void HpBar::ImGuiInspector()
+{
+	SelectDraw2DTexture::ImGuiInspector();
+	if (KeyboardManager::GetInstance().IsKeyPressed('F'))
+	{
+		m_rect.width--;
+	}
 }

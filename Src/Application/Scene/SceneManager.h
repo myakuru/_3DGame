@@ -103,7 +103,7 @@ public :
 	}
 
 	// シーンカメラかどうか
-	bool m_sceneCamera = false;
+	bool m_sceneCamera = true;
 
 	bool m_gameClear = false; // ゲームクリアフラグ
 

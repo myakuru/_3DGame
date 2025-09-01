@@ -51,11 +51,23 @@ float4 main(VSOutput In) : SV_Target0
 
 	toonColor = baseColor.rgb * ToonRamp;
 
-    // 環境光加算
+	 // 環境光加算
 	toonColor += g_AmbientLight.rgb * baseColor.rgb * baseColor.a;
+
+	// カメラへの方向
+	float3 vCam = g_CamPos - In.wPos;
+	float camDist = length(vCam); // カメラ - ピクセル距離
 
 	// 法線マップから法線ベクトル取得
 	float3 wN = g_normalTex.Sample(g_ss, In.UV).rgb;
+	
+	vCam = normalize(vCam);
+
+	float edge = 1.0f - saturate(dot(vCam, wN));
+	if (edge > 1.0f)
+	{
+		toonColor = float3(0, 0, 0);
+	}
 
 	// UV座標（0～1）から 射影座標（-1～1）へ変換
 	wN = wN * 2.0 - 1.0;
@@ -111,11 +123,6 @@ float4 main(VSOutput In) : SV_Target0
 		shadow /= 9.f;
 		shadow = shadow * 0.8f + 0.3f;
 	}
-
-	// カメラへの方向
-	float3 vCam = g_CamPos - In.wPos;
-	float camDist = length(vCam); // カメラ - ピクセル距離
-	vCam = normalize(vCam);
 
 	//------------------------------------------
 	// 高さフォグ

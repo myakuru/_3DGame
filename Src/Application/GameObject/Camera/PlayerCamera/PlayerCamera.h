@@ -34,15 +34,19 @@ public:
 
 private:
 
+	void UpdateCameraRayCast();
+
 	//std::weak_ptr<Player> m_player;
 	Math::Vector3 m_targetLookAt = Math::Vector3::Zero;
 	Math::Vector3 m_introCamPos = Math::Vector3::Zero;	// Introカメラの位置
 	Math::Vector3 m_cameraPos = Math::Vector3::Zero; // カメラの現在位置
 
+	std::shared_ptr<Player> m_spTarget = nullptr; // カメラのターゲット
+
 	// カメラシェイク用変数
 	float m_shakePower = 0.0f;
 	float m_shakeTime = 0.0f;
 
-	float m_smooth = 0.0f; // カメラ追従のスムージング係数
+	float m_smooth = 0.0f;		// カメラ追従のスムージング係数
 	float m_introTimer = 0.0f;	// Introカメラのタイマー
 };

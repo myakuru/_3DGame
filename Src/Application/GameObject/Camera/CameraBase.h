@@ -36,6 +36,14 @@ public:
 		       DirectX::XMConvertToRadians(m_degree.z));
 	}
 
+	const Math::Quaternion GetRotationQuaternion() const
+	{
+		return Math::Quaternion::CreateFromYawPitchRoll(
+			   DirectX::XMConvertToRadians(m_degree.y),
+			   DirectX::XMConvertToRadians(m_degree.x),
+			   DirectX::XMConvertToRadians(m_degree.z));
+	}
+
 	const Math::Matrix GetRotationYMatrix() const
 	{
 		return Math::Matrix::CreateRotationY(
@@ -81,6 +89,8 @@ protected:
 	float moveSpeed = 50.0f; // 移動速度
 	bool m_freeCameraFlg = false;
 
+	Math::Quaternion m_rotation = Math::Quaternion::Identity; // 回転用クォータニオン
+
 	void UpdateRotateByMouse();
 	void UpdateMoveKey();
 
@@ -90,6 +100,8 @@ protected:
 
 	Math::Matrix								m_mLocalPos		= Math::Matrix::Identity;
 	Math::Matrix								m_mRotation		= Math::Matrix::Identity;
+	Math::Quaternion							m_prevRotation = Math::Quaternion::Identity;
+	Math::Quaternion							m_targetRotation = Math::Quaternion::Identity;
 
 	// カメラ回転用マウス座標の差分
 	POINT										m_FixMousePos{};

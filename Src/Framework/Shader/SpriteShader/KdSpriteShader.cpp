@@ -180,7 +180,8 @@ void KdSpriteShader::DrawTex(const KdTexture* tex, int x, int y, int w, int h, c
 	y1 -= pivot.y * h;
 	y2 -= pivot.y * h;
 
-	Vertex vertex[] = {
+	Vertex vertex[] = 
+	{
 		{ {x1, y1, 0},	{uvMin.x, uvMax.y} },
 		{ {x1, y2, 0},	{uvMin.x, uvMin.y} },
 		{ {x2, y1, 0},	{uvMax.x, uvMax.y} },

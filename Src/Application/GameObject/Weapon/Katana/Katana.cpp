@@ -23,7 +23,7 @@ void Katana::Init()
 
 	m_trailModel->Load("Asset/Models/Goast/nani.gltf");
 
-	m_trailTex->Load("Asset/Textures/NA_ball of light_006.png");
+	m_trailTex->Load("Asset/Textures/nailGlow.png");
 	m_trailTex2->Load("Asset/Textures/NA_Basic hit_006.png");
 	m_trailTex3->Load("Asset/Textures/nailGlow.png");
 
@@ -62,9 +62,9 @@ void Katana::Update()
 	Math::Vector3 tip1, tip2, tip3;
 	if (m_swordHandData.m_weaponTranslationMatrix != Math::Matrix::Identity)
 	{
-		tip1 = m_swordData.m_weaponMatrix.Translation() + m_swordData.m_weaponMatrix.Up() * 4.0f;
-		tip2 = m_swordData.m_weaponMatrix.Translation() + m_swordData.m_weaponMatrix.Up() * 4.0f;
-		tip3 = m_swordData.m_weaponMatrix.Translation() + m_swordData.m_weaponMatrix.Up() * 4.0f;
+		tip1 = m_swordData.m_weaponMatrix.Translation() + m_swordData.m_weaponMatrix.Up() * 1.0f;
+		tip2 = m_swordData.m_weaponMatrix.Translation() + m_swordData.m_weaponMatrix.Up() * 1.0f;
+		tip3 = m_swordData.m_weaponMatrix.Translation() + m_swordData.m_weaponMatrix.Up() * 1.0f;
 	}
 	else
 	{
@@ -78,66 +78,28 @@ void Katana::Update()
 		m_trailPolygon3->ClearPoints();
 	}
 
-	// 軌跡点リスト（staticでフレーム間保持）
-	static std::deque<Math::Vector3> trailPoints1, trailPoints2, trailPoints3;
-	trailPoints1.push_back(tip1);
-	trailPoints2.push_back(tip2);
-	trailPoints3.push_back(tip3);
+	Math::Matrix finalMat = Math::Matrix::CreateTranslation(tip1);
+	Math::Matrix finalScale = Math::Matrix::CreateScale(0.1f, 0.1f, 0.1f);	
 
-	// 最大数制限
-	const size_t maxTrailLen = 100;
-	if (trailPoints1.size() > maxTrailLen) trailPoints1.pop_front();
-	if (trailPoints2.size() > maxTrailLen) trailPoints2.pop_front();
-	if (trailPoints3.size() > maxTrailLen) trailPoints3.pop_front();
+	m_trailPolygon->AddPoint(finalMat);
 
-	// Catmull-Rom補間で滑らかな軌跡を生成
-	auto addCatmullTrail = [&](std::deque<Math::Vector3>& points, std::shared_ptr<KdTrailPolygon>& trail, float scaleVal)
-		{
-			Math::Matrix inv = Math::Matrix::CreateRotationY(DirectX::XMConvertToRadians(90.0f));
-			Math::Matrix scale = Math::Matrix::CreateScale(scaleVal);
-
-			if (points.size() >= 4)
-			{
-				size_t start = points.size() - 4;
-				for (float t = 0.0f; t < 1.0f; t += 0.25f)
-				{
-					Math::Vector3 interp = CatmullRom(
-						points[start], points[start + 1], points[start + 2], points[start + 3], t
-					);
-					Math::Matrix mat = Math::Matrix::CreateTranslation(interp);
-					m_finalMat = scale * inv * (m_swordData.m_weaponRotationMatrix * mat);
-					trail->AddPoint(m_finalMat);
-				}
-			}
-			else
-			{
-				// 点が足りない場合はそのまま追加
-				Math::Matrix mat = Math::Matrix::CreateTranslation(points.back());
-				m_finalMat = scale * inv * (m_swordData.m_weaponRotationMatrix * mat);
-				trail->AddPoint(m_finalMat);
-			}
-		};
-
-	addCatmullTrail(trailPoints1, m_trailPolygon, 0.4f);
-	addCatmullTrail(trailPoints2, m_trailPolygon2, 0.4f);
-	addCatmullTrail(trailPoints3, m_trailPolygon3, 0.4f);
 }
 
 void Katana::DrawLit()
 {
-	KdShaderManager::Instance().m_StandardShader.DrawModel(*m_trailModel);
+	//KdShaderManager::Instance().m_StandardShader.DrawModel(*m_trailModel);
 }
 
 void Katana::DrawUnLit()
 {
-	//KdShaderManager::Instance().m_StandardShader.DrawPolygon(*m_trailPolygon3, Math::Matrix::Identity, { 1.0f,1.0f,1.0f,0.7f });
+	KdShaderManager::Instance().m_StandardShader.DrawPolygon(*m_trailPolygon, Math::Matrix::Identity, { 1.0f,1.0f,1.0f,0.7f });
 }
 
 void Katana::DrawBright()
 {
 	KdShaderManager::Instance().m_StandardShader.DrawPolygon(*m_trailPolygon, Math::Matrix::Identity, { 0.0f,1.0f,1.0f,0.5f });
-	KdShaderManager::Instance().m_StandardShader.DrawPolygon(*m_trailPolygon2, Math::Matrix::Identity, { 1.0f,1.0f,1.0f,0.7f });
-	KdShaderManager::Instance().m_StandardShader.DrawPolygon(*m_trailPolygon3, Math::Matrix::Identity, { 1.0f,1.0f,1.0f,0.7f });
+	//KdShaderManager::Instance().m_StandardShader.DrawPolygon(*m_trailPolygon2, Math::Matrix::Identity, { 1.0f,1.0f,1.0f,0.7f });
+	//KdShaderManager::Instance().m_StandardShader.DrawPolygon(*m_trailPolygon3, Math::Matrix::Identity, { 1.0f,1.0f,1.0f,0.7f });
 }
 
 void Katana::UpdateHand()

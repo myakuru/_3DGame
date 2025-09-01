@@ -15,9 +15,9 @@ void CurvesEffect::Init()
 	m_trailPolygon2->ClearPoints();
 	m_trailPolygon3->ClearPoints();
 
-	m_trailPolygon->SetLength(50);
-	m_trailPolygon2->SetLength(50);
-	m_trailPolygon3->SetLength(50);
+	m_trailPolygon->SetLength(60);
+	m_trailPolygon2->SetLength(60);
+	m_trailPolygon3->SetLength(60);
 
 	m_trailTex = KdAssets::Instance().m_textures.GetData("Asset/Textures/NA_ball of light_006.png");
 
@@ -134,7 +134,7 @@ void CurvesEffect::Update()
 			return pos;
 			};
 
-		Math::Matrix scaleMat = Math::Matrix::CreateScale(0.1f);
+		Math::Matrix scaleMat = Math::Matrix::CreateScale(0.05f);
 
 		Math::Matrix mat1 = scaleMat * Math::Matrix::CreateTranslation(calcCirclePos(center, circleNormal1, circleAngle, radius));
 		Math::Matrix mat2 = scaleMat * Math::Matrix::CreateTranslation(calcCirclePos(center, circleNormal2, circleAngle + DirectX::XM_2PI / 3, radius));

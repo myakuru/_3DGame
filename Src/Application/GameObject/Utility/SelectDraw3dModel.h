@@ -49,7 +49,7 @@ public:
 	void ImGuiInspector() override
 	{
 		KdGameObject::ImGuiInspector();
-		ImGui::BeginTable("DrawFlags", 2); // 3列
+		ImGui::BeginTable("DrawFlags", 2); // 2列
 		for (const auto& [name, flg] : m_drawFlg)
 		{
 			ImGui::TableNextColumn();
