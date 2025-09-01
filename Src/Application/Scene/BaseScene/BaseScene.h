@@ -66,6 +66,11 @@ public :
 		return m_renderTargetSpritePack;
 	}
 
+	const KdRenderTargetPack& GetRenderTargetUIPack() const
+	{
+		return m_renderTargetUIPack;
+	}
+
 protected :
 
 	// 継承先シーンで必要ならオーバーライドする
@@ -83,6 +88,12 @@ protected :
 
 	KdRenderTargetChanger m_renderTargetChanger;
 	KdRenderTargetPack m_renderTargetPack;
+
+	// UI用のレンダーターゲット切り替えるやつ
+	KdRenderTargetChanger m_renderTargetUIChanger;
+	// UIのテクスチャいれるやつ
+	KdRenderTargetPack m_renderTargetUIPack;
+	Math::Vector2 m_gameWindowSize = Math::Vector2::Zero;
 
 	KdRenderTargetChanger m_renderTargetSpriteChanger;
 	KdRenderTargetPack m_renderTargetSpritePack;

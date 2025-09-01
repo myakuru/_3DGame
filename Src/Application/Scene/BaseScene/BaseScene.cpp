@@ -268,10 +268,7 @@ void BaseScene::Draw()
 
 void BaseScene::DrawSprite()
 {
-	if (KdDebugGUI::Instance().ShowImGUiFlg())
-	{
-		m_renderTargetChanger.ChangeRenderTarget(m_renderTargetPack);
-	}
+	m_renderTargetUIChanger.ChangeRenderTarget(m_renderTargetUIPack);
 
 	// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 	// 2Dの描画はこの間で行う
@@ -284,7 +281,13 @@ void BaseScene::DrawSprite()
 	}
 	KdShaderManager::Instance().m_spriteShader.End();
 
-	m_renderTargetChanger.UndoRenderTarget();
+	m_renderTargetUIChanger.UndoRenderTarget();
+
+	KdShaderManager::Instance().m_spriteShader.Begin();
+	{
+		KdShaderManager::Instance().m_spriteShader.DrawTex(m_renderTargetUIPack.m_RTTexture.get(), 0, 0, static_cast<int>(m_gameWindowSize.x), static_cast<int>(m_gameWindowSize.y));
+	}
+	KdShaderManager::Instance().m_spriteShader.End();
 
 }
 
@@ -319,7 +322,6 @@ void BaseScene::DrawDebug()
 
 void BaseScene::Event()
 {
-	// 各シーンで必要な内容を実装(オーバーライド)する
 }
 
 void BaseScene::Init()
@@ -328,6 +330,11 @@ void BaseScene::Init()
 	const std::vector<std::string>& sizeData = windowData.GetLine(0);
 
 	m_renderTargetPack.CreateRenderTarget(atoi(sizeData[0].data()), atoi(sizeData[1].data()), true);
+	m_renderTargetUIPack.CreateRenderTarget(1920,1080, true);
 	KdEffekseerManager::GetInstance().Create(atoi(sizeData[0].data()), atoi(sizeData[1].data()));
-	// 各シーンで必要な内容を実装(オーバーライド)する
+
+	// 画面サイズによってUIのスケールを変える
+	std::string size = (sizeData[2].data());
+	m_gameWindowSize = { static_cast<float>(atoi(sizeData[0].data()), atoi(sizeData[1].data())) };
+
 }

@@ -42,7 +42,6 @@ void PlayerCamera::PostUpdate()
 		return;
 	}*/
 
-
 	if (SceneManager::Instance().m_gameClear)
 	{
 		UpdateWinnerCamera();
