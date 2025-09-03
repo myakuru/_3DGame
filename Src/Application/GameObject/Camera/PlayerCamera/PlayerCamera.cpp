@@ -84,7 +84,7 @@ void PlayerCamera::PostUpdate()
 	m_mWorld = Math::Matrix::CreateTranslation(m_targetLookAt);
 	m_mWorld = m_mWorld * m_mRotation;
 
-	Math::Vector3 targetPos = m_spTarget->GetPosition() + shakeOffset;
+	Math::Vector3 targetPos = m_spTarget->GetPos() + shakeOffset;
 
 	m_cameraPos = Math::Vector3::Lerp(m_cameraPos, targetPos, m_smooth * deltaTime);
 

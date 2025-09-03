@@ -301,6 +301,7 @@
     <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_Run\PlayerState_Run.h" />
     <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_Skill\PlayerState_Skill.h" />
     <ClInclude Include="Src\Application\GameObject\Collition\Collition.h" />
+    <ClInclude Include="Src\Application\GameObject\Effect\AttackEffect\AttackEffect.h" />
     <ClInclude Include="Src\Application\GameObject\Effect\CurvesEffect\CurvesEffect.h" />
     <ClInclude Include="Src\Application\GameObject\Effect\FowardEffect\ForwardEffect.h" />
     <ClInclude Include="Src\Application\GameObject\HitDamage\HitDamage.h" />
@@ -412,6 +413,7 @@
     <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_Run\PlayerState_Run.cpp" />
     <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_Skill\PlayerState_Skill.cpp" />
     <ClCompile Include="Src\Application\GameObject\Collition\Collition.cpp" />
+    <ClCompile Include="Src\Application\GameObject\Effect\AttackEffect\AttackEffect.cpp" />
     <ClCompile Include="Src\Application\GameObject\Effect\CurvesEffect\CurvesEffect.cpp" />
     <ClCompile Include="Src\Application\GameObject\Effect\FowardEffect\ForwardEffect.cpp" />
     <ClCompile Include="Src\Application\GameObject\HitDamage\HitDamage.cpp" />
@@ -471,6 +473,7 @@
     <ClCompile Include="Src\Framework\Utility\KdDebugGUI.cpp" />
     <ClCompile Include="Src\Framework\Utility\KdDebugWireFrame.cpp" />
     <ClCompile Include="Src\Framework\Utility\KdFPSController.cpp" />
+    <ClCompile Include="Src\MyFramework\Manager\KeyboardManager.cpp" />
     <ClCompile Include="Src\MyFramework\State\StateManager\StateManager.cpp" />
     <ClCompile Include="src\Pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -570,6 +573,12 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Src\Framework\Shader\StandardShader\PS_Effect.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
     </FxCompile>
     <FxCompile Include="Src\Framework\Shader\StandardShader\PS_Gradation.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>

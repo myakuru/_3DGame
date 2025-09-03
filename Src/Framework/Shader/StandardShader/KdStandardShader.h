@@ -41,7 +41,6 @@ public:
 
 		Math::Color gradientColor = { 1.0f, 1.0f, 1.0f, 1.0f }; // グラデーションカラー
 
-		//float			_blank2 = 0.0f; //スキンメッシュには必要ないので削除
 	};
 
 	// 定数バッファ(メッシュ単位更新)
@@ -65,6 +64,15 @@ public:
 	// 定数バッファ(ボーン単位更新：スキンメッシュ対応)
 	struct cbBone {
 		Math::Matrix	mBones[500];
+	};
+
+	// エフェクト用
+	struct cbEffect
+	{
+		float fadeAmount = 0.0f;
+		Math::Vector3 OutColor = { 0.2f, 0.7f, 1.0f };
+		Math::Vector3 InColor = { 1.0f, 1.0f, 1.0f };
+		float colorGradation = 5.0f;
 	};
 
 	//================================================
@@ -178,6 +186,10 @@ public:
 	void BeginGrayscale();
 	void EndGrayscale();
 
+	// エフェクト用
+	void BeginEffect();
+	void EndEffect();
+
 	//================================================
 	// 描画関数
 	//================================================
@@ -230,6 +242,17 @@ public:
 		m_gradientColor = color;
 	}
 
+	// フェード量の設定(エフェクト用)
+	void SetFadeAmount(float _fade, Math::Vector3 _outColor = { 0.2f,0.7f,1.0f }, Math::Vector3 _inColor = { 1,1,1 },float _colorGradation = 5.0f)
+	{
+		m_cb4_Effect.Work().fadeAmount = _fade;		// 基本０から１の間で描画するかしないか決める
+		m_cb4_Effect.Work().OutColor = _outColor;	// オブジェクトの外側の色
+		m_cb4_Effect.Work().InColor = _inColor;		// オブジェクトの内側の色
+		m_cb4_Effect.Work().colorGradation = _colorGradation; // 色のグラデーションの度合い
+		m_cb4_Effect.Write();
+		m_dirtyCBObj = true;
+	}
+
 private:
 
 	// マテリアルのセット
@@ -280,6 +303,7 @@ private:
 
 	ID3D11PixelShader* m_PS_Gradation = nullptr;				// グラーデーション用ピクセルシェーダー
 	ID3D11PixelShader* m_PS_GrayScale = nullptr;				// グレースケール用ピクセルシェーダー
+	ID3D11PixelShader* m_PS_Effect = nullptr;					// エフェクト用ピクセルシェーダー
 
 	// テクスチャ
 	std::shared_ptr<KdTexture>	m_dissolveTex = nullptr;	// ディゾルブで使用するデフォルトテクスチャ
@@ -289,6 +313,7 @@ private:
 	KdConstantBuffer<cbMesh>		m_cb1_Mesh;				// メッシュ毎に更新
 	KdConstantBuffer<cbMaterial>	m_cb2_Material;			// マテリアル毎に更新
 	KdConstantBuffer<cbBone>		m_cb3_Bone;				// ボーン毎に更新(スキンメッシュ対応)
+	KdConstantBuffer<cbEffect >		m_cb4_Effect;			// エフェクト用
 
 	KdRenderTargetPack	m_depthMapFromLightRTPack;
 	KdRenderTargetChanger m_depthMapFromLightRTChanger;
@@ -300,4 +325,7 @@ private:
 	//　グラデーション用フラグとカラー
 	bool m_enableGradient = false;
 	Math::Color m_gradientColor{1.0f,1.0f,1.0f,1.0f};
+	float m_fadeAmount = 1.0f;
+
+	float m_time = 0.0f;
 };

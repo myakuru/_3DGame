@@ -260,6 +260,20 @@ void BaseScene::Draw()
 	}
 	KdShaderManager::Instance().m_StandardShader.EndGrayscale();
 
+	// エフェクトの描画
+	KdShaderManager::Instance().m_StandardShader.BeginEffect();
+	{
+		for (auto& obj : m_objList)
+		{
+			obj->DrawEffect();
+		}
+		for (auto& obj : m_drawObjectList)
+		{
+			obj->DrawEffect();
+		}
+	}
+	KdShaderManager::Instance().m_StandardShader.EndEffect();
+
 	m_renderTargetChanger.UndoRenderTarget();
 
 	m_drawObjectList.clear();

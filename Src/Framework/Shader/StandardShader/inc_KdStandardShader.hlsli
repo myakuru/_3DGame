@@ -38,6 +38,14 @@ cbuffer cbBones : register(b3)
 	row_major float4x4 g_mBones[500];
 };
 
+cbuffer cbEffect : register(b4)
+{
+	float g_fadeAmount; // フェードアウト量（0.0～1.0、外部で調整可能に）
+	float3 g_OutColor; // フェードアウト時の色
+	float3 g_InnerColor; // フェードアウト時の中心の色
+	float g_colorGradation; // 色のグラデーション量
+};
+
 // 頂点シェーダから出力するデータ
 struct VSOutput
 {

@@ -15,7 +15,7 @@ void PlayerState_ChaegeAttack2::StateStart()
 	auto enemy = m_player->GetEnemy().lock();
 	if (enemy)
 	{
-		Math::Vector3 playerPos = m_player->GetPosition();
+		Math::Vector3 playerPos = m_player->GetPos();
 		Math::Vector3 enemyPos = enemy->GetPos();
 		m_attackDirection = enemyPos - playerPos;
 		m_attackDirection.y = 0.0f;

@@ -267,7 +267,7 @@ bool KdDirect3D::Init(HWND hWnd, int w, int h, bool deviceDebug, std::string& er
 	ss1->Release();
 
 	// ラスタライザーステートセット
-	ID3D11RasterizerState* rs = CreateRasterizerState(D3D11_CULL_BACK, D3D11_FILL_SOLID, true, false);
+	ID3D11RasterizerState* rs = CreateRasterizerState(D3D11_CULL_NONE, D3D11_FILL_SOLID, true, false);
 	m_pDeviceContext->RSSetState(rs);
 	rs->Release();
 

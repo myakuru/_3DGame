@@ -15,7 +15,7 @@ void PlayerState_ChargeAttack::StateStart()
 	auto enemy = m_player->GetEnemy().lock();
 	if (enemy)
 	{
-		Math::Vector3 playerPos = m_player->GetPosition();
+		Math::Vector3 playerPos = m_player->GetPos();
 		Math::Vector3 enemyPos = enemy->GetPos();
 		m_attackDirection = enemyPos - playerPos;
 		m_attackDirection.y = 0.0f;
@@ -62,7 +62,7 @@ void PlayerState_ChargeAttack::StateUpdate()
 
 	if (time >= 0.0f && !m_isCharging)
 	{
-		KdEffekseerManager::GetInstance().Play("ZZZshine.efkefc", { m_player->GetPosition().x,m_player->GetPosition().y + 0.5f,m_player->GetPosition().z }, 0.2f, 100.0f, false);
+		KdEffekseerManager::GetInstance().Play("ZZZshine.efkefc", { m_player->GetPos().x,m_player->GetPos().y + 0.5f,m_player->GetPos().z }, 0.2f, 100.0f, false);
 		m_isCharging = true;
 	}
 

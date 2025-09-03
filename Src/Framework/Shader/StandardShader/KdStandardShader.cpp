@@ -202,15 +202,6 @@ void KdStandardShader::EndGradient()
 
 void KdStandardShader::BeginGrayscale()
 {
-	// 頂点シェーダーのパイプライン変更
-	if (KdShaderManager::Instance().SetVertexShader(m_VS_Lit))
-	{
-		KdShaderManager::Instance().SetInputLayout(m_inputLayout);
-
-		KdShaderManager::Instance().SetVSConstantBuffer(0, m_cb0_Obj.GetAddress());
-		KdShaderManager::Instance().SetVSConstantBuffer(1, m_cb1_Mesh.GetAddress());
-	}
-
 	// ピクセルシェーダーのパイプライン変更
 	if (KdShaderManager::Instance().SetPixelShader(m_PS_GrayScale))
 	{
@@ -222,6 +213,25 @@ void KdStandardShader::BeginGrayscale()
 void KdStandardShader::EndGrayscale()
 {
 
+}
+
+void KdStandardShader::BeginEffect()
+{
+	// ピクセルシェーダーのパイプライン変更
+	if (KdShaderManager::Instance().SetPixelShader(m_PS_Effect))
+	{
+		m_cb4_Effect.Write();
+		// b0にエフェクト用定数バッファをセット
+		KdShaderManager::Instance().SetPSConstantBuffer(0, m_cb0_Obj.GetAddress());
+		// b2にマテリアル用定数バッファをセット
+		KdShaderManager::Instance().SetPSConstantBuffer(2, m_cb2_Material.GetAddress());
+		// b4にエフェクト用定数バッファをセット
+		KdShaderManager::Instance().SetPSConstantBuffer(4, m_cb4_Effect.GetAddress());
+	}
+}
+
+void KdStandardShader::EndEffect()
+{
 }
 
 
@@ -627,6 +637,14 @@ bool KdStandardShader::Init()
 			return false;
 		}
 	}
+	{
+#include"PS_Effect.shaderInc"
+		if (FAILED(KdDirect3D::Instance().WorkDev()->CreatePixelShader(compiledBuffer, sizeof(compiledBuffer), nullptr, &m_PS_Effect))) {
+			assert(0 && "ピクセルシェーダー作成失敗");
+			Release();
+			return false;
+		}
+	}
 
 	//-------------------------------------
 	// 定数バッファ作成
@@ -637,6 +655,9 @@ bool KdStandardShader::Init()
 
 	// スキンメッシュ対応
 	m_cb3_Bone.Create();
+
+	// エフェクト用
+	m_cb4_Effect.Create();
 
 	std::shared_ptr<KdTexture> ds = std::make_shared<KdTexture>();
 	ds->CreateDepthStencil(1024, 1024);
@@ -672,6 +693,7 @@ void KdStandardShader::Release()
 	KdSafeRelease(m_PS_Toon);
 	KdSafeRelease(m_PS_Gradation);
 	KdSafeRelease(m_PS_GrayScale);
+	KdSafeRelease(m_PS_Effect);
 
 	m_cb0_Obj.Release();
 	m_cb1_Mesh.Release();
@@ -679,6 +701,9 @@ void KdStandardShader::Release()
 
 	// スキンメッシュ対応
 	m_cb3_Bone.Release();
+
+	// エフェクト用
+	m_cb4_Effect.Release();
 }
 
 // ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// /////

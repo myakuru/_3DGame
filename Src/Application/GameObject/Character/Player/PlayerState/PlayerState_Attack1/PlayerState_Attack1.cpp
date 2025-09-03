@@ -15,7 +15,7 @@ void PlayerState_Attack1::StateStart()
 	auto enemy = m_player->GetEnemy().lock();
 	if (enemy)
 	{
-		Math::Vector3 playerPos = m_player->GetPosition();
+		Math::Vector3 playerPos = m_player->GetPos();
 		Math::Vector3 enemyPos = enemy->GetPos();
 		m_attackDirection = enemyPos - playerPos;
 		m_attackDirection.y = 0.0f;
@@ -76,10 +76,10 @@ void PlayerState_Attack1::StateUpdate()
 	if (!m_flag)
 	{
 		// エフェクトの表示位置（前方0.5f）
-		Math::Vector3 effectPos = m_player->GetPosition() + m_attackDirection * 3.0f;
+		Math::Vector3 effectPos = m_player->GetPos() + m_attackDirection * 3.0f;
 
 		// プレイヤーの回転行列
-		Math::Matrix rotationMat = Math::Matrix::CreateFromQuaternion(m_player->GetRotation());
+		Math::Matrix rotationMat = Math::Matrix::CreateFromQuaternion(m_player->GetRotationQuaternion());
 
 		// エフェクトのワールド行列（回転＋位置）
 		Math::Matrix effectWorld = rotationMat * Math::Matrix::CreateTranslation(effectPos);

@@ -37,10 +37,10 @@ void PlayerState_Skill::StateUpdate()
 	if (!m_flag)
 	{
 		// エフェクトの表示位置（前方0.5f）
-		Math::Vector3 effectPos = m_player->GetPosition() + m_attackDirection * 5.0f;
+		Math::Vector3 effectPos = m_player->GetPos() + m_attackDirection * 5.0f;
 
 		// プレイヤーの回転行列
-		Math::Matrix rotationMat = Math::Matrix::CreateFromQuaternion(m_player->GetRotation());
+		Math::Matrix rotationMat = Math::Matrix::CreateFromQuaternion(m_player->GetRotationQuaternion());
 
 		// エフェクトのワールド行列（回転＋位置）
 		Math::Matrix effectWorld = rotationMat * Math::Matrix::CreateTranslation(effectPos);

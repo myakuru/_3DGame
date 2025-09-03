@@ -43,7 +43,6 @@ public:
 	const std::weak_ptr<Enemy>& GetEnemy() const { return m_enemy; }
 
 	PlayerConfig& GetPlayerConfig() { return m_playerConfig; }
-	const Math::Vector3& GetPosition() const { return m_position; }
 
 	// ダメージを受けた時の処理
 	void TakeDamage(int damage)

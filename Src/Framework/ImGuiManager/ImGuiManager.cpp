@@ -13,6 +13,7 @@ void ImGuiManager::Init()
 	const std::vector<std::string>& sizeData = windowData.GetLine(0);
 
 	m_gameSceneSize = ImVec2(atoi(sizeData[0].data()) / 2, atoi(sizeData[1].data()) / 2); // ゲームシーンのサイズを設定
+	m_gameSceneInMouse = false; // マウスがゲームシーン内にあるかどうか
 }
 
 void ImGuiManager::ImGuiUpdate()
@@ -284,13 +285,13 @@ void ImGuiManager::ShowGameScene()
 		// 画像の矩形取得
 		ImVec2 imageMin = ImGui::GetItemRectMin();
 		ImVec2 imageMax = ImGui::GetItemRectMax();
+		ImVec2 mousePos = ImGui::GetIO().MousePos;
 
 		// 画像上でクリックされたか判定
 		if (ImGui::IsItemHovered() && ImGui::IsMouseClicked(ImGuiMouseButton_Left))
 		{
-			ImVec2 mousePos = ImGui::GetIO().MousePos;
-			float offsetX = mousePos.x - imageMin.x;
-			float offsetY = mousePos.y - imageMin.y;
+			offsetX = mousePos.x - imageMin.x;
+			offsetY = mousePos.y - imageMin.y;
 
 			POINT mouse;
 			if (offsetX >= 0 && offsetY >= 0 && offsetX < m_gameSceneSize.x && offsetY < m_gameSceneSize.y)
@@ -300,8 +301,6 @@ void ImGuiManager::ShowGameScene()
 
 				mouse.x = static_cast<LONG>(gameX);
 				mouse.y = static_cast<LONG>(gameY);
-
-				KdDebugGUI::Instance().AddLog("MousePosX:%d,MousePosY:%d \n", mouse.x, mouse.y);
 
 				// コライダーからレイを取得
 				KdCollider::RayInfo rayInfo;
@@ -341,8 +340,17 @@ void ImGuiManager::ShowGameScene()
 				}
 			}
 		}
-
 		ImGui::End();
+
+		// gameシーン外にマウスが出たらフラグを折る
+		if (mousePos.x < imageMin.x || mousePos.y < imageMin.y || mousePos.x > imageMax.x || mousePos.y > imageMax.y)
+		{
+			m_gameSceneInMouse = false;
+		}
+		else
+		{
+			m_gameSceneInMouse = true;
+		}
 	}
 }
 

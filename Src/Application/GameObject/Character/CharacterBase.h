@@ -17,7 +17,7 @@ public:
 	const Math::Vector3 &GetMovement() const { return m_movement; }
 	Math::Matrix& GetRotationMatrix() { return m_mRotation; }
 	void SetRotation(const Math::Quaternion& rotation) { m_rotation = rotation; }
-	Math::Quaternion& GetRotation() { return m_rotation; }
+	Math::Quaternion& GetRotationQuaternion() { return m_rotation; }
 
 	const bool & GetMoving() const { return m_isMoving; }
 	void SetPosition(const Math::Vector3& position) { m_position = position; }

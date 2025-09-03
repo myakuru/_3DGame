@@ -30,6 +30,8 @@ public:
 
 	KdRenderTargetPack GetRenderTargetChanger() { return m_renderTargetChanger; }
 
+	bool GetGameSceneInMouse() const { return m_gameSceneInMouse; }
+
 private:
 
 	std::weak_ptr<TPSCamera> m_tpsCamera;
@@ -51,6 +53,11 @@ private:
 	ImVec2 m_winSize{};
 	float m_width = 0.0f;
 	float m_height = 0.0f;
+
+	float offsetX = 0.0f;
+	float offsetY = 0.0f;
+
+	bool m_gameSceneInMouse = false;
 
 	std::string m_modelPath = "Asset/";
 

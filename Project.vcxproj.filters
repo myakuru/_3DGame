@@ -256,6 +256,9 @@
     <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_ChargeAttack2">
       <UniqueIdentifier>{65260c95-3cbf-4c16-94fb-310ee8c7d9a8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\GameObject\Effect\AttackEffect">
+      <UniqueIdentifier>{4373eb41-1767-4029-80da-b28adae81edd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -615,6 +618,9 @@
     <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_ChargeAttack2\PlayerState_ChaegeAttack2.h">
       <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_ChargeAttack2</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Effect\AttackEffect\AttackEffect.h">
+      <Filter>Src\Application\GameObject\Effect\AttackEffect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -911,6 +917,12 @@
     <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_ChargeAttack2\PlayerState_ChaegeAttack2.cpp">
       <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_ChargeAttack2</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Effect\AttackEffect\AttackEffect.cpp">
+      <Filter>Src\Application\GameObject\Effect\AttackEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\MyFramework\Manager\KeyboardManager.cpp">
+      <Filter>Src\MyFramework\Manager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Src\Framework\Shader\inc_KdCommon.hlsli">
@@ -973,6 +985,9 @@
       <Filter>Src\Framework\Shader\StandardShader</Filter>
     </FxCompile>
     <FxCompile Include="Src\Framework\Shader\StandardShader\PS_GrayScale.hlsl">
+      <Filter>Src\Framework\Shader\StandardShader</Filter>
+    </FxCompile>
+    <FxCompile Include="Src\Framework\Shader\StandardShader\PS_Effect.hlsl">
       <Filter>Src\Framework\Shader\StandardShader</Filter>
     </FxCompile>
   </ItemGroup>

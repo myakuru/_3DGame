@@ -49,7 +49,7 @@ void ForwardEffect::Update()
 		m_trailPolygon3->ClearPoints();
 
 		// プレイヤーの前方ベクトルを取得
-		Math::Vector3 forward = Math::Vector3::TransformNormal(Math::Vector3::Forward, Math::Matrix::CreateFromQuaternion(player->GetRotation()));
+		Math::Vector3 forward = Math::Vector3::TransformNormal(Math::Vector3::Forward, Math::Matrix::CreateFromQuaternion(player->GetRotationQuaternion()));
 		forward.Normalize();
 
 		// 開始位置と進行方向（前方×10）を保存
@@ -69,7 +69,7 @@ void ForwardEffect::Update()
 		m_trailProgress += 0.05f;
 
 		// プレイヤーの前方ベクトル
-		Math::Vector3 forward = Math::Vector3::TransformNormal(Math::Vector3::Forward, Math::Matrix::CreateFromQuaternion(player->GetRotation()));
+		Math::Vector3 forward = Math::Vector3::TransformNormal(Math::Vector3::Forward, Math::Matrix::CreateFromQuaternion(player->GetRotationQuaternion()));
 		forward.Normalize();
 
 		// 斜め方向ベクトルを作成
@@ -84,7 +84,7 @@ void ForwardEffect::Update()
 		Math::Vector3 trailPos3 = m_trailStartPos + forward_60 * 10.0f * m_trailProgress;
 
 		// ワールド行列
-		Math::Matrix rotMat = Math::Matrix::CreateFromQuaternion(player->GetRotation());
+		Math::Matrix rotMat = Math::Matrix::CreateFromQuaternion(player->GetRotationQuaternion());
 		Math::Matrix scaleMat = Math::Matrix::CreateScale(0.4f);
 
 		Math::Matrix trailMat = scaleMat* rotMat * Math::Matrix::CreateTranslation(trailPos + Math::Vector3{ 0,0.1f,0 });
