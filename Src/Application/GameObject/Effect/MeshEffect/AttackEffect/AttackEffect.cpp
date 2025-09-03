@@ -38,9 +38,10 @@ void AttackEffect::EffectControl()
 
 	m_time += deltaTime * m_fadeTime;
 
-	if(KeyboardManager::GetInstance().IsKeyJustPressed('F'))
+	if (KeyboardManager::GetInstance().IsKeyJustPressed('F'))
 	{
-		m_time = 0.0f; // リセット
+		m_time = 0.0f;      // リセット
+		m_alphaFade = 1.0f; // アルファもリセット
 	}
 
 	// 0.0fから1.0fまで増加
@@ -48,7 +49,12 @@ void AttackEffect::EffectControl()
 	{
 		m_fadeAmount = m_time; // 0.0fから1.0fまで増加
 	}
+	else
+	{
+		m_alphaFade -= deltaTime * m_fadeTime;
+		if (m_alphaFade < 0.0f) m_alphaFade = 0.0f;
+	}
 
 	// ここでエフェクトの色やグラデーションの設定も可能
-	KdShaderManager::Instance().m_StandardShader.SetFadeAmount(m_fadeAmount, m_outColor, m_inColor);
+	KdShaderManager::Instance().m_StandardShader.SetFadeAmount(m_fadeAmount, m_outColor, m_inColor, m_colorGradation, m_alphaFade);
 }

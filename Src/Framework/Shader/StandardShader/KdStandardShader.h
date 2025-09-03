@@ -73,6 +73,8 @@ public:
 		Math::Vector3 OutColor = { 0.2f, 0.7f, 1.0f };
 		Math::Vector3 InColor = { 1.0f, 1.0f, 1.0f };
 		float colorGradation = 5.0f;
+		float alphaFade = 1.0f; // 透明化の度合い(1.0で完全透明)
+		float _padding[3] = { 0.0f, 0.0f, 0.0f };
 	};
 
 	//================================================
@@ -243,12 +245,13 @@ public:
 	}
 
 	// フェード量の設定(エフェクト用)
-	void SetFadeAmount(float _fade, Math::Vector3 _outColor = { 0.2f,0.7f,1.0f }, Math::Vector3 _inColor = { 1,1,1 },float _colorGradation = 5.0f)
+	void SetFadeAmount(float _fade, Math::Vector3 _outColor = { 0.2f,0.7f,1.0f }, Math::Vector3 _inColor = { 1,1,1 },float _colorGradation = 5.0f, float _alphaFade = 1.0f)
 	{
 		m_cb4_Effect.Work().fadeAmount = _fade;		// 基本０から１の間で描画するかしないか決める
 		m_cb4_Effect.Work().OutColor = _outColor;	// オブジェクトの外側の色
 		m_cb4_Effect.Work().InColor = _inColor;		// オブジェクトの内側の色
 		m_cb4_Effect.Work().colorGradation = _colorGradation; // 色のグラデーションの度合い
+		m_cb4_Effect.Work().alphaFade = _alphaFade; // 透明化の度合い(1.0で完全透明)
 		m_cb4_Effect.Write();
 		m_dirtyCBObj = true;
 	}

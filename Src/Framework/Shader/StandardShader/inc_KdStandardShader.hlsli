@@ -44,6 +44,7 @@ cbuffer cbEffect : register(b4)
 	float3 g_OutColor; // フェードアウト時の色
 	float3 g_InnerColor; // フェードアウト時の中心の色
 	float g_colorGradation; // 色のグラデーション量
+	float g_alphaFade; // アルファフェード量
 };
 
 // 頂点シェーダから出力するデータ

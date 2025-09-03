@@ -10,6 +10,9 @@ float4 main(VSOutput In) : SV_Target0
 	{
 		discard;
 	}
+
+	// アルファ値をy座標で減衰させる
+	//float alpha = g_alphaFade * (1.0f - In.UV.y);
 	
     // テクスチャカラー取得
 	float4 texColor = g_baseTex.Sample(g_ss, In.UV);
@@ -34,5 +37,5 @@ float4 main(VSOutput In) : SV_Target0
 	float glowPower = pow(luminance, 5.0) * 2.0; // 明度を2乗して強調、さらに2倍
 
 	// 最終色を返すalpfaの値をシェーダー内では透明にならないからcpp側で調整する
-	return float4(iceColor * glowPower, 1.0f);
+	return float4(iceColor * glowPower, g_alphaFade);
 }
