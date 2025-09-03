@@ -256,8 +256,11 @@
     <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_ChargeAttack2">
       <UniqueIdentifier>{65260c95-3cbf-4c16-94fb-310ee8c7d9a8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Src\Application\GameObject\Effect\AttackEffect">
-      <UniqueIdentifier>{4373eb41-1767-4029-80da-b28adae81edd}</UniqueIdentifier>
+    <Filter Include="Src\Application\GameObject\Effect\MeshEffect">
+      <UniqueIdentifier>{3dc7c37a-1cc5-41c6-9833-93bf1fcf2c76}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Effect\MeshEffect\AttackEffect">
+      <UniqueIdentifier>{4d42841d-94d8-4aed-a6a4-3dcae3eb8128}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -618,8 +621,11 @@
     <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_ChargeAttack2\PlayerState_ChaegeAttack2.h">
       <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_ChargeAttack2</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Application\GameObject\Effect\AttackEffect\AttackEffect.h">
-      <Filter>Src\Application\GameObject\Effect\AttackEffect</Filter>
+    <ClInclude Include="Src\Application\GameObject\Effect\MeshEffect\AttackEffect\AttackEffect.h">
+      <Filter>Src\Application\GameObject\Effect\MeshEffect\AttackEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Effect\MeshEffect\MeshEffectBase.h">
+      <Filter>Src\Application\GameObject\Effect\MeshEffect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -917,11 +923,14 @@
     <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_ChargeAttack2\PlayerState_ChaegeAttack2.cpp">
       <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_ChargeAttack2</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Application\GameObject\Effect\AttackEffect\AttackEffect.cpp">
-      <Filter>Src\Application\GameObject\Effect\AttackEffect</Filter>
-    </ClCompile>
     <ClCompile Include="Src\MyFramework\Manager\KeyboardManager.cpp">
       <Filter>Src\MyFramework\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Effect\MeshEffect\AttackEffect\AttackEffect.cpp">
+      <Filter>Src\Application\GameObject\Effect\MeshEffect\AttackEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Effect\MeshEffect\MeshEffectBase.cpp">
+      <Filter>Src\Application\GameObject\Effect\MeshEffect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

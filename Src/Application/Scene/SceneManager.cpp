@@ -38,7 +38,7 @@
 #include"../GameObject/Collition/Collition.h"
 #include"../GameObject/Effect/FowardEffect/ForwardEffect.h"
 #include"../GameObject/Effect/CurvesEffect/CurvesEffect.h"
-#include"../GameObject/Effect/AttackEffect/AttackEffect.h"
+#include"../GameObject/Effect/MeshEffect/AttackEffect/AttackEffect.h"
 
 void SceneManager::Init()
 {

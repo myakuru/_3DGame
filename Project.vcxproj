@@ -301,9 +301,10 @@
     <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_Run\PlayerState_Run.h" />
     <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_Skill\PlayerState_Skill.h" />
     <ClInclude Include="Src\Application\GameObject\Collition\Collition.h" />
-    <ClInclude Include="Src\Application\GameObject\Effect\AttackEffect\AttackEffect.h" />
     <ClInclude Include="Src\Application\GameObject\Effect\CurvesEffect\CurvesEffect.h" />
     <ClInclude Include="Src\Application\GameObject\Effect\FowardEffect\ForwardEffect.h" />
+    <ClInclude Include="Src\Application\GameObject\Effect\MeshEffect\AttackEffect\AttackEffect.h" />
+    <ClInclude Include="Src\Application\GameObject\Effect\MeshEffect\MeshEffectBase.h" />
     <ClInclude Include="Src\Application\GameObject\HitDamage\HitDamage.h" />
     <ClInclude Include="Src\Application\GameObject\HUD\AlpfaMoving\AlpfaMoving.h" />
     <ClInclude Include="Src\Application\GameObject\HUD\BlackBanner\BlackBanner.h" />
@@ -413,9 +414,10 @@
     <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_Run\PlayerState_Run.cpp" />
     <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_Skill\PlayerState_Skill.cpp" />
     <ClCompile Include="Src\Application\GameObject\Collition\Collition.cpp" />
-    <ClCompile Include="Src\Application\GameObject\Effect\AttackEffect\AttackEffect.cpp" />
     <ClCompile Include="Src\Application\GameObject\Effect\CurvesEffect\CurvesEffect.cpp" />
     <ClCompile Include="Src\Application\GameObject\Effect\FowardEffect\ForwardEffect.cpp" />
+    <ClCompile Include="Src\Application\GameObject\Effect\MeshEffect\AttackEffect\AttackEffect.cpp" />
+    <ClCompile Include="Src\Application\GameObject\Effect\MeshEffect\MeshEffectBase.cpp" />
     <ClCompile Include="Src\Application\GameObject\HitDamage\HitDamage.cpp" />
     <ClCompile Include="Src\Application\GameObject\HUD\AlpfaMoving\AlpfaMoving.cpp" />
     <ClCompile Include="Src\Application\GameObject\HUD\BlackBanner\BlackBanner.cpp" />

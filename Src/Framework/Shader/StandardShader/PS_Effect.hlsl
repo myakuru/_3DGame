@@ -31,8 +31,8 @@ float4 main(VSOutput In) : SV_Target0
 	float3 iceColor = lerp(float3(g_InnerColor), float3(g_OutColor), saturate(distance * g_colorGradation));
 
     // 発光強度調整
-	float glowPower = pow(luminance, 4.0) * 2.0; // 明度を2乗して強調、さらに2倍
+	float glowPower = pow(luminance, 5.0) * 2.0; // 明度を2乗して強調、さらに2倍
 
-	// 最終色を返す
+	// 最終色を返すalpfaの値をシェーダー内では透明にならないからcpp側で調整する
 	return float4(iceColor * glowPower, 1.0f);
 }

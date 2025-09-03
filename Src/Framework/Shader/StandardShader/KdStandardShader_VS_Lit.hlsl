@@ -25,7 +25,7 @@ VSOutput main(
 			mBones += g_mBones[skinIndex[i]] * skinWeight[i];
 		}
 
-	// 座標と法線に適用
+		// 座標と法線に適用
 		pos = mul(pos, mBones);
 		normal = mul(normal, (float3x3) mBones);
 	}
