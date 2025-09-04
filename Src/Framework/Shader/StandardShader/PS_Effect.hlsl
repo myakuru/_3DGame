@@ -11,8 +11,7 @@ float4 main(VSOutput In) : SV_Target0
 		discard;
 	}
 
-	// アルファ値をy座標で減衰させる
-	//float alpha = g_alphaFade * (1.0f - In.UV.y);
+	//In.UV.y = In.UV.y / g_fadeAmount;
 	
     // テクスチャカラー取得
 	float4 texColor = g_baseTex.Sample(g_ss, In.UV);

@@ -262,6 +262,12 @@
     <Filter Include="Src\Application\GameObject\Effect\MeshEffect\AttackEffect">
       <UniqueIdentifier>{4d42841d-94d8-4aed-a6a4-3dcae3eb8128}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\GameObject\Effect\BillBoardEffect">
+      <UniqueIdentifier>{c1007d80-d993-4632-962f-eb6f41d9a883}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Effect\BillBoardEffect\FieldEffect">
+      <UniqueIdentifier>{fda7d371-7714-4be0-89c5-ae906bf411a3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -627,6 +633,9 @@
     <ClInclude Include="Src\Application\GameObject\Effect\MeshEffect\MeshEffectBase.h">
       <Filter>Src\Application\GameObject\Effect\MeshEffect</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Effect\BillBoardEffect\FieldEffect\FieldEffect.h">
+      <Filter>Src\Application\GameObject\Effect\BillBoardEffect\FieldEffect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -931,6 +940,9 @@
     </ClCompile>
     <ClCompile Include="Src\Application\GameObject\Effect\MeshEffect\MeshEffectBase.cpp">
       <Filter>Src\Application\GameObject\Effect\MeshEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Effect\BillBoardEffect\FieldEffect\FieldEffect.cpp">
+      <Filter>Src\Application\GameObject\Effect\BillBoardEffect\FieldEffect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

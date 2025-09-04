@@ -39,6 +39,7 @@
 #include"../GameObject/Effect/FowardEffect/ForwardEffect.h"
 #include"../GameObject/Effect/CurvesEffect/CurvesEffect.h"
 #include"../GameObject/Effect/MeshEffect/AttackEffect/AttackEffect.h"
+#include"../GameObject/Effect/BillBoardEffect/FieldEffect/FieldEffect.h"
 
 void SceneManager::Init()
 {
@@ -74,6 +75,7 @@ void SceneManager::Register() const
 	RegisterObject::GetInstance().Register<ForwardEffect>();
 	RegisterObject::GetInstance().Register<CurvesEffect>();
 	RegisterObject::GetInstance().Register<AttackEffect>();
+	RegisterObject::GetInstance().Register<FieldEffect>();
 }
 
 void SceneManager::PreUpdate()
