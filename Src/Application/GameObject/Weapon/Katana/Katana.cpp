@@ -51,10 +51,10 @@ void Katana::Update()
 		);
 
 		Math::Vector3 playerHipPos = m_swordData.m_weaponTranslationMatrix.Translation();
-		m_swordData.m_weaponTranslationMatrix.Translation(m_katanaOffset + playerHipPos);
+		m_swordData.m_weaponTranslationMatrix.Translation(m_katanaHandOffset + playerHipPos);
 		m_swordData.m_weaponScaleMatrix = Math::Matrix::CreateScale(m_swordData.m_scale);
 		m_swordData.m_weaponMatrix = m_swordData.m_weaponScaleMatrix * m_swordData.m_weaponRotationMatrix * m_swordData.m_weaponTranslationMatrix * m_swordData.m_playerWorldMatrix;
-		m_trailOffset = m_swordData.m_weaponScaleMatrix * m_swordData.m_weaponRotationMatrix * m_swordData.m_playerWorldMatrix;
+		//m_trailOffset = m_swordData.m_weaponScaleMatrix * m_swordData.m_weaponRotationMatrix * m_swordData.m_playerWorldMatrix;
 	}
 
 	// 軌跡の先端位置を計算
@@ -112,8 +112,9 @@ void Katana::UpdateHand()
 
 	m_swordData.m_weaponScaleMatrix = Math::Matrix::CreateScale(m_swordData.m_scale);
 
-	m_swordHandData.m_weaponTranslationMatrix.Translation(m_katanaOffset + m_swordHandData.m_weaponTranslationMatrix.Translation());
-	m_swordData.m_weaponMatrix = m_swordData.m_weaponScaleMatrix * m_swordHandData.m_weaponRotationMatrix *m_swordHandData.m_weaponTranslationMatrix * m_swordData.m_playerWorldMatrix; 
+	m_swordHandData.m_weaponTranslationMatrix.Translation(m_swordHandData.m_weaponTranslationMatrix.Translation());
+	Math::Matrix transOffset = Math::Matrix::CreateTranslation(m_katanaOffset);
+	m_swordData.m_weaponMatrix = transOffset * m_swordData.m_weaponScaleMatrix * m_swordHandData.m_weaponRotationMatrix *m_swordHandData.m_weaponTranslationMatrix * m_swordData.m_playerWorldMatrix;
 
 }
 
@@ -125,18 +126,24 @@ void Katana::ImGuiInspector()
 
 	ImGui::Text(U8("刀の角度を変更"));
 	ImGui::DragFloat3("deg", &m_swordData.m_weaponDeg.x, 0.1f);
-	ImGui::Text(U8("刀の位置を変更"));
+	ImGui::Text(U8("納刀のオフセットを変更"));
 	ImGui::DragFloat3("offset", &m_katanaOffset.x, 0.01f);
+	ImGui::Text(U8("手の位置の刀のを変更"));
+	ImGui::DragFloat3("Handoffset", &m_katanaHandOffset.x, 0.01f);
 	ImGui::Text(U8("刀のスケールを変更"));
 	ImGui::DragFloat3("scale", &m_swordData.m_scale.x, 0.01f);
 
 	ImGui::Separator();
 
-	if (ImGui::CollapsingHeader("Hand Katana"))
+	if (ImGui::CollapsingHeader("Sheathing of Katana"))
 	{
-		ImGui::Text(U8("手持ちの刀の角度を変更"));
+		ImGui::Text(U8("納刀時の角度を変更"));
 		ImGui::DragFloat3("handDeg", &m_swordHandData.m_weaponDeg.x, 0.1f);
 	}
 
-	UpdateHand();
+	if (ImGui::CollapsingHeader("Hand Katana"))
+	{
+		ImGui::Text(U8("手持ちの刀の角度を変更"));
+		ImGui::DragFloat3("sheathDeg", &m_swordData.m_weaponDeg.x, 0.1f);
+	}
 }

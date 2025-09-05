@@ -12,10 +12,11 @@
 #include"../PlayerState_Hit/PlayerState_Hit.h"
 #include"../PlayerState_Skill/PlayerState_Skill.h"
 #include"../../../../Weapon/Katana/Katana.h"
+#include"../../../../Weapon/WeaponKatanaScabbard/WeaponKatanaScabbard.h"
 
 void PlayerState_Idle::StateStart()
 {
-	auto anime = m_player->GetAnimeModel()->GetAnimation("Idle");
+	auto anime = m_player->GetAnimeModel()->GetAnimation("newIdle");
 	m_player->GetAnimator()->AnimationBlend(anime, 10.0f);
 	m_player->AnimeSetFlg() = true;
 }
@@ -100,4 +101,24 @@ void PlayerState_Idle::StateEnd()
 {
 	m_player->AnimeSetFlg() = false;
 	m_player->m_isHit = false; // ダメージフラグをリセット
+}
+
+void PlayerState_Idle::UpdateKatanaPos()
+{
+	// 左手のワークノードを取得
+	auto leftHandNode = m_player->GetModelWork()->FindWorkNode("VSB_9");
+
+	if (!leftHandNode) return;
+
+	// カタナの取得
+	auto katana = m_player->GetKatana().lock();
+	// 鞘の取得
+	auto saya = m_player->GetScabbard().lock();
+
+	if (!katana) return;
+	if (!saya) return;
+
+	// プレイヤーに追尾する刀にするためにワークノードとプレイヤーのワールド変換を設定
+	katana->SetHandKatanaMatrix(leftHandNode->m_worldTransform);
+	saya->SetHandKatanaMatrix(leftHandNode->m_worldTransform);
 }

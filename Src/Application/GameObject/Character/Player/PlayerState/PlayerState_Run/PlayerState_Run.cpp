@@ -5,6 +5,7 @@
 #include"../../../../Camera/PlayerCamera/PlayerCamera.h"
 #include"../PlayerState_Hit/PlayerState_Hit.h"
 #include"../../../../Weapon/Katana/Katana.h"
+#include"../../../../Weapon/WeaponKatanaScabbard/WeaponKatanaScabbard.h"
 
 void PlayerState_Run::StateStart()
 {
@@ -63,4 +64,24 @@ void PlayerState_Run::StateEnd()
 	PlayerStateBase::StateEnd();
 
 	m_player->m_isHit = false; // ダメージフラグをリセット
+}
+
+void PlayerState_Run::UpdateKatanaPos()
+{
+	// 左手のワークノードを取得
+	auto leftHandNode = m_player->GetModelWork()->FindWorkNode("VSB_9");
+
+	if (!leftHandNode) return;
+
+	// カタナの取得
+	auto katana = m_player->GetKatana().lock();
+	// 鞘の取得
+	auto saya = m_player->GetScabbard().lock();
+
+	if (!katana) return;
+	if (!saya) return;
+
+	// プレイヤーに追尾する刀にするためにワークノードとプレイヤーのワールド変換を設定
+	katana->SetHandKatanaMatrix(leftHandNode->m_worldTransform);
+	saya->SetHandKatanaMatrix(leftHandNode->m_worldTransform);
 }

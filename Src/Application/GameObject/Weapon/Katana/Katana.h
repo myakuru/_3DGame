@@ -1,6 +1,6 @@
 ﻿#pragma once
 #include"../WeaponBase.h"
-
+class WeaponKatanaScabbard;
 class Katana : public WeaponBase
 {
 public:

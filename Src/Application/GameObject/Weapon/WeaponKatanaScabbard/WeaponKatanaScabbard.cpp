@@ -19,8 +19,9 @@ void WeaponKatanaScabbard::UpdateMatrix()
 
 	m_swordData.m_weaponScaleMatrix = Math::Matrix::CreateScale(m_swordData.m_scale);
 
-	m_swordHandData.m_weaponTranslationMatrix.Translation(m_katanaOffset + m_swordHandData.m_weaponTranslationMatrix.Translation());
-	m_swordData.m_weaponMatrix = m_swordData.m_weaponScaleMatrix * m_swordHandData.m_weaponRotationMatrix * m_swordHandData.m_weaponTranslationMatrix * m_swordData.m_playerWorldMatrix;
+	m_swordHandData.m_weaponTranslationMatrix.Translation(m_swordHandData.m_weaponTranslationMatrix.Translation());
+	Math::Matrix transOffsetMat = Math::Matrix::CreateTranslation(m_katanaOffset);
+	m_swordData.m_weaponMatrix = transOffsetMat * m_swordData.m_weaponScaleMatrix * m_swordHandData.m_weaponRotationMatrix * m_swordHandData.m_weaponTranslationMatrix * m_swordData.m_playerWorldMatrix;
 }
 
 void WeaponKatanaScabbard::ImGuiInspector()
@@ -32,7 +33,7 @@ void WeaponKatanaScabbard::ImGuiInspector()
 	ImGui::Text(U8("刀の角度を変更"));
 	ImGui::DragFloat3("deg", &m_swordData.m_weaponDeg.x, 0.1f);
 	ImGui::Text(U8("刀の位置を変更"));
-	ImGui::DragFloat3("offset", &m_katanaOffset.x, 0.01f);
+	ImGui::DragFloat3("offset", &m_katanaOffset.x, 0.1f);
 	ImGui::Text(U8("刀のスケールを変更"));
 	ImGui::DragFloat3("scale", &m_swordData.m_scale.x, 0.01f);
 
