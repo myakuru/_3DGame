@@ -10,13 +10,6 @@ public:
 	Katana() { m_typeID = TypeID; }
 	~Katana() override = default;
 
-	// 刀の行列はPlayerで設定される
-	void SetKatanaMatrix(const Math::Matrix& _matrix) { m_swordData.m_weaponTranslationMatrix = _matrix; }
-	void SetPlayerMatrix(const Math::Matrix& _matrix) { m_swordData.m_playerTranslationMatrix = _matrix; }
-
-	void SetHandKatanaMatrix(const Math::Matrix& _matrix) { m_swordHandData.m_weaponTranslationMatrix = _matrix; }
-	void SetPlayerHandMatrix(const Math::Matrix& _matrix) { m_swordHandData.m_playerTranslationMatrix = _matrix; }
-
 	std::shared_ptr<KdTrailPolygon> GetTrail() { return m_trailPolygon; }
 	std::shared_ptr<KdTrailPolygon> GetTrail2() { return m_trailPolygon2; }
 	std::shared_ptr<KdTrailPolygon> GetTrail3() { return m_trailPolygon3; }
@@ -33,8 +26,6 @@ private:
 	void DrawBright() override;
 	void UpdateHand();
 	void ImGuiInspector() override;
-	void JsonSave(nlohmann::json& _json) const override;
-	void JsonInput(const nlohmann::json& _json) override;
 
 	Math::Vector3 CatmullRom(const Math::Vector3& p0, const Math::Vector3& p1, const Math::Vector3& p2, const Math::Vector3& p3, float t)
 	{
@@ -67,7 +58,4 @@ private:
 	std::shared_ptr<KdModelData> m_trailModel = std::make_shared<KdModelData>(); // 軌跡ポリゴン用モデル
 
 	Math::Matrix m_trailRotation = Math::Matrix::Identity; // 軌跡ポリゴンの回転
-
-	Math::Vector3 m_katanaOffset = Math::Vector3::Zero;
-	Math::Vector3 m_katanaHandOffset = Math::Vector3::Zero; // 手に持つ刀のオフセット
 };

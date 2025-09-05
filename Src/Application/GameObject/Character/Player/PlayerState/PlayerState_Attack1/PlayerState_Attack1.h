@@ -11,7 +11,6 @@ private:
 	void StateStart() override;
 	void StateUpdate() override;
 	void StateEnd() override;
-	void UpdateKatanaPos();
 
 	PlayerState_Attack1Parameter m_attackParam; // 攻撃パラメータ
 

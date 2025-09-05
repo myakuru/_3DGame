@@ -47,25 +47,5 @@ void PlayerState_ChaegeAttack2::StateUpdate()
 
 void PlayerState_ChaegeAttack2::StateEnd()
 {
-	// カタナの取得
-	auto katana = m_player->GetKatana().lock();
-
-	if (!katana) return;
-	katana->SetHandKatanaMatrix(Math::Matrix::Identity);
-}
-
-void PlayerState_ChaegeAttack2::UpdateKatanaPos()
-{
-	// 手のワークノードを取得
-	auto handNode = m_player->GetModelWork()->FindWorkNode("VSB_10");
-
-	if (!handNode) return;
-
-	// カタナの取得
-	auto katana = m_player->GetKatana().lock();
-
-	if (!katana) return;
-
-	// プレイヤーに追尾する刀にするためにワークノードとプレイヤーのワールド変換を設定
-	katana->SetHandKatanaMatrix(handNode->m_worldTransform);
+	PlayerStateBase::StateEnd();
 }

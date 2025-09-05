@@ -12,7 +12,6 @@ private:
 	void StateUpdate() override;
 	void StateEnd() override;
 
-	void UpdateKatanaPos();
 	PlayerState_Attack2Parameter m_attackParam;
 
 

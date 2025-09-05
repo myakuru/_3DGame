@@ -24,7 +24,7 @@ void PlayerState_Idle::StateUpdate()
 {
 	m_player->SetAnimeSpeed(60.0f);
 
-	UpdateKatana();
+	UpdateKatanaPos();
 
 	// キーが押されたらRunステートへ
 	if (KeyboardManager::GetInstance().IsKeyPressed('W') ||
@@ -100,25 +100,4 @@ void PlayerState_Idle::StateEnd()
 {
 	m_player->AnimeSetFlg() = false;
 	m_player->m_isHit = false; // ダメージフラグをリセット
-}
-
-void PlayerState_Idle::ImGuiInspector()
-{
-	ImGui::Text("PlayerState_Idle");
-}
-
-void PlayerState_Idle::UpdateKatana()
-{
-	// Idle時はHipsノードをhandWorkNodeにセット
-	auto hipNode = m_player->GetModelWork()->FindWorkNode("Hips");
-
-	if (!hipNode) return;
-
-	// カタナの取得
-	auto katana = m_player->GetKatana().lock();
-
-	if (!katana) return;
-
-	// プレイヤーに追尾する刀にするためにワークノードとプレイヤーのワールド変換を設定
-	katana->SetKatanaMatrix(hipNode->m_worldTransform);
 }

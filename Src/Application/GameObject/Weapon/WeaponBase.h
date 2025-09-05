@@ -3,8 +3,18 @@
 class WeaponBase : public SelectDraw3dModel
 {
 public:
-	WeaponBase() = default;
+
+	static const uint32_t TypeID;
+
+	WeaponBase() { m_type = TypeID; }
 	~WeaponBase() override = default;
+
+	// 刀の行列はPlayerで設定される
+	virtual void SetKatanaMatrix(const Math::Matrix& _matrix) { m_swordData.m_weaponTranslationMatrix = _matrix; }
+	virtual void SetPlayerMatrix(const Math::Matrix& _matrix) { m_swordData.m_playerWorldMatrix = _matrix; }
+
+	virtual void SetHandKatanaMatrix(const Math::Matrix& _matrix) { m_swordHandData.m_weaponTranslationMatrix = _matrix; }
+	virtual void SetPlayerHandMatrix(const Math::Matrix& _matrix) { m_swordHandData.m_playerWorldMatrix = _matrix; }
 
 protected:
 
@@ -19,14 +29,18 @@ protected:
 	struct SwordData
 	{
 		Math::Matrix m_weaponMatrix = Math::Matrix::Identity;			// 刀の行列
-		Math::Matrix m_weaponTranslationMatrix = Math::Matrix::Identity;	// 刀の位置行列
-		Math::Matrix m_playerTranslationMatrix = Math::Matrix::Identity;// プレイヤーの位置行列
+		Math::Matrix m_weaponTranslationMatrix = Math::Matrix::Identity;// 刀の位置行列
+		Math::Matrix m_playerWorldMatrix = Math::Matrix::Identity;		// プレイヤーの位置行列
 		Math::Matrix m_weaponRotationMatrix = Math::Matrix::Identity;	// 刀の回転行列
 		Math::Matrix m_weaponScaleMatrix = Math::Matrix::Identity;		// 刀の拡大縮小行列
 		Math::Vector3 m_weaponDeg = Math::Vector3::Zero;				// 刀の角度
-		Math::Vector3 m_scale = { 1.0f,1.0f,1.0f };	// 刀の拡大縮小
+		Math::Vector3 m_scale = { 1.0f,1.0f,1.0f };						// 刀の拡大縮小
 	};
 
 	SwordData m_swordData;	// 刀のデータ
 	SwordData m_swordHandData;
+
+	Math::Vector3 m_katanaOffset = Math::Vector3::Zero;
+	Math::Vector3 m_katanaHandOffset = Math::Vector3::Zero; // 手に持つ刀のオフセット
+
 };

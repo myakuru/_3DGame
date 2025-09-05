@@ -121,28 +121,5 @@ void PlayerState_Attack1::StateUpdate()
 
 void PlayerState_Attack1::StateEnd()
 {
-	// カタナの取得
-	auto katana = m_player->GetKatana().lock();
-
-	if (!katana) return;
-
-	// カタナの行列をリセット
-	katana->SetHandKatanaMatrix(Math::Matrix::Identity);
-
-}
-
-void PlayerState_Attack1::UpdateKatanaPos()
-{
-	// 手のワークノードを取得
-	auto handNode = m_player->GetModelWork()->FindWorkNode("VSB_10");
-
-	if (!handNode) return;
-
-	// カタナの取得
-	auto katana = m_player->GetKatana().lock();
-
-	if (!katana) return;
-
-	// プレイヤーに追尾する刀にするためにワークノードとプレイヤーのワールド変換を設定
-	katana->SetHandKatanaMatrix(handNode->m_worldTransform);
+	PlayerStateBase::StateEnd();
 }

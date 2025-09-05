@@ -13,8 +13,6 @@ private:
 	void StateUpdate() override;
 	void StateEnd() override;
 
-	void UpdateKatana();
-
 	float m_chargeTime = 0.0f; // チャージ時間
 
 	bool m_isCharging = false; // チャージ中かどうか

@@ -328,6 +328,7 @@
     <ClInclude Include="Src\Application\GameObject\Utility\Time.h" />
     <ClInclude Include="Src\Application\GameObject\Weapon\Katana\Katana.h" />
     <ClInclude Include="Src\Application\GameObject\Weapon\WeaponBase.h" />
+    <ClInclude Include="Src\Application\GameObject\Weapon\WeaponKatanaScabbard\WeaponKatanaScabbard.h" />
     <ClInclude Include="Src\Application\GameObject\Winner\Winner.h" />
     <ClInclude Include="Src\Application\main.h" />
     <ClInclude Include="Src\Application\Scene\BaseScene\BaseScene.h" />
@@ -403,6 +404,7 @@
     <ClCompile Include="Src\Application\GameObject\Character\Enemy\EnemyState\EnemyState_Idle\EnemyState_Idle.cpp" />
     <ClCompile Include="Src\Application\GameObject\Character\Enemy\EnemyState\EnemyState_Run\EnemyState_Run.cpp" />
     <ClCompile Include="Src\Application\GameObject\Character\Player\Player.cpp" />
+    <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState.cpp" />
     <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_Attack1\PlayerState_Attack1.cpp" />
     <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_Attack2\PlayerState_Attack2.cpp" />
     <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_Attack\PlayerState_Attack.cpp" />
@@ -438,6 +440,7 @@
     <ClCompile Include="Src\Application\GameObject\SkySphere\SkySphere.cpp" />
     <ClCompile Include="Src\Application\GameObject\Weapon\Katana\Katana.cpp" />
     <ClCompile Include="Src\Application\GameObject\Weapon\WeaponBase.cpp" />
+    <ClCompile Include="Src\Application\GameObject\Weapon\WeaponKatanaScabbard\WeaponKatanaScabbard.cpp" />
     <ClCompile Include="Src\Application\GameObject\Winner\Winner.cpp" />
     <ClCompile Include="Src\Application\main.cpp" />
     <ClCompile Include="Src\Application\Scene\BaseScene\BaseScene.cpp" />

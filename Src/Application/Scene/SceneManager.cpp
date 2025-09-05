@@ -40,6 +40,7 @@
 #include"../GameObject/Effect/CurvesEffect/CurvesEffect.h"
 #include"../GameObject/Effect/MeshEffect/AttackEffect/AttackEffect.h"
 #include"../GameObject/Effect/BillBoardEffect/FieldEffect/FieldEffect.h"
+#include"../GameObject/Weapon/WeaponKatanaScabbard/WeaponKatanaScabbard.h"
 
 void SceneManager::Init()
 {
@@ -76,6 +77,7 @@ void SceneManager::Register() const
 	RegisterObject::GetInstance().Register<CurvesEffect>();
 	RegisterObject::GetInstance().Register<AttackEffect>();
 	RegisterObject::GetInstance().Register<FieldEffect>();
+	RegisterObject::GetInstance().Register<WeaponKatanaScabbard>();
 }
 
 void SceneManager::PreUpdate()

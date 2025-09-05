@@ -332,12 +332,6 @@ void KdStandardShader::DrawModel(KdModelWork& rModel, const Math::Matrix& mWorld
 		m_cb0_Obj.Write();
 	}
 
-	// オブジェクト単位の情報転送
-	if (m_dirtyCBObj)
-	{
-		m_cb0_Obj.Write();
-	}
-
 	auto& workNodes = rModel.GetNodes();
 	auto& dataNodes = data->GetOriginalNodes();
 

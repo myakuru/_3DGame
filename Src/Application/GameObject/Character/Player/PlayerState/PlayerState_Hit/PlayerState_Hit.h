@@ -14,8 +14,6 @@ private:
 
 	//void ImGuiInspector() override;
 
-	void UpdateKatana();
-
 	bool m_lButtonPressing = false;
 
 };

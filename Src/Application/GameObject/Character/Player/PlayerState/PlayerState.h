@@ -2,13 +2,19 @@
 #include"../../../../../MyFramework/State/StateBase/StateBase.h"
 #include"../PlayerConfig.h"
 #include"../Player.h"
-#include"../../../Enemy/Enemy.h"
+#include"../../Enemy/Enemy.h"
 
 class PlayerStateBase : public StateBase
 {
 public:
 	PlayerStateBase() = default;
 	~PlayerStateBase() override = default;
+
+	void StateStart() override;
+	void StateUpdate() override;
+	void StateEnd() override;
+
+	virtual void UpdateKatanaPos();
 
 	void SetPlayer(Player* player) { m_player = player; }
 

@@ -10,8 +10,6 @@ float4 main(VSOutput In) : SV_Target0
 	{
 		discard;
 	}
-
-	//In.UV.y = In.UV.y / g_fadeAmount;
 	
     // テクスチャカラー取得
 	float4 texColor = g_baseTex.Sample(g_ss, In.UV);

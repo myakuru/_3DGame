@@ -33,7 +33,7 @@ void PlayerState_Hit::StateUpdate()
 		return;
 	}
 
-	UpdateKatana();
+	UpdateKatanaPos();
 
 	if (KeyboardManager::GetInstance().IsKeyJustPressed(VK_LBUTTON))
 	{
@@ -47,25 +47,5 @@ void PlayerState_Hit::StateUpdate()
 
 void PlayerState_Hit::StateEnd()
 {
-	// カタナの取得
-	auto katana = m_player->GetKatana().lock();
-
-	if (!katana) return;
-	katana->SetHandKatanaMatrix(Math::Matrix::Identity);
-}
-
-void PlayerState_Hit::UpdateKatana()
-{
-	// 手のワークノードを取得
-	auto handNode = m_player->GetModelWork()->FindWorkNode("VSB_10");
-
-	if (!handNode) return;
-
-	// カタナの取得
-	auto katana = m_player->GetKatana().lock();
-
-	if (!katana) return;
-
-	// プレイヤーに追尾する刀にするためにワークノードとプレイヤーのワールド変換を設定
-	katana->SetHandKatanaMatrix(handNode->m_worldTransform);
+	PlayerStateBase::StateEnd();
 }

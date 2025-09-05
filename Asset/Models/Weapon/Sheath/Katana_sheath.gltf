@@ -1,0 +1,142 @@
+{
+	"asset":
+	{
+		"version": "2.0",
+		"generator": "Unreal Engine 5.5.4"
+	},
+	"scene": 0,
+	"accessors": [
+		{
+			"bufferView": 0,
+			"count": 816,
+			"type": "SCALAR",
+			"componentType": 5123
+		},
+		{
+			"bufferView": 1,
+			"count": 816,
+			"type": "VEC3",
+			"componentType": 5126,
+			"min": [ -0.0515740141, -0.0999353379, -0.0136199947 ],
+			"max": [ 0.0397844724, 0.88321656, 0.0136088543 ]
+		},
+		{
+			"bufferView": 2,
+			"count": 816,
+			"type": "VEC4",
+			"componentType": 5121,
+			"normalized": true
+		},
+		{
+			"bufferView": 3,
+			"count": 816,
+			"type": "VEC3",
+			"componentType": 5126
+		},
+		{
+			"bufferView": 4,
+			"count": 816,
+			"type": "VEC2",
+			"componentType": 5126
+		}
+	],
+	"buffers": [
+		{
+			"uri": "Katana_sheath.bin",
+			"byteLength": 31008
+		}
+	],
+	"bufferViews": [
+		{
+			"buffer": 0,
+			"byteLength": 1632,
+			"target": 34963
+		},
+		{
+			"buffer": 0,
+			"byteLength": 9792,
+			"byteOffset": 1632,
+			"target": 34962
+		},
+		{
+			"buffer": 0,
+			"byteLength": 3264,
+			"byteOffset": 11424,
+			"target": 34962
+		},
+		{
+			"buffer": 0,
+			"byteLength": 9792,
+			"byteOffset": 14688,
+			"target": 34962
+		},
+		{
+			"buffer": 0,
+			"byteLength": 6528,
+			"byteOffset": 24480,
+			"target": 34962
+		}
+	],
+	"images": [
+		{
+			"uri": "M_Katana_BaseColor.png"
+		}
+	],
+	"materials": [
+		{
+			"name": "M_Katana",
+			"pbrMetallicRoughness":
+			{
+				"baseColorTexture":
+				{
+					"index": 0
+				},
+				"metallicFactor": 0,
+				"roughnessFactor": 0.5
+			}
+		}
+	],
+	"meshes": [
+		{
+			"name": "Katana_sheath",
+			"primitives": [
+				{
+					"attributes":
+					{
+						"POSITION": 1,
+						"COLOR_0": 2,
+						"NORMAL": 3,
+						"TEXCOORD_0": 4
+					},
+					"indices": 0,
+					"material": 0
+				}
+			]
+		}
+	],
+	"nodes": [
+		{
+			"name": "Katana_sheath",
+			"mesh": 0
+		}
+	],
+	"samplers": [
+		{
+			"minFilter": 9987,
+			"magFilter": 9729
+		}
+	],
+	"scenes": [
+		{
+			"name": "ThirdPersonMap",
+			"nodes": [ 0 ]
+		}
+	],
+	"textures": [
+		{
+			"name": "M_Katana_BaseColor",
+			"sampler": 0,
+			"source": 0
+		}
+	]
+}

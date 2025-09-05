@@ -1,6 +1,5 @@
 ﻿#include "Katana.h"
 #include"../../../main.h"
-#include"../../../../Framework/Json/Json.h"
 #include"../../../Scene/SceneManager.h"
 
 // TypeIDの定義と初期化
@@ -54,8 +53,8 @@ void Katana::Update()
 		Math::Vector3 playerHipPos = m_swordData.m_weaponTranslationMatrix.Translation();
 		m_swordData.m_weaponTranslationMatrix.Translation(m_katanaOffset + playerHipPos);
 		m_swordData.m_weaponScaleMatrix = Math::Matrix::CreateScale(m_swordData.m_scale);
-		m_swordData.m_weaponMatrix = m_swordData.m_weaponScaleMatrix * m_swordData.m_weaponRotationMatrix * m_swordData.m_weaponTranslationMatrix * m_swordData.m_playerTranslationMatrix;
-		m_trailOffset = m_swordData.m_weaponScaleMatrix * m_swordData.m_weaponRotationMatrix * m_swordData.m_playerTranslationMatrix;
+		m_swordData.m_weaponMatrix = m_swordData.m_weaponScaleMatrix * m_swordData.m_weaponRotationMatrix * m_swordData.m_weaponTranslationMatrix * m_swordData.m_playerWorldMatrix;
+		m_trailOffset = m_swordData.m_weaponScaleMatrix * m_swordData.m_weaponRotationMatrix * m_swordData.m_playerWorldMatrix;
 	}
 
 	// 軌跡の先端位置を計算
@@ -92,12 +91,12 @@ void Katana::DrawLit()
 
 void Katana::DrawUnLit()
 {
-	KdShaderManager::Instance().m_StandardShader.DrawPolygon(*m_trailPolygon, Math::Matrix::Identity, { 1.0f,1.0f,1.0f,0.7f });
+	//KdShaderManager::Instance().m_StandardShader.DrawPolygon(*m_trailPolygon, Math::Matrix::Identity, { 1.0f,1.0f,1.0f,0.7f });
 }
 
 void Katana::DrawBright()
 {
-	KdShaderManager::Instance().m_StandardShader.DrawPolygon(*m_trailPolygon, Math::Matrix::Identity, { 0.0f,1.0f,1.0f,0.5f });
+	//KdShaderManager::Instance().m_StandardShader.DrawPolygon(*m_trailPolygon, Math::Matrix::Identity, { 0.0f,1.0f,1.0f,0.5f });
 	//KdShaderManager::Instance().m_StandardShader.DrawPolygon(*m_trailPolygon2, Math::Matrix::Identity, { 1.0f,1.0f,1.0f,0.7f });
 	//KdShaderManager::Instance().m_StandardShader.DrawPolygon(*m_trailPolygon3, Math::Matrix::Identity, { 1.0f,1.0f,1.0f,0.7f });
 }
@@ -111,8 +110,10 @@ void Katana::UpdateHand()
 		DirectX::XMConvertToRadians(m_swordHandData.m_weaponDeg.z)
 	);
 
-	m_swordHandData.m_weaponTranslationMatrix.Translation(m_swordHandData.m_weaponTranslationMatrix.Translation());
-	m_swordData.m_weaponMatrix = m_swordData.m_weaponScaleMatrix * m_swordHandData.m_weaponRotationMatrix *m_swordHandData.m_weaponTranslationMatrix * m_swordData.m_playerTranslationMatrix; 
+	m_swordData.m_weaponScaleMatrix = Math::Matrix::CreateScale(m_swordData.m_scale);
+
+	m_swordHandData.m_weaponTranslationMatrix.Translation(m_katanaOffset + m_swordHandData.m_weaponTranslationMatrix.Translation());
+	m_swordData.m_weaponMatrix = m_swordData.m_weaponScaleMatrix * m_swordHandData.m_weaponRotationMatrix *m_swordHandData.m_weaponTranslationMatrix * m_swordData.m_playerWorldMatrix; 
 
 }
 
@@ -138,22 +139,4 @@ void Katana::ImGuiInspector()
 	}
 
 	UpdateHand();
-}
-
-void Katana::JsonSave(nlohmann::json& _json) const
-{
-	WeaponBase::JsonSave(_json);
-	_json["weaponDeg"] = JSON_MANAGER.VectorToJson(m_swordData.m_weaponDeg);
-	_json["katanaOffset"] = JSON_MANAGER.VectorToJson(m_katanaOffset);
-	_json["scale"] = JSON_MANAGER.VectorToJson(m_swordData.m_scale);
-	_json["handWeaponDeg"] = JSON_MANAGER.VectorToJson(m_swordHandData.m_weaponDeg);
-}
-
-void Katana::JsonInput(const nlohmann::json& _json)
-{
-	WeaponBase::JsonInput(_json);
-	if (_json.contains("weaponDeg")) m_swordData.m_weaponDeg = JSON_MANAGER.JsonToVector(_json["weaponDeg"]);
-	if (_json.contains("katanaOffset")) m_katanaOffset = JSON_MANAGER.JsonToVector(_json["katanaOffset"]);
-	if (_json.contains("scale")) m_swordData.m_scale = JSON_MANAGER.JsonToVector(_json["scale"]);
-	if (_json.contains("handWeaponDeg")) m_swordHandData.m_weaponDeg = JSON_MANAGER.JsonToVector(_json["handWeaponDeg"]);
 }

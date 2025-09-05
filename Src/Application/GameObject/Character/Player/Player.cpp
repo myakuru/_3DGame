@@ -1,6 +1,7 @@
 ﻿#include "Player.h"
 #include"../../../Scene/SceneManager.h"
 #include"../../Weapon/Katana/Katana.h"
+#include"../../Weapon/WeaponKatanaScabbard/WeaponKatanaScabbard.h"
 #include"../../../main.h"
 #include"../../../../Framework/Json/Json.h"
 #include"../../Camera/PlayerCamera/PlayerCamera.h"
@@ -43,11 +44,16 @@ void Player::PreUpdate()
 
 	// カタナの取得
 	auto katana = m_katana.lock();
+	// 鞘の取得
+	auto scabbard = m_scabbard.lock();
 
 	if (!katana) return;
+	if (!scabbard) return;
 
 	katana->SetPlayerMatrix(m_mWorld);
 	katana->SetPlayerHandMatrix(m_mWorld);
+	scabbard->SetPlayerMatrix(m_mWorld);
+	scabbard->SetPlayerHandMatrix(m_mWorld);
 }
 
 void Player::SkirtUpdate()
@@ -59,10 +65,12 @@ void Player::Update()
 	SceneManager::Instance().GetObjectWeakPtr(m_playerCamera);
 	SceneManager::Instance().GetObjectWeakPtr(m_enemy);
 	SceneManager::Instance().GetObjectWeakPtr(m_katana);
+	SceneManager::Instance().GetObjectWeakPtr(m_scabbard);
 
 	if (m_playerCamera.expired()) return;
 	if (m_enemy.expired()) return;
 	if (m_katana.expired()) return;
+	if (m_scabbard.expired()) return;
 
 
 	KdGameObject::Update();

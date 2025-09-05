@@ -35,7 +35,7 @@ void PlayerState_BackWordAvoid::StateUpdate()
 		return;
 	}
 
-	UpdateKatana();
+	UpdateKatanaPos();
 
 	float dashSpeed = 1.0f;
 	
@@ -43,28 +43,9 @@ void PlayerState_BackWordAvoid::StateUpdate()
 
 }
 
-void PlayerState_BackWordAvoid::UpdateKatana()
-{
-	auto hipNode = m_player->GetModelWork()->FindDataNode("Hips");
-
-	if (!hipNode) return;
-
-	// カタナの取得
-	auto katana = m_player->GetKatana().lock();
-
-	if (!katana) return;
-
-	// プレイヤーに追尾する刀にするためにワークノードとプレイヤーのワールド変換を設定
-	katana->SetKatanaMatrix(hipNode->m_worldTransform);
-}
-
 void PlayerState_BackWordAvoid::StateEnd()
 {
-	// カタナの取得
-	auto katana = m_player->GetKatana().lock();
-
-	if (!katana) return;
-	katana->SetHandKatanaMatrix(Math::Matrix::Identity);
+	PlayerStateBase::StateEnd();
 
 	m_player->SetAvoidFlg(false);
 	m_player->SetAvoidStartTime(0.0f); // 現在の時間を記録

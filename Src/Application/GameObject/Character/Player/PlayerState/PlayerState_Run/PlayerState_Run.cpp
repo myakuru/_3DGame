@@ -8,7 +8,7 @@
 
 void PlayerState_Run::StateStart()
 {
-	auto anime = m_player->GetAnimeModel()->GetAnimation("RunFast");
+	auto anime = m_player->GetAnimeModel()->GetAnimation("newRun");
 	m_player->GetAnimator()->AnimationBlend(anime, 10.0f);
 	m_player->AnimeSetFlg() = true;
 }
@@ -60,27 +60,7 @@ void PlayerState_Run::StateUpdate()
 
 void PlayerState_Run::StateEnd()
 {
-	// カタナの取得
-	auto katana = m_player->GetKatana().lock();
-
-	if (!katana) return;
-	katana->SetHandKatanaMatrix(Math::Matrix::Identity);
+	PlayerStateBase::StateEnd();
 
 	m_player->m_isHit = false; // ダメージフラグをリセット
-}
-
-void PlayerState_Run::UpdateKatanaPos()
-{
-	// Idle時はHipsノードをhandWorkNodeにセット
-	auto hipNode = m_player->GetModelWork()->FindDataNode("Hips");
-
-	if (!hipNode) return;
-
-	// カタナの取得
-	auto katana = m_player->GetKatana().lock();
-
-	if (!katana) return;
-
-	// プレイヤーに追尾する刀にするためにワークノードとプレイヤーのワールド変換を設定
-	katana->SetKatanaMatrix(hipNode->m_worldTransform);
 }

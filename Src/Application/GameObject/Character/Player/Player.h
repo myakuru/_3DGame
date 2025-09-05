@@ -3,6 +3,7 @@
 #include"PlayerConfig.h"
 class Enemy;
 class Katana;
+class WeaponKatanaScabbard;
 class PlayerStateBase;
 struct PlayerStatus
 {
@@ -40,6 +41,7 @@ public:
 	KdModelWork* GetModelWork() { return m_modelWork.get(); }
 
 	const std::weak_ptr<Katana>& GetKatana() const { return m_katana; }
+	const std::weak_ptr<WeaponKatanaScabbard>& GetScabbard() const { return m_scabbard; }
 	const std::weak_ptr<Enemy>& GetEnemy() const { return m_enemy; }
 
 	PlayerConfig& GetPlayerConfig() { return m_playerConfig; }
@@ -70,6 +72,8 @@ private:
 	Math::Vector3 m_lastMoveDirection = Math::Vector3::Zero;
 
 	std::weak_ptr<Katana>	m_katana;	// カタナの参照
+	std::weak_ptr<WeaponKatanaScabbard>	m_scabbard;	// カタナの参照
+
 	std::weak_ptr<Enemy>	m_enemy;	// 敵の参照
 
 	struct KdModelWork::Node* m_armatureNode = nullptr; // ヒップノード
