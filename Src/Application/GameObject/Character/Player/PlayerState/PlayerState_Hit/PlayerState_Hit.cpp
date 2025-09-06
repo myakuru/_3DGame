@@ -11,15 +11,6 @@ void PlayerState_Hit::StateStart()
 	m_player->AnimeSetFlg() = true;
 
 	m_player->m_onceEffect = false;
-
-	// 攻撃開始時に直前の移動方向を保存
-	m_attackDirection = m_player->GetLastMoveDirection();
-
-	// 攻撃開始時に向きを合わせる
-	if (m_attackDirection != Math::Vector3::Zero)
-	{
-		m_player->UpdateQuaternion(m_attackDirection);
-	}
 }
 
 void PlayerState_Hit::StateUpdate()

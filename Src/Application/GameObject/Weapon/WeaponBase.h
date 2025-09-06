@@ -10,10 +10,10 @@ public:
 	~WeaponBase() override = default;
 
 	// 刀の行列はPlayerで設定される
-	virtual void SetKatanaMatrix(const Math::Matrix& _matrix) { m_swordData.m_weaponTranslationMatrix = _matrix; }
+	virtual void SetKatanaMatrix(const Math::Matrix& _matrix) { m_swordData.m_weaponBonesMatrix = _matrix; }
 	virtual void SetPlayerMatrix(const Math::Matrix& _matrix) { m_swordData.m_playerWorldMatrix = _matrix; }
 
-	virtual void SetHandKatanaMatrix(const Math::Matrix& _matrix) { m_swordHandData.m_weaponTranslationMatrix = _matrix; }
+	virtual void SetHandKatanaMatrix(const Math::Matrix& _matrix) { m_swordHandData.m_weaponBonesMatrix = _matrix; }
 	virtual void SetPlayerHandMatrix(const Math::Matrix& _matrix) { m_swordHandData.m_playerWorldMatrix = _matrix; }
 
 protected:
@@ -29,7 +29,7 @@ protected:
 	struct SwordData
 	{
 		Math::Matrix m_weaponMatrix = Math::Matrix::Identity;			// 刀の行列
-		Math::Matrix m_weaponTranslationMatrix = Math::Matrix::Identity;// 刀の位置行列
+		Math::Matrix m_weaponBonesMatrix = Math::Matrix::Identity;// 刀の位置行列
 		Math::Matrix m_playerWorldMatrix = Math::Matrix::Identity;		// プレイヤーの位置行列
 		Math::Matrix m_weaponRotationMatrix = Math::Matrix::Identity;	// 刀の回転行列
 		Math::Matrix m_weaponScaleMatrix = Math::Matrix::Identity;		// 刀の拡大縮小行列

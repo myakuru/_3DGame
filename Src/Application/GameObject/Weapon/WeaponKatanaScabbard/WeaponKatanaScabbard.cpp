@@ -19,9 +19,9 @@ void WeaponKatanaScabbard::UpdateMatrix()
 
 	m_swordData.m_weaponScaleMatrix = Math::Matrix::CreateScale(m_swordData.m_scale);
 
-	m_swordHandData.m_weaponTranslationMatrix.Translation(m_swordHandData.m_weaponTranslationMatrix.Translation());
+	m_swordHandData.m_weaponBonesMatrix.Translation(m_swordHandData.m_weaponBonesMatrix.Translation());
 	Math::Matrix transOffsetMat = Math::Matrix::CreateTranslation(m_katanaOffset);
-	m_swordData.m_weaponMatrix = transOffsetMat * m_swordData.m_weaponScaleMatrix * m_swordHandData.m_weaponRotationMatrix * m_swordHandData.m_weaponTranslationMatrix * m_swordData.m_playerWorldMatrix;
+	m_swordData.m_weaponMatrix = transOffsetMat * m_swordData.m_weaponScaleMatrix * m_swordHandData.m_weaponRotationMatrix * m_swordHandData.m_weaponBonesMatrix * m_swordData.m_playerWorldMatrix;
 }
 
 void WeaponKatanaScabbard::ImGuiInspector()

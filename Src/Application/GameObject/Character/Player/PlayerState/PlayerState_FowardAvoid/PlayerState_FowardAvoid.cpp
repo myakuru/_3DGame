@@ -3,10 +3,11 @@
 #include"../../../../../main.h"
 
 #include"../../../../Weapon/Katana/Katana.h"
+#include"../../../../Weapon/WeaponKatanaScabbard/WeaponKatanaScabbard.h"
 
 void PlayerState_ForwardAvoid::StateStart()
 {
-	auto anime = m_player->GetAnimeModel()->GetAnimation("AvoidFoward");
+	auto anime = m_player->GetAnimeModel()->GetAnimation("AvoidBackward");
 	m_player->GetAnimator()->AnimationBlend(anime, 10.0f, false);
 	m_player->AnimeSetFlg() = true;
 
@@ -49,4 +50,24 @@ void PlayerState_ForwardAvoid::StateEnd()
 	m_player->SetAvoidFlg(false);
 	m_player->SetAvoidStartTime(0.0f);
 
+}
+
+void PlayerState_ForwardAvoid::UpdateKatanaPos()
+{
+	// 左手のワークノードを取得
+	auto leftHandNode = m_player->GetModelWork()->FindWorkNode("VSB_9");
+
+	if (!leftHandNode) return;
+
+	// カタナの取得
+	auto katana = m_player->GetKatana().lock();
+	// 鞘の取得
+	auto saya = m_player->GetScabbard().lock();
+
+	if (!katana) return;
+	if (!saya) return;
+
+	// プレイヤーに追尾する刀にするためにワークノードとプレイヤーのワールド変換を設定
+	katana->SetHandKatanaMatrix(leftHandNode->m_worldTransform);
+	saya->SetHandKatanaMatrix(leftHandNode->m_worldTransform);
 }

@@ -12,7 +12,14 @@ void FieldEffect::Update()
 
 	if (!spCamera) return;
 
-	Math::Matrix rot = spCamera->GetRotationMatrix().CreateBillboard(m_position, spCamera->GetPos(), spCamera->GetPos().Up);
+	// ビルボード行列
+	Math::Matrix rot = Math::Matrix::CreateBillboard
+	(
+		m_position,													// オブジェクトの位置
+		spCamera->GetCamera()->GetCameraMatrix().Translation(),		// カメラの位置
+		Math::Vector3::UnitY										// カメラの上方向
+	);
 
-	m_mWorld = Math::Matrix::CreateScale(m_scale) * rot * Math::Matrix::CreateTranslation(m_position);
+	// 最終的なワールド行列
+	m_mWorld = Math::Matrix::CreateScale(m_scale) * rot;
 }

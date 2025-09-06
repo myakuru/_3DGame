@@ -16,6 +16,8 @@ public:
 
 	bool& EnableTrail() { return m_enableTrail; }
 
+	void SetNowAttackState(bool state) { m_isAttackState = state; }
+
 
 private:
 
@@ -47,6 +49,7 @@ private:
 
 	bool m_enableTrail = true;
 
+	bool m_isAttackState = false; // 攻撃中かどうか
 
 	Math::Matrix m_trailOffset = Math::Matrix::Identity; // 軌跡ポリゴンのオフセット
 

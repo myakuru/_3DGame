@@ -11,29 +11,7 @@ void PlayerState_ChaegeAttack2::StateStart()
 	m_player->GetAnimator()->AnimationBlend(anime, 10.0f, false);
 	m_player->AnimeSetFlg() = true;
 
-	// 敵の方向ベクトルを計算
-	auto enemy = m_player->GetEnemy().lock();
-	if (enemy)
-	{
-		Math::Vector3 playerPos = m_player->GetPos();
-		Math::Vector3 enemyPos = enemy->GetPos();
-		m_attackDirection = enemyPos - playerPos;
-		m_attackDirection.y = 0.0f;
-		if (m_attackDirection != Math::Vector3::Zero)
-		{
-			m_attackDirection.Normalize();
-			m_player->UpdateQuaternionDirect(m_attackDirection); // カメラ回転を掛けない
-		}
-	}
-	else
-	{
-		// 敵がいない場合は直前の移動方向
-		m_attackDirection = m_player->GetLastMoveDirection();
-		if (m_attackDirection != Math::Vector3::Zero)
-		{
-			m_player->UpdateQuaternionDirect(m_attackDirection);
-		}
-	}
+	PlayerStateBase::StateStart();
 
 	m_attackParam = m_player->GetPlayerConfig().GetAttack2Param();
 	m_attackParam.m_dashTimer = 0.0f;

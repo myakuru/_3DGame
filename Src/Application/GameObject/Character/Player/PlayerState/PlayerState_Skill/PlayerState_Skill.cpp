@@ -6,18 +6,11 @@
 
 void PlayerState_Skill::StateStart()
 {
-	auto anime = m_player->GetAnimeModel()->GetAnimation("Skill");
+	auto anime = m_player->GetAnimeModel()->GetAnimation("Eskill");
 	m_player->GetAnimator()->AnimationBlend(anime, 10.0f, false);
 	m_player->AnimeSetFlg() = true;
 
-	// 攻撃開始時に直前の移動方向を保存
-	m_attackDirection = m_player->GetLastMoveDirection();
-
-	// 攻撃開始時に向きを合わせる
-	if (m_attackDirection != Math::Vector3::Zero)
-	{
-		m_player->UpdateQuaternion(m_attackDirection);
-	}
+	PlayerStateBase::StateStart();
 
 	m_attackParam = m_player->GetPlayerConfig().GetAttack2Param();
 	m_attackParam.m_dashTimer = 0.0f;

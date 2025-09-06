@@ -4,6 +4,37 @@
 
 void PlayerStateBase::StateStart()
 {
+	// 敵の方向ベクトルを計算
+	auto enemy = m_player->GetEnemy().lock();
+	if (enemy)
+	{
+		Math::Vector3 playerPos = m_player->GetPos();
+		Math::Vector3 enemyPos = enemy->GetPos();
+		m_attackDirection = enemyPos - playerPos;
+		m_attackDirection.y = 0.0f;
+		if (m_attackDirection != Math::Vector3::Zero)
+		{
+			m_attackDirection.Normalize();
+			m_player->UpdateQuaternionDirect(m_attackDirection); // カメラ回転を掛けない
+		}
+	}
+	else
+	{
+		// 敵がいない場合は直前の移動方向
+		m_attackDirection = m_player->GetLastMoveDirection();
+		if (m_attackDirection != Math::Vector3::Zero)
+		{
+			m_player->UpdateQuaternionDirect(m_attackDirection);
+		}
+	}
+
+	// カタナの取得
+	auto katana = m_player->GetKatana().lock();
+
+	if (!katana) return;
+
+	katana->SetNowAttackState(false);
+
 }
 
 void PlayerStateBase::StateUpdate()
@@ -17,6 +48,7 @@ void PlayerStateBase::StateEnd()
 
 	if (!katana) return;
 	katana->SetHandKatanaMatrix(Math::Matrix::Identity);
+	katana->SetNowAttackState(false);
 }
 
 void PlayerStateBase::UpdateKatanaPos()

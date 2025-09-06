@@ -38,28 +38,38 @@ void Katana::Init()
 void Katana::Update()
 {
 	// 剣の行列計算（元の処理そのまま）
-	if (m_swordHandData.m_weaponTranslationMatrix != Math::Matrix::Identity)
+	if (!m_isAttackState)
 	{
 		UpdateHand();
 	}
 	else
 	{
-		m_swordData.m_weaponRotationMatrix = Math::Matrix::CreateFromYawPitchRoll(
+		/*m_swordData.m_weaponRotationMatrix = Math::Matrix::CreateFromYawPitchRoll
+		(
+			DirectX::XMConvertToRadians(m_swordData.m_weaponDeg.y),
+			DirectX::XMConvertToRadians(m_swordData.m_weaponDeg.x),
+			DirectX::XMConvertToRadians(m_swordData.m_weaponDeg.z)
+		);*/
+
+		m_swordData.m_weaponRotationMatrix = m_swordData.m_weaponBonesMatrix.CreateFromYawPitchRoll
+		(
 			DirectX::XMConvertToRadians(m_swordData.m_weaponDeg.y),
 			DirectX::XMConvertToRadians(m_swordData.m_weaponDeg.x),
 			DirectX::XMConvertToRadians(m_swordData.m_weaponDeg.z)
 		);
 
-		Math::Vector3 playerHipPos = m_swordData.m_weaponTranslationMatrix.Translation();
-		m_swordData.m_weaponTranslationMatrix.Translation(m_katanaHandOffset + playerHipPos);
 		m_swordData.m_weaponScaleMatrix = Math::Matrix::CreateScale(m_swordData.m_scale);
-		m_swordData.m_weaponMatrix = m_swordData.m_weaponScaleMatrix * m_swordData.m_weaponRotationMatrix * m_swordData.m_weaponTranslationMatrix * m_swordData.m_playerWorldMatrix;
+
+		m_swordData.m_weaponBonesMatrix.Translation(m_swordHandData.m_weaponBonesMatrix.Translation());
+		Math::Matrix transOffset = Math::Matrix::CreateTranslation(m_katanaHandOffset);
+		m_swordData.m_weaponMatrix = transOffset * m_swordData.m_weaponScaleMatrix * m_swordData.m_weaponRotationMatrix * m_swordHandData.m_weaponBonesMatrix * m_swordHandData.m_playerWorldMatrix;
+
 		//m_trailOffset = m_swordData.m_weaponScaleMatrix * m_swordData.m_weaponRotationMatrix * m_swordData.m_playerWorldMatrix;
 	}
 
 	// 軌跡の先端位置を計算
 	Math::Vector3 tip1, tip2, tip3;
-	if (m_swordHandData.m_weaponTranslationMatrix != Math::Matrix::Identity)
+	if (m_swordHandData.m_weaponBonesMatrix != Math::Matrix::Identity)
 	{
 		tip1 = m_swordData.m_weaponMatrix.Translation() + m_swordData.m_weaponMatrix.Up() * 1.0f;
 		tip2 = m_swordData.m_weaponMatrix.Translation() + m_swordData.m_weaponMatrix.Up() * 1.0f;
@@ -112,9 +122,9 @@ void Katana::UpdateHand()
 
 	m_swordData.m_weaponScaleMatrix = Math::Matrix::CreateScale(m_swordData.m_scale);
 
-	m_swordHandData.m_weaponTranslationMatrix.Translation(m_swordHandData.m_weaponTranslationMatrix.Translation());
+	m_swordHandData.m_weaponBonesMatrix.Translation(m_swordHandData.m_weaponBonesMatrix.Translation());
 	Math::Matrix transOffset = Math::Matrix::CreateTranslation(m_katanaOffset);
-	m_swordData.m_weaponMatrix = transOffset * m_swordData.m_weaponScaleMatrix * m_swordHandData.m_weaponRotationMatrix *m_swordHandData.m_weaponTranslationMatrix * m_swordData.m_playerWorldMatrix;
+	m_swordData.m_weaponMatrix = transOffset * m_swordData.m_weaponScaleMatrix * m_swordHandData.m_weaponRotationMatrix *m_swordHandData.m_weaponBonesMatrix * m_swordData.m_playerWorldMatrix;
 
 }
 
