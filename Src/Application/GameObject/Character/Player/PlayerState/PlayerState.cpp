@@ -54,7 +54,7 @@ void PlayerStateBase::StateEnd()
 void PlayerStateBase::UpdateKatanaPos()
 {
 	// 右手のワークノードを取得
-	auto rightHandNode = m_player->GetModelWork()->FindWorkNode("VSB_10");
+	auto rightHandNode = m_player->GetModelWork()->FindWorkNode("VSB_24");
 	// 左手のワークノードを取得
 	auto leftHandNode = m_player->GetModelWork()->FindWorkNode("VSB_9");
 
@@ -71,5 +71,25 @@ void PlayerStateBase::UpdateKatanaPos()
 
 	// プレイヤーに追尾する刀にするためにワークノードとプレイヤーのワールド変換を設定
 	katana->SetHandKatanaMatrix(rightHandNode->m_worldTransform);
+	saya->SetHandKatanaMatrix(leftHandNode->m_worldTransform);
+}
+
+void PlayerStateBase::UpdateUnsheathed()
+{
+	// 左手のワークノードを取得
+	auto leftHandNode = m_player->GetModelWork()->FindWorkNode("VSB_9");
+
+	if (!leftHandNode) return;
+
+	// カタナの取得
+	auto katana = m_player->GetKatana().lock();
+	// 鞘の取得
+	auto saya = m_player->GetScabbard().lock();
+
+	if (!katana) return;
+	if (!saya) return;
+
+	// プレイヤーに追尾する刀にするためにワークノードとプレイヤーのワールド変換を設定
+	katana->SetHandKatanaMatrix(leftHandNode->m_worldTransform);
 	saya->SetHandKatanaMatrix(leftHandNode->m_worldTransform);
 }

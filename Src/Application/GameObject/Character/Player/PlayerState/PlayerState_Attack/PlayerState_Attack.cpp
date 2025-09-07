@@ -1,14 +1,15 @@
 ﻿#include "PlayerState_Attack.h"
 #include"../../../../../main.h"
 #include"../PlayerState_Attack1/PlayerState_Attack1.h"
-#include"../PlayerState_Idle/PlayerState_Idle.h"
+#include"../PlayerState_Sheathing-of-Katana/PlayerState_Sheathing-of-Katana.h"
 #include"../PlayerState_Run/PlayerState_Run.h"
 #include"../../../../Weapon/Katana/Katana.h"
+#include"../../../../Weapon/WeaponKatanaScabbard/WeaponKatanaScabbard.h"
 
 void PlayerState_Attack::StateStart()
 {
 	auto anime = m_player->GetAnimeModel()->GetAnimation("Attack");
-	m_player->GetAnimator()->AnimationBlend(anime, 10.0f, false);
+	m_player->GetAnimator()->AnimationBlend(anime, 0.1f, false);
 	m_player->AnimeSetFlg() = true;
 
 	PlayerStateBase::StateStart();
@@ -17,19 +18,10 @@ void PlayerState_Attack::StateStart()
 	m_attackParam.m_dashTimer = 0.0f;
 
 	m_player->m_onceEffect = false;
-
-	// カタナの取得
-	auto katana = m_player->GetKatana().lock();
-
-	if (!katana) return;
-
-	katana->SetNowAttackState(true);
 }
 
 void PlayerState_Attack::StateUpdate()
 {
-	UpdateKatanaPos();
-
 	m_player->GetEnemy().lock()->GetPos();
 
 	float deltaTime = Application::Instance().GetDeltaTime();
@@ -43,18 +35,14 @@ void PlayerState_Attack::StateUpdate()
 		m_time = 0.0f;
 	}
 
-	m_player->SetAnimeSpeed(100.01f);
+	float time = m_player->GetAnimator()->GetTime();
+
+	m_player->SetAnimeSpeed(60.01f);
 
 	if (m_player->GetAnimator()->IsAnimationEnd())
 	{
-		auto idleState = std::make_shared<PlayerState_Idle>();
-		m_player->ChangeState(idleState);
-		return;
-	}
-	else if (m_player->GetMoving() && m_player->GetAnimator()->IsAnimationEnd())
-	{
-		auto idleState = std::make_shared<PlayerState_Run>();
-		m_player->ChangeState(idleState);
+		auto state = std::make_shared<PlayerState_SheathKatana>();
+		m_player->ChangeState(state);
 		return;
 	}
 
@@ -84,6 +72,23 @@ void PlayerState_Attack::StateUpdate()
 	{
 		// 移動を止める
 		m_player->SetIsMoving(Math::Vector3::Zero);
+	}
+
+
+	// カタナの取得
+	auto katana = m_player->GetKatana().lock();
+
+	if (!katana) return;
+
+	if (time >= 10.0f)
+	{
+		katana->SetNowAttackState(true);
+		UpdateKatanaPos();
+	}
+	else
+	{
+		katana->SetNowAttackState(false);
+		UpdateUnsheathed();
 	}
 }
 

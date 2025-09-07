@@ -271,6 +271,9 @@
     <Filter Include="Src\Application\GameObject\Weapon\WeaponKatanaScabbard">
       <UniqueIdentifier>{28aeaa5b-8dd3-4316-8eda-58de5e5912e0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_Sheathing-of-Katana">
+      <UniqueIdentifier>{e5e40de1-e20d-47c9-9c5d-327a39fef0e3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -642,6 +645,9 @@
     <ClInclude Include="Src\Application\GameObject\Weapon\WeaponKatanaScabbard\WeaponKatanaScabbard.h">
       <Filter>Src\Application\GameObject\Weapon\WeaponKatanaScabbard</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_Sheathing-of-Katana\PlayerState_Sheathing-of-Katana.h">
+      <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_Sheathing-of-Katana</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -955,6 +961,9 @@
     </ClCompile>
     <ClCompile Include="Src\Application\GameObject\Weapon\WeaponKatanaScabbard\WeaponKatanaScabbard.cpp">
       <Filter>Src\Application\GameObject\Weapon\WeaponKatanaScabbard</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_Sheathing-of-Katana\PlayerState_Sheathing-of-Katana.cpp">
+      <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_Sheathing-of-Katana</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

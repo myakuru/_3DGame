@@ -15,6 +15,7 @@ public:
 	void StateEnd() override;
 
 	virtual void UpdateKatanaPos();
+	virtual void UpdateUnsheathed();
 
 	void SetPlayer(Player* player) { m_player = player; }
 

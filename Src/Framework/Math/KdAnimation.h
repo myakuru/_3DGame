@@ -52,7 +52,6 @@ public:
 	{
 		m_spAnimation = rData;
 		m_isLoop = isLoop;
-
 		m_time = 0.0f;
 	}
 

@@ -237,6 +237,7 @@ void KdAnimator::AnimationBlend(const std::shared_ptr<KdAnimationData>& nextAnim
 {
 	m_spNextAnimation = nextAnim;
 	m_blendTime = 0.0f;
+	m_time = 0.0f;
 	m_blendDuration = duration;
 	m_isBlending = true;
 	m_nextIsLoop = nextIsLoop;
