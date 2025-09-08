@@ -1,13 +1,13 @@
 ﻿#pragma once
 #include"../MeshEffectBase.h"
-class AttackEffect : public MeshEffectBase
+class AttackEffect_second : public MeshEffectBase
 {
 public:
-
+	
 	static const uint32_t TypeID;
 
-	AttackEffect() { m_type = TypeID; }
-	~AttackEffect() override = default;
+	AttackEffect_second() { m_type = TypeID; }
+	~AttackEffect_second() override = default;
 
 	void EffectReset();
 

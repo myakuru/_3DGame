@@ -1,25 +1,29 @@
-﻿#include "AttackEffect.h"
+﻿#include"AttackEffect_second.h"
 #include"../../../../main.h"
 #include"../../../../Scene/SceneManager.h"
 #include"../../../../GameObject/Character/Player/Player.h"
-#include"../../../../../Framework/Json/Json.h"
 
-const uint32_t AttackEffect::TypeID = KdGameObject::GenerateTypeID();
+const uint32_t AttackEffect_second::TypeID = KdGameObject::GenerateTypeID();
 
-void AttackEffect::EffectReset()
+void  AttackEffect_second::EffectReset()
 {
 	m_time = 0.0f;      // リセット
 	m_alphaFade = 1.0f; // アルファもリセット
 }
 
-void AttackEffect::Init()
+void AttackEffect_second::Init()
 {
 	MeshEffectBase::Init();
 	EffectReset();
 }
 
-void AttackEffect::Update()
+void AttackEffect_second::Update()
 {
+	if (KeyboardManager::GetInstance().IsKeyJustPressed('F'))
+	{
+		Init();
+	}
+
 	// 基底にプレイヤーの取得を任せる
 	MeshEffectBase::Update();
 
@@ -44,7 +48,7 @@ void AttackEffect::Update()
 	m_mWorld.Translation(m_position + spPlayer->GetPos() + forward * m_distance);
 }
 
-void AttackEffect::EffectControl()
+void AttackEffect_second::EffectControl()
 {
 	float deltaTime = Application::Instance().GetDeltaTime();
 
@@ -62,7 +66,7 @@ void AttackEffect::EffectControl()
 	}
 }
 
-void AttackEffect::DrawEffect()
+void AttackEffect_second::DrawEffect()
 {
 	// ここでエフェクトの色やグラデーションの設定も可能
 	KdShaderManager::Instance().m_StandardShader.SetFadeAmount(m_fadeAmount, m_outColor, m_inColor, m_colorGradation, m_alphaFade);

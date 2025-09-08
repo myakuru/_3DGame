@@ -5,6 +5,8 @@
 #include"../PlayerState_Run/PlayerState_Run.h"
 #include"../../../../Weapon/Katana/Katana.h"
 #include"../../../../Weapon/WeaponKatanaScabbard/WeaponKatanaScabbard.h"
+#include"../../../../../Scene/SceneManager.h"
+#include"../../../../Effect/MeshEffect/AttackEffect/AttackEffect.h"
 
 void PlayerState_Attack::StateStart()
 {
@@ -18,6 +20,7 @@ void PlayerState_Attack::StateStart()
 	m_attackParam.m_dashTimer = 0.0f;
 
 	m_player->m_onceEffect = false;
+	m_once = false;
 }
 
 void PlayerState_Attack::StateUpdate()
@@ -37,7 +40,7 @@ void PlayerState_Attack::StateUpdate()
 
 	float time = m_player->GetAnimator()->GetTime();
 
-	m_player->SetAnimeSpeed(60.01f);
+	m_player->SetAnimeSpeed(80.0f);
 
 	if (m_player->GetAnimator()->IsAnimationEnd())
 	{
@@ -87,12 +90,26 @@ void PlayerState_Attack::StateUpdate()
 	}
 	else
 	{
+		//m_player->SetAnimeSpeed(0.01f);
 		katana->SetNowAttackState(false);
 		UpdateUnsheathed();
+	}
+
+	SceneManager::Instance().GetObjectWeakPtr(m_attackEffect);
+
+	auto attackEffect = m_attackEffect.lock();
+
+	if (!attackEffect) return;
+
+	if (!m_once)
+	{
+		attackEffect->EffectReset();
+		m_once = true;
 	}
 }
 
 void PlayerState_Attack::StateEnd()
 {
 	PlayerStateBase::StateEnd();
+	m_once = false;
 }

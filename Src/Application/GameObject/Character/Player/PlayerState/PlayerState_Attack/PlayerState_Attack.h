@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include"../PlayerState.h"
+class AttackEffect;
 class PlayerState_Attack :public PlayerStateBase
 {
 public:
@@ -14,6 +15,7 @@ private:
 
 	PlayerState_Attack2Parameter m_attackParam;
 
+	std::weak_ptr<AttackEffect> m_attackEffect;
 
-	bool m_flag = false; // 攻撃フラグ
+	bool m_once = false;
 };

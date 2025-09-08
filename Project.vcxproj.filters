@@ -274,6 +274,9 @@
     <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_Sheathing-of-Katana">
       <UniqueIdentifier>{e5e40de1-e20d-47c9-9c5d-327a39fef0e3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\GameObject\Effect\MeshEffect\AttackEffect_second">
+      <UniqueIdentifier>{d21d4134-2dbd-4ff0-b16a-dd0fa6a1e6ef}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -648,6 +651,9 @@
     <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_Sheathing-of-Katana\PlayerState_Sheathing-of-Katana.h">
       <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_Sheathing-of-Katana</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Effect\MeshEffect\AttackEffect_second\AttackEffect_second.h">
+      <Filter>Src\Application\GameObject\Effect\MeshEffect\AttackEffect_second</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -964,6 +970,9 @@
     </ClCompile>
     <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_Sheathing-of-Katana\PlayerState_Sheathing-of-Katana.cpp">
       <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_Sheathing-of-Katana</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Effect\MeshEffect\AttackEffect_second\AttackEffect_second.cpp">
+      <Filter>Src\Application\GameObject\Effect\MeshEffect\AttackEffect_second</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

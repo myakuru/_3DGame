@@ -17,7 +17,7 @@ void PlayerState_SheathKatana::StateStart()
 
 void PlayerState_SheathKatana::StateUpdate()
 {
-	m_player->SetAnimeSpeed(30.01f);
+	m_player->SetAnimeSpeed(80.0f);
 
 	if (m_player->GetAnimator()->IsAnimationEnd())
 	{
@@ -32,9 +32,9 @@ void PlayerState_SheathKatana::StateUpdate()
 	katana->SetNowAttackState(true);
 	float time = m_player->GetAnimator()->GetTime();
 
-	if (time <= 60.0f)
+	if (time <= 70.0f)
 	{
-		m_player->SetAnimeSpeed(1.0f);
+		//m_player->SetAnimeSpeed(1.0f);
 		katana->SetNowAttackState(true);
 		UpdateKatanaPos();
 	}
