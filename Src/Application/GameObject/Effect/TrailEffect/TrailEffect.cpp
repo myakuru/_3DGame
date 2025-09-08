@@ -11,7 +11,7 @@ void TrailEffect::Init()
 	KdGameObject::Init();
 	m_trailPolygon = std::make_shared<KdTrailPolygon>();
 	m_trailPolygon->ClearPoints();
-	m_trailPolygon->SetLength(30);
+	m_trailPolygon->SetLength(20);
 	m_trailTex = KdAssets::Instance().m_textures.GetData("Asset/Textures/NA_Basic hit_006.png");
 	m_trailPolygon->SetMaterial(m_trailTex);
 	m_trailPolygon->SetPattern(KdTrailPolygon::Trail_Pattern::eBillboard);
@@ -38,12 +38,15 @@ void TrailEffect::Update()
 	if (!katana) return;
 
 	m_katanaMat = katana->GetKatanaMatrix();
+	m_trailRot = katana->GetKatanaRotation();
 
 	Math::Vector3 tip1 = m_katanaMat.Translation() + m_katanaMat.Backward() * 100.0f;
 
+	Math::Matrix inv = Math::Matrix::CreateRotationY(DirectX::XMConvertToRadians(90.0f));
+
 	Math::Matrix trailScale = Math::Matrix::CreateScale(m_trailScale);
 	Math::Matrix trailTrans = Math::Matrix::CreateTranslation(tip1);
-	Math::Matrix finalMat = trailScale * trailTrans;
+	Math::Matrix finalMat = trailScale*(m_trailRot * trailTrans);
 	m_trailPolygon->AddPoint(finalMat);
 }
 

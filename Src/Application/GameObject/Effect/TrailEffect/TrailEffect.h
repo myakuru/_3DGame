@@ -29,6 +29,7 @@ private:
 	Math::Matrix m_katanaMat = Math::Matrix::Identity; // 軌跡ポリゴンの最終行列
 
 	Math::Vector3 m_trailScale = Math::Vector3::Zero;
+	Math::Matrix m_trailRot = Math::Matrix::Identity;
 
 	std::weak_ptr<Katana> m_katana;
 

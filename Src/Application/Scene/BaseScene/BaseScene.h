@@ -61,17 +61,26 @@ public :
 		return m_renderTargetPack;
 	}
 
-	const KdRenderTargetPack& GetRenderTargetSpritePack() const
-	{
-		return m_renderTargetSpritePack;
-	}
-
-	const KdRenderTargetPack& GetRenderTargetUIPack() const
-	{
-		return m_renderTargetUIPack;
-	}
-
 protected :
+
+	// デバッグGUI表示時のみRT切り替え、終了時に自動Undo
+	template<typename Func>
+	void WithDebugRenderTarget(Func drawFunc)
+	{
+		bool changedRT = false;
+		if (KdDebugGUI::Instance().ShowImGUiFlg())
+		{
+			m_renderTargetChanger.ChangeRenderTarget(m_renderTargetPack);
+			changedRT = true;
+		}
+
+		drawFunc();
+
+		if (changedRT)
+		{
+			m_renderTargetChanger.UndoRenderTarget();
+		}
+	}
 
 	// 継承先シーンで必要ならオーバーライドする
 	virtual void Event();
@@ -96,7 +105,6 @@ protected :
 	Math::Vector2 m_gameWindowSize = Math::Vector2::Zero;
 
 	KdRenderTargetChanger m_renderTargetSpriteChanger;
-	KdRenderTargetPack m_renderTargetSpritePack;
 
 	// 全オブジェクトのアドレスをリストで管理
 	std::list<std::shared_ptr<KdGameObject>> m_objList;
