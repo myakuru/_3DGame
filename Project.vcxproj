@@ -308,6 +308,7 @@
     <ClInclude Include="Src\Application\GameObject\Effect\MeshEffect\AttackEffect\AttackEffect.h" />
     <ClInclude Include="Src\Application\GameObject\Effect\MeshEffect\AttackEffect_second\AttackEffect_second.h" />
     <ClInclude Include="Src\Application\GameObject\Effect\MeshEffect\MeshEffectBase.h" />
+    <ClInclude Include="Src\Application\GameObject\Effect\TrailEffect\TrailEffect.h" />
     <ClInclude Include="Src\Application\GameObject\HitDamage\HitDamage.h" />
     <ClInclude Include="Src\Application\GameObject\HUD\AlpfaMoving\AlpfaMoving.h" />
     <ClInclude Include="Src\Application\GameObject\HUD\BlackBanner\BlackBanner.h" />
@@ -426,6 +427,7 @@
     <ClCompile Include="Src\Application\GameObject\Effect\MeshEffect\AttackEffect\AttackEffect.cpp" />
     <ClCompile Include="Src\Application\GameObject\Effect\MeshEffect\AttackEffect_second\AttackEffect_second.cpp" />
     <ClCompile Include="Src\Application\GameObject\Effect\MeshEffect\MeshEffectBase.cpp" />
+    <ClCompile Include="Src\Application\GameObject\Effect\TrailEffect\TrailEffect.cpp" />
     <ClCompile Include="Src\Application\GameObject\HitDamage\HitDamage.cpp" />
     <ClCompile Include="Src\Application\GameObject\HUD\AlpfaMoving\AlpfaMoving.cpp" />
     <ClCompile Include="Src\Application\GameObject\HUD\BlackBanner\BlackBanner.cpp" />

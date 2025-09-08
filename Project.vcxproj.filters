@@ -277,6 +277,9 @@
     <Filter Include="Src\Application\GameObject\Effect\MeshEffect\AttackEffect_second">
       <UniqueIdentifier>{d21d4134-2dbd-4ff0-b16a-dd0fa6a1e6ef}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\GameObject\Effect\TrailEffect">
+      <UniqueIdentifier>{389b04b0-5ad9-46d0-804e-348ca6ad3e45}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -654,6 +657,9 @@
     <ClInclude Include="Src\Application\GameObject\Effect\MeshEffect\AttackEffect_second\AttackEffect_second.h">
       <Filter>Src\Application\GameObject\Effect\MeshEffect\AttackEffect_second</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Effect\TrailEffect\TrailEffect.h">
+      <Filter>Src\Application\GameObject\Effect\TrailEffect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -973,6 +979,9 @@
     </ClCompile>
     <ClCompile Include="Src\Application\GameObject\Effect\MeshEffect\AttackEffect_second\AttackEffect_second.cpp">
       <Filter>Src\Application\GameObject\Effect\MeshEffect\AttackEffect_second</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Effect\TrailEffect\TrailEffect.cpp">
+      <Filter>Src\Application\GameObject\Effect\TrailEffect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
