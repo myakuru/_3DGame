@@ -34,7 +34,6 @@ void PlayerStateBase::StateStart()
 	if (!katana) return;
 
 	katana->SetNowAttackState(false);
-
 }
 
 void PlayerStateBase::StateUpdate()

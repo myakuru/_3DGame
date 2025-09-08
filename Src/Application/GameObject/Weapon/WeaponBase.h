@@ -16,6 +16,8 @@ public:
 	virtual void SetHandKatanaMatrix(const Math::Matrix& _matrix) { m_swordHandData.m_weaponBonesMatrix = _matrix; }
 	virtual void SetPlayerHandMatrix(const Math::Matrix& _matrix) { m_swordHandData.m_playerWorldMatrix = _matrix; }
 
+	virtual const Math::Matrix& GetKatanaMatrix() const { return m_swordData.m_weaponMatrix; }
+
 protected:
 
 	void Init() override;

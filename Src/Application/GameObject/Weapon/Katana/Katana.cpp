@@ -63,35 +63,17 @@ void Katana::Update()
 		m_swordData.m_weaponBonesMatrix.Translation(m_swordHandData.m_weaponBonesMatrix.Translation());
 		Math::Matrix transOffset = Math::Matrix::CreateTranslation(m_katanaHandOffset);
 		m_swordData.m_weaponMatrix = transOffset * m_swordData.m_weaponScaleMatrix * m_swordData.m_weaponRotationMatrix * m_swordHandData.m_weaponBonesMatrix * m_swordHandData.m_playerWorldMatrix;
-
-		//m_trailOffset = m_swordData.m_weaponScaleMatrix * m_swordData.m_weaponRotationMatrix * m_swordData.m_playerWorldMatrix;
 	}
 
 	// 軌跡の先端位置を計算
-	Math::Vector3 tip1, tip2, tip3;
-	if (m_swordHandData.m_weaponBonesMatrix != Math::Matrix::Identity)
-	{
-		tip1 = m_swordData.m_weaponMatrix.Translation() + m_swordData.m_weaponMatrix.Up() * 1.0f;
-		tip2 = m_swordData.m_weaponMatrix.Translation() + m_swordData.m_weaponMatrix.Up() * 1.0f;
-		tip3 = m_swordData.m_weaponMatrix.Translation() + m_swordData.m_weaponMatrix.Up() * 1.0f;
-	}
-	else
-	{
-		//tip1 = m_swordData.m_weaponMatrix.Translation() + m_swordData.m_weaponMatrix.Up();
-		//tip2 = m_swordData.m_weaponMatrix.Translation() + m_swordData.m_weaponMatrix.Up();
-		//tip3 = m_swordData.m_weaponMatrix.Translation() + m_swordData.m_weaponMatrix.Up();
+	Math::Vector3 tip1 = Math::Vector3::Zero;
 
-		// 軌跡をクリア
-		m_trailPolygon->ClearPoints();
-		m_trailPolygon2->ClearPoints();
-		m_trailPolygon3->ClearPoints();
-	}
+	tip1 = m_swordData.m_weaponMatrix.Translation() + m_swordData.m_weaponMatrix.Up() * 1.0f;
+
 
 	Math::Matrix finalMat = Math::Matrix::CreateTranslation(tip1);
-	Math::Matrix finalScale = Math::Matrix::CreateScale(0.1f, 0.1f, 0.1f);	
 
-	m_trailPolygon->AddPoint(finalMat);
-
+	//m_trailPolygon->AddPoint(finalMat);
 }
 
 void Katana::DrawLit()
@@ -106,7 +88,7 @@ void Katana::DrawUnLit()
 
 void Katana::DrawBright()
 {
-	//KdShaderManager::Instance().m_StandardShader.DrawPolygon(*m_trailPolygon, Math::Matrix::Identity, { 0.0f,1.0f,1.0f,0.5f });
+	KdShaderManager::Instance().m_StandardShader.DrawPolygon(*m_trailPolygon, Math::Matrix::Identity, { 0.0f,1.0f,1.0f,0.5f });
 	//KdShaderManager::Instance().m_StandardShader.DrawPolygon(*m_trailPolygon2, Math::Matrix::Identity, { 1.0f,1.0f,1.0f,0.7f });
 	//KdShaderManager::Instance().m_StandardShader.DrawPolygon(*m_trailPolygon3, Math::Matrix::Identity, { 1.0f,1.0f,1.0f,0.7f });
 }

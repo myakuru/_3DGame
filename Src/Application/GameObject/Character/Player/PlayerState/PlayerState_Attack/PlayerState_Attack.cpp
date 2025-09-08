@@ -7,6 +7,7 @@
 #include"../../../../Weapon/WeaponKatanaScabbard/WeaponKatanaScabbard.h"
 #include"../../../../../Scene/SceneManager.h"
 #include"../../../../Effect/MeshEffect/AttackEffect/AttackEffect.h"
+#include"../../../../Effect/TrailEffect/TrailEffect.h"
 
 void PlayerState_Attack::StateStart()
 {
@@ -25,6 +26,7 @@ void PlayerState_Attack::StateStart()
 
 void PlayerState_Attack::StateUpdate()
 {
+
 	m_player->GetEnemy().lock()->GetPos();
 
 	float deltaTime = Application::Instance().GetDeltaTime();
@@ -77,11 +79,17 @@ void PlayerState_Attack::StateUpdate()
 		m_player->SetIsMoving(Math::Vector3::Zero);
 	}
 
+	PlayerStateBase::StateUpdate();
 
 	// カタナの取得
 	auto katana = m_player->GetKatana().lock();
-
 	if (!katana) return;
+
+	SceneManager::Instance().GetObjectWeakPtr(m_trailEffect);
+	auto trailEffect = m_trailEffect.lock();
+	if (!trailEffect) return;
+
+	trailEffect->SetEnableTrail(true);
 
 	if (time >= 10.0f)
 	{
@@ -112,4 +120,11 @@ void PlayerState_Attack::StateEnd()
 {
 	PlayerStateBase::StateEnd();
 	m_once = false;
+
+	auto trailEffect = m_trailEffect.lock();
+	if (!trailEffect) return;
+	// Trailの削除
+	trailEffect->Clear();
+	trailEffect->SetEnableTrail(false);
+
 }

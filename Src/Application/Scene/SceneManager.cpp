@@ -42,6 +42,7 @@
 #include"../GameObject/Effect/BillBoardEffect/FieldEffect/FieldEffect.h"
 #include"../GameObject/Weapon/WeaponKatanaScabbard/WeaponKatanaScabbard.h"
 #include"../GameObject/Effect/MeshEffect/AttackEffect_second/AttackEffect_second.h"
+#include"../GameObject/Effect/TrailEffect/TrailEffect.h"
 
 void SceneManager::Init()
 {
@@ -80,6 +81,7 @@ void SceneManager::Register() const
 	RegisterObject::GetInstance().Register<FieldEffect>();
 	RegisterObject::GetInstance().Register<WeaponKatanaScabbard>();
 	RegisterObject::GetInstance().Register<AttackEffect_second>();
+	RegisterObject::GetInstance().Register<TrailEffect>();
 }
 
 void SceneManager::PreUpdate()
