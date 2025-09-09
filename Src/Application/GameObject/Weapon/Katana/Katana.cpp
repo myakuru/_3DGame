@@ -16,13 +16,13 @@ void Katana::Init()
 	m_trailPolygon2->ClearPoints();
 	m_trailPolygon3->ClearPoints();
 
-	m_trailPolygon->SetLength(100);
+	m_trailPolygon->SetLength(20);
 	m_trailPolygon2->SetLength(100);
 	m_trailPolygon3->SetLength(100);
 
 	m_trailModel->Load("Asset/Models/Goast/nani.gltf");
 
-	m_trailTex->Load("Asset/Textures/nailGlow.png");
+	m_trailTex->Load("Asset/Textures/glow.png");
 	m_trailTex2->Load("Asset/Textures/NA_Basic hit_006.png");
 	m_trailTex3->Load("Asset/Textures/nailGlow.png");
 
@@ -63,17 +63,23 @@ void Katana::Update()
 		m_swordData.m_weaponBonesMatrix.Translation(m_swordHandData.m_weaponBonesMatrix.Translation());
 		Math::Matrix transOffset = Math::Matrix::CreateTranslation(m_katanaHandOffset);
 		m_swordData.m_weaponMatrix = transOffset * m_swordData.m_weaponScaleMatrix * m_swordData.m_weaponRotationMatrix * m_swordHandData.m_weaponBonesMatrix * m_swordHandData.m_playerWorldMatrix;
+		
+		// 軌跡の先端位置を計算
+		/*Math::Vector3 tip1 = Math::Vector3::Zero;
+
+		tip1 = m_swordData.m_weaponMatrix.Translation() + m_swordData.m_weaponRotationMatrix.Up() * 1.0f;
+
+		Math::Matrix inv = Math::Matrix::CreateRotationY(DirectX::XMConvertToRadians(90.0f));
+
+		Math::Matrix trailTrans = Math::Matrix::CreateTranslation(tip1);
+
+		Math::Matrix trailScale = Math::Matrix::CreateScale({ 0.5f,0.5f,0.5f });
+
+		Math::Matrix finalMat = trailScale *inv * (m_swordData.m_weaponRotationMatrix *trailTrans);
+
+		m_trailPolygon->AddPoint(finalMat);*/
+	
 	}
-
-	// 軌跡の先端位置を計算
-	Math::Vector3 tip1 = Math::Vector3::Zero;
-
-	tip1 = m_swordData.m_weaponMatrix.Translation() + m_swordData.m_weaponMatrix.Up() * 1.0f;
-
-
-	Math::Matrix finalMat = Math::Matrix::CreateTranslation(tip1);
-
-	//m_trailPolygon->AddPoint(finalMat);
 }
 
 void Katana::DrawLit()
@@ -83,12 +89,12 @@ void Katana::DrawLit()
 
 void Katana::DrawUnLit()
 {
-	//KdShaderManager::Instance().m_StandardShader.DrawPolygon(*m_trailPolygon, Math::Matrix::Identity, { 1.0f,1.0f,1.0f,0.7f });
+	//KdShaderManager::Instance().m_StandardShader.DrawPolygon(*m_trailPolygon, Math::Matrix::Identity, { 1.0f,1.0f,1.0f,1.0f });
 }
 
 void Katana::DrawBright()
 {
-	KdShaderManager::Instance().m_StandardShader.DrawPolygon(*m_trailPolygon, Math::Matrix::Identity, { 0.0f,1.0f,1.0f,0.5f });
+	KdShaderManager::Instance().m_StandardShader.DrawPolygon(*m_trailPolygon, Math::Matrix::Identity, { 1.0f,1.0f,1.0f,0.5f });
 	//KdShaderManager::Instance().m_StandardShader.DrawPolygon(*m_trailPolygon2, Math::Matrix::Identity, { 1.0f,1.0f,1.0f,0.7f });
 	//KdShaderManager::Instance().m_StandardShader.DrawPolygon(*m_trailPolygon3, Math::Matrix::Identity, { 1.0f,1.0f,1.0f,0.7f });
 }
