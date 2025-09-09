@@ -64,9 +64,9 @@
     "moveSpeed": 0.14000000059604645,
     "path": "Asset\\Models\\Player\\Perula\\Perula.gltf",
     "pos": {
-      "x": 5.774953365325928,
+      "x": 11.36773681640625,
       "y": 1.0,
-      "z": -10.358059883117676
+      "z": 13.687557220458984
     },
     "scale": {
       "x": 0.8999999761581421,
@@ -123,6 +123,12 @@
       "y": 0.004000000189989805,
       "z": 0.004000000189989805
     },
+    "trailColor": {
+      "w": 0.699999988079071,
+      "x": 0.0,
+      "y": 1.0,
+      "z": 0.9117646217346191
+    },
     "type": 32,
     "weaponDeg": {
       "x": 175.0,
@@ -139,8 +145,8 @@
       "z": 1.0
     },
     "deg": {
-      "x": 13.349991798400879,
-      "y": 3356.811767578125,
+      "x": 20.399974822998047,
+      "y": 2692.907470703125,
       "z": 0.0
     },
     "moveSpeed": 50.0,
@@ -689,7 +695,7 @@
       "z": 0.41960784792900085
     },
     "deg": {
-      "x": -0.06772585213184357,
+      "x": -0.09321748465299606,
       "y": -0.03200000151991844,
       "z": 0.0
     },
@@ -711,8 +717,8 @@
     "Name": "class Scoring",
     "color": {
       "w": 1.0,
-      "x": 0.7099999785423279,
-      "y": 0.23999999463558197,
+      "x": 0.1899999976158142,
+      "y": 0.6200000047683716,
       "z": 1.0
     },
     "deg": {
@@ -1100,44 +1106,6 @@
     "type": 18
   },
   {
-    "GravitySpeed": 0.0,
-    "Name": "class Enemy",
-    "color": {
-      "w": 1.0,
-      "x": 1.0,
-      "y": 1.0,
-      "z": 1.0
-    },
-    "deg": {
-      "x": 0.0,
-      "y": 0.0,
-      "z": 0.0
-    },
-    "drawFlags": {
-      "DrawBright": false,
-      "DrawGradation": false,
-      "DrawGrayScale": false,
-      "DrawLit": true,
-      "DrawToon": false,
-      "DrawUnLit": false,
-      "GenerateDepthMapFromLight": true
-    },
-    "fixedFps": 120.0,
-    "moveSpeed": 0.05000000074505806,
-    "path": "Asset\\Models\\Enemy\\Enemy.gltf",
-    "pos": {
-      "x": 14.057794570922852,
-      "y": 1.0,
-      "z": 4.599361896514893
-    },
-    "scale": {
-      "x": 1.0,
-      "y": 1.0,
-      "z": 1.0
-    },
-    "type": 36
-  },
-  {
     "Name": "class CurvesEffect",
     "color": {
       "w": 1.0,
@@ -1334,10 +1302,15 @@
   },
   {
     "Name": "class TrailEffect",
-    "TrailEffect": {
-      "x": 1.5,
+    "Rot": {
+      "x": 0.0,
       "y": 0.0,
       "z": 0.0
+    },
+    "TrailEffect": {
+      "x": 2.0,
+      "y": 2.0,
+      "z": 2.0
     },
     "color": {
       "w": 0.3921568691730499,
@@ -1362,6 +1335,44 @@
       "z": 1.0
     },
     "type": 12
+  },
+  {
+    "GravitySpeed": 0.0,
+    "Name": "class Enemy",
+    "color": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "deg": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
+      "DrawLit": false,
+      "DrawToon": true,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "fixedFps": 120.0,
+    "moveSpeed": 0.0,
+    "path": "Asset\\Models\\Enemy\\Enemy.gltf",
+    "pos": {
+      "x": 9.5,
+      "y": 1.0,
+      "z": 0.0
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "type": 32
   },
   {
     "Name": "class FPSCamera",

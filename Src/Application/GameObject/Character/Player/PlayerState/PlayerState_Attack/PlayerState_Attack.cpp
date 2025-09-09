@@ -27,7 +27,10 @@ void PlayerState_Attack::StateStart()
 void PlayerState_Attack::StateUpdate()
 {
 
-	m_player->GetEnemy().lock()->GetPos();
+	if (m_player->GetEnemy().lock())
+	{
+		m_player->GetEnemy().lock()->GetPos();
+	}
 
 	float deltaTime = Application::Instance().GetDeltaTime();
 
@@ -85,11 +88,7 @@ void PlayerState_Attack::StateUpdate()
 	auto katana = m_player->GetKatana().lock();
 	if (!katana) return;
 
-	SceneManager::Instance().GetObjectWeakPtr(m_trailEffect);
-	auto trailEffect = m_trailEffect.lock();
-	if (!trailEffect) return;
-
-	trailEffect->SetEnableTrail(true);
+	katana->SetShowTrail(true);
 
 	if (time >= 10.0f)
 	{
@@ -121,10 +120,11 @@ void PlayerState_Attack::StateEnd()
 	PlayerStateBase::StateEnd();
 	m_once = false;
 
-	auto trailEffect = m_trailEffect.lock();
-	if (!trailEffect) return;
-	// Trailの削除
-	trailEffect->Clear();
-	trailEffect->SetEnableTrail(false);
+	// カタナの取得
+	auto katana = m_player->GetKatana().lock();
+	if (!katana) return;
+
+	katana->SetShowTrail(false);
+	katana->GetTrail()->ClearPoints();
 
 }

@@ -1,6 +1,7 @@
 ﻿#include "Katana.h"
 #include"../../../main.h"
 #include"../../../Scene/SceneManager.h"
+#include"../../../../Framework/Json/Json.h"
 
 // TypeIDの定義と初期化
 const uint32_t Katana::TypeID = KdGameObject::GenerateTypeID();
@@ -9,30 +10,13 @@ void Katana::Init()
 {
 	WeaponBase::Init();
 	m_trailPolygon = std::make_shared<KdTrailPolygon>();
-	m_trailPolygon2 = std::make_shared<KdTrailPolygon>();
-	m_trailPolygon3 = std::make_shared<KdTrailPolygon>();
 
 	m_trailPolygon->ClearPoints();
-	m_trailPolygon2->ClearPoints();
-	m_trailPolygon3->ClearPoints();
-
-	m_trailPolygon->SetLength(20);
-	m_trailPolygon2->SetLength(100);
-	m_trailPolygon3->SetLength(100);
-
-	m_trailModel->Load("Asset/Models/Goast/nani.gltf");
-
-	m_trailTex->Load("Asset/Textures/glow.png");
-	m_trailTex2->Load("Asset/Textures/NA_Basic hit_006.png");
-	m_trailTex3->Load("Asset/Textures/nailGlow.png");
+	m_trailPolygon->SetLength(100);
+	m_trailTex = KdAssets::Instance().m_textures.GetData("Asset/Textures/trajectory.png");
 
 	m_trailPolygon->SetMaterial(m_trailTex);
-	m_trailPolygon2->SetMaterial(m_trailTex);
-	m_trailPolygon3->SetMaterial(m_trailTex3);
-
-	m_trailPolygon->SetPattern(KdTrailPolygon::Trail_Pattern::eBillboard);
-	m_trailPolygon2->SetPattern(KdTrailPolygon::Trail_Pattern::eBillboard);
-	m_trailPolygon3->SetPattern(KdTrailPolygon::Trail_Pattern::eBillboard);
+	m_showTrail = false;
 }
 
 void Katana::Update()
@@ -44,13 +28,6 @@ void Katana::Update()
 	}
 	else
 	{
-		/*m_swordData.m_weaponRotationMatrix = Math::Matrix::CreateFromYawPitchRoll
-		(
-			DirectX::XMConvertToRadians(m_swordData.m_weaponDeg.y),
-			DirectX::XMConvertToRadians(m_swordData.m_weaponDeg.x),
-			DirectX::XMConvertToRadians(m_swordData.m_weaponDeg.z)
-		);*/
-
 		m_swordData.m_weaponRotationMatrix = m_swordData.m_weaponBonesMatrix.CreateFromYawPitchRoll
 		(
 			DirectX::XMConvertToRadians(m_swordData.m_weaponDeg.y),
@@ -65,38 +42,32 @@ void Katana::Update()
 		m_swordData.m_weaponMatrix = transOffset * m_swordData.m_weaponScaleMatrix * m_swordData.m_weaponRotationMatrix * m_swordHandData.m_weaponBonesMatrix * m_swordHandData.m_playerWorldMatrix;
 		
 		// 軌跡の先端位置を計算
-		/*Math::Vector3 tip1 = Math::Vector3::Zero;
+		
+		Math::Vector3 tip1 = Math::Vector3::Zero;
 
-		tip1 = m_swordData.m_weaponMatrix.Translation() + m_swordData.m_weaponRotationMatrix.Up() * 1.0f;
+		tip1 = m_swordData.m_weaponMatrix.Translation() + m_swordData.m_weaponMatrix.Up() * 1.0f;
 
-		Math::Matrix inv = Math::Matrix::CreateRotationY(DirectX::XMConvertToRadians(90.0f));
+		Math::Matrix inv = Math::Matrix::CreateRotationY(DirectX::XMConvertToRadians(70.0f));
 
 		Math::Matrix trailTrans = Math::Matrix::CreateTranslation(tip1);
 
-		Math::Matrix trailScale = Math::Matrix::CreateScale({ 0.5f,0.5f,0.5f });
+		Math::Matrix trailScale = Math::Matrix::CreateScale({ 1.0f,1.0f,1.0f });
 
-		Math::Matrix finalMat = trailScale *inv * (m_swordData.m_weaponRotationMatrix *trailTrans);
+		Math::Matrix finalMat = trailScale * inv * (m_swordData.m_weaponRotationMatrix * trailTrans);
 
-		m_trailPolygon->AddPoint(finalMat);*/
-	
+		if (m_showTrail)
+		{
+			m_trailPolygon->AddPoint(finalMat);
+		}
 	}
-}
-
-void Katana::DrawLit()
-{
-	//KdShaderManager::Instance().m_StandardShader.DrawModel(*m_trailModel);
-}
-
-void Katana::DrawUnLit()
-{
-	//KdShaderManager::Instance().m_StandardShader.DrawPolygon(*m_trailPolygon, Math::Matrix::Identity, { 1.0f,1.0f,1.0f,1.0f });
 }
 
 void Katana::DrawBright()
 {
-	KdShaderManager::Instance().m_StandardShader.DrawPolygon(*m_trailPolygon, Math::Matrix::Identity, { 1.0f,1.0f,1.0f,0.5f });
-	//KdShaderManager::Instance().m_StandardShader.DrawPolygon(*m_trailPolygon2, Math::Matrix::Identity, { 1.0f,1.0f,1.0f,0.7f });
-	//KdShaderManager::Instance().m_StandardShader.DrawPolygon(*m_trailPolygon3, Math::Matrix::Identity, { 1.0f,1.0f,1.0f,0.7f });
+	if (m_showTrail) 
+	{
+		KdShaderManager::Instance().m_StandardShader.DrawPolygon(*m_trailPolygon, Math::Matrix::Identity, m_trailColor);
+	}
 }
 
 void Katana::UpdateHand()
@@ -131,6 +102,9 @@ void Katana::ImGuiInspector()
 	ImGui::Text(U8("刀のスケールを変更"));
 	ImGui::DragFloat3("scale", &m_swordData.m_scale.x, 0.01f);
 
+
+	ImGui::ColorEdit4("trailColor", &m_trailColor.x);
+
 	ImGui::Separator();
 
 	if (ImGui::CollapsingHeader("Sheathing of Katana"))
@@ -144,4 +118,16 @@ void Katana::ImGuiInspector()
 		ImGui::Text(U8("手持ちの刀の角度を変更"));
 		ImGui::DragFloat3("sheathDeg", &m_swordData.m_weaponDeg.x, 0.1f);
 	}
+}
+
+void Katana::JsonSave(nlohmann::json& _json) const
+{
+	WeaponBase::JsonSave(_json);
+	_json["trailColor"] = JSON_MANAGER.Vector4ToJson(m_trailColor);
+}
+
+void Katana::JsonInput(const nlohmann::json& _json)
+{
+	WeaponBase::JsonInput(_json);
+	if (_json.contains("trailColor")) m_trailColor = JSON_MANAGER.JsonToVector4(_json["trailColor"]);
 }

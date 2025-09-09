@@ -68,7 +68,7 @@ void Player::Update()
 	SceneManager::Instance().GetObjectWeakPtr(m_scabbard);
 
 	if (m_playerCamera.expired()) return;
-	if (m_enemy.expired()) return;
+	//if (m_enemy.expired()) return;
 	if (m_katana.expired()) return;
 	if (m_scabbard.expired()) return;
 

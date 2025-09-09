@@ -10,7 +10,7 @@ public:
 
 	void Clear() { m_trailPolygon->ClearPoints(); }
 
-	void SetEnableTrail(bool enable) { m_enableTrail = enable; }
+	//void SetEnableTrail(bool enable) { m_enableTrail = enable; }
 
 private:
 
@@ -36,6 +36,8 @@ private:
 
 	Math::Matrix m_finalMat = Math::Matrix::Identity; // 軌跡ポリゴンの最終行列
 
+	
+	Math::Vector3 m_rotAngle;
 	std::weak_ptr<Katana> m_katana;
 
 };
