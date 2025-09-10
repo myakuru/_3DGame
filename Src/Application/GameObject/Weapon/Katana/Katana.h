@@ -22,7 +22,9 @@ private:
 
 	void Init() override;
 	void Update() override;
+	void UpdateTrailPolygon();								//　軌跡ポリゴンの更新
 	void DrawBright() override;
+	void DrawUnLit() override;
 	void UpdateHand();
 	void ImGuiInspector() override;
 	void JsonSave(nlohmann::json& _json) const override;
@@ -43,6 +45,9 @@ private:
 	Math::Matrix m_trailRotation = Math::Matrix::Identity; // 軌跡ポリゴンの回転
 
 	Math::Color m_trailColor = { 1.0f,1.0f,1.0f,0.7f };
+
+	float m_trailKatanaPoint = 0.0f;	// 軌跡をつける刀の位置
+	Math::Vector3 m_trailScale = { 1.0f,1.0f,1.0f }; // 軌跡の拡大縮小
 
 	bool m_showTrail = false;
 };

@@ -73,10 +73,7 @@ private:
 
 	std::weak_ptr<Katana>	m_katana;	// カタナの参照
 	std::weak_ptr<WeaponKatanaScabbard>	m_scabbard;	// カタナの参照
-
 	std::weak_ptr<Enemy>	m_enemy;	// 敵の参照
-
-	struct KdModelWork::Node* m_armatureNode = nullptr; // ヒップノード
 
 	PlayerStatus m_status;
 

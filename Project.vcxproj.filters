@@ -507,9 +507,6 @@
     <ClInclude Include="Src\MyFramework\State\StateManager\StateManager.h">
       <Filter>Src\MyFramework\State\StateManager</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState.h">
-      <Filter>Src\Application\GameObject\Character\Player\State</Filter>
-    </ClInclude>
     <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_Run\PlayerState_Run.h">
       <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_Run</Filter>
     </ClInclude>
@@ -659,6 +656,9 @@
     </ClInclude>
     <ClInclude Include="Src\Application\GameObject\Effect\TrailEffect\TrailEffect.h">
       <Filter>Src\Application\GameObject\Effect\TrailEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState.h">
+      <Filter>Src\Application\GameObject\Character\Player\State</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -126,5 +126,4 @@ void PlayerState_Attack::StateEnd()
 
 	katana->SetShowTrail(false);
 	katana->GetTrail()->ClearPoints();
-
 }

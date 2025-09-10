@@ -4,6 +4,7 @@
 #include"../PlayerState_Run/PlayerState_Run.h"
 #include"../../../../../main.h"
 #include"../../../../Weapon/Katana/Katana.h"
+#include"../PlayerState_Sheathing-of-Katana/PlayerState_Sheathing-of-Katana.h"
 
 void PlayerState_Attack1::StateStart()
 {
@@ -47,14 +48,8 @@ void PlayerState_Attack1::StateUpdate()
 
 	if (m_player->GetAnimator()->IsAnimationEnd())
 	{
-		auto idleState = std::make_shared<PlayerState_Idle>();
-		m_player->ChangeState(idleState);
-		return;
-	}
-	else if (m_player->GetMoving() && m_player->GetAnimator()->IsAnimationEnd())
-	{
-		auto idleState = std::make_shared<PlayerState_Run>();
-		m_player->ChangeState(idleState);
+		auto state = std::make_shared<PlayerState_SheathKatana>();
+		m_player->ChangeState(state);
 		return;
 	}
 
@@ -102,9 +97,26 @@ void PlayerState_Attack1::StateUpdate()
 		m_player->SetIsMoving(Math::Vector3::Zero);
 	}
 
+	// カタナの取得
+	auto katana = m_player->GetKatana().lock();
+	if (!katana) return;
+
+	// 剣の軌跡の表示
+	katana->SetShowTrail(true);
+	// 現在攻撃中フラグを立てる
+	katana->SetNowAttackState(true);
+	// 手と鞘の位置を更新
+	UpdateKatanaPos();
+
 }
 
 void PlayerState_Attack1::StateEnd()
 {
 	PlayerStateBase::StateEnd();
+
+	// カタナの取得
+	auto katana = m_player->GetKatana().lock();
+	if (!katana) return;
+	// 剣の軌跡の非表示
+	katana->SetShowTrail(false);
 }

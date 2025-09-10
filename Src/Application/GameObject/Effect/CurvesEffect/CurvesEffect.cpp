@@ -141,8 +141,8 @@ void CurvesEffect::Update()
 		Math::Matrix mat3 = scaleMat * Math::Matrix::CreateTranslation(calcCirclePos(center, circleNormal3, circleAngle + DirectX::XM_2PI * 2 / 3, radius));
 
 		m_trailPolygon->AddPoint(mat1);
-		m_trailPolygon2->AddPoint(mat2);
-		m_trailPolygon3->AddPoint(mat3);
+		//m_trailPolygon2->AddPoint(mat2);
+		//m_trailPolygon3->AddPoint(mat3);
 	}
 	else
 	{

@@ -72,7 +72,6 @@ void Player::Update()
 	if (m_katana.expired()) return;
 	if (m_scabbard.expired()) return;
 
-
 	KdGameObject::Update();
 
 	float deltaTime = Application::Instance().GetDeltaTime();
@@ -197,12 +196,11 @@ void Player::UpdateChargeAttack()
 	}
 	else
 	{
-		// 初回起動条件（m_onceEffectがfalseのとき）
 		if (!m_onceEffect)
 		{
 			m_isChargeAttackActive = true;
 			m_chargeAttackCount = 0;
-			m_chargeAttackTimer = 0.3f; // 最初のダメージを即時発生させたい場合は0.3f
+			m_chargeAttackTimer = 0.3f;
 			m_onceEffect = true;
 		}
 	}

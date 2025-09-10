@@ -53,6 +53,7 @@ public:
 	inline void ClearPoints()
 	{
 		m_pointList.clear();
+		GenerateVertices();
 	}
 
 	// リストの数を取得
