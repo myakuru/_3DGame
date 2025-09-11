@@ -61,6 +61,11 @@ public :
 		return m_renderTargetPack;
 	}
 
+	const KdRenderTargetPack& GetRenderTargetUIPack() const
+	{
+		return m_renderTargetUIPack;
+	}
+
 protected :
 
 	// デバッグGUI表示時のみRT切り替え、終了時に自動Undo
@@ -102,9 +107,10 @@ protected :
 	KdRenderTargetChanger m_renderTargetUIChanger;
 	// UIのテクスチャいれるやつ
 	KdRenderTargetPack m_renderTargetUIPack;
-	Math::Vector2 m_gameWindowSize = Math::Vector2::Zero;
 
-	KdRenderTargetChanger m_renderTargetSpriteChanger;
+	int m_gameWindowSizeX = 0;
+	int m_gameWindowSizeY = 0;
+
 
 	// 全オブジェクトのアドレスをリストで管理
 	std::list<std::shared_ptr<KdGameObject>> m_objList;

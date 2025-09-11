@@ -1,29 +1,44 @@
-﻿#include"AttackEffect_second.h"
-#include"../../../../main.h"
+﻿#include "Attack4Effect.h"
 #include"../../../../Scene/SceneManager.h"
 #include"../../../../GameObject/Character/Player/Player.h"
+#include"../../../../main.h"
 
-const uint32_t AttackEffect_second::TypeID = KdGameObject::GenerateTypeID();
+const uint32_t Attack4Effect::TypeID = KdGameObject::GenerateTypeID();
 
-void  AttackEffect_second::EffectReset()
-{
-	m_time = 0.0f;      // リセット
-	m_alphaFade = 1.0f; // アルファもリセット
-}
-
-void AttackEffect_second::Init()
+void Attack4Effect::Init()
 {
 	MeshEffectBase::Init();
-	EffectReset();
+	m_isEffectTime = 0.0f;
 }
 
-void AttackEffect_second::Update()
+void Attack4Effect::Update()
 {
+	float deltaTime = Application::Instance().GetDeltaTime();
+
+	// Fキーが押されたらタイマー開始
+	if (KeyboardManager::GetInstance().IsKeyJustPressed('F'))
+	{
+		m_isWaitForEffect = true;
+		m_effectWaitTime = 0.0f;
+	}
+
+	// タイマーが動作中なら経過時間を加算
+	if (m_isWaitForEffect)
+	{
+		m_effectWaitTime += deltaTime;
+		if (m_effectWaitTime >= m_isStartEffectTime)
+		{
+			m_time = 0.0f;				// リセット
+			m_alphaFade = 1.0f;			// アルファもリセット
+			m_isEffectTime = 0.0f;
+			m_isWaitForEffect = false;	// タイマー終了
+		}
+	}
+
 	// 基底にプレイヤーの取得を任せる
 	MeshEffectBase::Update();
 
 	auto spPlayer = m_player.lock();
-
 	if (!spPlayer) return;
 
 	EffectControl(); // エフェクト制御
@@ -43,7 +58,7 @@ void AttackEffect_second::Update()
 	m_mWorld.Translation(m_position + spPlayer->GetPos() + forward * m_distance);
 }
 
-void AttackEffect_second::EffectControl()
+void Attack4Effect::EffectControl()
 {
 	float deltaTime = Application::Instance().GetDeltaTime();
 
@@ -61,7 +76,7 @@ void AttackEffect_second::EffectControl()
 	}
 }
 
-void AttackEffect_second::DrawEffect()
+void Attack4Effect::DrawEffect()
 {
 	// ここでエフェクトの色やグラデーションの設定も可能
 	KdShaderManager::Instance().m_StandardShader.SetFadeAmount(m_fadeAmount, m_outColor, m_inColor, m_colorGradation, m_alphaFade);

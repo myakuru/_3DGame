@@ -157,6 +157,6 @@ void CurvesEffect::Update()
 void CurvesEffect::DrawBright()
 {
 	KdShaderManager::Instance().m_StandardShader.DrawPolygon(*m_trailPolygon, Math::Matrix::Identity, { 0.51f, 0.31f, 0.97f, 1.f });
-	KdShaderManager::Instance().m_StandardShader.DrawPolygon(*m_trailPolygon2, Math::Matrix::Identity, { 0.2f, 0.38f, 0.94f, 1.f });
+	//KdShaderManager::Instance().m_StandardShader.DrawPolygon(*m_trailPolygon2, Math::Matrix::Identity, { 0.2f, 0.38f, 0.94f, 1.f });
 	//KdShaderManager::Instance().m_StandardShader.DrawPolygon(*m_trailPolygon3, Math::Matrix::Identity, { 1.0f,1.0f,1.0f,0.7f });
 }

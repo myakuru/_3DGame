@@ -225,6 +225,12 @@ void KdAnimator::AdvanceTime(std::vector<KdModelWork::Node>& rNodes, float speed
 		if (m_isLoop)
 		{
 			m_time = 0.0f;
+			m_loopCount++;
+			// 最大ループ回数を超えたらループ終了
+			if (m_maxLoopCount > 0 && m_loopCount >= m_maxLoopCount)
+			{
+				m_isLoop = false;
+			}
 		}
 		else
 		{
@@ -233,7 +239,7 @@ void KdAnimator::AdvanceTime(std::vector<KdModelWork::Node>& rNodes, float speed
 	}
 }
 
-void KdAnimator::AnimationBlend(const std::shared_ptr<KdAnimationData>& nextAnim, float duration, bool nextIsLoop)
+void KdAnimator::AnimationBlend(const std::shared_ptr<KdAnimationData>& nextAnim, float duration, bool nextIsLoop, int maxLoopCount)
 {
 	m_spNextAnimation = nextAnim;
 	m_blendTime = 0.0f;
@@ -241,6 +247,7 @@ void KdAnimator::AnimationBlend(const std::shared_ptr<KdAnimationData>& nextAnim
 	m_blendDuration = duration;
 	m_isBlending = true;
 	m_nextIsLoop = nextIsLoop;
+	m_maxLoopCount = maxLoopCount;
 }
 
 bool KdAnimator::GetRootMotion(const std::shared_ptr<KdAnimationData>& animData, const std::vector<KdModelData::Node>& modelNodes, const std::string& rootBoneName, float time, Math::Vector3& outTranslation) const

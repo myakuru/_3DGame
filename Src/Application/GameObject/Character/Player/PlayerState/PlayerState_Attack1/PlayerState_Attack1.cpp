@@ -73,8 +73,6 @@ void PlayerState_Attack1::StateUpdate()
 		m_flag = true;
 	}
 
-	UpdateKatanaPos();
-
 	// 攻撃中の移動方向で回転を更新
 	if (m_player->GetMovement() != Math::Vector3::Zero)
 	{

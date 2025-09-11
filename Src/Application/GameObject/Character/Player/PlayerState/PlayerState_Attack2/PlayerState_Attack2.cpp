@@ -4,6 +4,8 @@
 #include"../../../../../main.h"
 #include"../../../../Weapon/Katana/Katana.h"
 
+#include"../PlayerState_Attack3/PlayerState_Attack3.h"
+
 void PlayerState_Attack2::StateStart()
 {
 	auto anime = m_player->GetAnimeModel()->GetAnimation("Attack2");
@@ -38,24 +40,11 @@ void PlayerState_Attack2::StateUpdate()
 		m_time = 0.0f;
 	}
 
-	if (!m_flag)
+	if (KeyboardManager::GetInstance().IsKeyJustPressed(VK_LBUTTON))
 	{
-		// エフェクトの表示位置（前方0.5f）
-		Math::Vector3 effectPos = m_player->GetPos() + m_attackDirection * 3.0f;
-
-		// プレイヤーの回転行列
-		Math::Matrix rotationMat = Math::Matrix::CreateFromQuaternion(m_player->GetRotationQuaternion());
-
-		// エフェクトのワールド行列（回転＋位置）
-		Math::Matrix effectWorld = rotationMat * Math::Matrix::CreateTranslation({ effectPos.x,effectPos.y + 10.0f,effectPos.z });
-
-		// Effekseerエフェクト再生
-		auto effect = KdEffekseerManager::GetInstance().Play("NA_slash_008.efkefc", { effectPos.x,effectPos.y,effectPos.z }, 1.0f, 100.0f, false);
-		if (auto spEffect = effect.lock())
-		{
-			KdEffekseerManager::GetInstance().SetWorldMatrix(spEffect->GetHandle(), effectWorld);
-		}
-		m_flag = true;
+		auto attack1state = std::make_shared<PlayerState_Attack3>();
+		m_player->ChangeState(attack1state);
+		return;
 	}
 
 	if (m_player->GetAnimator()->IsAnimationEnd())

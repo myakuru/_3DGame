@@ -291,6 +291,8 @@
     <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState.h" />
     <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_Attack1\PlayerState_Attack1.h" />
     <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_Attack2\PlayerState_Attack2.h" />
+    <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_Attack3\PlayerState_Attack3.h" />
+    <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_Attack4\PlayerState_Attack4.h" />
     <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_Attack\PlayerState_Attack.h" />
     <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_BackWordAvoid\PlayerState_BackWordAvoid.h" />
     <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_ChargeAttack2\PlayerState_ChaegeAttack2.h" />
@@ -305,9 +307,11 @@
     <ClInclude Include="Src\Application\GameObject\Effect\BillBoardEffect\FieldEffect\FieldEffect.h" />
     <ClInclude Include="Src\Application\GameObject\Effect\CurvesEffect\CurvesEffect.h" />
     <ClInclude Include="Src\Application\GameObject\Effect\FowardEffect\ForwardEffect.h" />
+    <ClInclude Include="Src\Application\GameObject\Effect\MeshEffect\Attack4Effect\Attack4Effect.h" />
     <ClInclude Include="Src\Application\GameObject\Effect\MeshEffect\AttackEffect\AttackEffect.h" />
     <ClInclude Include="Src\Application\GameObject\Effect\MeshEffect\AttackEffect_second\AttackEffect_second.h" />
     <ClInclude Include="Src\Application\GameObject\Effect\MeshEffect\MeshEffectBase.h" />
+    <ClInclude Include="Src\Application\GameObject\Effect\SlashEffect\SlashEffect.h" />
     <ClInclude Include="Src\Application\GameObject\Effect\TrailEffect\TrailEffect.h" />
     <ClInclude Include="Src\Application\GameObject\HitDamage\HitDamage.h" />
     <ClInclude Include="Src\Application\GameObject\HUD\AlpfaMoving\AlpfaMoving.h" />
@@ -410,6 +414,8 @@
     <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState.cpp" />
     <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_Attack1\PlayerState_Attack1.cpp" />
     <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_Attack2\PlayerState_Attack2.cpp" />
+    <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_Attack3\PlayerState_Attack3.cpp" />
+    <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_Attack4\PlayerState_Attack4.cpp" />
     <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_Attack\PlayerState_Attack.cpp" />
     <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_BackWordAvoid\PlayerState_BackWordAvoid.cpp" />
     <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_ChargeAttack2\PlayerState_ChaegeAttack2.cpp" />
@@ -424,9 +430,11 @@
     <ClCompile Include="Src\Application\GameObject\Effect\BillBoardEffect\FieldEffect\FieldEffect.cpp" />
     <ClCompile Include="Src\Application\GameObject\Effect\CurvesEffect\CurvesEffect.cpp" />
     <ClCompile Include="Src\Application\GameObject\Effect\FowardEffect\ForwardEffect.cpp" />
+    <ClCompile Include="Src\Application\GameObject\Effect\MeshEffect\Attack4Effect\Attack4Effect.cpp" />
     <ClCompile Include="Src\Application\GameObject\Effect\MeshEffect\AttackEffect\AttackEffect.cpp" />
     <ClCompile Include="Src\Application\GameObject\Effect\MeshEffect\AttackEffect_second\AttackEffect_second.cpp" />
     <ClCompile Include="Src\Application\GameObject\Effect\MeshEffect\MeshEffectBase.cpp" />
+    <ClCompile Include="Src\Application\GameObject\Effect\SlashEffect\SlashEffect.cpp" />
     <ClCompile Include="Src\Application\GameObject\Effect\TrailEffect\TrailEffect.cpp" />
     <ClCompile Include="Src\Application\GameObject\HitDamage\HitDamage.cpp" />
     <ClCompile Include="Src\Application\GameObject\HUD\AlpfaMoving\AlpfaMoving.cpp" />

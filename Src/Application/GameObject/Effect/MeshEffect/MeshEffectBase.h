@@ -24,6 +24,9 @@ protected:
 	float m_colorGradation = 5.0f;					// 色のグラデーションの割合(0.0f～1.0f)
 	float m_alphaFade = 0.0f;						// フェードの透明度(0.0f～1.0f)
 	float m_distance = 0.0f;						// プレイヤーからの距離
+	float m_isEffectTime = 0.0f;					// エフェクトが発生してからの時間
+	float m_isStartEffectTime = 1.0f;				// エフェクトが発生するまでの時間
+
 
 	Math::Vector3 m_outColor = { 0.2f,0.7f,1.0f };	// オブジェクトの外側の色
 	Math::Vector3 m_inColor = { 1,1,1 };			// オブジェクトの内側の色

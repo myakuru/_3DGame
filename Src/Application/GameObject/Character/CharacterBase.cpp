@@ -9,13 +9,11 @@ void CharaBase::Init()
 	m_pDebugWire = std::make_unique<KdDebugWireFrame>();
 
 	ModelLoad(m_path);
-
-	//m_trailPolygon.SetMaterial("Asset/Textures/System/WhiteNoise.png");
 }
 
 std::shared_ptr<KdModelWork> CharaBase::GetAnimeModel()
 {
-	return m_modelWork; 
+	return m_modelWork;
 }
 
 void CharaBase::UpdateQuaternion(Math::Vector3& _moveVector)
@@ -34,12 +32,14 @@ void CharaBase::UpdateQuaternion(Math::Vector3& _moveVector)
 
 	_moveVector.Normalize();
 
-	// 向きたい方向をクォータニオンに変換 第1引数：前を向く方向, 第2引数：どっちが上か
-	Math::Quaternion targetRotation = Math::Quaternion::LookRotation(_moveVector, Math::Vector3::Up);
+	// Yaw角を計算
+	float targetYaw = atan2(-_moveVector.x, -_moveVector.z);
 
-	// 滑らかに回転させるために、現在の回転と目標の回転を補間
+	// Yaw角からクォータニオンを生成
+	Math::Quaternion targetRotation = Math::Quaternion::CreateFromAxisAngle(Math::Vector3::Up, targetYaw);
+
+	// クォータニオンの内積を計算
 	m_rotation = Math::Quaternion::Slerp(m_rotation, targetRotation, deltaTime * m_fixedFrameRate);
-
 }
 
 void CharaBase::UpdateQuaternionDirect(const Math::Vector3& direction)
@@ -81,11 +81,6 @@ void CharaBase::Update()
 	Math::Matrix translation = Math::Matrix::CreateTranslation(m_position);
 
 	m_mWorld = scale * quaternion * translation;
-
-	// ステートで移動処理など管理
-
-	// トレイルポリゴンの更新
-	//m_trailPolygon.AddPoint(m_mWorld);
 }
 
 void CharaBase::PostUpdate()

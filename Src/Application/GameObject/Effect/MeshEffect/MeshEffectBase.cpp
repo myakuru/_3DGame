@@ -28,6 +28,7 @@ void MeshEffectBase::ImGuiInspector()
 	ImGui::DragFloat("ColorGradation", &m_colorGradation, 0.1f);
 	ImGui::DragFloat("AlphaFade", &m_alphaFade, 0.1f);
 	ImGui::DragFloat("Distance", &m_distance, 0.1f);
+	ImGui::DragFloat("IsStartEffectTime", &m_isStartEffectTime, 0.1f);
 }
 
 void MeshEffectBase::JsonInput(const nlohmann::json& _json)
@@ -39,6 +40,7 @@ void MeshEffectBase::JsonInput(const nlohmann::json& _json)
 	if (_json.contains("ColorGradation")) m_colorGradation = _json["ColorGradation"].get<float>();
 	if (_json.contains("AlphaFade")) m_alphaFade = _json["AlphaFade"].get<float>();
 	if (_json.contains("Distance")) m_distance = _json["Distance"].get<float>();
+	if (_json.contains("IsStartEffectTime")) m_isStartEffectTime = _json["IsStartEffectTime"].get<float>();
 }
 
 void MeshEffectBase::JsonSave(nlohmann::json& _json) const
@@ -50,4 +52,5 @@ void MeshEffectBase::JsonSave(nlohmann::json& _json) const
 	_json["ColorGradation"] = m_colorGradation;
 	_json["AlphaFade"] = m_alphaFade;
 	_json["Distance"] = m_distance;
+	_json["IsStartEffectTime"] = m_isStartEffectTime;
 }

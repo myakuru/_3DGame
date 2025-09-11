@@ -256,12 +256,6 @@
     <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_ChargeAttack2">
       <UniqueIdentifier>{65260c95-3cbf-4c16-94fb-310ee8c7d9a8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Src\Application\GameObject\Effect\MeshEffect">
-      <UniqueIdentifier>{3dc7c37a-1cc5-41c6-9833-93bf1fcf2c76}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\Application\GameObject\Effect\MeshEffect\AttackEffect">
-      <UniqueIdentifier>{4d42841d-94d8-4aed-a6a4-3dcae3eb8128}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Src\Application\GameObject\Effect\BillBoardEffect">
       <UniqueIdentifier>{c1007d80-d993-4632-962f-eb6f41d9a883}</UniqueIdentifier>
     </Filter>
@@ -274,11 +268,29 @@
     <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_Sheathing-of-Katana">
       <UniqueIdentifier>{e5e40de1-e20d-47c9-9c5d-327a39fef0e3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\GameObject\Effect\TrailEffect">
+      <UniqueIdentifier>{389b04b0-5ad9-46d0-804e-348ca6ad3e45}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_Attack4">
+      <UniqueIdentifier>{99fec502-20b9-4942-a6ac-2e45417a022d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_Attack3">
+      <UniqueIdentifier>{691e9d26-5bb9-4a70-8524-46c5ef4774b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Effect\SlashEffect">
+      <UniqueIdentifier>{fb3395cd-cddc-4f20-b2c1-a26f4c24cbe2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Effect\MeshEffect">
+      <UniqueIdentifier>{3dc7c37a-1cc5-41c6-9833-93bf1fcf2c76}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Effect\MeshEffect\AttackEffect">
+      <UniqueIdentifier>{4d42841d-94d8-4aed-a6a4-3dcae3eb8128}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Src\Application\GameObject\Effect\MeshEffect\AttackEffect_second">
       <UniqueIdentifier>{d21d4134-2dbd-4ff0-b16a-dd0fa6a1e6ef}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Src\Application\GameObject\Effect\TrailEffect">
-      <UniqueIdentifier>{389b04b0-5ad9-46d0-804e-348ca6ad3e45}</UniqueIdentifier>
+    <Filter Include="Src\Application\GameObject\Effect\MeshEffect\Attack4Effect">
+      <UniqueIdentifier>{e2d8fe0b-dd74-4342-b4d3-8ae51dffa12f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -660,6 +672,18 @@
     <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState.h">
       <Filter>Src\Application\GameObject\Character\Player\State</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_Attack3\PlayerState_Attack3.h">
+      <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_Attack3</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_Attack4\PlayerState_Attack4.h">
+      <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_Attack4</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Effect\SlashEffect\SlashEffect.h">
+      <Filter>Src\Application\GameObject\Effect\SlashEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Effect\MeshEffect\Attack4Effect\Attack4Effect.h">
+      <Filter>Src\Application\GameObject\Effect\MeshEffect\Attack4Effect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -982,6 +1006,18 @@
     </ClCompile>
     <ClCompile Include="Src\Application\GameObject\Effect\TrailEffect\TrailEffect.cpp">
       <Filter>Src\Application\GameObject\Effect\TrailEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_Attack3\PlayerState_Attack3.cpp">
+      <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_Attack3</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_Attack4\PlayerState_Attack4.cpp">
+      <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_Attack4</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Effect\SlashEffect\SlashEffect.cpp">
+      <Filter>Src\Application\GameObject\Effect\SlashEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Effect\MeshEffect\Attack4Effect\Attack4Effect.cpp">
+      <Filter>Src\Application\GameObject\Effect\MeshEffect\Attack4Effect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

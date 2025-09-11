@@ -70,7 +70,8 @@ public:
 	// アニメーションの更新
 	void AdvanceTime(std::vector<KdModelWork::Node>& rNodes, float speed = 1.0f);
 
-	void AnimationBlend(const std::shared_ptr<KdAnimationData>& nextAnim, float duration, bool nextIsLoop = true);
+	// アニメーションの補間再生1:再生アニメーション、2:補間時間、3:次のアニメーションがループするか、4:最大ループ回数(-1で無限ループ)
+	void AnimationBlend(const std::shared_ptr<KdAnimationData>& nextAnim, float duration, bool nextIsLoop = true, int maxLoopCount = -1);
 
 	bool GetRootMotion(
 		const std::shared_ptr<KdAnimationData>& animData,
@@ -94,4 +95,7 @@ private:
 
 	bool m_isLoop = false;
 	bool m_nextIsLoop = false;
+
+	int m_loopCount = 0;         // 現在のループ回数
+	int m_maxLoopCount = -1;     // 最大ループ回数（-1なら無限ループ）
 };

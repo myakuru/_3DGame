@@ -48,12 +48,6 @@ void BaseScene::PreUpdate()
 		obj->PreUpdate();
 	}
 
-	if (!KdDebugGUI::Instance().ShowImGUiFlg())
-	{
-		m_renderTargetPack.ClearTexture();
-		m_renderTargetUIPack.ClearTexture();
-	}
-
 	SceneManager::Instance().GetObjectWeakPtr(m_playerCamera);
 
 	if (m_playerCamera.expired()) return;
@@ -240,10 +234,9 @@ void BaseScene::DrawSprite()
 
 	KdShaderManager::Instance().m_spriteShader.Begin();
 	{
-		KdShaderManager::Instance().m_spriteShader.DrawTex(m_renderTargetUIPack.m_RTTexture.get(), 0, 0, static_cast<int>(m_gameWindowSize.x), static_cast<int>(m_gameWindowSize.y));
+		KdShaderManager::Instance().m_spriteShader.DrawTex(m_renderTargetUIPack.m_RTTexture.get(), 0, 0, m_gameWindowSizeX, m_gameWindowSizeY);
 	}
 	KdShaderManager::Instance().m_spriteShader.End();
-
 }
 
 void BaseScene::DrawDebug()
@@ -272,8 +265,7 @@ void BaseScene::Init()
 	m_renderTargetUIPack.CreateRenderTarget(1920,1080, true);
 	KdEffekseerManager::GetInstance().Create(atoi(sizeData[0].data()), atoi(sizeData[1].data()));
 
-	// 画面サイズによってUIのスケールを変える
-	std::string size = (sizeData[2].data());
-	m_gameWindowSize = { static_cast<float>(atoi(sizeData[0].data()), atoi(sizeData[1].data())) };
+	m_gameWindowSizeX = atoi(sizeData[0].data());
+	m_gameWindowSizeY = atoi(sizeData[1].data());
 
 }
