@@ -201,7 +201,7 @@ std::weak_ptr<KdEffekseerObject> KdEffekseerManager::Play(const PlayEfkInfo& inf
 	// エフェクト新規生成
 	else
 	{
-		std::string loadFileName = EffekseerPath + info.FileName;
+		std::string loadFileName = info.FileName;
 
 		// エフェクト新規生成
 		auto effect = Effekseer::Effect::Create(m_efkManager,
@@ -220,10 +220,19 @@ std::weak_ptr<KdEffekseerObject> KdEffekseerManager::Play(const PlayEfkInfo& inf
 		m_effectMap[info.FileName] = spEfkObject;
 	}
 
-	m_efkManager->SetScale(handle, info.Size.x, info.Size.y, info.Size.z);
-	m_efkManager->SetSpeed(handle, info.Speed * deltaTime);
-	Math::Vector3 rotate = ConvertToRadian(info.Rotate);
-	m_efkManager->SetRotation(handle, rotate.x, rotate.y, rotate.z);
+	// 自分で追加(ワールド行列を使うか判定)
+	if (info.UseWorldMatrix)
+	{
+		SetWorldMatrix(handle, info.World);
+		m_efkManager->SetSpeed(handle, info.Speed * deltaTime);
+	}
+	else
+	{
+		m_efkManager->SetScale(handle, info.Size.x, info.Size.y, info.Size.z);
+		m_efkManager->SetSpeed(handle, info.Speed * deltaTime);
+		Math::Vector3 rotate = ConvertToRadian(info.Rotate);
+		m_efkManager->SetRotation(handle, rotate.x, rotate.y, rotate.z);
+	}
 	spEfkObject->SetParentManager(m_efkManager);
 	spEfkObject->SetHandle(handle);
 	spEfkObject->SetPlayEfkInfo(info);
@@ -268,6 +277,9 @@ void KdEffekseerManager::UpdateEffekseerEffect()
 						const PlayEfkInfo& info = effObj->GetPlayEfkInfo();
 						replayList.push_back(info);
 					}
+
+					// 再生終了したエフェクトはリストから除外する
+					efkFoundItr->reset();
 
 					// ハンドル値が変わるので今の再生リストから除外する
 					efkFoundItr = m_nowEffectPlayList.erase(efkFoundItr);

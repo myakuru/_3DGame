@@ -22,6 +22,8 @@ public:
 	void SetEnableGray(bool enable) { m_enableGray = enable; }
 	bool IsEnableGray() const { return m_enableGray; }
 
+	void SetEnableStrongBlur(bool enable) { m_enableStrongBlur = enable; }
+
 	// ノイズの強さを設定
 	void SetNoiseStrength(float strength) { m_cb0_NoiseInfo.Work().NoiseStrength = strength; }
 
@@ -140,4 +142,5 @@ private:
 	// 自分で追加
 	bool m_enableNoise = false; // ノイズ処理のオンオフ
 	bool m_enableGray = false; // グレースケール処理のオンオフ
+	bool m_enableStrongBlur = false; // 強い光源ぼかしのオンオフ
 };

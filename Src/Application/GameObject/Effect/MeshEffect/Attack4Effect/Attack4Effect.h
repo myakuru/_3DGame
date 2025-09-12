@@ -21,4 +21,6 @@ private:
 	bool m_isWaitForEffect = false;
 	float m_effectWaitTime = 0.0f;
 
+	bool m_once = false;
+
 };

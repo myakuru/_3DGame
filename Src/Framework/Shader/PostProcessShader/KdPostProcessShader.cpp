@@ -232,6 +232,10 @@ void KdPostProcessShader::PostEffectProcess()
 	{
 		KdShaderManager::Instance().m_spriteShader.DrawTex(m_noiseRTPack.m_RTTexture.get(), 0, 0, atoi(sizeData[0].data()), atoi(sizeData[1].data()));
 	}
+	else if (m_enableStrongBlur)
+	{
+		KdShaderManager::Instance().m_spriteShader.DrawTex(m_strongBlurRTPack.m_RTTexture.get(), 0, 0, atoi(sizeData[0].data()), atoi(sizeData[1].data()));
+	}
 	else
 	{
 		KdShaderManager::Instance().m_spriteShader.DrawTex(m_finalRTPack.m_RTTexture.get(), 0, 0, atoi(sizeData[0].data()), atoi(sizeData[1].data()));

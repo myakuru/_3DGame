@@ -11,18 +11,35 @@ public:
 	void Update();
 	void Draw();
 
-	struct PlayEfkInfo
-	{
-		std::string FileName = "";
-		Math::Vector3 Pos = Math::Vector3::Zero;
-		Math::Vector3 Size = Math::Vector3::One;
-		Math::Vector3 Rotate = Math::Vector3::One;
+	struct PlayEfkInfo {
+		std::string FileName;
+		Math::Vector3 Pos;
+		Math::Vector3 Size;
 		float Speed = 1.0f;
 		bool IsLoop = false;
+		Math::Vector3 Rotate = Math::Vector3::Zero;
+		// 自分で追加
+		Math::Matrix World = Math::Matrix::Identity;
+		bool UseWorldMatrix = false; // ワールド行列を使うかどうか
 	};
 
 	// Effekseerエフェクト再生
 	std::weak_ptr<KdEffekseerObject> Play(const std::string& effName, const DirectX::SimpleMath::Vector3& pos, const float size = 1, const float speed = 1, const bool isLoop = false);
+
+	std::weak_ptr<KdEffekseerObject> Play(
+		const std::string& effName,
+		const Math::Matrix& world,
+		const float speed = 1.0f,
+		bool isLoop = false)
+	{
+		PlayEfkInfo info;
+		info.FileName = effName;
+		info.World = world;
+		info.Speed = speed;
+		info.UseWorldMatrix = true;
+		info.IsLoop = isLoop;
+		return Play(info);
+	}
 
 	void StopAllEffect();
 	void StopEffect(const std::string& name);

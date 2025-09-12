@@ -27,7 +27,6 @@ float BlinnPhong(float3 lightDir, float3 vCam, float3 normal, float specPower)
 
 float4 main(VSOutput In) : SV_Target0
 {
-	
 	// ベースカラー取得
 	float4 baseColor = g_baseTex.Sample(g_ss, In.UV) * g_BaseColor * In.Color;
 

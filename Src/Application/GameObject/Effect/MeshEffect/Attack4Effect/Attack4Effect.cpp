@@ -9,6 +9,7 @@ void Attack4Effect::Init()
 {
 	MeshEffectBase::Init();
 	m_isEffectTime = 0.0f;
+	m_once = false;
 }
 
 void Attack4Effect::Update()
@@ -20,6 +21,7 @@ void Attack4Effect::Update()
 	{
 		m_isWaitForEffect = true;
 		m_effectWaitTime = 0.0f;
+		m_once = false;
 	}
 
 	// タイマーが動作中なら経過時間を加算

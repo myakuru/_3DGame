@@ -292,6 +292,15 @@
     <Filter Include="Src\Application\GameObject\Effect\MeshEffect\Attack4Effect">
       <UniqueIdentifier>{e2d8fe0b-dd74-4342-b4d3-8ae51dffa12f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\GameObject\Effect\EffekseerEffect">
+      <UniqueIdentifier>{b20c0b6a-3f77-40b8-97f6-24726054b39f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Effect\EffekseerEffect\EffectPlay">
+      <UniqueIdentifier>{1c1aa236-da8e-43dd-9280-c2ec859bf34e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Effect\EffekseerEffect\AttacEffect1">
+      <UniqueIdentifier>{2cf4fbc1-ebfc-4f00-9a53-5f1cf78d2b65}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -684,6 +693,15 @@
     <ClInclude Include="Src\Application\GameObject\Effect\MeshEffect\Attack4Effect\Attack4Effect.h">
       <Filter>Src\Application\GameObject\Effect\MeshEffect\Attack4Effect</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Effect\EffekseerEffect\EffekseerEffectBase.h">
+      <Filter>Src\Application\GameObject\Effect\EffekseerEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Effect\EffekseerEffect\EffectPlay\EffectPlay.h">
+      <Filter>Src\Application\GameObject\Effect\EffekseerEffect\EffectPlay</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Effect\EffekseerEffect\AttacEffect1\AttacEffect1.h">
+      <Filter>Src\Application\GameObject\Effect\EffekseerEffect\AttacEffect1</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -1018,6 +1036,15 @@
     </ClCompile>
     <ClCompile Include="Src\Application\GameObject\Effect\MeshEffect\Attack4Effect\Attack4Effect.cpp">
       <Filter>Src\Application\GameObject\Effect\MeshEffect\Attack4Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Effect\EffekseerEffect\EffekseerEffectBase.cpp">
+      <Filter>Src\Application\GameObject\Effect\EffekseerEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Effect\EffekseerEffect\EffectPlay\EffectPlay.cpp">
+      <Filter>Src\Application\GameObject\Effect\EffekseerEffect\EffectPlay</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Effect\EffekseerEffect\AttacEffect1\AttacEffect1.cpp">
+      <Filter>Src\Application\GameObject\Effect\EffekseerEffect\AttacEffect1</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

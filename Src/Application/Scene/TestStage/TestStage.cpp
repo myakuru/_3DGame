@@ -10,7 +10,7 @@ void TestScene::Event()
 	KdShaderManager::Instance().WorkAmbientController().SetDistanceFog({ m_fogColor }, m_fogDensity);
 	KdShaderManager::Instance().WorkAmbientController().SetheightFog({ 0.7f, 0.7f, 0.7f }, 0.0f, -50.0f, 0.0f);
 
-	KdShaderManager::Instance().WorkAmbientController().SetDirLight({ -0.01f, -0.03f, 0.0f }, { 0,0,0 });
+	KdShaderManager::Instance().WorkAmbientController().SetDirLight({ -0.01f, -0.03f, 0.0f }, { 1,1,1 });
 
 	if (SceneManager::Instance().m_gameClear)
 	{
@@ -24,12 +24,12 @@ void TestScene::Event()
 
 	if (KeyboardManager::GetInstance().IsKeyPressed('P'))
 	{
-		KdShaderManager::Instance().m_postProcessShader.SetEnableNoise(true); // ノイズON
+		KdShaderManager::Instance().m_postProcessShader.SetEnableNoise(true);	// ノイズON
 		KdShaderManager::Instance().m_postProcessShader.SetNoiseStrength(0.07f);
 	}
 	else
 	{
-		KdShaderManager::Instance().m_postProcessShader.SetEnableNoise(false); // ノイズON
+		KdShaderManager::Instance().m_postProcessShader.SetEnableNoise(false);	// ノイズON
 	}
 
 	SceneManager::Instance().GetObjectWeakPtr(m_player);
@@ -51,6 +51,14 @@ void TestScene::Event()
 
 	Time::Instance().Update();
 
+	if (KeyboardManager::GetInstance().IsKeyPressed('C'))
+	{
+		KdShaderManager::Instance().m_postProcessShader.SetEnableStrongBlur(true);
+	}
+	else
+	{
+		KdShaderManager::Instance().m_postProcessShader.SetEnableStrongBlur(false);
+	}
 }
 
 void TestScene::Init()
@@ -59,10 +67,10 @@ void TestScene::Init()
 
 	// PostProcess用パラメータ
 	m_brightThreshold = 0.9f;
-	m_fogEnable = false;
+	m_fogEnable = true;
 	m_fogUseRange = true;
-	m_fogColor = { 0.3f, 0.3f, 0.3f };
-	m_fogDensity = 0.005f;
+	m_fogColor = { 0.5f, 0.5f, 0.5f };
+	m_fogDensity = 0.003f;
 
 	m_isCountDown = false;	// カウントダウンフラグを初期化
 

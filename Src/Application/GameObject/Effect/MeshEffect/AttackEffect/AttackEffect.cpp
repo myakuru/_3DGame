@@ -64,6 +64,8 @@ void AttackEffect::EffectControl()
 
 void AttackEffect::DrawEffect()
 {
+	if (m_alphaFade <= 0) return; // アルファが0以下なら描画しない
+
 	// ここでエフェクトの色やグラデーションの設定も可能
 	KdShaderManager::Instance().m_StandardShader.SetFadeAmount(m_fadeAmount, m_outColor, m_inColor, m_colorGradation, m_alphaFade);
 	MeshEffectBase::DrawEffect();

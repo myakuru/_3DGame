@@ -132,7 +132,7 @@ void KdAmbientController::SetDistanceFog(const Math::Vector3& col, float density
 }
 
 // ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// /////
-// 高さフォグの設定
+// 高さフォグの設定	カラー、上端の高さ、下端の高さ、フォグ開始距離
 // ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// /////
 void KdAmbientController::SetheightFog(const Math::Vector3& col, float topValue, float bottomValue, float distance)
 {

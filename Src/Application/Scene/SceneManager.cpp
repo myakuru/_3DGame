@@ -45,6 +45,8 @@
 #include"../GameObject/Effect/TrailEffect/TrailEffect.h"
 #include"../GameObject/Effect/SlashEffect/SlashEffect.h"
 #include"../GameObject/Effect/MeshEffect/Attack4Effect/Attack4Effect.h"
+#include"../GameObject/Effect/EffekseerEffect/EffectPlay/EffectPlay.h"
+#include"../GameObject//Effect/EffekseerEffect/AttacEffect1/AttacEffect1.h"
 
 void SceneManager::Init()
 {
@@ -86,6 +88,9 @@ void SceneManager::Register() const
 	RegisterObject::GetInstance().Register<TrailEffect>();
 	RegisterObject::GetInstance().Register<SlashEffect>();
 	RegisterObject::GetInstance().Register<Attack4Effect>();
+
+	RegisterObject::GetInstance().Register<EffectPlay>();
+	RegisterObject::GetInstance().Register<AttacEffect1>();
 }
 
 void SceneManager::PreUpdate()

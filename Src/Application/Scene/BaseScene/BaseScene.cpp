@@ -61,8 +61,6 @@ void BaseScene::Update()
 		// シーン毎のイベント処理
 		Event();
 
-		KdEffekseerManager::GetInstance().Update();
-
 		// KdGameObjectを継承した全てのオブジェクトの更新 (ポリモーフィズム)
 		for (auto& obj : m_objList)
 		{
@@ -183,7 +181,6 @@ void BaseScene::Draw()
 			{
 				for (auto& obj : m_objList) obj->DrawToon();
 				for (auto& obj : m_drawObjectList) obj->DrawToon();
-				KdEffekseerManager::GetInstance().Draw();
 			}
 			KdShaderManager::Instance().m_StandardShader.EndToon();
 
@@ -263,7 +260,6 @@ void BaseScene::Init()
 
 	m_renderTargetPack.CreateRenderTarget(atoi(sizeData[0].data()), atoi(sizeData[1].data()), true);
 	m_renderTargetUIPack.CreateRenderTarget(1920,1080, true);
-	KdEffekseerManager::GetInstance().Create(atoi(sizeData[0].data()), atoi(sizeData[1].data()));
 
 	m_gameWindowSizeX = atoi(sizeData[0].data());
 	m_gameWindowSizeY = atoi(sizeData[1].data());
