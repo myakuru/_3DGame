@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include"../PlayerState.h"
+class AttacEffect1;
 class PlayerState_Attack1 : public PlayerStateBase
 {
 public:
@@ -12,7 +13,12 @@ private:
 	void StateUpdate() override;
 	void StateEnd() override;
 
+	void UpdateEffect(); // エフェクト更新
+
 	PlayerState_Attack1Parameter m_attackParam; // 攻撃パラメータ
 
+	std::weak_ptr<AttacEffect1> m_effect; // エフェクト
+
 	bool m_flag = false; // 攻撃フラグ
+	bool m_effectOnce = false; // エフェクト一回だけ再生するフラグ
 };

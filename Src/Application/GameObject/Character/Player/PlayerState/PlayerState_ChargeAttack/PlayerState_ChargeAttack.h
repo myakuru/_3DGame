@@ -21,7 +21,6 @@ private:
 	std::shared_ptr<ForwardEffect> m_forwardEffect = std::make_shared<ForwardEffect>();
 
 	int m_chargeAttackCount = 0;      // 何回呼んだか
-	float m_chargeAttackTimer = 0.0f; // 経過時間
 
 	bool m_flag = false; // 攻撃フラグ
 

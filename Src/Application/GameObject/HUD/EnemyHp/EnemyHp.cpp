@@ -23,13 +23,13 @@ void EnemyHp::Update()
 	if (!enemy) return;
 	if (!camera) return;
 
-	// 1. 敵のワールド座標を取得
+	// 敵のワールド座標を取得
 	Math::Vector3 enemyPos = enemy->GetPos();
 
-	// 2. Initで生成したm_offsetを使う
+	// Initで生成したm_offsetを使う
 	Math::Vector3 worldPos = enemyPos + m_offset;
 
-	// 3. ワールド座標→スクリーン座標へ変換
+	// ワールド座標→スクリーン座標へ変換
 	camera->ConvertWorldToScreenDetail(worldPos, m_screenPos);
 }
 

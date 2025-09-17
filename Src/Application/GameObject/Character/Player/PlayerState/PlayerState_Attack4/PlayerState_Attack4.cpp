@@ -12,12 +12,10 @@ void PlayerState_Attack4::StateStart()
 
 	PlayerStateBase::StateStart();
 
-	// カタナの取得
-	auto katana = m_player->GetKatana().lock();
-
-	if (!katana) return;
-
-	katana->SetNowAttackState(true);
+	if (auto katana = m_player->GetKatana().lock(); katana)
+	{
+		katana->SetNowAttackState(true);
+	}
 
 	m_time = 0.0f;
 }

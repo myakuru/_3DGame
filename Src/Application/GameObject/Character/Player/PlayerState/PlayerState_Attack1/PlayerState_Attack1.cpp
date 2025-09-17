@@ -5,6 +5,9 @@
 #include"../../../../../main.h"
 #include"../../../../Weapon/Katana/Katana.h"
 #include"../PlayerState_Sheathing-of-Katana/PlayerState_Sheathing-of-Katana.h"
+#include"../../../../../Scene/SceneManager.h"
+#include"../../../../Effect/EffekseerEffect/AttacEffect1/AttacEffect1.h"
+#include"../../../../Camera/PlayerCamera/PlayerCamera.h"
 
 void PlayerState_Attack1::StateStart()
 {
@@ -21,16 +24,20 @@ void PlayerState_Attack1::StateStart()
 	m_player->m_onceEffect = false;
 
 	// カタナの取得
-	auto katana = m_player->GetKatana().lock();
+	if (auto katana = m_player->GetKatana().lock(); katana)
+	{
+		katana->SetNowAttackState(true);
+	}
 
-	if (!katana) return;
-
-	katana->SetNowAttackState(true);
+	m_effectOnce = false;
 }
 
 void PlayerState_Attack1::StateUpdate()
 {
 	m_player->SetAnimeSpeed(120.0f);
+
+	// エフェクトの取得
+	SceneManager::Instance().GetObjectWeakPtr(m_effect);
 
 	// 0.5秒間当たり判定有効
 	if (m_time <= 1.0 / 2)
@@ -53,26 +60,6 @@ void PlayerState_Attack1::StateUpdate()
 		return;
 	}
 
-	if (!m_flag)
-	{
-		// エフェクトの表示位置（前方0.5f）
-		Math::Vector3 effectPos = m_player->GetPos() + m_attackDirection * 3.0f;
-
-		// プレイヤーの回転行列
-		Math::Matrix rotationMat = Math::Matrix::CreateFromQuaternion(m_player->GetRotationQuaternion());
-
-		// エフェクトのワールド行列（回転＋位置）
-		Math::Matrix effectWorld = rotationMat * Math::Matrix::CreateTranslation(effectPos);
-
-		// Effekseerエフェクト再生
-		auto effect = KdEffekseerManager::GetInstance().Play("Attack.efkefc", { effectPos }, 1.0f, 300.0f, false);
-		if (auto spEffect = effect.lock())
-		{
-			KdEffekseerManager::GetInstance().SetWorldMatrix(spEffect->GetHandle(), effectWorld);
-		}
-		m_flag = true;
-	}
-
 	// 攻撃中の移動方向で回転を更新
 	if (m_player->GetMovement() != Math::Vector3::Zero)
 	{
@@ -85,7 +72,7 @@ void PlayerState_Attack1::StateUpdate()
 	float deltaTime = Application::Instance().GetDeltaTime();
 	if (m_attackParam.m_dashTimer < 0.2f)
 	{
-		float dashSpeed = 0.4f;
+		float dashSpeed = 1.0f;
 		m_player->SetIsMoving(m_attackDirection * dashSpeed);
 		m_attackParam.m_dashTimer += deltaTime;
 	}
@@ -93,18 +80,29 @@ void PlayerState_Attack1::StateUpdate()
 	{
 		// 移動を止める
 		m_player->SetIsMoving(Math::Vector3::Zero);
+
+		if (auto playreCamera = m_player->GetPlayerCamera().lock(); playreCamera)
+		{
+			playreCamera->StartShake({ m_player->GetCameraShakePower()}, m_player->GetCameraShakeTime());
+		}
+
+		if (!m_effectOnce)
+		{
+			m_effectOnce = true;
+			UpdateEffect();
+		}
 	}
 
-	// カタナの取得
-	auto katana = m_player->GetKatana().lock();
-	if (!katana) return;
 
-	// 剣の軌跡の表示
-	katana->SetShowTrail(true);
-	// 現在攻撃中フラグを立てる
-	katana->SetNowAttackState(true);
-	// 手と鞘の位置を更新
-	UpdateKatanaPos();
+	if (auto katana = m_player->GetKatana().lock(); katana)
+	{
+		// 剣の軌跡の表示
+		katana->SetShowTrail(true);
+		// 現在攻撃中フラグを立てる
+		katana->SetNowAttackState(true);
+		// 手と鞘の位置を更新
+		UpdateKatanaPos();
+	}
 
 }
 
@@ -112,9 +110,24 @@ void PlayerState_Attack1::StateEnd()
 {
 	PlayerStateBase::StateEnd();
 
-	// カタナの取得
-	auto katana = m_player->GetKatana().lock();
-	if (!katana) return;
-	// 剣の軌跡の非表示
-	katana->SetShowTrail(false);
+	// エフェクトがあったらフラグをfalseにする
+	if(auto effect = m_effect.lock(); effect)
+	{
+		effect->SetPlayEffect(false);
+	}
+
+	// カタナの軌跡を消す
+	if (auto katana = m_player->GetKatana().lock(); katana)
+	{
+		katana->SetNowAttackState(false);
+	}
+}
+
+void PlayerState_Attack1::UpdateEffect()
+{
+	// エフェクトがあったらフラグをtrueにする
+	if (auto effect = m_effect.lock(); effect)
+	{
+		effect->SetPlayEffect(true);
+	}
 }

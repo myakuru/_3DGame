@@ -42,9 +42,9 @@ void EnemyState_Run::StateUpdate()
 	else
 	{
 		// Attackステートに移行
-		auto attack = std::make_shared<EnemyState_Attack>();
-		m_enemy->ChangeState(attack);
-		return;
+		//auto attack = std::make_shared<EnemyState_Attack>();
+		//m_enemy->ChangeState(attack);
+		//return;
 	}
 
 }

@@ -11,8 +11,9 @@ void EffekseerEffectBase::Init()
 	const std::vector<std::string>& sizeData = windowData.GetLine(0);
 	KdEffekseerManager::GetInstance().Create(atoi(sizeData[0].data()), atoi(sizeData[1].data()));
 
-	// 初回は起動しないようにする。
 	m_once = false;
+	m_load = false;
+
 }
 
 void EffekseerEffectBase::Update()
@@ -22,7 +23,11 @@ void EffekseerEffectBase::Update()
 
 	if (KeyboardManager::GetInstance().IsKeyJustPressed('F'))
 	{
-		m_once = true;
+		m_load = true;
+	}
+	else if(KeyboardManager::GetInstance().IsKeyJustReleased('F'))
+	{
+		m_load = false;
 	}
 
 	SceneManager::Instance().GetObjectWeakPtr(m_player);
@@ -48,19 +53,21 @@ void EffekseerEffectBase::Update()
 
 void EffekseerEffectBase::EffectUpdate()
 {
-	if (m_once)
+	// エフェクトの再生(1回だけ) 立ち上がり検知処理
+	if (!m_once && m_load)
 	{
 		KdEffekseerManager::GetInstance().Play(m_path, m_mWorld, m_effectSpeed);
-		m_once = false;
+		m_once = m_load;
 	}
+
+	if (!m_load) m_once = false;
+	
 }
 
 void EffekseerEffectBase::DrawEffect()
 {
 	// Effekseerの描画
-	KdShaderManager::Instance().ChangeRasterizerState(KdRasterizerState::CullNone);
 	KdEffekseerManager::GetInstance().Draw();
-	KdShaderManager::Instance().UndoRasterizerState();
 }
 
 void EffekseerEffectBase::ImGuiInspector()

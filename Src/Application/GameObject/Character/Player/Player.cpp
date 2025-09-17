@@ -137,7 +137,7 @@ void Player::UpdateAttack()
 			// カメラシェイク
 			if (auto camera = m_playerCamera.lock(); camera)
 			{
-				camera->StartShake(0.3f, 0.2f);
+				camera->StartShake({0.3f,0.3f}, 0.2f);
 			}
 
 		}
@@ -181,7 +181,7 @@ void Player::UpdateChargeAttack()
 				// カメラシェイク
 				if (auto camera = m_playerCamera.lock(); camera)
 				{
-					camera->StartShake(0.3f, 0.3f);
+					camera->StartShake({ 0.3f,0.3f }, 0.3f);
 				}
 			}
 			m_chargeAttackCount++;
@@ -218,6 +218,15 @@ void Player::ImGuiInspector()
 	ImGui::Text(U8("プレイヤーの状態"));
 	ImGui::DragFloat(U8("移動速度"), &m_moveSpeed, 0.1f);
 
+	ImGui::Text(U8("Attack１のカメラの揺れ"));
+	ImGui::DragFloat2(U8("揺れの大きさ"), &m_cameraShakePower.x, 0.01f);
+
+	ImGui::Text(U8("Attack1のカメラの揺れ時間"));
+	ImGui::DragFloat(U8("揺れの時間"), &m_cameraShakeTime, 0.01f);
+
+	ImGui::Text(U8("プレイヤーの回転速度"));
+	ImGui::DragFloat(U8("回転速度"), &m_rotateSpeed, 0.1f);
+
 	ImGui::Separator();
 	m_playerConfig.InGuiInspector();
 }
@@ -229,6 +238,10 @@ void Player::JsonInput(const nlohmann::json& _json)
 	if (_json.contains("fixedFps")) m_fixedFrameRate = _json["fixedFps"].get<float>();
 	if (_json.contains("moveSpeed")) m_moveSpeed = _json["moveSpeed"].get<float>();
 
+	if (_json.contains("cameraShake")) m_cameraShakePower = JSON_MANAGER.JsonToVector2(_json["cameraShake"]);
+	if (_json.contains("cameraShakeTime")) m_cameraShakeTime = _json["cameraShakeTime"].get<float>();
+	if (_json.contains("rotateSpeed")) m_rotateSpeed = _json["rotateSpeed"].get<float>();
+
 	m_playerConfig.JsonInput(_json);
 }
 
@@ -238,6 +251,9 @@ void Player::JsonSave(nlohmann::json& _json) const
 	_json["GravitySpeed"] = m_gravitySpeed;
 	_json["fixedFps"] = m_fixedFrameRate;
 	_json["moveSpeed"] = m_moveSpeed;
+	_json["cameraShake"] = JSON_MANAGER.Vector2ToJson(m_cameraShakePower);
+	_json["cameraShakeTime"] = m_cameraShakeTime;
+	_json["rotateSpeed"] = m_rotateSpeed;
 
 	m_playerConfig.JsonSave(_json);
 }

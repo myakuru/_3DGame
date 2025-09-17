@@ -40,6 +40,11 @@
     "DashTime2": 0.0,
     "GravitySpeed": 0.0,
     "Name": "class Player",
+    "cameraShake": {
+      "x": 0.0,
+      "y": 0.30000001192092896
+    },
+    "cameraShakeTime": 0.0,
     "color": {
       "w": 1.0,
       "x": 0.8352941274642944,
@@ -60,14 +65,15 @@
       "DrawUnLit": false,
       "GenerateDepthMapFromLight": true
     },
-    "fixedFps": 60.0,
+    "fixedFps": 80.0,
     "moveSpeed": 0.14000000059604645,
     "path": "Asset\\Models\\Player\\Perula\\Perula.gltf",
     "pos": {
-      "x": 22.395305633544922,
+      "x": -4.0,
       "y": 1.0,
-      "z": 16.94935417175293
+      "z": 4.0
     },
+    "rotateSpeed": 30.0,
     "scale": {
       "x": 0.8999999761581421,
       "y": 0.8999999761581421,
@@ -151,10 +157,11 @@
       "z": 1.0
     },
     "deg": {
-      "x": 2.550046920776367,
-      "y": 1295.5487060546875,
+      "x": 14.10003662109375,
+      "y": 809.85009765625,
       "z": 0.0
     },
+    "fov": 60.0,
     "moveSpeed": 50.0,
     "path": "Asset/Models/Sky/Sky.gltf",
     "pos": {
@@ -701,7 +708,7 @@
       "z": 0.41960784792900085
     },
     "deg": {
-      "x": -0.08584553003311157,
+      "x": -0.09399999678134918,
       "y": -0.03200000151991844,
       "z": 0.0
     },
@@ -1388,7 +1395,7 @@
     "type": 10
   },
   {
-    "EffectSpeed": 80.0,
+    "EffectSpeed": 20.0,
     "Name": "class EffectPlay",
     "color": {
       "w": 1.0,
@@ -1402,7 +1409,7 @@
       "z": 0.0
     },
     "distance": 10.0,
-    "path": "Asset\\Data\\Effect\\EVFX_Slash\\VFX\\effects\\EVFX02_17_WaveBlade.efkefc",
+    "path": "Asset\\Data\\Effect\\EVFX_Slash\\VFX\\effects\\Charge0.efkefc",
     "pos": {
       "x": 0.0,
       "y": 0.0,
@@ -1442,6 +1449,62 @@
       "z": 0.30000001192092896
     },
     "type": 9
+  },
+  {
+    "EffectSpeed": 10.0,
+    "Name": "class SmokeEffect",
+    "color": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "deg": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "distance": 0.0,
+    "path": "Asset\\Data\\Effect\\EVFX_Slash\\VFX\\Smoke\\EVFXForge01_10_FrostforgeSlash.efkefc",
+    "pos": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "scale": {
+      "x": 0.30000001192092896,
+      "y": 0.10000000149011612,
+      "z": 0.30000001192092896
+    },
+    "type": 14
+  },
+  {
+    "EffectSpeed": 10.0,
+    "Name": "class ShineEffect",
+    "color": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "deg": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "distance": 0.0,
+    "path": "Asset\\Data\\Effect\\SampleEffect\\ZZZshine.efkefc",
+    "pos": {
+      "x": 0.0,
+      "y": 0.4000000059604645,
+      "z": 0.0
+    },
+    "scale": {
+      "x": 0.5,
+      "y": 0.10000000149011612,
+      "z": 0.10000000149011612
+    },
+    "type": 13
   },
   {
     "Name": "class FPSCamera",

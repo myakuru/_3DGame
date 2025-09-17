@@ -39,7 +39,7 @@ public:
 
 	void UpdateQuaternionDirect(const Math::Vector3& direction);
 
-	std::shared_ptr<PlayerCamera> GetPlayerCamera() const { return m_playerCamera.lock(); }
+	std::weak_ptr<PlayerCamera> GetPlayerCamera() const { return m_playerCamera; }
 
 protected:
 
@@ -73,6 +73,8 @@ protected:
 
 	// 60fps換算にするようの変数
 	float m_fixedFrameRate = 0.0f;
+
+	float m_rotateSpeed = 0.0f; // 回転速度
 
 	// 行列関係
 	Math::Matrix m_mRotation = Math::Matrix::Identity;

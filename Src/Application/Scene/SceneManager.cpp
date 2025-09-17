@@ -47,6 +47,10 @@
 #include"../GameObject/Effect/MeshEffect/Attack4Effect/Attack4Effect.h"
 #include"../GameObject/Effect/EffekseerEffect/EffectPlay/EffectPlay.h"
 #include"../GameObject//Effect/EffekseerEffect/AttacEffect1/AttacEffect1.h"
+#include"../GameObject/Effect/EffekseerEffect/CloudEffect/CloudEffect.h"
+#include"../GameObject/Effect/EffekseerEffect/SmokeEffect/SmokeEffect.h"
+#include"../GameObject/Effect/EffekseerEffect/ShineEffect/ShineEffect.h"
+#include"../GameObject/Effect/EffekseerEffect/GroundFreezes/GroundFreezes.h"
 
 void SceneManager::Init()
 {
@@ -91,6 +95,10 @@ void SceneManager::Register() const
 
 	RegisterObject::GetInstance().Register<EffectPlay>();
 	RegisterObject::GetInstance().Register<AttacEffect1>();
+	RegisterObject::GetInstance().Register<CloudEffect>();
+	RegisterObject::GetInstance().Register<SmokeEffect>();
+	RegisterObject::GetInstance().Register<ShineEffect>();
+	RegisterObject::GetInstance().Register<GroundFreezes>();
 }
 
 void SceneManager::PreUpdate()

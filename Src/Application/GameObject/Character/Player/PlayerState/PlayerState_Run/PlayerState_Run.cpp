@@ -45,7 +45,7 @@ void PlayerState_Run::StateUpdate()
 
 	UpdateKatanaPos();
 
-	if (!m_player->GetPlayerCamera()) return;
+	if (!m_player->GetPlayerCamera().lock()) return;
 
 	m_player->UpdateQuaternion(moveDir);
 	m_player->SetIsMoving(moveDir);
@@ -64,24 +64,4 @@ void PlayerState_Run::StateEnd()
 	PlayerStateBase::StateEnd();
 
 	m_player->m_isHit = false; // ダメージフラグをリセット
-}
-
-void PlayerState_Run::UpdateKatanaPos()
-{
-	// 左手のワークノードを取得
-	auto leftHandNode = m_player->GetModelWork()->FindWorkNode("VSB_9");
-
-	if (!leftHandNode) return;
-
-	// カタナの取得
-	auto katana = m_player->GetKatana().lock();
-	// 鞘の取得
-	auto saya = m_player->GetScabbard().lock();
-
-	if (!katana) return;
-	if (!saya) return;
-
-	// プレイヤーに追尾する刀にするためにワークノードとプレイヤーのワールド変換を設定
-	katana->SetHandKatanaMatrix(leftHandNode->m_worldTransform);
-	saya->SetHandKatanaMatrix(leftHandNode->m_worldTransform);
 }

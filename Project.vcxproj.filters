@@ -301,6 +301,18 @@
     <Filter Include="Src\Application\GameObject\Effect\EffekseerEffect\AttacEffect1">
       <UniqueIdentifier>{2cf4fbc1-ebfc-4f00-9a53-5f1cf78d2b65}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\GameObject\Effect\EffekseerEffect\CloudEffect">
+      <UniqueIdentifier>{a9e58c79-08fa-4510-9fb2-55fbeb45924a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Effect\EffekseerEffect\SmokeEffect">
+      <UniqueIdentifier>{19b57e38-c317-4cdf-8fcf-23a77ddfeda0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Effect\EffekseerEffect\ShineEffect">
+      <UniqueIdentifier>{b96a251d-0732-4e87-a409-34f4602054e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Effect\EffekseerEffect\GroundFreezes">
+      <UniqueIdentifier>{d803d0bb-3b9b-49b6-ae3c-c1bfac0f1c46}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -702,6 +714,18 @@
     <ClInclude Include="Src\Application\GameObject\Effect\EffekseerEffect\AttacEffect1\AttacEffect1.h">
       <Filter>Src\Application\GameObject\Effect\EffekseerEffect\AttacEffect1</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Effect\EffekseerEffect\CloudEffect\CloudEffect.h">
+      <Filter>Src\Application\GameObject\Effect\EffekseerEffect\CloudEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Effect\EffekseerEffect\SmokeEffect\SmokeEffect.h">
+      <Filter>Src\Application\GameObject\Effect\EffekseerEffect\SmokeEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Effect\EffekseerEffect\ShineEffect\ShineEffect.h">
+      <Filter>Src\Application\GameObject\Effect\EffekseerEffect\ShineEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Effect\EffekseerEffect\GroundFreezes\GroundFreezes.h">
+      <Filter>Src\Application\GameObject\Effect\EffekseerEffect\GroundFreezes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -1040,11 +1064,23 @@
     <ClCompile Include="Src\Application\GameObject\Effect\EffekseerEffect\EffekseerEffectBase.cpp">
       <Filter>Src\Application\GameObject\Effect\EffekseerEffect</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Application\GameObject\Effect\EffekseerEffect\EffectPlay\EffectPlay.cpp">
-      <Filter>Src\Application\GameObject\Effect\EffekseerEffect\EffectPlay</Filter>
+    <ClCompile Include="Src\Application\GameObject\Effect\EffekseerEffect\CloudEffect\CloudEffect.cpp">
+      <Filter>Src\Application\GameObject\Effect\EffekseerEffect\CloudEffect</Filter>
     </ClCompile>
     <ClCompile Include="Src\Application\GameObject\Effect\EffekseerEffect\AttacEffect1\AttacEffect1.cpp">
       <Filter>Src\Application\GameObject\Effect\EffekseerEffect\AttacEffect1</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Effect\EffekseerEffect\EffectPlay\EffectPlay.cpp">
+      <Filter>Src\Application\GameObject\Effect\EffekseerEffect\EffectPlay</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Effect\EffekseerEffect\SmokeEffect\SmokeEffect.cpp">
+      <Filter>Src\Application\GameObject\Effect\EffekseerEffect\SmokeEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Effect\EffekseerEffect\ShineEffect\ShineEffect.cpp">
+      <Filter>Src\Application\GameObject\Effect\EffekseerEffect\ShineEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Effect\EffekseerEffect\GroundFreezes\GroundFreezes.cpp">
+      <Filter>Src\Application\GameObject\Effect\EffekseerEffect\GroundFreezes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

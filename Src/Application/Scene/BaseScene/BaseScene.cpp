@@ -216,24 +216,22 @@ void BaseScene::DrawSprite()
 {
 	m_renderTargetUIChanger.ChangeRenderTarget(m_renderTargetUIPack);
 
-	// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
-	// 2Dの描画はこの間で行う
+	// 2D描画
 	KdShaderManager::Instance().m_spriteShader.Begin();
-	{
-		for (auto& obj : m_objList)
-		{
-			obj->DrawSprite();
-		}
-	}
+	for (auto& obj : m_objList) obj->DrawSprite();
 	KdShaderManager::Instance().m_spriteShader.End();
 
 	m_renderTargetUIChanger.UndoRenderTarget();
 
 	KdShaderManager::Instance().m_spriteShader.Begin();
-	{
-		KdShaderManager::Instance().m_spriteShader.DrawTex(m_renderTargetUIPack.m_RTTexture.get(), 0, 0, m_gameWindowSizeX, m_gameWindowSizeY);
-	}
+	//KdShaderManager::Instance().ChangeBlendState(KdBlendState::Alpha);
+	Math::Color color = { 1.0f,1.0f,1.0f,1.0f };
+	KdShaderManager::Instance().m_spriteShader.DrawTex(m_renderTargetUIPack.m_RTTexture, 0, 0, m_gameWindowSizeX, m_gameWindowSizeY, nullptr,&color);
+	//KdShaderManager::Instance().UndoBlendState();
 	KdShaderManager::Instance().m_spriteShader.End();
+
+
+	//m_renderTargetUIPack.ClearTexture();
 }
 
 void BaseScene::DrawDebug()

@@ -65,6 +65,9 @@ public:
 
 	PlayerStatus& GetPlayerStatus() { return m_status; }
 
+	const Math::Vector2& GetCameraShakePower() const { return m_cameraShakePower; }
+	float GetCameraShakeTime() const { return m_cameraShakeTime; }
+
 private:
 
 	Math::Vector3 m_moveDirection = Math::Vector3::Zero; // 移動方向
@@ -85,6 +88,9 @@ private:
 	int m_chargeAttackCount = 0;      // 何回ダメージを与えたか
 	float m_chargeAttackTimer = 0.0f; // 経過時間
 	bool m_isChargeAttackActive = false; // 連続攻撃中か
+
+	Math::Vector2 m_cameraShakePower = Math::Vector2::Zero; // カメラシェイクの強さ
+	float m_cameraShakeTime = 0.0f; // カメラシェイクの時間
 
 	PlayerConfig m_playerConfig;
 

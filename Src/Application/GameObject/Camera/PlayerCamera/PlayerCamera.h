@@ -24,9 +24,9 @@ public:
 	void DebugDraw(DirectX::BoundingFrustum _frustum);
 
 	// 強さ、時間
-	void StartShake(float power, float time)
+	void StartShake(Math::Vector2 _power, float time)
 	{
-		m_shakePower = power;
+		m_shakePower = _power;
 		m_shakeTime = time;
 	}
 
@@ -44,9 +44,11 @@ private:
 	std::shared_ptr<Player> m_spTarget = nullptr; // カメラのターゲット
 
 	// カメラシェイク用変数
-	float m_shakePower = 0.0f;
 	float m_shakeTime = 0.0f;
+
+	Math::Vector2 m_shakePower = Math::Vector2::Zero; // シェイクの強さ
 
 	float m_smooth = 0.0f;		// カメラ追従のスムージング係数
 	float m_introTimer = 0.0f;	// Introカメラのタイマー
+	float m_fov = 60.0f;		// 視野角
 };

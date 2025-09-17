@@ -1,13 +1,14 @@
 ﻿#include"PlayerState_ChargeAttack.h"
 #include"../../../../../main.h"
 
-#include"../PlayerState_Idle/PlayerState_Idle.h"
+#include"../PlayerState_ChargeAttack2/PlayerState_ChaegeAttack2.h"
 #include"../../../../Weapon/Katana/Katana.h"
 #include"../../../../../Scene/SceneManager.h"
+#include"../../../../Camera/PlayerCamera/PlayerCamera.h"
 
 void PlayerState_ChargeAttack::StateStart()
 {
-	auto anime = m_player->GetAnimeModel()->GetAnimation("ChargeAttack");
+	auto anime = m_player->GetAnimeModel()->GetAnimation("ChargeAttack0");
 	m_player->GetAnimator()->AnimationBlend(anime, 10.0f,false);
 	m_player->AnimeSetFlg() = true;
 
@@ -15,34 +16,39 @@ void PlayerState_ChargeAttack::StateStart()
 
 	m_chargeTime = 0.0f;
 	m_isCharging = false;
-	m_isCharged = false;
 
-	m_flag = false; // エフェクトフラグ
+	m_time = 0.0f;
 
 }
 
 void PlayerState_ChargeAttack::StateUpdate()
 {
-	m_player->SetAnimeSpeed(180.0f);
+	// アニメーション速度を変更
+	m_player->SetAnimeSpeed(80.0f);
 
-	float deltaTime = Application::Instance().GetDeltaTime();
-
+	// アニメーションが終了したら納刀する状態へ
 	if (m_player->GetAnimator()->IsAnimationEnd())
 	{
-		auto idleState = std::make_shared<PlayerState_Idle>();
-		m_player->ChangeState(idleState);
+		auto state = std::make_shared<PlayerState_ChaegeAttack2>();
+		m_player->ChangeState(state);
 		return;
 	}
 
-	UpdateKatanaPos();
+	float deltaTime = Application::Instance().GetDeltaTime();
 
-	float time = m_player->GetAnimator()->GetTime();
+	m_time += deltaTime;
 
-	if (time >= 0.0f && !m_isCharging)
+	if (m_time >= 0.0f && m_time <= 0.05f)
 	{
-		KdEffekseerManager::GetInstance().Play("ZZZshine.efkefc", { m_player->GetPos().x,m_player->GetPos().y + 0.5f,m_player->GetPos().z }, 0.2f, 100.0f, false);
-		m_isCharging = true;
+		KdShaderManager::Instance().m_postProcessShader.SetEnableStrongBlur(true);
 	}
+	else
+	{
+		KdShaderManager::Instance().m_postProcessShader.SetEnableStrongBlur(false);
+	}
+
+	// 刀は鞘の中にある状態
+	UpdateUnsheathed();
 
 	// 攻撃中の移動方向で回転を更新
 	if (m_player->GetMovement() != Math::Vector3::Zero)
@@ -53,41 +59,11 @@ void PlayerState_ChargeAttack::StateUpdate()
 		m_player->UpdateQuaternionDirect(moveDir);
 	}
 
-	if (time >= 60.5f && !m_isCharged)
-	{
-		SceneManager::Instance().SetEffectActive(true);
-
-		if (m_time <= 1.0 / 2)
-		{
-			for (int i = 0; i < 5; ++i)
-			{
-				m_player->UpdateChargeAttack();
-			}
-			m_time = 0.0f;
-		}
-
-		float deltaTime = Application::Instance().GetDeltaTime();
-
-		if (m_chargeTime < 0.3f)
-		{
-			float dashSpeed = 0.0f;
-			m_player->SetIsMoving(m_attackDirection * dashSpeed);
-			m_chargeTime += deltaTime;
-
-			if (!m_flag)
-			{
-				m_forwardEffect->Init();
-				SceneManager::Instance().AddObject(m_forwardEffect);
-				m_flag = true;
-			}
-
-		}
-		else
-		{
-			// 移動を止める
-			m_player->SetIsMoving(Math::Vector3::Zero);
-		}
-	}
+	
+	m_player->SetIsMoving(m_attackDirection);
+		
+	// 移動を止める
+	m_player->SetIsMoving(Math::Vector3::Zero);
 
 }
 

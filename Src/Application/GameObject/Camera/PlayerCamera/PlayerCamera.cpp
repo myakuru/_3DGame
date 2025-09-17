@@ -66,8 +66,8 @@ void PlayerCamera::PostUpdate()
 	Math::Vector3 shakeOffset = Math::Vector3::Zero;
 	if (m_shakeTime > 0.0f)
 	{
-		shakeOffset.x = KdRandom::GetFloat(-m_shakePower, m_shakePower);
-		shakeOffset.y = KdRandom::GetFloat(-m_shakePower, m_shakePower);
+		shakeOffset.x = KdRandom::GetFloat(-m_shakePower.x, m_shakePower.x);
+		shakeOffset.y = KdRandom::GetFloat(-m_shakePower.y, m_shakePower.y);
 		m_shakeTime -= deltaTime;
 		if (m_shakeTime <= 0.0f)
 		{
@@ -236,6 +236,10 @@ void PlayerCamera::ImGuiInspector()
 	ImGui::Text(U8("プレイヤーとカメラの距離"));
 	ImGui::DragFloat3("offsetPos", &m_targetLookAt.x, 0.1f);
 	ImGui::DragFloat("Camera Smooth", &m_smooth, 0.01f);
+	ImGui::DragFloat("FOV", &m_fov, 1.0f, 1.0f, 179.0f);
+
+
+	m_spCamera->SetProjectionMatrix(m_fov);
 }
 
 void PlayerCamera::JsonSave(nlohmann::json& _json) const
@@ -243,6 +247,7 @@ void PlayerCamera::JsonSave(nlohmann::json& _json) const
 	CameraBase::JsonSave(_json);
 	_json["targetLookAt"] = JSON_MANAGER.VectorToJson(m_targetLookAt);
 	_json["smooth"] = m_smooth;
+	_json["fov"] = m_fov;
 }
 
 void PlayerCamera::JsonInput(const nlohmann::json& _json)
@@ -250,6 +255,7 @@ void PlayerCamera::JsonInput(const nlohmann::json& _json)
 	CameraBase::JsonInput(_json);
 	if(_json.contains("targetLookAt")) m_targetLookAt = JSON_MANAGER.JsonToVector(_json["targetLookAt"]);
 	if (_json.contains("smooth")) m_smooth = _json["smooth"].get<float>();
+	if (_json.contains("fov")) m_fov = _json["fov"].get<float>();
 }
 
 DirectX::BoundingFrustum PlayerCamera::CreateFrustum() const

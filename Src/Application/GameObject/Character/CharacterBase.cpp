@@ -39,7 +39,7 @@ void CharaBase::UpdateQuaternion(Math::Vector3& _moveVector)
 	Math::Quaternion targetRotation = Math::Quaternion::CreateFromAxisAngle(Math::Vector3::Up, targetYaw);
 
 	// クォータニオンの内積を計算
-	m_rotation = Math::Quaternion::Slerp(m_rotation, targetRotation, deltaTime * m_fixedFrameRate);
+	m_rotation = Math::Quaternion::Slerp(m_rotation, targetRotation, deltaTime * m_rotateSpeed);
 }
 
 void CharaBase::UpdateQuaternionDirect(const Math::Vector3& direction)
@@ -52,7 +52,7 @@ void CharaBase::UpdateQuaternionDirect(const Math::Vector3& direction)
 
 	// 向きたい方向をクォータニオンに変換 第1引数：前を向く方向, 第2引数：どっちが上か
 	Math::Quaternion targetRotation = Math::Quaternion::LookRotation(dir, Math::Vector3::Up);
-	m_rotation = Math::Quaternion::Slerp(m_rotation, targetRotation, deltaTime * m_fixedFrameRate);
+	m_rotation = Math::Quaternion::Slerp(m_rotation, targetRotation, deltaTime * m_rotateSpeed);
 }
 
 void CharaBase::Update()

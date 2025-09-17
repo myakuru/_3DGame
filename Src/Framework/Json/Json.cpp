@@ -135,6 +135,24 @@ nlohmann::json JsonManager::VectorToJson(const Math::Vector3& _vec) const
 	};
 }
 
+Math::Vector2 JsonManager::JsonToVector2(const nlohmann::json& _json) const
+{
+	return Math::Vector2
+	{
+		_json["x"],
+		_json["y"]
+	};
+}
+
+nlohmann::json JsonManager::Vector2ToJson(const Math::Vector2& _vec) const
+{
+	return nlohmann::json
+	{
+		{"x", _vec.x },
+		{"y",_vec.y }
+	};
+}
+
 Math::Vector4 JsonManager::JsonToVector4(const nlohmann::json& _json) const
 {
 	return Math::Vector4

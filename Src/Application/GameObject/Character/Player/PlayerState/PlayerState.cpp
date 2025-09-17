@@ -2,6 +2,7 @@
 #include"../../../Weapon/Katana/Katana.h"
 #include"../../../Weapon/WeaponKatanaScabbard/WeaponKatanaScabbard.h"
 
+
 void PlayerStateBase::StateStart()
 {
 	// 敵の方向ベクトルを計算

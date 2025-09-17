@@ -27,6 +27,12 @@ public:
 	// ベクターの値をJsonに変換する
 	nlohmann::json VectorToJson(const Math::Vector3& _vec) const;
 
+	// Jsonの値をベクター２に変換する
+	Math::Vector2 JsonToVector2(const nlohmann::json& _json) const;
+
+	// ベクター２の値をJsonに変換する
+	nlohmann::json Vector2ToJson(const Math::Vector2& _vec) const;
+
 	// Jsonの値をベクター４に変換する
 	Math::Vector4 JsonToVector4(const nlohmann::json& _json) const;
 
