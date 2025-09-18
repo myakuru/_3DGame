@@ -313,6 +313,12 @@
     <Filter Include="Src\Application\GameObject\Effect\EffekseerEffect\GroundFreezes">
       <UniqueIdentifier>{d803d0bb-3b9b-49b6-ae3c-c1bfac0f1c46}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\GameObject\Effect\EffekseerEffect\ShineEffectBlue">
+      <UniqueIdentifier>{c3ee67f2-8003-457b-9163-296f2aeca419}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Effect\EffekseerEffect\SwordFlash">
+      <UniqueIdentifier>{f3e29696-6cbe-4bcb-b54a-4a91b9a251b6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -726,6 +732,12 @@
     <ClInclude Include="Src\Application\GameObject\Effect\EffekseerEffect\GroundFreezes\GroundFreezes.h">
       <Filter>Src\Application\GameObject\Effect\EffekseerEffect\GroundFreezes</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Effect\EffekseerEffect\ShineEffectBlue\ShineEffectBlue.h">
+      <Filter>Src\Application\GameObject\Effect\EffekseerEffect\ShineEffectBlue</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Effect\EffekseerEffect\SwordFlash\SwordFlash.h">
+      <Filter>Src\Application\GameObject\Effect\EffekseerEffect\SwordFlash</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -1081,6 +1093,12 @@
     </ClCompile>
     <ClCompile Include="Src\Application\GameObject\Effect\EffekseerEffect\GroundFreezes\GroundFreezes.cpp">
       <Filter>Src\Application\GameObject\Effect\EffekseerEffect\GroundFreezes</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Effect\EffekseerEffect\ShineEffectBlue\ShineEffectBlue.cpp">
+      <Filter>Src\Application\GameObject\Effect\EffekseerEffect\ShineEffectBlue</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Effect\EffekseerEffect\SwordFlash\SwordFlash.cpp">
+      <Filter>Src\Application\GameObject\Effect\EffekseerEffect\SwordFlash</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

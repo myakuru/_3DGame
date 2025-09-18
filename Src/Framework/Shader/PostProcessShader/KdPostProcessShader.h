@@ -27,6 +27,10 @@ public:
 	// ノイズの強さを設定
 	void SetNoiseStrength(float strength) { m_cb0_NoiseInfo.Work().NoiseStrength = strength; }
 
+	// 
+
+	const KdRenderTargetPack& GetNoiseRenderTargetPack() const { return m_noiseRTPack; }
+
 
 	struct Vertex
 	{
@@ -115,6 +119,7 @@ private:
 	
 	// 自分で追加
 	KdRenderTargetPack	m_noiseRTPack;
+
 
 	KdRenderTargetPack	m_brightEffectRTPack;
 	static const int	kLightBloomNum = 4;

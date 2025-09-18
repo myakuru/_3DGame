@@ -133,83 +133,80 @@ void BaseScene::PreDraw()
 
 void BaseScene::Draw()
 {
-	WithDebugRenderTarget([&]()
-		{
-			m_renderTargetPack.ClearTexture();
-			// 光を遮るオブジェクト(不透明な物体や2Dキャラ)
-			KdShaderManager::Instance().m_StandardShader.BeginGenerateDepthMapFromLight();
-			{
-				for (auto& obj : m_objList) obj->GenerateDepthMapFromLight();
-				for (auto& obj : m_drawObjectList) obj->GenerateDepthMapFromLight();
-			}
-			KdShaderManager::Instance().m_StandardShader.EndGenerateDepthMapFromLight();
 
-			// 陰影のないオブジェクト(背景など)
-			KdShaderManager::Instance().m_StandardShader.BeginUnLit();
-			{
-				for (auto& obj : m_objList) obj->DrawUnLit();
-				for (auto& obj : m_drawObjectList) obj->DrawUnLit();
-			}
-			KdShaderManager::Instance().m_StandardShader.EndUnLit();
+	// 光を遮るオブジェクト(不透明な物体や2Dキャラ)
+	KdShaderManager::Instance().m_StandardShader.BeginGenerateDepthMapFromLight();
+	{
+		for (auto& obj : m_objList) obj->GenerateDepthMapFromLight();
+		for (auto& obj : m_drawObjectList) obj->GenerateDepthMapFromLight();
+	}
+	KdShaderManager::Instance().m_StandardShader.EndGenerateDepthMapFromLight();
 
-			// 陰影のあるオブジェクト
-			KdShaderManager::Instance().m_StandardShader.BeginLit();
-			{
-				for (auto& obj : m_objList) obj->DrawLit();
-				for (auto& obj : m_drawObjectList) obj->DrawLit();
-			}
-			KdShaderManager::Instance().m_StandardShader.EndLit();
+	// 陰影のないオブジェクト(背景など)
+	KdShaderManager::Instance().m_StandardShader.BeginUnLit();
+	{
+		for (auto& obj : m_objList) obj->DrawUnLit();
+		for (auto& obj : m_drawObjectList) obj->DrawUnLit();
+	}
+	KdShaderManager::Instance().m_StandardShader.EndUnLit();
 
-			// 陰影のないエフェクト
-			KdShaderManager::Instance().m_StandardShader.BeginUnLit();
-			{
-				for (auto& obj : m_objList) obj->DrawEffect();
-				for (auto& obj : m_drawObjectList) obj->DrawEffect();
-			}
-			KdShaderManager::Instance().m_StandardShader.EndUnLit();
+	// 陰影のあるオブジェクト
+	KdShaderManager::Instance().m_StandardShader.BeginLit();
+	{
+		for (auto& obj : m_objList) obj->DrawLit();
+		for (auto& obj : m_drawObjectList) obj->DrawLit();
+	}
+	KdShaderManager::Instance().m_StandardShader.EndLit();
 
-			// 光源オブジェクト
-			KdShaderManager::Instance().m_postProcessShader.BeginBright();
-			{
-				for (auto& obj : m_objList) obj->DrawBright();
-				for (auto& obj : m_drawObjectList) obj->DrawBright();
-			}
-			KdShaderManager::Instance().m_postProcessShader.EndBright();
+	// 陰影のないエフェクト
+	KdShaderManager::Instance().m_StandardShader.BeginUnLit();
+	{
+		for (auto& obj : m_objList) obj->DrawEffect();
+		for (auto& obj : m_drawObjectList) obj->DrawEffect();
+	}
+	KdShaderManager::Instance().m_StandardShader.EndUnLit();
 
-			// Toonシェーダー
-			KdShaderManager::Instance().m_StandardShader.BeginToon();
-			{
-				for (auto& obj : m_objList) obj->DrawToon();
-				for (auto& obj : m_drawObjectList) obj->DrawToon();
-			}
-			KdShaderManager::Instance().m_StandardShader.EndToon();
+	// 光源オブジェクト
+	KdShaderManager::Instance().m_postProcessShader.BeginBright();
+	{
+		for (auto& obj : m_objList) obj->DrawBright();
+		for (auto& obj : m_drawObjectList) obj->DrawBright();
+	}
+	KdShaderManager::Instance().m_postProcessShader.EndBright();
 
-			// グラデーション
-			KdShaderManager::Instance().m_StandardShader.BeginGradient();
-			{
-				for (auto& obj : m_objList) obj->DrawGradation();
-				for (auto& obj : m_drawObjectList) obj->DrawGradation();
-			}
-			KdShaderManager::Instance().m_StandardShader.EndGradient();
+	// Toonシェーダー
+	KdShaderManager::Instance().m_StandardShader.BeginToon();
+	{
+		for (auto& obj : m_objList) obj->DrawToon();
+		for (auto& obj : m_drawObjectList) obj->DrawToon();
+	}
+	KdShaderManager::Instance().m_StandardShader.EndToon();
 
-			// グレースケール
-			KdShaderManager::Instance().m_StandardShader.BeginGrayscale();
-			{
-				for (auto& obj : m_objList) obj->DrawGrayScale();
-				for (auto& obj : m_drawObjectList) obj->DrawGrayScale();
-			}
-			KdShaderManager::Instance().m_StandardShader.EndGrayscale();
+	// グラデーション
+	KdShaderManager::Instance().m_StandardShader.BeginGradient();
+	{
+		for (auto& obj : m_objList) obj->DrawGradation();
+		for (auto& obj : m_drawObjectList) obj->DrawGradation();
+	}
+	KdShaderManager::Instance().m_StandardShader.EndGradient();
 
-			// エフェクト
-			KdShaderManager::Instance().m_StandardShader.BeginEffect();
-			{
-				for (auto& obj : m_objList) obj->DrawEffect();
-				for (auto& obj : m_drawObjectList) obj->DrawEffect();
-			}
-			KdShaderManager::Instance().m_StandardShader.EndEffect();
+	// グレースケール
+	KdShaderManager::Instance().m_StandardShader.BeginGrayscale();
+	{
+		for (auto& obj : m_objList) obj->DrawGrayScale();
+		for (auto& obj : m_drawObjectList) obj->DrawGrayScale();
+	}
+	KdShaderManager::Instance().m_StandardShader.EndGrayscale();
 
-			m_drawObjectList.clear();
-		});
+	// エフェクト
+	KdShaderManager::Instance().m_StandardShader.BeginEffect();
+	{
+		for (auto& obj : m_objList) obj->DrawEffect();
+		for (auto& obj : m_drawObjectList) obj->DrawEffect();
+	}
+	KdShaderManager::Instance().m_StandardShader.EndEffect();
+
+	m_drawObjectList.clear();
 }
 
 void BaseScene::DrawSprite()

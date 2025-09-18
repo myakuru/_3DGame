@@ -6,12 +6,14 @@
 #include"../../../../../Scene/SceneManager.h"
 #include"../../../../Camera/PlayerCamera/PlayerCamera.h"
 
-#include"../../../../Camera/PlayerCamera/PlayerCamera.h"
+#include"../../../../Effect/EffekseerEffect/ShineEffectBlue/ShineEffectBlue.h"
+#include"../../../../Effect/EffekseerEffect/GroundFreezes/GroundFreezes.h"
+
 
 void PlayerState_ChargeAttack::StateStart()
 {
 	auto anime = m_player->GetAnimeModel()->GetAnimation("ChargeAttack0");
-	m_player->GetAnimator()->AnimationBlend(anime, 10.0f,false);
+	m_player->GetAnimator()->AnimationBlend(anime, 20.0f,false);
 	m_player->AnimeSetFlg() = true;
 
 	PlayerStateBase::StateStart();
@@ -23,13 +25,25 @@ void PlayerState_ChargeAttack::StateStart()
 
 	if (auto camera = m_player->GetPlayerCamera().lock(); camera)
 	{
-		camera->SetTargetLookAt({ 0.f,1.f,-1.0f });
+		camera->SetTargetLookAt({ 0.f,1.f,-2.0f });
 	}
-
 }
 
 void PlayerState_ChargeAttack::StateUpdate()
 {
+	SceneManager::Instance().GetObjectWeakPtr(m_shineEffect);
+	SceneManager::Instance().GetObjectWeakPtr(m_groundFreezes);
+
+	if (auto effect = m_shineEffect.lock(); effect)
+	{
+		effect->SetPlayEffect(true);
+	}
+
+	if (auto effect = m_groundFreezes.lock(); effect)
+	{
+		effect->SetPlayEffect(true);
+	}
+
 	// アニメーション速度を変更
 	m_player->SetAnimeSpeed(80.0f);
 
@@ -45,7 +59,7 @@ void PlayerState_ChargeAttack::StateUpdate()
 
 	m_time += deltaTime;
 
-	if (m_time >= 0.0f && m_time <= 0.1f)
+	if (m_time >= 0.3f && m_time <= 0.5f)
 	{
 		KdShaderManager::Instance().m_postProcessShader.SetEnableStrongBlur(true);
 	}
@@ -81,5 +95,15 @@ void PlayerState_ChargeAttack::StateEnd()
 	if (auto camera = m_player->GetPlayerCamera().lock(); camera)
 	{
 		camera->SetTargetLookAt({ 0.f,1.f,-2.5f });
+	}
+
+	if (auto effect = m_shineEffect.lock(); effect)
+	{
+		effect->SetPlayEffect(false);
+	}
+
+	if (auto effect = m_groundFreezes.lock(); effect)
+	{
+		effect->SetPlayEffect(false);
 	}
 }

@@ -275,7 +275,7 @@ void ImGuiManager::ShowGameScene()
 
 		m_winSize = ImGui::GetWindowSize();
 
-		auto texID = (ImTextureID)(SceneManager::Instance().GetCurrentScene()->GetRenderTargetPack().m_RTTexture->WorkSRView());
+		auto texID = (ImTextureID)(KdShaderManager::Instance().m_postProcessShader.GetNoiseRenderTargetPack().m_RTTexture->WorkSRView());
 
 		m_width = m_winSize.x;
 		m_height = m_width * 9.0f / 16.0f;

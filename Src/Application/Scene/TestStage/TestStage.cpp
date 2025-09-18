@@ -61,6 +61,8 @@ void TestScene::Init()
 {
 	//KdShaderManager::Instance().m_postProcessShader.SetEnableGray(false);
 
+	KdShaderManager::Instance().m_postProcessShader.SetEnableStrongBlur(true);
+
 	m_isCountDown = false;	// カウントダウンフラグを初期化
 
 	m_countDownTimer = 120.0f; // カウントダウンタイマーを120秒に設定

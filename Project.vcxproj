@@ -311,8 +311,10 @@
     <ClInclude Include="Src\Application\GameObject\Effect\EffekseerEffect\EffectPlay\EffectPlay.h" />
     <ClInclude Include="Src\Application\GameObject\Effect\EffekseerEffect\EffekseerEffectBase.h" />
     <ClInclude Include="Src\Application\GameObject\Effect\EffekseerEffect\GroundFreezes\GroundFreezes.h" />
+    <ClInclude Include="Src\Application\GameObject\Effect\EffekseerEffect\ShineEffectBlue\ShineEffectBlue.h" />
     <ClInclude Include="Src\Application\GameObject\Effect\EffekseerEffect\ShineEffect\ShineEffect.h" />
     <ClInclude Include="Src\Application\GameObject\Effect\EffekseerEffect\SmokeEffect\SmokeEffect.h" />
+    <ClInclude Include="Src\Application\GameObject\Effect\EffekseerEffect\SwordFlash\SwordFlash.h" />
     <ClInclude Include="Src\Application\GameObject\Effect\FowardEffect\ForwardEffect.h" />
     <ClInclude Include="Src\Application\GameObject\Effect\MeshEffect\Attack4Effect\Attack4Effect.h" />
     <ClInclude Include="Src\Application\GameObject\Effect\MeshEffect\AttackEffect\AttackEffect.h" />
@@ -441,8 +443,10 @@
     <ClCompile Include="Src\Application\GameObject\Effect\EffekseerEffect\EffectPlay\EffectPlay.cpp" />
     <ClCompile Include="Src\Application\GameObject\Effect\EffekseerEffect\EffekseerEffectBase.cpp" />
     <ClCompile Include="Src\Application\GameObject\Effect\EffekseerEffect\GroundFreezes\GroundFreezes.cpp" />
+    <ClCompile Include="Src\Application\GameObject\Effect\EffekseerEffect\ShineEffectBlue\ShineEffectBlue.cpp" />
     <ClCompile Include="Src\Application\GameObject\Effect\EffekseerEffect\ShineEffect\ShineEffect.cpp" />
     <ClCompile Include="Src\Application\GameObject\Effect\EffekseerEffect\SmokeEffect\SmokeEffect.cpp" />
+    <ClCompile Include="Src\Application\GameObject\Effect\EffekseerEffect\SwordFlash\SwordFlash.cpp" />
     <ClCompile Include="Src\Application\GameObject\Effect\FowardEffect\ForwardEffect.cpp" />
     <ClCompile Include="Src\Application\GameObject\Effect\MeshEffect\Attack4Effect\Attack4Effect.cpp" />
     <ClCompile Include="Src\Application\GameObject\Effect\MeshEffect\AttackEffect\AttackEffect.cpp" />

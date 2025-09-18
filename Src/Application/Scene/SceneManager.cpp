@@ -51,6 +51,8 @@
 #include"../GameObject/Effect/EffekseerEffect/SmokeEffect/SmokeEffect.h"
 #include"../GameObject/Effect/EffekseerEffect/ShineEffect/ShineEffect.h"
 #include"../GameObject/Effect/EffekseerEffect/GroundFreezes/GroundFreezes.h"
+#include"../GameObject/Effect/EffekseerEffect/ShineEffectBlue/ShineEffectBlue.h"
+#include"../GameObject/Effect/EffekseerEffect/SwordFlash/SwordFlash.h"
 
 void SceneManager::Init()
 {
@@ -99,6 +101,8 @@ void SceneManager::Register() const
 	RegisterObject::GetInstance().Register<SmokeEffect>();
 	RegisterObject::GetInstance().Register<ShineEffect>();
 	RegisterObject::GetInstance().Register<GroundFreezes>();
+	RegisterObject::GetInstance().Register<ShineEffectBlue>();
+	RegisterObject::GetInstance().Register<SwordFlash>();
 }
 
 void SceneManager::PreUpdate()

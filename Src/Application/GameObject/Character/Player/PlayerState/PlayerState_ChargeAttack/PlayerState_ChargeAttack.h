@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include"../PlayerState.h"
-#include"../../../../Effect/FowardEffect/ForwardEffect.h"
+class ShineEffectBlue;
+class GroundFreezes;
 class PlayerState_ChargeAttack :public PlayerStateBase
 {
 public:
@@ -18,7 +19,8 @@ private:
 	bool m_isCharging = false; // チャージ中かどうか
 	bool m_isCharged = false; // チャージが完了したかどうか
 
-	std::shared_ptr<ForwardEffect> m_forwardEffect = std::make_shared<ForwardEffect>();
+	std::weak_ptr<ShineEffectBlue> m_shineEffect; // エフェクト
+	std::weak_ptr<GroundFreezes> m_groundFreezes; // エフェクト
 
 	int m_chargeAttackCount = 0;      // 何回呼んだか
 

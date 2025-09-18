@@ -202,44 +202,25 @@ void KdPostProcessShader::PostEffectProcess()
 	KdCSVData windowData("Asset/Data/WindowSettings.csv");
 	const std::vector<std::string>& sizeData = windowData.GetLine(0);
 
-	// --- 合成用RenderTargetに切り替え ---
-	KdRenderTargetPack m_finalRTPack;
-	m_finalRTPack.CreateRenderTarget(atoi(sizeData[0].data()), atoi(sizeData[1].data()));
-
-	KdRenderTargetChanger RTChanger;
-	RTChanger.ChangeRenderTarget(m_finalRTPack);
-
-	// まずBright（LightBloom）を描画
-	KdShaderManager::Instance().m_spriteShader.DrawTex(m_brightEffectRTPack.m_RTTexture.get(), 0, 0, atoi(sizeData[0].data()), atoi(sizeData[1].data()));
-
-	// 次にノイズをAddブレンドで合成
-	KdShaderManager::Instance().ChangeBlendState(KdBlendState::Add);
-	KdShaderManager::Instance().m_spriteShader.DrawTex(m_noiseRTPack.m_RTTexture.get(), 0, 0, atoi(sizeData[0].data()), atoi(sizeData[1].data()));
-	KdShaderManager::Instance().UndoBlendState();
-
-	RTChanger.UndoRenderTarget();
-
-	// --- 最終合成結果を画面に出力 ---
-	KdShaderManager::Instance().m_spriteShader.DrawTex(m_finalRTPack.m_RTTexture.get(), 0, 0, atoi(sizeData[0].data()), atoi(sizeData[1].data()));
-
-
-
+	// ノイズを条件付きで合成
 	if (m_enableNoise)
 	{
+		KdShaderManager::Instance().ChangeBlendState(KdBlendState::Add);
 		KdShaderManager::Instance().m_spriteShader.DrawTex(m_noiseRTPack.m_RTTexture.get(), 0, 0, atoi(sizeData[0].data()), atoi(sizeData[1].data()));
+		KdShaderManager::Instance().UndoBlendState();
 	}
-	else if (m_enableGray)
+
+	// グレースケールも条件付きで合成
+	if (m_enableGray)
 	{
+		// グレースケール用の合成処理
+		KdShaderManager::Instance().ChangeBlendState(KdBlendState::Alpha);
 		KdShaderManager::Instance().m_spriteShader.DrawTex(m_noiseRTPack.m_RTTexture.get(), 0, 0, atoi(sizeData[0].data()), atoi(sizeData[1].data()));
+		KdShaderManager::Instance().UndoBlendState();
 	}
-	else if (m_enableStrongBlur)
-	{
-		KdShaderManager::Instance().m_spriteShader.DrawTex(m_strongBlurRTPack.m_RTTexture.get(), 0, 0, atoi(sizeData[0].data()), atoi(sizeData[1].data()));
-	}
-	else
-	{
-		KdShaderManager::Instance().m_spriteShader.DrawTex(m_finalRTPack.m_RTTexture.get(), 0, 0, atoi(sizeData[0].data()), atoi(sizeData[1].data()));
-	}
+
+	// --- 最終合成結果を画面に出力 ---
+	KdShaderManager::Instance().m_spriteShader.DrawTex(m_noiseRTPack.m_RTTexture.get(), 0, 0, atoi(sizeData[0].data()), atoi(sizeData[1].data()));
 }
 
 void KdPostProcessShader::LightBloomProcess()
@@ -312,7 +293,6 @@ void KdPostProcessShader::DepthOfFieldProcess()
 void KdPostProcessShader::NoiseProcess()
 {
 	// 定数バッファセット
-	//m_cb0_NoiseInfo.Work().NoiseStrength = 0.07f;
 	m_cb0_NoiseInfo.Work().Time = Time::Instance().GetElapsedTime();
 	m_cb0_NoiseInfo.Work().EnableGray = m_enableGray ? 1 : 0;
 	m_cb0_NoiseInfo.Work().EnableNoise = m_enableNoise ? 1 : 0;
@@ -329,7 +309,9 @@ void KdPostProcessShader::NoiseProcess()
 	shaderMgr.SetPixelShader(m_PS_Noise);
 
 	// ポストエフェクトテクスチャにノイズを描画
-	DrawTexture(&m_depthOfFieldRTPack.m_RTTexture, 1, m_noiseRTPack.m_RTTexture, &m_noiseRTPack.m_viewPort);
+	m_enableStrongBlur ? DrawTexture(&m_strongBlurRTPack.m_RTTexture, 1, m_noiseRTPack.m_RTTexture, &m_noiseRTPack.m_viewPort) :
+							DrawTexture(&m_postEffectRTPack.m_RTTexture, 1, m_noiseRTPack.m_RTTexture, &m_noiseRTPack.m_viewPort);
+	
 }
 
 void KdPostProcessShader::CreateBlurOffsetList(std::vector<Math::Vector3>& dstInfo, const std::shared_ptr<KdTexture>& spSrcTex, int samplingRadius, const Math::Vector2& dir)
