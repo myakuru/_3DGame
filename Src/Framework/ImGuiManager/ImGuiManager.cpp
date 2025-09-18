@@ -29,6 +29,8 @@ void ImGuiManager::ImGuiUpdate()
 
 	// インスペクターウィンドウを表示
 	ShowInspector();
+
+	SceneManager::Instance().DrawImGui();
 }
 
 void ImGuiManager::Hierarchy()

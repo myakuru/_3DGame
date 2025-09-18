@@ -110,7 +110,7 @@ float4 main(VSOutput In) : SV_Target0
 		float tw = 1.0 / w;
 		float th = 1.0 / h;
 	
-		// uvの周辺6x6も判定し、平均値を求める
+		// uvの周辺3x3も判定し、平均値を求める
 		shadow = 0;
 		for (int y = -1; y <= 1; y++)
 		{
@@ -119,8 +119,7 @@ float4 main(VSOutput In) : SV_Target0
 				shadow += g_dirShadowMap.SampleCmpLevelZero(g_ssCmp, uv + float2(x * tw, y * th), z);
 			}
 		}
-		shadow /= 9.f;
-		shadow = shadow * 0.8f + 0.3f;
+		shadow *= 0.11;
 	}
 
 	//------------------------------------------

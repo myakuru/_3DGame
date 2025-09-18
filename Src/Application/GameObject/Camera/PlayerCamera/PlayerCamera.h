@@ -32,6 +32,9 @@ public:
 
 	Math::Vector3 GetCameraPos() const { return m_cameraPos; }
 
+	// カメラのターゲット位置を設定デフォルトは(0,1,-2.5)
+	void SetTargetLookAt(const Math::Vector3& target) { m_followRate = target; }
+
 private:
 
 	void UpdateCameraRayCast();
@@ -42,6 +45,9 @@ private:
 	Math::Vector3 m_cameraPos = Math::Vector3::Zero; // カメラの現在位置
 
 	std::shared_ptr<Player> m_spTarget = nullptr; // カメラのターゲット
+
+	// どこまでターゲットを追従するか
+	Math::Vector3 m_followRate = Math::Vector3::Zero;
 
 	// カメラシェイク用変数
 	float m_shakeTime = 0.0f;

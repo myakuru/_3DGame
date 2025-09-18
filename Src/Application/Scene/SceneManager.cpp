@@ -142,6 +142,11 @@ void SceneManager::DrawDebug()
 	m_currentScene->DrawDebug();
 }
 
+void SceneManager::DrawImGui()
+{
+	m_currentScene->DrawImGui();
+}
+
 std::list<std::shared_ptr<KdGameObject>>& SceneManager::GetObjList()
 {
 	return m_currentScene->GetObjList();

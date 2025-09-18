@@ -24,6 +24,7 @@ public :
 	void Draw();
 	void DrawSprite();
 	void DrawDebug();
+	void DrawImGui();
 
 	// 次のシーンをセット (次のフレームから切り替わる)
 	void SetNextScene(SceneType _nextScene)

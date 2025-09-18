@@ -20,7 +20,7 @@ void FieldEffect::Init()
 			KdRandom::GetFloat(fieldMin, fieldMax),
 			KdRandom::GetFloat(fieldMin, fieldMax)
 		);
-		poly.scale = Math::Vector3(1.0f, 1.0f, 1.0f);
+		poly.scale = Math::Vector3(5.0f, 5.0f, 5.0f);
 		m_polys.push_back(poly);
 	}
 }

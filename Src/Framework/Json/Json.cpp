@@ -7,6 +7,7 @@ void JsonManager::JsonToObj() const
 {
 	auto name = SceneManager::Instance().GetCurrentScene()->GetSceneName();
 	nlohmann::json json = JsonDeserialize("Json/" + name);
+	SceneManager::Instance().GetCurrentScene()->LoadSceneSettingsFromJson("Json/" + name + "PostProcess");
 
 	for (auto& it : json)
 	{
@@ -40,6 +41,7 @@ void JsonManager::AllSave() const
 	}
 	std::string nowScene = SceneManager::Instance().GetCurrentScene()->GetSceneName();
 
+	SceneManager::Instance().GetCurrentScene()->SaveSceneSettingsToJson("Json/" + nowScene + "PostProcess");
 	JsonSerialize(json, "Json/" + nowScene);
 }
 

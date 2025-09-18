@@ -103,5 +103,6 @@ bool EffekseerEffectBase::ModelLoad(std::string _path)
 		return true;
 	}
 
+	// それ以外は読み込み失敗
 	return false;
 }

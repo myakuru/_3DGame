@@ -6,6 +6,8 @@
 #include"../../../../../Scene/SceneManager.h"
 #include"../../../../Camera/PlayerCamera/PlayerCamera.h"
 
+#include"../../../../Camera/PlayerCamera/PlayerCamera.h"
+
 void PlayerState_ChargeAttack::StateStart()
 {
 	auto anime = m_player->GetAnimeModel()->GetAnimation("ChargeAttack0");
@@ -18,6 +20,11 @@ void PlayerState_ChargeAttack::StateStart()
 	m_isCharging = false;
 
 	m_time = 0.0f;
+
+	if (auto camera = m_player->GetPlayerCamera().lock(); camera)
+	{
+		camera->SetTargetLookAt({ 0.f,1.f,-1.0f });
+	}
 
 }
 
@@ -38,7 +45,7 @@ void PlayerState_ChargeAttack::StateUpdate()
 
 	m_time += deltaTime;
 
-	if (m_time >= 0.0f && m_time <= 0.05f)
+	if (m_time >= 0.0f && m_time <= 0.1f)
 	{
 		KdShaderManager::Instance().m_postProcessShader.SetEnableStrongBlur(true);
 	}
@@ -70,4 +77,9 @@ void PlayerState_ChargeAttack::StateUpdate()
 void PlayerState_ChargeAttack::StateEnd()
 {
 	PlayerStateBase::StateEnd();
+
+	if (auto camera = m_player->GetPlayerCamera().lock(); camera)
+	{
+		camera->SetTargetLookAt({ 0.f,1.f,-2.5f });
+	}
 }

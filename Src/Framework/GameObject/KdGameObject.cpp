@@ -3,6 +3,7 @@
 #include"../../Framework/Json/Json.h"
 #include"../../Framework/ImGuiManager/ImGuiManager.h"
 #include"../../Application/Scene/SceneManager.h"
+#include"../../Application/Scene/BaseScene/BaseScene.h"
 
 void KdGameObject::Init()
 {

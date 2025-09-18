@@ -16,6 +16,14 @@ public :
 	void DrawSprite();
 	void DrawDebug();
 
+	virtual void JsonInput(const nlohmann::json& _json) {/*基底クラスではなにもしない*/ };
+	virtual void JsonSave(nlohmann::json& _json) const {/*基底クラスではなにもしない*/ };
+	virtual void LoadSceneSettingsFromJson(const std::string& filePath) {/*基底クラスではなにもしない*/ };
+
+	virtual void SaveSceneSettingsToJson(const std::string& filePath) const {/*基底クラスではなにもしない*/ };
+
+	virtual void DrawImGui() {/*基底クラスではなにもしない*/}
+
 	// オブジェクトリストを取得
 	std::list<std::shared_ptr<KdGameObject>>& GetObjList()
 	{
@@ -96,6 +104,16 @@ protected :
 	bool m_fogEnable = true;
 	bool m_fogUseRange = false;
 	Math::Vector3 m_fogColor = { 0.7f, 0.7f, 0.7f };
+	Math::Vector3 m_highFogColor = { 0.7f, 0.7f, 0.7f };
+	float m_highFogHeight = 0.0f;
+	float m_lowFogHeight = 0.0f;
+	float m_highFogDistance = 0.0f;
+	Math::Vector3 m_directionalLightDir = { 1,1,1 };
+	Math::Vector3 m_directionalLightColor = { 1.0f,1.0f,1.0f };
+
+	Math::Vector2 m_lightingArea = { 1.0f, 1.0f };
+	float m_dirLightHeight = 1.0f;
+
 	float m_fogDensity = 0.005f;
 
 	std::weak_ptr<PlayerCamera> m_playerCamera;

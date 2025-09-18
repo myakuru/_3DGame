@@ -82,7 +82,7 @@ void KdAmbientController::AddPointLight(const PointLight& pointLight)
 // ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// /////
 void KdAmbientController::SetDirLightShadowArea(const Math::Vector2& lightingArea, float dirLightHeight)
 {
-	m_shadowProj = DirectX::XMMatrixOrthographicLH(lightingArea.x, lightingArea.x, 0, dirLightHeight * 2.0f);
+	m_shadowProj = DirectX::XMMatrixOrthographicLH(lightingArea.x, lightingArea.y, 0.0f, dirLightHeight * 2.0f);
 
 	m_dirLightHeight = dirLightHeight;
 }

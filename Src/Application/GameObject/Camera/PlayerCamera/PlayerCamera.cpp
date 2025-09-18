@@ -20,6 +20,9 @@ void PlayerCamera::Init()
 	SetCursorPos(m_FixMousePos.x, m_FixMousePos.y);
 
 	m_cameraPos = Math::Vector3(-4.0f, 1.2f, 4.0f);
+
+	// 初期のカメラのターゲット座標を設定
+	m_followRate = m_targetLookAt;
 }
 
 void PlayerCamera::PostUpdate()
@@ -28,19 +31,10 @@ void PlayerCamera::PostUpdate()
 
 	float deltaTime = Application::Instance().GetDeltaTime();
 
-	// ターゲットの行列(有効な場合利用する)
-	Math::Matrix _targetMat = Math::Matrix::Identity;
-
 	SceneManager::Instance().GetObjectWeakPtr(m_Player);
 	m_spTarget = m_Player.lock();
 
 	if (!m_spTarget) return;
-
-	/*if (SceneManager::Instance().IsIntroCamera())
-	{
-		UpdateIntroCamera();
-		return;
-	}*/
 
 	if (SceneManager::Instance().m_gameClear)
 	{
@@ -80,6 +74,9 @@ void PlayerCamera::PostUpdate()
 		shakeOffset = Math::Vector3::Zero;
 	}
 	
+	// ターゲットの位置をラープさせる
+	m_targetLookAt = Math::Vector3::Lerp(m_targetLookAt, m_followRate, m_smooth * deltaTime);
+
 	// カメラの位置をターゲットの位置に設定
 	m_mWorld = Math::Matrix::CreateTranslation(m_targetLookAt);
 	m_mWorld = m_mWorld * m_mRotation;

@@ -19,7 +19,7 @@ public:
 	void SetEnableNoise(bool enable) { m_enableNoise = enable; }
 	bool IsEnableNoise() const { return m_enableNoise; }
 
-	void SetEnableGray(bool enable) { m_enableGray = enable; }
+	void SetEnableGray(bool enable = false) { m_enableGray = enable; }
 	bool IsEnableGray() const { return m_enableGray; }
 
 	void SetEnableStrongBlur(bool enable) { m_enableStrongBlur = enable; }
