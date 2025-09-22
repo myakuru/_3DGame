@@ -35,6 +35,8 @@ void PlayerState_Run::StateUpdate()
 		return; 
 	}
 
+	PlayerStateBase::StateUpdate();
+
 	// ダメージを受けたらHitステートへ
 	if (m_player->m_isHit)
 	{
@@ -43,7 +45,7 @@ void PlayerState_Run::StateUpdate()
 		return;
 	}
 
-	UpdateKatanaPos();
+	UpdateUnsheathed();
 
 	if (!m_player->GetPlayerCamera().lock()) return;
 

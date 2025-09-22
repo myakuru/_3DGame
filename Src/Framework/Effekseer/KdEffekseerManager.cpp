@@ -224,7 +224,7 @@ std::weak_ptr<KdEffekseerObject> KdEffekseerManager::Play(const PlayEfkInfo& inf
 	if (info.UseWorldMatrix)
 	{
 		SetWorldMatrix(handle, info.World);
-		m_efkManager->SetSpeed(handle, info.Speed * deltaTime);
+		m_efkManager->SetSpeed(handle, info.Speed);
 	}
 	else
 	{
@@ -251,8 +251,6 @@ void KdEffekseerManager::UpdateEffekseerEffect()
 	if (m_isPause) { return; }
 
 	m_efkManager->Update();
-
-	m_efkManager->BeginUpdate();
 
 	// ループ再生監視
 	{
@@ -297,8 +295,6 @@ void KdEffekseerManager::UpdateEffekseerEffect()
 		}
 		replayList.clear();
 	}
-
-	m_efkManager->EndUpdate();
 }
 
 void KdEffekseerManager::UpdateEkfCameraMatrix()

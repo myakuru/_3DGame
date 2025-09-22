@@ -65,6 +65,8 @@ void PlayerState_ChaegeAttack2::StateUpdate()
 		return;
 	}
 
+	PlayerStateBase::StateUpdate();
+
 	// 刀は鞘の中にある状態
 	UpdateUnsheathed();
 

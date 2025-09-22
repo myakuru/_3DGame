@@ -36,6 +36,8 @@ void PlayerState_ForwardAvoid::StateUpdate()
 		return;
 	}
 
+	PlayerStateBase::StateUpdate();
+
 	UpdateKatanaPos();
 
 	float dashSpeed = -0.5f;

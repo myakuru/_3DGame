@@ -277,9 +277,6 @@
     <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_Attack3">
       <UniqueIdentifier>{691e9d26-5bb9-4a70-8524-46c5ef4774b1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Src\Application\GameObject\Effect\SlashEffect">
-      <UniqueIdentifier>{fb3395cd-cddc-4f20-b2c1-a26f4c24cbe2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Src\Application\GameObject\Effect\MeshEffect">
       <UniqueIdentifier>{3dc7c37a-1cc5-41c6-9833-93bf1fcf2c76}</UniqueIdentifier>
     </Filter>
@@ -318,6 +315,21 @@
     </Filter>
     <Filter Include="Src\Application\GameObject\Effect\EffekseerEffect\SwordFlash">
       <UniqueIdentifier>{f3e29696-6cbe-4bcb-b54a-4a91b9a251b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Effect\EffekseerEffect\Rotation">
+      <UniqueIdentifier>{39d2e242-6f50-44f3-a18c-ed8d421a4b50}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Effect\EffekseerEffect\SlashEffect">
+      <UniqueIdentifier>{c230a218-9e85-4b8b-b727-c1b8fa59585d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_AvoidAttack">
+      <UniqueIdentifier>{81d92776-12ab-4dd6-bb5c-5377408da1be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Camera\PlayerCamera\PlayerCameraState">
+      <UniqueIdentifier>{42c96d3c-0f1f-4610-bd14-c8d124cb3847}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_SpecialAttack">
+      <UniqueIdentifier>{59008110-b006-4169-a131-d3bcf00edf77}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -705,9 +717,6 @@
     <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_Attack4\PlayerState_Attack4.h">
       <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_Attack4</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Application\GameObject\Effect\SlashEffect\SlashEffect.h">
-      <Filter>Src\Application\GameObject\Effect\SlashEffect</Filter>
-    </ClInclude>
     <ClInclude Include="Src\Application\GameObject\Effect\MeshEffect\Attack4Effect\Attack4Effect.h">
       <Filter>Src\Application\GameObject\Effect\MeshEffect\Attack4Effect</Filter>
     </ClInclude>
@@ -737,6 +746,21 @@
     </ClInclude>
     <ClInclude Include="Src\Application\GameObject\Effect\EffekseerEffect\SwordFlash\SwordFlash.h">
       <Filter>Src\Application\GameObject\Effect\EffekseerEffect\SwordFlash</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Framework\Utility\KdFrameTimer.h">
+      <Filter>Src\Framework\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Effect\EffekseerEffect\Rotation\Rotation.h">
+      <Filter>Src\Application\GameObject\Effect\EffekseerEffect\Rotation</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Effect\EffekseerEffect\SlashEffect\SlashEffect.h">
+      <Filter>Src\Application\GameObject\Effect\EffekseerEffect\SlashEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_AvoidAttack\PlayerState_AvoidAttack.h">
+      <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_AvoidAttack</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_SpecialAttack\PlayerState_SpecialAttack.h">
+      <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_SpecialAttack</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1067,9 +1091,6 @@
     <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_Attack4\PlayerState_Attack4.cpp">
       <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_Attack4</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Application\GameObject\Effect\SlashEffect\SlashEffect.cpp">
-      <Filter>Src\Application\GameObject\Effect\SlashEffect</Filter>
-    </ClCompile>
     <ClCompile Include="Src\Application\GameObject\Effect\MeshEffect\Attack4Effect\Attack4Effect.cpp">
       <Filter>Src\Application\GameObject\Effect\MeshEffect\Attack4Effect</Filter>
     </ClCompile>
@@ -1099,6 +1120,21 @@
     </ClCompile>
     <ClCompile Include="Src\Application\GameObject\Effect\EffekseerEffect\SwordFlash\SwordFlash.cpp">
       <Filter>Src\Application\GameObject\Effect\EffekseerEffect\SwordFlash</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Framework\Utility\KdFrameTimer.cpp">
+      <Filter>Src\Framework\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Effect\EffekseerEffect\Rotation\Rotation.cpp">
+      <Filter>Src\Application\GameObject\Effect\EffekseerEffect\Rotation</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Effect\EffekseerEffect\SlashEffect\SlashEffect.cpp">
+      <Filter>Src\Application\GameObject\Effect\EffekseerEffect\SlashEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_AvoidAttack\PlayerState_AvoidAttack.cpp">
+      <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_AvoidAttack</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_SpecialAttack\PlayerState_SpecialAttack.cpp">
+      <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_SpecialAttack</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

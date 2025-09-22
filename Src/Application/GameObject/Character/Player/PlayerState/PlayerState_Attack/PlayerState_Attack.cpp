@@ -8,6 +8,7 @@
 #include"../../../../../Scene/SceneManager.h"
 #include"../../../../Effect/MeshEffect/AttackEffect/AttackEffect.h"
 #include"../../../../Effect/TrailEffect/TrailEffect.h"
+#include"../../../../Effect/EffekseerEffect/SwordFlash/SwordFlash.h"
 
 void PlayerState_Attack::StateStart()
 {
@@ -21,11 +22,23 @@ void PlayerState_Attack::StateStart()
 	m_attackParam.m_dashTimer = 0.0f;
 
 	m_player->m_onceEffect = false;
-	m_once = false;
+
+	// 攻撃時はtrueにする
+	if (auto katana = m_player->GetKatana().lock(); katana)
+	{
+		katana->SetNowAttackState(true);
+	}
+
+	m_keyInput = false;          // 次段コンボ予約フラグ初期化
+	m_time = 0.0f;               // 当たり判定用
 }
 
 void PlayerState_Attack::StateUpdate()
 {
+	SceneManager::Instance().GetObjectWeakPtr(m_slashEffect);
+
+	auto swordEffect = m_slashEffect.lock();
+	if (!swordEffect) return;
 
 	if (m_player->GetEnemy().lock())
 	{
@@ -33,31 +46,45 @@ void PlayerState_Attack::StateUpdate()
 	}
 
 	float deltaTime = Application::Instance().GetDeltaTime();
-
 	m_time += deltaTime;
 
-	// 0.5秒間当たり判定有効
-	if (m_time <= 1.0 / 2)
+	// 当たり判定有効時間: 最初の0.5秒のみ
+	if (m_time <= 0.5f)
 	{
 		m_player->UpdateAttack();
-		m_time = 0.0f;
 	}
 
-	float time = m_player->GetAnimator()->GetTime();
+	float animTime = m_player->GetAnimator()->GetTime();
 
-	m_player->SetAnimeSpeed(80.0f);
-
-	if (m_player->GetAnimator()->IsAnimationEnd())
-	{
-		auto state = std::make_shared<PlayerState_SheathKatana>();
-		m_player->ChangeState(state);
-		return;
-	}
 
 	if (KeyboardManager::GetInstance().IsKeyJustPressed(VK_LBUTTON))
 	{
-		auto attack1state = std::make_shared<PlayerState_Attack1>();
-		m_player->ChangeState(attack1state);
+		m_keyInput = true;
+	}
+
+	// アニメ速度制御：予約があれば加速
+	if (m_keyInput)
+	{
+		m_player->SetAnimeSpeed(150.0f);
+	}
+	else
+	{
+		m_player->SetAnimeSpeed(80.0f);
+	}
+
+	// アニメ終了時の遷移
+	if (m_player->GetAnimator()->IsAnimationEnd())
+	{
+		if (m_keyInput)
+		{
+			auto next = std::make_shared<PlayerState_Attack1>();
+			m_player->ChangeState(next);
+		}
+		else
+		{
+			auto sheath = std::make_shared<PlayerState_SheathKatana>();
+			m_player->ChangeState(sheath);
+		}
 		return;
 	}
 
@@ -70,60 +97,47 @@ void PlayerState_Attack::StateUpdate()
 		m_player->UpdateQuaternionDirect(moveDir);
 	}
 
+	// 先行ダッシュ処理
 	if (m_attackParam.m_dashTimer < 0.2f)
 	{
-		float dashSpeed = 0.7f;
+		const float dashSpeed = 0.7f;
 		m_player->SetIsMoving(m_attackDirection * dashSpeed);
 		m_attackParam.m_dashTimer += deltaTime;
 	}
 	else
 	{
-		// 移動を止める
+		// エフェクト再生・移動停止
+		swordEffect->SetPlayEffect(true);
+		swordEffect->IsEffectPlaying();
 		m_player->SetIsMoving(Math::Vector3::Zero);
 	}
 
 	PlayerStateBase::StateUpdate();
 
-	// カタナの取得
+	// カタナ関連
 	auto katana = m_player->GetKatana().lock();
 	if (!katana) return;
 
 	katana->SetShowTrail(true);
 
-	if (time >= 10.0f)
+	if (animTime >= 10.0f)
 	{
 		katana->SetNowAttackState(true);
 		UpdateKatanaPos();
 	}
 	else
 	{
-		//m_player->SetAnimeSpeed(0.01f);
 		katana->SetNowAttackState(false);
 		UpdateUnsheathed();
-	}
-
-	SceneManager::Instance().GetObjectWeakPtr(m_attackEffect);
-
-	auto attackEffect = m_attackEffect.lock();
-
-	if (!attackEffect) return;
-
-	if (!m_once)
-	{
-		attackEffect->EffectReset();
-		m_once = true;
 	}
 }
 
 void PlayerState_Attack::StateEnd()
 {
 	PlayerStateBase::StateEnd();
-	m_once = false;
 
-	// カタナの取得
-	auto katana = m_player->GetKatana().lock();
-	if (!katana) return;
-
-	katana->SetShowTrail(false);
-	katana->GetTrail()->ClearPoints();
+	if (auto swordEffect = m_slashEffect.lock(); swordEffect)
+	{
+		swordEffect->SetPlayEffect(false);
+	}
 }

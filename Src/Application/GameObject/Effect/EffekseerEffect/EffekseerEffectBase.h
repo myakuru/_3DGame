@@ -9,6 +9,9 @@ public:
 
 	void SetPlayEffect(bool once) { m_load = once; }
 
+	// エフェクトが再生中か
+	bool IsEffectPlaying() const { return m_isEffectPlaying; }
+
 protected:
 
 	void Init() override;
@@ -27,6 +30,12 @@ protected:
 
 	bool m_once = false;	// エフェクトを１回だけ再生する
 	bool m_load = false; // エフェクトがロードされたか
+
+	// 現在再生中のエフェクト参照
+	std::weak_ptr<KdEffekseerObject> m_wpEffect;
+
+	// キャッシュされた再生状態
+	bool m_isEffectPlaying = false;
 
 	float m_distance = 0.0f;
 	float m_effectSpeed = 0.0f;

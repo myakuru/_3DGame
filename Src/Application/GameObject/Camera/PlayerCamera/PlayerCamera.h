@@ -35,6 +35,12 @@ public:
 	// カメラのターゲット位置を設定デフォルトは(0,1,-2.5)
 	void SetTargetLookAt(const Math::Vector3& target) { m_followRate = target; }
 
+	// カメラのターゲットの回転を設定
+	void SetTargetRotation(const Math::Vector3& rot)
+	{
+		m_degree = rot;
+	}
+
 private:
 
 	void UpdateCameraRayCast();

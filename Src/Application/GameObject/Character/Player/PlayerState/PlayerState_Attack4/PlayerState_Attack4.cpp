@@ -12,6 +12,7 @@ void PlayerState_Attack4::StateStart()
 
 	PlayerStateBase::StateStart();
 
+	// 攻撃時はtrueにする
 	if (auto katana = m_player->GetKatana().lock(); katana)
 	{
 		katana->SetNowAttackState(true);

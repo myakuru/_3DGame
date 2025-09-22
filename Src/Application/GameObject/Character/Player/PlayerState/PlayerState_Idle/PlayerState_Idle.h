@@ -12,8 +12,6 @@ private:
 	void StateUpdate() override;
 	void StateEnd() override;
 
-	void UpdateKatanaPos() override;
-
 	bool m_lButtonPressing = false;
 
 };

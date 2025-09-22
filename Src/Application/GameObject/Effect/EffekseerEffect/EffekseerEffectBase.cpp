@@ -1,6 +1,7 @@
 ﻿#include "EffekseerEffectBase.h"
 #include"../../Character/Player/Player.h"
 #include"../../../Scene/SceneManager.h"
+#include"../../../main.h"
 
 void EffekseerEffectBase::Init()
 {
@@ -53,14 +54,29 @@ void EffekseerEffectBase::Update()
 
 void EffekseerEffectBase::EffectUpdate()
 {
-	// エフェクトの再生(1回だけ) 立ち上がり検知処理
+	// 再生要求が来た瞬間だけ再生開始
 	if (!m_once && m_load)
 	{
-		KdEffekseerManager::GetInstance().Play(m_path, m_mWorld, m_effectSpeed);
+		m_wpEffect = KdEffekseerManager::GetInstance().Play(m_path, m_mWorld, m_effectSpeed / 200).lock();
 		m_once = m_load;
 	}
 
 	if (!m_load) m_once = false;
+
+	// 再生状態更新
+	if (auto effect = m_wpEffect.lock(); effect)
+	{
+		m_isEffectPlaying = effect->IsPlaying();
+		if (!m_isEffectPlaying)
+		{
+			// 終了したので参照破棄
+			m_wpEffect.reset();
+		}
+	}
+	else
+	{
+		m_isEffectPlaying = false;
+	}
 	
 }
 

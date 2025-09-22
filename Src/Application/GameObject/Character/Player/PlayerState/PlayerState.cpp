@@ -1,13 +1,13 @@
 ﻿#include "PlayerState.h"
 #include"../../../Weapon/Katana/Katana.h"
 #include"../../../Weapon/WeaponKatanaScabbard/WeaponKatanaScabbard.h"
+#include"../PlayerState/PlayerState_SpecialAttack/PlayerState_SpecialAttack.h"
 
 
 void PlayerStateBase::StateStart()
 {
 	// 敵の方向ベクトルを計算
-	auto enemy = m_player->GetEnemy().lock();
-	if (enemy)
+	if (auto enemy = m_player->GetEnemy().lock(); enemy)
 	{
 		Math::Vector3 playerPos = m_player->GetPos();
 		Math::Vector3 enemyPos = enemy->GetPos();
@@ -29,16 +29,21 @@ void PlayerStateBase::StateStart()
 		}
 	}
 
-	// カタナの取得
-	auto katana = m_player->GetKatana().lock();
-
-	if (!katana) return;
-
-	katana->SetNowAttackState(false);
+	// デフォルトは刀を左手に持たないようにする。
+	if (auto katana = m_player->GetKatana().lock(); katana)
+	{
+		katana->SetNowAttackState(false);
+	}
 }
 
 void PlayerStateBase::StateUpdate()
 {
+	if (KeyboardManager::GetInstance().IsKeyJustPressed('Q'))
+	{
+		auto specialAttackState = std::make_shared<PlayerState_SpecialAttack>();
+		m_player->ChangeState(specialAttackState);
+		return;
+	}
 }
 
 void PlayerStateBase::StateEnd()
@@ -54,7 +59,7 @@ void PlayerStateBase::StateEnd()
 void PlayerStateBase::UpdateKatanaPos()
 {
 	// 右手のワークノードを取得
-	auto rightHandNode = m_player->GetModelWork()->FindWorkNode("VSB_24");
+	auto rightHandNode = m_player->GetModelWork()->FindWorkNode("Katana");
 	// 左手のワークノードを取得
 	auto leftHandNode = m_player->GetModelWork()->FindWorkNode("VSB_9");
 

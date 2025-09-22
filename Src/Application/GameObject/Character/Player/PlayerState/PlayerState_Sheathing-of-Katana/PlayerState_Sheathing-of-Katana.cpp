@@ -19,6 +19,13 @@ void PlayerState_SheathKatana::StateUpdate()
 {
 	m_player->SetAnimeSpeed(80.0f);
 
+	if (KeyboardManager::GetInstance().IsKeyJustPressed(VK_LBUTTON))
+	{
+		auto attackState = std::make_shared<PlayerState_Idle>();
+		m_player->ChangeState(attackState);
+		return;
+	}
+
 	if (m_player->GetAnimator()->IsAnimationEnd())
 	{
 		auto idleState = std::make_shared<PlayerState_Idle>();

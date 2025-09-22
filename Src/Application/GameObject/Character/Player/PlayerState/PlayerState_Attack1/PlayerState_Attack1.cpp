@@ -12,7 +12,7 @@
 void PlayerState_Attack1::StateStart()
 {
 	auto anime = m_player->GetAnimeModel()->GetAnimation("Attack1");
-	m_player->GetAnimator()->AnimationBlend(anime, 10.0f, false);
+	m_player->GetAnimator()->AnimationBlend(anime, 20.0f, false);
 	m_player->AnimeSetFlg() = true;
 
 	PlayerStateBase::StateStart();
@@ -23,19 +23,19 @@ void PlayerState_Attack1::StateStart()
 
 	m_player->m_onceEffect = false;
 
-	// カタナの取得
+	// 攻撃時はtrueにする
 	if (auto katana = m_player->GetKatana().lock(); katana)
 	{
 		katana->SetNowAttackState(true);
 	}
 
 	m_effectOnce = false;
+
+	m_keyInput = false;
 }
 
 void PlayerState_Attack1::StateUpdate()
 {
-	m_player->SetAnimeSpeed(120.0f);
-
 	// エフェクトの取得
 	SceneManager::Instance().GetObjectWeakPtr(m_effect);
 
@@ -48,15 +48,32 @@ void PlayerState_Attack1::StateUpdate()
 
 	if (KeyboardManager::GetInstance().IsKeyJustPressed(VK_LBUTTON))
 	{
-		auto attack1state = std::make_shared<PlayerState_Attack2>();
-		m_player->ChangeState(attack1state);
-		return;
+		m_keyInput = true;
 	}
 
+	// アニメ速度制御：予約があれば加速
+	if (m_keyInput)
+	{
+		m_player->SetAnimeSpeed(150.0f);
+	}
+	else
+	{
+		m_player->SetAnimeSpeed(100.0f);
+	}
+
+	// アニメ終了時の遷移
 	if (m_player->GetAnimator()->IsAnimationEnd())
 	{
-		auto state = std::make_shared<PlayerState_SheathKatana>();
-		m_player->ChangeState(state);
+		if (m_keyInput)
+		{
+			auto next = std::make_shared<PlayerState_Attack2>();
+			m_player->ChangeState(next);
+		}
+		else
+		{
+			auto sheath = std::make_shared<PlayerState_SheathKatana>();
+			m_player->ChangeState(sheath);
+		}
 		return;
 	}
 

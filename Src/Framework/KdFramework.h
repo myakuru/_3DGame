@@ -13,6 +13,7 @@
 #include "Utility/KdUtility.h"
 #include "Utility/KdCSVData.h"
 #include "Utility/KdFPSController.h"
+#include"Utility/KdFrameTimer.h"
 #include "Utility/KdRandom.h"
 
 // 音関連

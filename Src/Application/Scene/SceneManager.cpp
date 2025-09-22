@@ -43,7 +43,6 @@
 #include"../GameObject/Weapon/WeaponKatanaScabbard/WeaponKatanaScabbard.h"
 #include"../GameObject/Effect/MeshEffect/AttackEffect_second/AttackEffect_second.h"
 #include"../GameObject/Effect/TrailEffect/TrailEffect.h"
-#include"../GameObject/Effect/SlashEffect/SlashEffect.h"
 #include"../GameObject/Effect/MeshEffect/Attack4Effect/Attack4Effect.h"
 #include"../GameObject/Effect/EffekseerEffect/EffectPlay/EffectPlay.h"
 #include"../GameObject//Effect/EffekseerEffect/AttacEffect1/AttacEffect1.h"
@@ -53,6 +52,8 @@
 #include"../GameObject/Effect/EffekseerEffect/GroundFreezes/GroundFreezes.h"
 #include"../GameObject/Effect/EffekseerEffect/ShineEffectBlue/ShineEffectBlue.h"
 #include"../GameObject/Effect/EffekseerEffect/SwordFlash/SwordFlash.h"
+#include"../GameObject/Effect/EffekseerEffect/Rotation/Rotation.h"
+#include"../GameObject/Effect/EffekseerEffect/SlashEffect/SlashEffect.h"
 
 void SceneManager::Init()
 {
@@ -92,7 +93,6 @@ void SceneManager::Register() const
 	RegisterObject::GetInstance().Register<WeaponKatanaScabbard>();
 	RegisterObject::GetInstance().Register<AttackEffect_second>();
 	RegisterObject::GetInstance().Register<TrailEffect>();
-	RegisterObject::GetInstance().Register<SlashEffect>();
 	RegisterObject::GetInstance().Register<Attack4Effect>();
 
 	RegisterObject::GetInstance().Register<EffectPlay>();
@@ -103,6 +103,8 @@ void SceneManager::Register() const
 	RegisterObject::GetInstance().Register<GroundFreezes>();
 	RegisterObject::GetInstance().Register<ShineEffectBlue>();
 	RegisterObject::GetInstance().Register<SwordFlash>();
+	RegisterObject::GetInstance().Register<Rotation>();
+	RegisterObject::GetInstance().Register<SlashAttack2Effect>();
 }
 
 void SceneManager::PreUpdate()

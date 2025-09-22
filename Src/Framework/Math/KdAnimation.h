@@ -98,4 +98,10 @@ private:
 
 	int m_loopCount = 0;         // 現在のループ回数
 	int m_maxLoopCount = -1;     // 最大ループ回数（-1なら無限ループ）
+
+	bool m_blendCaptured = false;
+
+	// ブレンドポーズ
+	std::vector<Math::Matrix> m_blendBasePoses;
+	UINT idx;
 };

@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include"../PlayerState.h"
+class SlashAttack2Effect;
 class PlayerState_Attack3 :public PlayerStateBase
 {
 public:
@@ -10,6 +11,9 @@ private:
 
 	void StateStart() override;
 	void StateUpdate() override;
+	void StateEnd() override;
+
+	std::weak_ptr<SlashAttack2Effect> m_slashEffect;
 
 	float m_time = 0.0f;
 

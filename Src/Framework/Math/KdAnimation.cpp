@@ -159,62 +159,83 @@ void KdAnimator::AdvanceTime(std::vector<KdModelWork::Node>& rNodes, float speed
 {
 	if (!m_spAnimation) { return; }
 
+	// ブレンド中
 	if (m_isBlending && m_spNextAnimation)
 	{
-		float t = m_blendTime / m_blendDuration;
+		float t = (m_blendDuration > 0.0f) ? (m_blendTime / m_blendDuration) : 1.0f;
 		if (t > 1.0f) t = 1.0f;
 
-		for (size_t i = 0; i < rNodes.size(); ++i)
+		// ブレンド開始時に一度だけ現行ポーズをキャプチャ
+		if (!m_blendCaptured)
 		{
-			Math::Matrix lastMatrix, nextFirstMatrix, lerpedMatrix;
+			m_blendBasePoses.resize(rNodes.size());
+			for (auto& rAnimNode : m_spAnimation->m_nodes)
+			{
+				// 対応するモデルノードのインデックス
+				UINT idx = rAnimNode.m_nodeOffset;
+				m_blendBasePoses[idx] = rNodes[idx].m_localTransform;
+			}
+			m_blendCaptured = true;
+		}
 
-			// 現在アニメーションの最後
-			if (i < m_spAnimation->m_nodes.size())
-				m_spAnimation->m_nodes[i].Interpolate(lastMatrix, m_spAnimation->m_maxLength);
+		// 次アニメ側の再生時間（0 から進行）
+		float nextTime = m_blendTime;
 
-			// 次アニメーションの最初
-			if (i < m_spNextAnimation->m_nodes.size())
-				m_spNextAnimation->m_nodes[i].Interpolate(nextFirstMatrix, 0.0f);
+		// 各アニメノード（nodeOffset がモデル側インデックス）
+		for (auto& nextAnimNode : m_spNextAnimation->m_nodes)
+		{
+			UINT nodeIdx = nextAnimNode.m_nodeOffset;
+			if (nodeIdx >= rNodes.size()) continue;
 
-			Math::Vector3 scale, translation;
-			Math::Quaternion rotation;
+			// 現行側：キャプチャ済みポーズ
+			Math::Matrix& fromMat = m_blendBasePoses[nodeIdx];
 
-			Math::Vector3 resultScale, resultTranslation;
-			Math::Quaternion resultRotation;
+			// 次アニメ側：現在の nextTime でサンプル
+			Math::Matrix toMat;
+			nextAnimNode.Interpolate(toMat, nextTime);
 
-			lastMatrix.Decompose(scale, rotation, translation);
-			nextFirstMatrix.Decompose(resultScale, resultRotation, resultTranslation);
+			// Decompose
+			Math::Vector3 fromS, fromT;
+			Math::Quaternion fromR;
+			fromMat.Decompose(fromS, fromR, fromT);
 
-			Math::Vector3 lerpScale = DirectX::XMVectorLerp(scale, resultScale, t);
-			Math::Quaternion lerpRotation = DirectX::XMQuaternionSlerp(rotation, resultRotation, t);
-			Math::Vector3 lerpTranslation = DirectX::XMVectorLerp(translation, resultTranslation, t);
+			Math::Vector3 toS, toT;
+			Math::Quaternion toR;
+			toMat.Decompose(toS, toR, toT);
 
-			Math::Matrix transMat = Math::Matrix::CreateTranslation(lerpTranslation);
-			Math::Matrix scaleMat = Math::Matrix::CreateScale(lerpScale);
-			Math::Matrix rotateMat = Math::Matrix::CreateFromQuaternion(lerpRotation);
+			// 補間
+			Math::Vector3 blendS = DirectX::XMVectorLerp(fromS, toS, t);
+			Math::Quaternion blendR = DirectX::XMQuaternionSlerp(fromR, toR, t);
+			Math::Vector3 blendT = DirectX::XMVectorLerp(fromT, toT, t);
 
-			lerpedMatrix = scaleMat * rotateMat * transMat;
+			// 再構築
+			Math::Matrix m = Math::Matrix::CreateScale(blendS)
+				* Math::Matrix::CreateFromQuaternion(blendR)
+				* Math::Matrix::CreateTranslation(blendT);
 
-			rNodes[i].m_localTransform = lerpedMatrix;
+			rNodes[nodeIdx].m_localTransform = m;
 		}
 
 		m_blendTime += speed;
 		if (m_blendTime >= m_blendDuration)
 		{
-			// 補間終了
+			// 完了：次を現行へ
 			m_spAnimation = m_spNextAnimation;
+			m_spNextAnimation = nullptr;
 			m_time = 0.0f;
 			m_isBlending = false;
-			m_spNextAnimation = nullptr;
+			m_blendCaptured = false;
+			m_blendBasePoses.clear();
 			m_isLoop = m_nextIsLoop;
 		}
 		return;
 	}
 
-	// 通常のアニメーション進行
+	// 通常進行（既存）
 	for (auto& rAnimNode : m_spAnimation->m_nodes)
 	{
 		UINT idx = rAnimNode.m_nodeOffset;
+		if (idx >= rNodes.size()) continue;
 		rAnimNode.Interpolate(rNodes[idx].m_localTransform, m_time);
 	}
 
@@ -226,7 +247,6 @@ void KdAnimator::AdvanceTime(std::vector<KdModelWork::Node>& rNodes, float speed
 		{
 			m_time = 0.0f;
 			m_loopCount++;
-			// 最大ループ回数を超えたらループ終了
 			if (m_maxLoopCount > 0 && m_loopCount >= m_maxLoopCount)
 			{
 				m_isLoop = false;
@@ -248,6 +268,7 @@ void KdAnimator::AnimationBlend(const std::shared_ptr<KdAnimationData>& nextAnim
 	m_isBlending = true;
 	m_nextIsLoop = nextIsLoop;
 	m_maxLoopCount = maxLoopCount;
+	m_blendCaptured = false; // 次フレームでキャプチャ
 }
 
 bool KdAnimator::GetRootMotion(const std::shared_ptr<KdAnimationData>& animData, const std::vector<KdModelData::Node>& modelNodes, const std::string& rootBoneName, float time, Math::Vector3& outTranslation) const

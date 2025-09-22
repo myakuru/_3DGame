@@ -1,15 +1,17 @@
 ﻿#include "PlayerState_Attack2.h"
 #include"../PlayerState_Idle/PlayerState_Idle.h"
-#include"../PlayerState_Run/PlayerState_Run.h"
+#include"../PlayerState_Sheathing-of-Katana/PlayerState_Sheathing-of-Katana.h"
 #include"../../../../../main.h"
 #include"../../../../Weapon/Katana/Katana.h"
 
 #include"../PlayerState_Attack3/PlayerState_Attack3.h"
+#include"../../../../../Scene/SceneManager.h"
+#include"../../../../Effect/EffekseerEffect/Rotation/Rotation.h"
 
 void PlayerState_Attack2::StateStart()
 {
 	auto anime = m_player->GetAnimeModel()->GetAnimation("Attack2");
-	m_player->GetAnimator()->AnimationBlend(anime, 10.0f, false);
+	m_player->GetAnimator()->AnimationBlend(anime, 20.0f, false);
 	m_player->AnimeSetFlg() = true;
 
 	PlayerStateBase::StateStart();
@@ -18,19 +20,19 @@ void PlayerState_Attack2::StateStart()
 
 	m_player->m_onceEffect = false;
 
-	m_flag = false; // 攻撃フラグ
+	// 攻撃時はtrueにする
+	if (auto katana = m_player->GetKatana().lock(); katana)
+	{
+		katana->SetNowAttackState(true);
+	}
 
-	// カタナの取得
-	auto katana = m_player->GetKatana().lock();
-
-	if (!katana) return;
-
-	katana->SetNowAttackState(true);
-
+	m_keyInput = false;				// 次段コンボ予約フラグ初期化
 }
 
 void PlayerState_Attack2::StateUpdate()
 {
+	SceneManager::Instance().GetObjectWeakPtr(m_slashEffect);
+
 	m_player->SetAnimeSpeed(120.0f);
 
 	// 0.5秒間当たり判定有効
@@ -42,21 +44,32 @@ void PlayerState_Attack2::StateUpdate()
 
 	if (KeyboardManager::GetInstance().IsKeyJustPressed(VK_LBUTTON))
 	{
-		auto attack1state = std::make_shared<PlayerState_Attack3>();
-		m_player->ChangeState(attack1state);
-		return;
+		m_keyInput = true;
 	}
 
+	// アニメ速度制御：予約があれば加速
+	if (m_keyInput)
+	{
+		m_player->SetAnimeSpeed(150.0f);
+	}
+	else
+	{
+		m_player->SetAnimeSpeed(100.0f);
+	}
+
+	// アニメ終了時の遷移
 	if (m_player->GetAnimator()->IsAnimationEnd())
 	{
-		auto idleState = std::make_shared<PlayerState_Idle>();
-		m_player->ChangeState(idleState);
-		return;
-	}
-	else if (m_player->GetMoving() && m_player->GetAnimator()->IsAnimationEnd())
-	{
-		auto idleState = std::make_shared<PlayerState_Run>();
-		m_player->ChangeState(idleState);
+		if (m_keyInput)
+		{
+			auto next = std::make_shared<PlayerState_Attack3>();
+			m_player->ChangeState(next);
+		}
+		else
+		{
+			auto sheath = std::make_shared<PlayerState_SheathKatana>();
+			m_player->ChangeState(sheath);
+		}
 		return;
 	}
 
@@ -80,6 +93,11 @@ void PlayerState_Attack2::StateUpdate()
 	}
 	else
 	{
+		if (auto effect = m_slashEffect.lock(); effect)
+		{
+			effect->SetPlayEffect(true);
+		}
+
 		// 移動を止める
 		m_player->SetIsMoving(Math::Vector3::Zero);
 	}
@@ -88,5 +106,11 @@ void PlayerState_Attack2::StateUpdate()
 void PlayerState_Attack2::StateEnd()
 {
 	m_player->AnimeSetFlg() = false;
+
 	PlayerStateBase::StateEnd();
+
+	if (auto effect = m_slashEffect.lock(); effect)
+	{
+		effect->SetPlayEffect(false);
+	}
 }

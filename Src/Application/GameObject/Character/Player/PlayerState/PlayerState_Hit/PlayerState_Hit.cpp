@@ -24,6 +24,8 @@ void PlayerState_Hit::StateUpdate()
 		return;
 	}
 
+	PlayerStateBase::StateUpdate();
+
 	UpdateKatanaPos();
 
 	if (KeyboardManager::GetInstance().IsKeyJustPressed(VK_LBUTTON))

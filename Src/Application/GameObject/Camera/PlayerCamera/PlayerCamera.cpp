@@ -231,7 +231,7 @@ void PlayerCamera::ImGuiInspector()
 	CameraBase::ImGuiInspector();
 
 	ImGui::Text(U8("プレイヤーとカメラの距離"));
-	ImGui::DragFloat3("offsetPos", &m_targetLookAt.x, 0.1f);
+	ImGui::DragFloat3("offsetPos", &m_followRate.x, 0.1f);
 	ImGui::DragFloat("Camera Smooth", &m_smooth, 0.01f);
 	ImGui::DragFloat("FOV", &m_fov, 1.0f, 1.0f, 179.0f);
 

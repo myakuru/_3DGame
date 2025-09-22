@@ -1,50 +1,29 @@
 ﻿#include "PlayerState_Skill.h"
 #include"../../../../../main.h"
-#include"../PlayerState_Idle/PlayerState_Idle.h"
 #include"../PlayerState_Run/PlayerState_Run.h"
 #include"../../../../Weapon/Katana/Katana.h"
+#include"../PlayerState_Sheathing-of-Katana/PlayerState_Sheathing-of-Katana.h"
 
 void PlayerState_Skill::StateStart()
 {
 	auto anime = m_player->GetAnimeModel()->GetAnimation("Eskill");
-	m_player->GetAnimator()->AnimationBlend(anime, 10.0f, false);
+	m_player->GetAnimator()->AnimationBlend(anime, 20.0f, false);
 	m_player->AnimeSetFlg() = true;
 
 	PlayerStateBase::StateStart();
 
-	m_attackParam = m_player->GetPlayerConfig().GetAttack2Param();
 	m_attackParam.m_dashTimer = 0.0f;
 }
 
 void PlayerState_Skill::StateUpdate()
 {
-	m_player->SetAnimeSpeed(180.0f);
+	m_player->SetAnimeSpeed(100.0f);
 
 	if (m_player->GetAnimator()->IsAnimationEnd())
 	{
-		auto idleState = std::make_shared<PlayerState_Idle>();
-		m_player->ChangeState(idleState);
+		auto sheathState = std::make_shared<PlayerState_SheathKatana>();
+		m_player->ChangeState(sheathState);
 		return;
-	}
-
-	if (!m_flag)
-	{
-		// エフェクトの表示位置（前方0.5f）
-		Math::Vector3 effectPos = m_player->GetPos() + m_attackDirection * 5.0f;
-
-		// プレイヤーの回転行列
-		Math::Matrix rotationMat = Math::Matrix::CreateFromQuaternion(m_player->GetRotationQuaternion());
-
-		// エフェクトのワールド行列（回転＋位置）
-		Math::Matrix effectWorld = rotationMat * Math::Matrix::CreateTranslation(effectPos);
-
-		// Effekseerエフェクト再生
-		auto effect = KdEffekseerManager::GetInstance().Play("Skill.efkefc", { effectPos }, 1.0f, 100.0f, false);
-		if (auto spEffect = effect.lock())
-		{
-			KdEffekseerManager::GetInstance().SetWorldMatrix(spEffect->GetHandle(), effectWorld);
-		}
-		m_flag = true;
 	}
 
 	UpdateKatanaPos();
