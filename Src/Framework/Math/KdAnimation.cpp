@@ -155,102 +155,68 @@ void KdAnimationData::Node::Interpolate(Math::Matrix& rDst, float time)
 	}
 }
 
-void KdAnimator::AdvanceTime(std::vector<KdModelWork::Node>& rNodes, float speed)
+void KdAnimator::UpdateBlendAnimation(std::vector<KdModelWork::Node>& rNodes, float speed, float BlendWeight)
 {
 	if (!m_spAnimation) { return; }
 
-	// ブレンド中
-	if (m_isBlending && m_spNextAnimation)
-	{
-		float t = (m_blendDuration > 0.0f) ? (m_blendTime / m_blendDuration) : 1.0f;
-		if (t > 1.0f) t = 1.0f;
-
-		// ブレンド開始時に一度だけ現行ポーズをキャプチャ
-		if (!m_blendCaptured)
-		{
-			m_blendBasePoses.resize(rNodes.size());
-			for (auto& rAnimNode : m_spAnimation->m_nodes)
-			{
-				// 対応するモデルノードのインデックス
-				UINT idx = rAnimNode.m_nodeOffset;
-				m_blendBasePoses[idx] = rNodes[idx].m_localTransform;
-			}
-			m_blendCaptured = true;
-		}
-
-		// 次アニメ側の再生時間（0 から進行）
-		float nextTime = m_blendTime;
-
-		// 各アニメノード（nodeOffset がモデル側インデックス）
-		for (auto& nextAnimNode : m_spNextAnimation->m_nodes)
-		{
-			UINT nodeIdx = nextAnimNode.m_nodeOffset;
-			if (nodeIdx >= rNodes.size()) continue;
-
-			// 現行側：キャプチャ済みポーズ
-			Math::Matrix& fromMat = m_blendBasePoses[nodeIdx];
-
-			// 次アニメ側：現在の nextTime でサンプル
-			Math::Matrix toMat;
-			nextAnimNode.Interpolate(toMat, nextTime);
-
-			// Decompose
-			Math::Vector3 fromS, fromT;
-			Math::Quaternion fromR;
-			fromMat.Decompose(fromS, fromR, fromT);
-
-			Math::Vector3 toS, toT;
-			Math::Quaternion toR;
-			toMat.Decompose(toS, toR, toT);
-
-			// 補間
-			Math::Vector3 blendS = DirectX::XMVectorLerp(fromS, toS, t);
-			Math::Quaternion blendR = DirectX::XMQuaternionSlerp(fromR, toR, t);
-			Math::Vector3 blendT = DirectX::XMVectorLerp(fromT, toT, t);
-
-			// 再構築
-			Math::Matrix m = Math::Matrix::CreateScale(blendS)
-				* Math::Matrix::CreateFromQuaternion(blendR)
-				* Math::Matrix::CreateTranslation(blendT);
-
-			rNodes[nodeIdx].m_localTransform = m;
-		}
-
-		m_blendTime += speed;
-		if (m_blendTime >= m_blendDuration)
-		{
-			// 完了：次を現行へ
-			m_spAnimation = m_spNextAnimation;
-			m_spNextAnimation = nullptr;
-			m_time = 0.0f;
-			m_isBlending = false;
-			m_blendCaptured = false;
-			m_blendBasePoses.clear();
-			m_isLoop = m_nextIsLoop;
-		}
-		return;
-	}
-
-	// 通常進行（既存）
+	// 全てのアニメーションノード（モデルの行列を補間する情報）の行列補間を実行する
 	for (auto& rAnimNode : m_spAnimation->m_nodes)
 	{
+		// 対応するモデルノードのインデックス
 		UINT idx = rAnimNode.m_nodeOffset;
-		if (idx >= rNodes.size()) continue;
-		rAnimNode.Interpolate(rNodes[idx].m_localTransform, m_time);
+
+		// ブレンドの比重が10以上ならそのまま補間
+		if (BlendWeight >= 1.0f)
+		{
+			// アニメーションデータによる行列補間
+			rAnimNode.Interpolate(rNodes[idx].m_localTransform, m_time);
+		}
+		// ブレンド比重に従ってブレンディング補間
+		else
+		{
+			Math::Matrix NextAnim;
+
+			rAnimNode.Interpolate(NextAnim, m_time);
+
+			Math::Vector3 scale, nextScale;
+			Math::Quaternion rotate, nextRotate;
+			Math::Vector3 trans, nextTrans;
+
+			rNodes[idx].m_localTransform.Decompose(scale, rotate, trans);
+			NextAnim.Decompose(nextScale, nextRotate, nextTrans);
+
+			// 補間拡大率生成
+			Math::Vector3 blendScale = DirectX::XMVectorLerp(scale, nextScale, BlendWeight);
+
+			// 補間回転クォタニオン生成
+			Math::Quaternion blendRotate = DirectX::XMQuaternionSlerp(rotate, nextRotate, BlendWeight);
+
+			// 補間座標生成
+			Math::Vector3 blendTrans = DirectX::XMVectorLerp(trans, nextTrans, BlendWeight);
+
+			// 拡大率の補間
+			Math::Matrix mScale = Math::Matrix::CreateScale(blendScale);
+
+			// 回転角度の補間
+			Math::Matrix mRotate = Math::Matrix::CreateFromQuaternion(blendRotate);
+
+			rNodes[idx].m_localTransform = mScale * mRotate;
+
+			// 座標の補間
+			rNodes[idx].m_localTransform.Translation(blendTrans);
+		}
 	}
 
+	// アニメーションのフレームを進める
 	m_time += speed;
 
+	// アニメーションデータの最後のフレームを超えたら
 	if (m_time >= m_spAnimation->m_maxLength)
 	{
 		if (m_isLoop)
 		{
+			// アニメーションの最初に戻る（ループさせる
 			m_time = 0.0f;
-			m_loopCount++;
-			if (m_maxLoopCount > 0 && m_loopCount >= m_maxLoopCount)
-			{
-				m_isLoop = false;
-			}
 		}
 		else
 		{
@@ -259,37 +225,49 @@ void KdAnimator::AdvanceTime(std::vector<KdModelWork::Node>& rNodes, float speed
 	}
 }
 
-void KdAnimator::AnimationBlend(const std::shared_ptr<KdAnimationData>& nextAnim, float duration, bool nextIsLoop, int maxLoopCount)
+void KdAnimator::SetAnimation(const std::shared_ptr<KdAnimationData>& rData, float blendTime, bool isLoop)
 {
-	m_spNextAnimation = nextAnim;
-	m_blendTime = 0.0f;
-	m_time = 0.0f;
-	m_blendDuration = duration;
-	m_isBlending = true;
-	m_nextIsLoop = nextIsLoop;
-	m_maxLoopCount = maxLoopCount;
-	m_blendCaptured = false; // 次フレームでキャプチャ
+	if (!rData) { return; }
+
+	// 遷移中のアニメーションがあったら、一気に遷移してしまう
+	if (m_pNextAnimator)
+	{
+		m_pNowAnimator = std::move(m_pNextAnimator);
+	}
+
+	m_pNextAnimator = std::make_unique<KdAnimator>();
+	m_pNextAnimator->RegistAnimation(rData, isLoop);
+
+	m_blendTimer.Restart();
+	m_blendTimer.SetSec(blendTime);
 }
 
-bool KdAnimator::GetRootMotion(const std::shared_ptr<KdAnimationData>& animData, const std::vector<KdModelData::Node>& modelNodes, const std::string& rootBoneName, float time, Math::Vector3& outTranslation) const
+void KdAnimator::AdvanceTime(std::vector<KdModelWork::Node>& rNodes, float speed)
 {
-	if (!animData) return false;
+	if (m_pNowAnimator)
+	{
+		// アニメーション更新
+		m_pNowAnimator->UpdateBlendAnimation(rNodes, speed);
+	}
 
-	// ノードインデックス取得
-	int boneIndex = -1;
-	for (size_t i = 0; i < modelNodes.size(); ++i) {
-		if (modelNodes[i].m_name == rootBoneName) {
-			boneIndex = static_cast<int>(i);
-			break;
+	// 遷移先のアニメーションあり？無ければブレンド無し
+	if (m_pNextAnimator)
+	{
+		// ブレンドアニメーション
+		m_pNextAnimator->UpdateBlendAnimation(rNodes, speed, m_blendTimer.GetProgress());
+
+		// ブレンドタイマーの更新
+		m_blendTimer.Update(speed);
+
+		if (m_blendTimer.IsEnd())
+		{
+			// 遷移先のアニメーションユニットを再生中アニメーションに置き換え
+			m_pNowAnimator = std::move(m_pNextAnimator);
+			// 遷移先（ブレンド先）を空にする
+			m_pNextAnimator = nullptr;
+
+			// タイマーのリセット
+			m_blendTimer.Restart();
 		}
 	}
-	if (boneIndex == -1) return false;
-
-	// アニメーションノード取得
-	for (auto& node : animData->m_nodes) {
-		if (node.m_nodeOffset == boneIndex) {
-			return node.InterpolateTranslations(outTranslation, time);
-		}
-	}
-	return false;
 }

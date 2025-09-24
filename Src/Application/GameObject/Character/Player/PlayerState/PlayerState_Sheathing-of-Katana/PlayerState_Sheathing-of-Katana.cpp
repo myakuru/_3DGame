@@ -1,5 +1,6 @@
 ﻿#include "PlayerState_Sheathing-of-Katana.h"
 #include"../PlayerState_Idle/PlayerState_Idle.h"
+#include"../PlayerState_Attack/PlayerState_Attack.h"
 
 #include"../../../../Weapon/Katana/Katana.h"
 #include"../../../../Weapon/WeaponKatanaScabbard/WeaponKatanaScabbard.h"
@@ -7,7 +8,7 @@
 void PlayerState_SheathKatana::StateStart()
 {
 	auto anime = m_player->GetAnimeModel()->GetAnimation("SheathKatana");
-	m_player->GetAnimator()->AnimationBlend(anime, 10.0f, false);
+	m_player->GetAnimator()->SetAnimation(anime, 0.9f, false);
 	m_player->AnimeSetFlg() = true;
 
 	PlayerStateBase::StateStart();
@@ -17,11 +18,11 @@ void PlayerState_SheathKatana::StateStart()
 
 void PlayerState_SheathKatana::StateUpdate()
 {
-	m_player->SetAnimeSpeed(80.0f);
+	m_player->SetAnimeSpeed(120.0f);
 
 	if (KeyboardManager::GetInstance().IsKeyJustPressed(VK_LBUTTON))
 	{
-		auto attackState = std::make_shared<PlayerState_Idle>();
+		auto attackState = std::make_shared<PlayerState_Attack>();
 		m_player->ChangeState(attackState);
 		return;
 	}
@@ -36,18 +37,21 @@ void PlayerState_SheathKatana::StateUpdate()
 	// カタナの取得
 	auto katana = m_player->GetKatana().lock();
 	if (!katana) return;
-	katana->SetNowAttackState(true);
+	
 	float time = m_player->GetAnimator()->GetTime();
 
-	if (time <= 70.0f)
+	//KdDebugGUI::Instance().AddLog(std::to_string(time).data());
+	//KdDebugGUI::Instance().AddLog("\n");
+
+	katana->SetShowTrail(false);
+
+	if (time >= 20.f)
 	{
-		//m_player->SetAnimeSpeed(1.0f);
 		katana->SetNowAttackState(true);
 		UpdateKatanaPos();
 	}
 	else
 	{
-		//m_player->SetAnimeSpeed(0.05f);
 		katana->SetNowAttackState(false);
 		UpdateUnsheathed();
 	}

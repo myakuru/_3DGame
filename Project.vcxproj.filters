@@ -331,6 +331,9 @@
     <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_SpecialAttack">
       <UniqueIdentifier>{59008110-b006-4169-a131-d3bcf00edf77}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_SpecialAttackCutIn">
+      <UniqueIdentifier>{c34bd41a-f23c-408a-ad48-64f22c123383}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -762,6 +765,9 @@
     <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_SpecialAttack\PlayerState_SpecialAttack.h">
       <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_SpecialAttack</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_SpecialAttackCutIn\PlayerState_SpecialAttackCutIn.h">
+      <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_SpecialAttackCutIn</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -1135,6 +1141,9 @@
     </ClCompile>
     <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_SpecialAttack\PlayerState_SpecialAttack.cpp">
       <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_SpecialAttack</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_SpecialAttackCutIn\PlayerState_SpecialAttackCutIn.cpp">
+      <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_SpecialAttackCutIn</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -1,7 +1,7 @@
 ﻿#include "PlayerState.h"
 #include"../../../Weapon/Katana/Katana.h"
 #include"../../../Weapon/WeaponKatanaScabbard/WeaponKatanaScabbard.h"
-#include"../PlayerState/PlayerState_SpecialAttack/PlayerState_SpecialAttack.h"
+#include"../PlayerState/PlayerState_SpecialAttackCutIn/PlayerState_SpecialAttackCutIn.h"
 
 
 void PlayerStateBase::StateStart()
@@ -40,7 +40,7 @@ void PlayerStateBase::StateUpdate()
 {
 	if (KeyboardManager::GetInstance().IsKeyJustPressed('Q'))
 	{
-		auto specialAttackState = std::make_shared<PlayerState_SpecialAttack>();
+		auto specialAttackState = std::make_shared<PlayerState_SpecialAttackCutIn>();
 		m_player->ChangeState(specialAttackState);
 		return;
 	}

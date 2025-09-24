@@ -49,7 +49,7 @@ void Katana::Update()
 void Katana::UpdateTrailPolygon()
 {
 	Math::Vector3 tip1 = m_swordData.m_weaponMatrix.Translation() + m_swordData.m_weaponMatrix.Backward() * m_trailKatanaPoint;
-	Math::Matrix inv = Math::Matrix::CreateRotationY(DirectX::XMConvertToRadians(70.0f));
+	Math::Matrix inv = Math::Matrix::CreateRotationY(DirectX::XMConvertToRadians(-90));
 	Math::Matrix trailTrans = Math::Matrix::CreateTranslation(tip1);
 	Math::Matrix trailScale = Math::Matrix::CreateScale(m_trailScale);
 	Math::Matrix finalMat = trailScale * inv * (m_swordData.m_weaponRotationMatrix * trailTrans);

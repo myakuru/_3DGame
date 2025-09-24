@@ -13,7 +13,7 @@
 void PlayerState_ChargeAttack::StateStart()
 {
 	auto anime = m_player->GetAnimeModel()->GetAnimation("ChargeAttack0");
-	m_player->GetAnimator()->AnimationBlend(anime, 20.0f,false);
+	m_player->GetAnimator()->SetAnimation(anime, 0.25f, false);
 	m_player->AnimeSetFlg() = true;
 
 	PlayerStateBase::StateStart();

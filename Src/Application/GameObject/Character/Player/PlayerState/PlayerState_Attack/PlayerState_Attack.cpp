@@ -13,7 +13,7 @@
 void PlayerState_Attack::StateStart()
 {
 	auto anime = m_player->GetAnimeModel()->GetAnimation("Attack");
-	m_player->GetAnimator()->AnimationBlend(anime, 0.1f, false);
+	m_player->GetAnimator()->SetAnimation(anime, 0.25f, false);
 	m_player->AnimeSetFlg() = true;
 
 	PlayerStateBase::StateStart();
@@ -119,17 +119,9 @@ void PlayerState_Attack::StateUpdate()
 	if (!katana) return;
 
 	katana->SetShowTrail(true);
+	UpdateKatanaPos();
 
-	if (animTime >= 10.0f)
-	{
-		katana->SetNowAttackState(true);
-		UpdateKatanaPos();
-	}
-	else
-	{
-		katana->SetNowAttackState(false);
-		UpdateUnsheathed();
-	}
+
 }
 
 void PlayerState_Attack::StateEnd()

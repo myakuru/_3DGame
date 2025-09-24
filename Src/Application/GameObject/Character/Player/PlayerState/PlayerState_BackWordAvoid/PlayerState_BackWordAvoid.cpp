@@ -8,7 +8,7 @@
 void PlayerState_BackWordAvoid::StateStart()
 {
 	auto anime = m_player->GetAnimeModel()->GetAnimation("AvoidForward");
-	m_player->GetAnimator()->AnimationBlend(anime, 10.0f, false);
+	m_player->GetAnimator()->SetAnimation(anime, 0.25f, false);
 	m_player->AnimeSetFlg() = true;
 
 	// 攻撃開始時に直前の移動方向を保存

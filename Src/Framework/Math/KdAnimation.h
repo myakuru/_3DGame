@@ -48,60 +48,50 @@ class KdAnimator
 {
 public:
 
-	inline void SetAnimation(const std::shared_ptr<KdAnimationData>& rData, bool isLoop = true)
-	{
-		m_spAnimation = rData;
-		m_isLoop = isLoop;
-		m_time = 0.0f;
-	}
+	// 新API: 第2引数はブレンド秒
+	void SetAnimation(const std::shared_ptr<KdAnimationData>& rData, float blendTime = 0.25f, bool isLoop = true);
+
 
 	// アニメーションが終了してる？
 	bool IsAnimationEnd() const
 	{
-		if (m_spAnimation == nullptr) { return true; }
-		if (m_time >= m_spAnimation->m_maxLength) { return true; }
+		// 再生中の実体（ブレンド中はNext、完了後はNow）を優先して判定
+		const KdAnimator* pActive = m_pNextAnimator ? m_pNextAnimator.get() : m_pNowAnimator.get();
+		if (pActive && pActive->m_spAnimation)
+		{
+			return (pActive->m_time >= pActive->m_spAnimation->m_maxLength);
+		}
 
-		return false;
+
+		// 再生中のアニメーションが無い場合は終了してるとみなす
+		if (m_spAnimation == nullptr) { return true; }
+		return (m_time >= m_spAnimation->m_maxLength);
 	}
 
-	float GetTime() const { return m_time; }
-	void SetTime(float time) { m_blendTime = time; }
-
+	float GetTime() const { return m_blendTimer.GetNowFrame(); }
+	
 	// アニメーションの更新
 	void AdvanceTime(std::vector<KdModelWork::Node>& rNodes, float speed = 1.0f);
 
-	// アニメーションの補間再生1:再生アニメーション、2:補間時間、3:次のアニメーションがループするか、4:最大ループ回数(-1で無限ループ)
-	void AnimationBlend(const std::shared_ptr<KdAnimationData>& nextAnim, float duration, bool nextIsLoop = true, int maxLoopCount = -1);
-
-	bool GetRootMotion(
-		const std::shared_ptr<KdAnimationData>& animData,
-		const std::vector<KdModelData::Node>& modelNodes,
-		const std::string& rootBoneName,
-		float time,
-		Math::Vector3& outTranslation
-	) const;
-
 private:
+
+	inline void RegistAnimation(const std::shared_ptr<KdAnimationData>& rData, bool isLoop = true)
+	{
+		m_spAnimation = rData;
+		m_isLoop = isLoop;
+	}
+
+	// アニメーションのブレンド更新
+	void UpdateBlendAnimation(std::vector<KdModelWork::Node>& rNodes, float speed = 1.0f, float BlendWeight = 1.0f);
 
 	std::shared_ptr<KdAnimationData>	m_spAnimation = nullptr;	// 再生するアニメーションデータ
 
-	std::shared_ptr<KdAnimationData> m_spNextAnimation = nullptr;	// 次に再生するアニメーションデータ
-
-	float m_blendTime = 0.0f;      // 補間経過時間
-	float m_blendDuration = 0.0f;  // 補間全体時間
-	bool m_isBlending = false;
+	std::unique_ptr<KdAnimator>			m_pNowAnimator;				// 現状再生中のアニメーション
+	std::unique_ptr<KdAnimator>			m_pNextAnimator;			// 次に遷移するアニメーション
 
 	float m_time = 0.0f;
 
 	bool m_isLoop = false;
-	bool m_nextIsLoop = false;
 
-	int m_loopCount = 0;         // 現在のループ回数
-	int m_maxLoopCount = -1;     // 最大ループ回数（-1なら無限ループ）
-
-	bool m_blendCaptured = false;
-
-	// ブレンドポーズ
-	std::vector<Math::Matrix> m_blendBasePoses;
-	UINT idx;
+	KdFrameTimer						m_blendTimer;				// ブレンド時間管理用タイマー
 };

@@ -8,7 +8,7 @@
 void PlayerState_SpecialAttack::StateStart()
 {
 	auto anime = m_player->GetAnimeModel()->GetAnimation("PowerAttack");
-	m_player->GetAnimator()->AnimationBlend(anime, 20.0f, false);
+	m_player->GetAnimator()->SetAnimation(anime, 0.25f, false);
 
 	PlayerStateBase::StateStart();
 
@@ -21,7 +21,7 @@ void PlayerState_SpecialAttack::StateStart()
 
 void PlayerState_SpecialAttack::StateUpdate()
 {
-	//アニメーション再生速度を変更
+	// アニメーション再生速度を変更
 	m_player->SetAnimeSpeed(60.0f);
 
 	if (m_player->GetAnimator()->IsAnimationEnd())
@@ -45,6 +45,13 @@ void PlayerState_SpecialAttack::StateUpdate()
 	{
 		// 移動を止める
 		m_player->SetIsMoving(Math::Vector3::Zero);
+	}
+
+	// カタナ関連
+	if (auto katana = m_player->GetKatana().lock(); katana)
+	{
+		// 刀のトレイルポリゴンの表示
+		katana->SetShowTrail(true);
 	}
 }
 

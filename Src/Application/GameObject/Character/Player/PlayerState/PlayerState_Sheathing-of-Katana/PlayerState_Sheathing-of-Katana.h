@@ -11,6 +11,4 @@ private:
 	void StateStart() override;
 	void StateUpdate() override;
 	void StateEnd() override;
-
-	bool m_flag = false; // 攻撃フラグ
 };

@@ -23,6 +23,8 @@ void PlayerCamera::Init()
 
 	// 初期のカメラのターゲット座標を設定
 	m_followRate = m_targetLookAt;
+
+	m_spCamera->SetProjectionMatrix(m_fov);
 }
 
 void PlayerCamera::PostUpdate()

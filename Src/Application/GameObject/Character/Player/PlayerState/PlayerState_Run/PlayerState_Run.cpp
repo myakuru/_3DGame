@@ -10,7 +10,7 @@
 void PlayerState_Run::StateStart()
 {
 	auto anime = m_player->GetAnimeModel()->GetAnimation("Run");
-	m_player->GetAnimator()->AnimationBlend(anime, 10.0f);
+	m_player->GetAnimator()->SetAnimation(anime);
 	m_player->AnimeSetFlg() = true;
 }
 

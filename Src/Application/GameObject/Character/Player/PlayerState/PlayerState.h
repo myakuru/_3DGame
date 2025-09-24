@@ -14,7 +14,10 @@ public:
 	void StateUpdate() override;
 	void StateEnd() override;
 
+	// 刀の位置を右手に追従するように更新
 	virtual void UpdateKatanaPos();
+
+	// 刀と鞘の位置が左手に追従するように更新
 	virtual void UpdateUnsheathed();
 
 	void SetPlayer(Player* player) { m_player = player; }
