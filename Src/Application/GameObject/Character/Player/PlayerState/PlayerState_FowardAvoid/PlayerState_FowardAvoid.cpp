@@ -9,7 +9,7 @@ void PlayerState_ForwardAvoid::StateStart()
 {
 	auto anime = m_player->GetAnimeModel()->GetAnimation("AvoidBackward");
 	m_player->GetAnimator()->SetAnimation(anime, 0.25f, false);
-	m_player->AnimeSetFlg() = true;
+	
 
 	// 攻撃開始時に直前の移動方向を保存
 	m_attackDirection = m_player->GetLastMoveDirection();
@@ -38,7 +38,7 @@ void PlayerState_ForwardAvoid::StateUpdate()
 
 	PlayerStateBase::StateUpdate();
 
-	UpdateKatanaPos();
+	UpdateUnsheathed();
 
 	float dashSpeed = -0.5f;
 
@@ -52,24 +52,4 @@ void PlayerState_ForwardAvoid::StateEnd()
 	m_player->SetAvoidFlg(false);
 	m_player->SetAvoidStartTime(0.0f);
 
-}
-
-void PlayerState_ForwardAvoid::UpdateKatanaPos()
-{
-	// 左手のワークノードを取得
-	auto leftHandNode = m_player->GetModelWork()->FindWorkNode("VSB_9");
-
-	if (!leftHandNode) return;
-
-	// カタナの取得
-	auto katana = m_player->GetKatana().lock();
-	// 鞘の取得
-	auto saya = m_player->GetScabbard().lock();
-
-	if (!katana) return;
-	if (!saya) return;
-
-	// プレイヤーに追尾する刀にするためにワークノードとプレイヤーのワールド変換を設定
-	katana->SetHandKatanaMatrix(leftHandNode->m_worldTransform);
-	saya->SetHandKatanaMatrix(leftHandNode->m_worldTransform);
 }

@@ -12,8 +12,8 @@
 void PlayerState_Attack1::StateStart()
 {
 	auto anime = m_player->GetAnimeModel()->GetAnimation("Attack1");
-	m_player->GetAnimator()->SetAnimation(anime, 0.25f, false);
-	m_player->AnimeSetFlg() = true;
+	m_player->GetAnimator()->SetAnimation(anime, 0.3f, false);
+	
 
 	PlayerStateBase::StateStart();
 

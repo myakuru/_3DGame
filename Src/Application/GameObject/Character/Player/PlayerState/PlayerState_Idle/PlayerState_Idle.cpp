@@ -5,7 +5,7 @@
 
 #include"../../../../../Scene/SceneManager.h"
 
-#include"../PlayerState_Run/PlayerState_Run.h"
+#include"../PlayerState_RunStart/PlayerState_RunStart.h"
 #include"../PlayerState_Attack/PlayerState_Attack.h"
 #include"../PlayerState_FowardAvoid/PlayerState_FowardAvoid.h"
 #include"../PlayerState_ChargeAttack/PlayerState_ChargeAttack.h"
@@ -18,8 +18,6 @@ void PlayerState_Idle::StateStart()
 {
 	auto anime = m_player->GetAnimeModel()->GetAnimation("Idle");
 	m_player->GetAnimator()->SetAnimation(anime);
-
-	m_player->AnimeSetFlg() = true;
 }
 
 void PlayerState_Idle::StateUpdate()
@@ -34,7 +32,7 @@ void PlayerState_Idle::StateUpdate()
 		KeyboardManager::GetInstance().IsKeyPressed('S') ||
 		KeyboardManager::GetInstance().IsKeyPressed('D'))
 	{
-		auto spRunState = std::make_shared<PlayerState_Run>();
+		auto spRunState = std::make_shared<PlayerState_RunStart>();
 		m_player->ChangeState(spRunState);
 		return;
 	}
@@ -102,6 +100,5 @@ void PlayerState_Idle::StateUpdate()
 
 void PlayerState_Idle::StateEnd()
 {
-	m_player->AnimeSetFlg() = false;
 	m_player->m_isHit = false; // ダメージフラグをリセット
 }

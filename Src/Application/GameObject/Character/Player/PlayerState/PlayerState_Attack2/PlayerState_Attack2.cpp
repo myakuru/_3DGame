@@ -11,9 +11,7 @@
 void PlayerState_Attack2::StateStart()
 {
 	auto anime = m_player->GetAnimeModel()->GetAnimation("Attack2");
-	m_player->GetAnimator()->SetAnimation(anime, 0.25f, false);
-	m_player->AnimeSetFlg() = true;
-
+	m_player->GetAnimator()->SetAnimation(anime, 0.3f, false);
 	PlayerStateBase::StateStart();
 
 	m_attackParam = m_player->GetPlayerConfig().GetAttackParam();
@@ -33,8 +31,6 @@ void PlayerState_Attack2::StateUpdate()
 {
 	SceneManager::Instance().GetObjectWeakPtr(m_slashEffect);
 
-	m_player->SetAnimeSpeed(120.0f);
-
 	// 0.5秒間当たり判定有効
 	if (m_time <= 1.0 / 2)
 	{
@@ -50,7 +46,7 @@ void PlayerState_Attack2::StateUpdate()
 	// アニメ速度制御：予約があれば加速
 	if (m_keyInput)
 	{
-		m_player->SetAnimeSpeed(150.0f);
+		m_player->SetAnimeSpeed(130.0f);
 	}
 	else
 	{
@@ -105,8 +101,6 @@ void PlayerState_Attack2::StateUpdate()
 
 void PlayerState_Attack2::StateEnd()
 {
-	m_player->AnimeSetFlg() = false;
-
 	PlayerStateBase::StateEnd();
 
 	if (auto effect = m_slashEffect.lock(); effect)

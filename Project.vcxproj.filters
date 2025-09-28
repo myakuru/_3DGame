@@ -334,6 +334,12 @@
     <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_SpecialAttackCutIn">
       <UniqueIdentifier>{c34bd41a-f23c-408a-ad48-64f22c123383}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_RunStart">
+      <UniqueIdentifier>{f45ac0e4-3fc5-443d-938a-aa94f0bb669c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_RunEnd">
+      <UniqueIdentifier>{4ab2ac0b-f325-40e5-aabc-3dfcfc3724d4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -768,6 +774,12 @@
     <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_SpecialAttackCutIn\PlayerState_SpecialAttackCutIn.h">
       <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_SpecialAttackCutIn</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_RunStart\PlayerState_RunStart.h">
+      <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_RunStart</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_RunEnd\PlayerState_RunEnd.h">
+      <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_RunEnd</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -1144,6 +1156,12 @@
     </ClCompile>
     <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_SpecialAttackCutIn\PlayerState_SpecialAttackCutIn.cpp">
       <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_SpecialAttackCutIn</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_RunStart\PlayerState_RunStart.cpp">
+      <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_RunStart</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_RunEnd\PlayerState_RunEnd.cpp">
+      <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_RunEnd</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

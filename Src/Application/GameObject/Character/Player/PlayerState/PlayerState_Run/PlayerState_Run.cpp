@@ -1,6 +1,6 @@
 ﻿#include "PlayerState_Run.h"
 #include"../../../CharacterBase.h"
-#include"../PlayerState_Idle/PlayerState_Idle.h"
+#include"../PlayerState_RunEnd/PlayerState_RunEnd.h"
 #include"../PlayerState_BackWordAvoid/PlayerState_BackWordAvoid.h"
 #include"../../../../Camera/PlayerCamera/PlayerCamera.h"
 #include"../PlayerState_Hit/PlayerState_Hit.h"
@@ -11,19 +11,18 @@ void PlayerState_Run::StateStart()
 {
 	auto anime = m_player->GetAnimeModel()->GetAnimation("Run");
 	m_player->GetAnimator()->SetAnimation(anime);
-	m_player->AnimeSetFlg() = true;
+	m_player->SetAnimeSpeed(70.0f);
 }
 
 void PlayerState_Run::StateUpdate()
 {
-	m_player->SetAnimeSpeed(60.0f);
 
 	m_player->UpdateMoveDirectionFromInput();
 	Math::Vector3 moveDir = m_player->GetMoveDirection();
 
 	if (moveDir == Math::Vector3::Zero)
 	{
-		auto state = std::make_shared<PlayerState_Idle>();
+		auto state = std::make_shared<PlayerState_RunEnd>();
 		m_player->ChangeState(state);
 		return;
 	}

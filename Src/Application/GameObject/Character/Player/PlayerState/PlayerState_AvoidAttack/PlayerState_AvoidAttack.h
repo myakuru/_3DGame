@@ -6,10 +6,10 @@ public:
 	PlayerState_AvoidAttack() = default;
 	~PlayerState_AvoidAttack() override = default;
 
+private:
 	void StateStart() override;
 	void StateUpdate() override;
 	void StateEnd() override;
 
-private:
-
+	Math::Vector3 m_avoidDirection = Math::Vector3::Zero;
 };

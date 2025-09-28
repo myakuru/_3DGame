@@ -56,6 +56,14 @@ void Player::PreUpdate()
 	scabbard->SetPlayerHandMatrix(m_mWorld);
 }
 
+void Player::PostUpdate()
+{
+	CharaBase::PostUpdate();
+	// ライトの影の中心位置をプレイヤーに合わせる
+	auto& amb = KdShaderManager::Instance().WorkAmbientController();
+	amb.SetShadowCenter(m_position);
+}
+
 void Player::SkirtUpdate()
 {
 }

@@ -14,7 +14,6 @@ void PlayerState_ChargeAttack::StateStart()
 {
 	auto anime = m_player->GetAnimeModel()->GetAnimation("ChargeAttack0");
 	m_player->GetAnimator()->SetAnimation(anime, 0.25f, false);
-	m_player->AnimeSetFlg() = true;
 
 	PlayerStateBase::StateStart();
 
@@ -59,7 +58,10 @@ void PlayerState_ChargeAttack::StateUpdate()
 
 	m_time += deltaTime;
 
-	if (m_time >= 0.3f && m_time <= 0.5f)
+	//KdDebugGUI::Instance().AddLog(std::to_string(m_time).data());
+	//KdDebugGUI::Instance().AddLog("\n");
+
+	if (m_time >= 0.1f && m_time <= 0.2f)
 	{
 		KdShaderManager::Instance().m_postProcessShader.SetEnableStrongBlur(true);
 	}

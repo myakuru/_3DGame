@@ -82,8 +82,12 @@ void KdAmbientController::AddPointLight(const PointLight& pointLight)
 // ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// /////
 void KdAmbientController::SetDirLightShadowArea(const Math::Vector2& lightingArea, float dirLightHeight)
 {
-	m_shadowProj = DirectX::XMMatrixOrthographicLH(lightingArea.x, lightingArea.y, 0.0f, dirLightHeight * 2.0f);
+	// lightingArea.x 幅, lightingArea.y 奥行（正射影：左右 / 上下）
+		// プレイヤー中心にしたいのでここは単にサイズだけ保持
+	float width = lightingArea.x;
+	float height = lightingArea.y;
 
+	m_shadowProj = DirectX::XMMatrixOrthographicLH(width, height, 0.0f, dirLightHeight * 2.0f);
 	m_dirLightHeight = dirLightHeight;
 }
 
@@ -152,31 +156,24 @@ void KdAmbientController::SetheightFog(const Math::Vector3& col, float topValue,
 // ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// /////
 void KdAmbientController::WriteLightParams()
 {
-	// 環境光
 	if (m_dirtyLightAmb)
 	{
 		KdShaderManager::Instance().WriteCBAmbientLight(m_parameter.m_ambientLightColor);
-
 		m_dirtyLightAmb = false;
 	}
-
-	// 平行光
 	if (m_dirtyLightDir)
 	{
 		KdShaderManager::Instance().WriteCBDirectionalLight(
 			m_parameter.m_directionalLightDir, m_parameter.m_directionalLightColor);
-
 		m_dirtyLightDir = false;
 	}
-
-	// 点光源
-	if (m_pointLights.size())
+	if (!m_pointLights.empty())
 	{
 		KdShaderManager::Instance().WriteCBPointLight(m_pointLights);
 	}
 
-	// 影描画エリアの更新
-	KdShaderManager::Instance().WriteCBShadowArea(m_shadowProj, m_dirLightHeight);
+	// 影エリア（中心位置を含めて送る）
+	KdShaderManager::Instance().WriteCBShadowArea(m_shadowProj, m_dirLightHeight, m_shadowCenter);
 }
 
 // ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// /////

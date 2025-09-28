@@ -453,18 +453,19 @@ void KdShaderManager::WriteCBDirectionalLight(const Math::Vector3& dir, const Ma
 // ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// /////
 // 影生成エリアのデータをGPUに転送
 // ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// /////
-void KdShaderManager::WriteCBShadowArea(const Math::Matrix& proj, float dirLightHeight)
+void KdShaderManager::WriteCBShadowArea(const Math::Matrix& proj, float dirLightHeight, const Math::Vector3& center)
 {
 	Math::Vector3 lightDir = m_cb9_Light.Get().DirLight_Dir;
-	Math::Vector3 lightPos = m_cb7_Camera.Get().CamPos;
-	Math::Vector3 upVec = (lightDir == Math::Vector3::Up) ? Math::Vector3::Right : Math::Vector3::Up ;
+	Math::Vector3 focusPos = center; // 影の中心（プレイヤー）
+	Math::Vector3 upVec = (fabs(lightDir.Dot(Math::Vector3::Up)) > 0.99f) ? Math::Vector3::Right : Math::Vector3::Up;
 
-	Math::Matrix shadowVP = DirectX::XMMatrixLookAtLH(lightPos - lightDir * dirLightHeight, lightPos, upVec);
+	// ライトカメラ位置 = 中心 - 方向 * 高さ
+	Math::Vector3 lightPos = focusPos - lightDir * dirLightHeight;
 
-	shadowVP *= proj;
+	Math::Matrix lightView = DirectX::XMMatrixLookAtLH(lightPos, focusPos, upVec);
+	Math::Matrix shadowVP = lightView * proj;
 
 	m_cb9_Light.Work().DirLight_mVP = shadowVP;
-
 	m_cb9_Light.Write();
 }
 

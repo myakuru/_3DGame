@@ -111,7 +111,9 @@ float4 main(VSOutput In) : SV_Target0
 		// 射影座標 -> UV座標へ変換
 		float2 uv = liPos.xy * float2(1, -1) * 0.5 + 0.5;
 		// ライトカメラからの距離
-		float z = liPos.z - 0.004; // シャドウアクネ対策
+		float NdL = saturate(dot(normalize(In.wN), -normalize(g_DL_Dir)));
+		float slopeBias = lerp(0.0005, 0.0035, 1 - NdL);
+		float z = liPos.z - slopeBias;
 		
 		// 画像のサイズからテクセルサイズを求める
 		float w, h;

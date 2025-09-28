@@ -7,8 +7,6 @@ void EnemyState_Attack1::StateStart()
 {
 	auto anime = m_enemy->GetAnimeModel()->GetAnimation("Attack1");
 	m_enemy->GetAnimator()->SetAnimation(anime, false);
-	m_enemy->AnimeSetFlg() = true;
-
 	m_enemy->m_onceEffect = false;
 
 	m_time = 0.0f;

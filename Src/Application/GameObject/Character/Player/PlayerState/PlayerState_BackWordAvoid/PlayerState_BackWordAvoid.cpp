@@ -3,13 +3,13 @@
 #include"../../../../Weapon/Katana/Katana.h"
 
 #include"../PlayerState_Idle/PlayerState_Idle.h"
+#include"../PlayerState_Run/PlayerState_Run.h"
 #include"../../../../Weapon/WeaponKatanaScabbard/WeaponKatanaScabbard.h"
 
 void PlayerState_BackWordAvoid::StateStart()
 {
 	auto anime = m_player->GetAnimeModel()->GetAnimation("AvoidForward");
 	m_player->GetAnimator()->SetAnimation(anime, 0.25f, false);
-	m_player->AnimeSetFlg() = true;
 
 	// 攻撃開始時に直前の移動方向を保存
 	m_attackDirection = m_player->GetLastMoveDirection();

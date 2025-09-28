@@ -22,6 +22,7 @@ public:
 
 	void Init() override;
 	void PreUpdate() override;
+	void PostUpdate() override;
 	void SkirtUpdate();
 	void Update() override;
 	void UpdateAttack();

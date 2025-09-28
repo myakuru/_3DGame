@@ -46,7 +46,6 @@ void PlayerCamera::PostUpdate()
 
 	// カメラの回転
 	UpdateRotateByMouse();
-	//m_mRotation = GetRotationMatrix();
 
 	// 直前のフレームの回転を保存
 	m_targetRotation = GetRotationQuaternion();

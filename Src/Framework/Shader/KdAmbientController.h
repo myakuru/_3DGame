@@ -65,6 +65,8 @@ public:
 	// 高さフォグの設定
 	void SetheightFog(const Math::Vector3& col, float topValue, float bottomValue, float distance);
 
+	void SetShadowCenter(const Math::Vector3& center) { m_shadowCenter = center; }
+
 private:
 
 	void WriteLightParams(); 
@@ -79,6 +81,9 @@ private:
 	Math::Matrix m_shadowProj;
 	// 平行光源の高さ(実際には存在しない影生成用の仮の位置)
 	float		m_dirLightHeight = 0.0f;
+
+	// 影中心（毎フレーム プレイヤー位置を設定推奨）
+	Math::Vector3 m_shadowCenter = Math::Vector3::Zero;
 
 	// 変更があるかを判定するフラグ
 	bool m_dirtyLightAmb = true;

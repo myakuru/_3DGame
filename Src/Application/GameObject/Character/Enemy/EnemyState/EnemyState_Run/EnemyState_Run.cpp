@@ -7,7 +7,6 @@ void EnemyState_Run::StateStart()
 {
 	auto anime = m_enemy->GetAnimeModel()->GetAnimation("Run");
 	m_enemy->GetAnimator()->SetAnimation(anime, true);
-	m_enemy->AnimeSetFlg() = true;
 }
 
 void EnemyState_Run::StateUpdate()
@@ -51,5 +50,4 @@ void EnemyState_Run::StateUpdate()
 
 void EnemyState_Run::StateEnd()
 {
-	m_enemy->AnimeSetFlg() = false;
 }

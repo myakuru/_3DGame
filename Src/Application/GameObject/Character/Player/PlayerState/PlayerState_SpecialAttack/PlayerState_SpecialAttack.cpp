@@ -31,6 +31,17 @@ void PlayerState_SpecialAttack::StateUpdate()
 		return;
 	}
 
+	// 攻撃中の移動方向で回転を更新
+	if (m_player->GetMovement() != Math::Vector3::Zero)
+	{
+		Math::Vector3 moveDir = m_player->GetMovement();
+		moveDir.y = 0.0f;
+		moveDir.Normalize();
+		m_player->UpdateQuaternionDirect(moveDir);
+	}
+
+	m_player->SetIsMoving(m_attackDirection);
+
 	UpdateKatanaPos();
 
 	float deltaTime = Application::Instance().GetDeltaTime();

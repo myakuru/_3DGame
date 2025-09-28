@@ -1,14 +1,14 @@
 ﻿#include "PlayerState_Attack4.h"
 #include"../PlayerState_Sheathing-of-Katana/PlayerState_Sheathing-of-Katana.h"
 #include"../../../../../main.h"
+#include"../PlayerState_Attack1/PlayerState_Attack1.h"
 
 #include"../../../../Weapon/Katana/Katana.h"
 
 void PlayerState_Attack4::StateStart()
 {
 	auto anime = m_player->GetAnimeModel()->GetAnimation("Attack4");
-	m_player->GetAnimator()->SetAnimation(anime, 0.25f, false);
-	m_player->AnimeSetFlg() = true;
+	m_player->GetAnimator()->SetAnimation(anime, 0.3f, false);
 
 	PlayerStateBase::StateStart();
 
@@ -19,6 +19,8 @@ void PlayerState_Attack4::StateStart()
 	}
 
 	m_time = 0.0f;
+
+	m_keyInput = false;
 }
 
 void PlayerState_Attack4::StateUpdate()
@@ -27,10 +29,33 @@ void PlayerState_Attack4::StateUpdate()
 
 	float deltaTime = Application::Instance().GetDeltaTime();
 
+	if (KeyboardManager::GetInstance().IsKeyJustPressed(VK_LBUTTON))
+	{
+		m_keyInput = true;
+	}
+
+	if (m_keyInput)
+	{
+		m_player->SetAnimeSpeed(130.0f);
+	}
+	else
+	{
+		m_player->SetAnimeSpeed(80.0f);
+	}
+
+	// アニメ終了時の遷移
 	if (m_player->GetAnimator()->IsAnimationEnd())
 	{
-		auto state = std::make_shared<PlayerState_SheathKatana>();
-		m_player->ChangeState(state);
+		if (m_keyInput)
+		{
+			auto next = std::make_shared<PlayerState_Attack1>();
+			m_player->ChangeState(next);
+		}
+		else
+		{
+			auto sheath = std::make_shared<PlayerState_SheathKatana>();
+			m_player->ChangeState(sheath);
+		}
 		return;
 	}
 

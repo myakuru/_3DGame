@@ -28,7 +28,6 @@ public:
 	/// </summary>
 	std::shared_ptr<KdModelWork> GetAnimeModel();
 	std::shared_ptr<KdAnimator> GetAnimator() const { return m_animator; }
-	bool& AnimeSetFlg() { return IsAnimeSet; }
 	void SetAnimeSpeed(float speed) { m_fixedFrameRate = speed; }
 
 	/// <summary>
@@ -64,8 +63,6 @@ protected:
 	/// アニメーション関係
 	/// </summary>
 	std::shared_ptr <KdAnimator>	m_animator = std::make_shared<KdAnimator>();
-	bool IsAnimeSet = false;
-
 
 	// 重力
 	float m_gravity = 0.0f;

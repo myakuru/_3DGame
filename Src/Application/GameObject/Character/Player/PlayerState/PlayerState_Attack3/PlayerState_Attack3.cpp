@@ -10,8 +10,7 @@
 void PlayerState_Attack3::StateStart()
 {
 	auto anime = m_player->GetAnimeModel()->GetAnimation("Attack3");
-	m_player->GetAnimator()->SetAnimation(anime, 0.25f, false);
-	m_player->AnimeSetFlg() = true;
+	m_player->GetAnimator()->SetAnimation(anime, 0.3f, false);
 
 	PlayerStateBase::StateStart();
 
@@ -46,7 +45,7 @@ void PlayerState_Attack3::StateUpdate()
 	// アニメ速度制御：予約があれば加速
 	if (m_keyInput)
 	{
-		m_player->SetAnimeSpeed(100.0f);
+		m_player->SetAnimeSpeed(150.0f);
 	}
 	else
 	{

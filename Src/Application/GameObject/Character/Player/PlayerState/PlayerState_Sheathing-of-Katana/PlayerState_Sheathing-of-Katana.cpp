@@ -9,7 +9,7 @@ void PlayerState_SheathKatana::StateStart()
 {
 	auto anime = m_player->GetAnimeModel()->GetAnimation("SheathKatana");
 	m_player->GetAnimator()->SetAnimation(anime, 0.9f, false);
-	m_player->AnimeSetFlg() = true;
+	
 
 	PlayerStateBase::StateStart();
 
