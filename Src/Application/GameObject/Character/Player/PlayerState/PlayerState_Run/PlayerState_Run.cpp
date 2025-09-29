@@ -16,6 +16,7 @@ void PlayerState_Run::StateStart()
 
 void PlayerState_Run::StateUpdate()
 {
+	UpdateUnsheathed();
 
 	m_player->UpdateMoveDirectionFromInput();
 	Math::Vector3 moveDir = m_player->GetMoveDirection();
@@ -44,20 +45,11 @@ void PlayerState_Run::StateUpdate()
 		return;
 	}
 
-	UpdateUnsheathed();
-
 	if (!m_player->GetPlayerCamera().lock()) return;
 
 	m_player->UpdateQuaternion(moveDir);
 	m_player->SetIsMoving(moveDir);
 
-
-	KdDebugGUI::Instance().AddLog(std::to_string(moveDir.x).data());
-	KdDebugGUI::Instance().AddLog(", ");
-	KdDebugGUI::Instance().AddLog(std::to_string(moveDir.y).data());
-	KdDebugGUI::Instance().AddLog(", ");
-	KdDebugGUI::Instance().AddLog(std::to_string(moveDir.z).data());
-	KdDebugGUI::Instance().AddLog("\n");
 }
 
 void PlayerState_Run::StateEnd()

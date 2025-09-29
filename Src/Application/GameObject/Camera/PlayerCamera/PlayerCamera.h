@@ -32,7 +32,7 @@ public:
 
 	Math::Vector3 GetCameraPos() const { return m_cameraPos; }
 
-	// カメラのターゲット位置を設定デフォルトは(0,1,-2.5)
+	// カメラのターゲット位置を設定デフォルトは(0.0f,1.0f,-3.5f)
 	void SetTargetLookAt(const Math::Vector3& target) { m_followRate = target; }
 
 	// カメラのターゲットの回転を設定
@@ -45,7 +45,6 @@ private:
 
 	void UpdateCameraRayCast();
 
-	//std::weak_ptr<Player> m_player;
 	Math::Vector3 m_targetLookAt = Math::Vector3::Zero;
 	Math::Vector3 m_introCamPos = Math::Vector3::Zero;	// Introカメラの位置
 	Math::Vector3 m_cameraPos = Math::Vector3::Zero; // カメラの現在位置

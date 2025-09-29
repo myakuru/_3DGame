@@ -4,13 +4,14 @@
 #include"../PlayerState_Attack4/PlayerState_Attack4.h"
 #include"../../../../../Scene/SceneManager.h"
 #include"../../../../Effect/EffekseerEffect/SlashEffect/SlashEffect.h"
-
+#include"../../../../Camera/PlayerCamera/PlayerCamera.h"
+	
 #include"../../../../Weapon/Katana/Katana.h"
 
 void PlayerState_Attack3::StateStart()
 {
 	auto anime = m_player->GetAnimeModel()->GetAnimation("Attack3");
-	m_player->GetAnimator()->SetAnimation(anime, 0.3f, false);
+	m_player->GetAnimator()->SetAnimation(anime, 0.25f, false);
 
 	PlayerStateBase::StateStart();
 
@@ -22,16 +23,23 @@ void PlayerState_Attack3::StateStart()
 
 	m_time = 0.0f;
 	m_keyInput = false;
-}
 
-void PlayerState_Attack3::StateUpdate()
-{
 	SceneManager::Instance().GetObjectWeakPtr(m_slashEffect);
 
 	if (auto effect = m_slashEffect.lock(); effect)
 	{
 		effect->SetPlayEffect(true);
 	}
+
+	// カメラの位置を変更
+	if (auto camera = m_player->GetPlayerCamera().lock(); camera)
+	{
+		camera->SetTargetLookAt({ 0.f,1.0f,-5.0f });
+	}
+}
+
+void PlayerState_Attack3::StateUpdate()
+{
 
 	PlayerStateBase::StateUpdate();
 
@@ -45,7 +53,7 @@ void PlayerState_Attack3::StateUpdate()
 	// アニメ速度制御：予約があれば加速
 	if (m_keyInput)
 	{
-		m_player->SetAnimeSpeed(150.0f);
+		m_player->SetAnimeSpeed(130.0f);
 	}
 	else
 	{
@@ -82,7 +90,7 @@ void PlayerState_Attack3::StateUpdate()
 
 	if (m_time < 0.2f)
 	{
-		float dashSpeed = 0.3f;
+		float dashSpeed = 0.7f;
 		m_player->SetIsMoving(m_attackDirection * dashSpeed);
 		m_time += deltaTime;
 	}

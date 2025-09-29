@@ -34,7 +34,7 @@ protected:
 	// 現在再生中のエフェクト参照
 	std::weak_ptr<KdEffekseerObject> m_wpEffect;
 
-	// キャッシュされた再生状態
+	// 再生状態
 	bool m_isEffectPlaying = false;
 
 	float m_distance = 0.0f;

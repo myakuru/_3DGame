@@ -31,14 +31,12 @@ void PlayerState_Attack::StateStart()
 
 	m_keyInput = false;          // 次段コンボ予約フラグ初期化
 	m_time = 0.0f;               // 当たり判定用
+
+	SceneManager::Instance().GetObjectWeakPtr(m_slashEffect);
 }
 
 void PlayerState_Attack::StateUpdate()
 {
-	SceneManager::Instance().GetObjectWeakPtr(m_slashEffect);
-
-	auto swordEffect = m_slashEffect.lock();
-	if (!swordEffect) return;
 
 	if (m_player->GetEnemy().lock())
 	{
@@ -62,7 +60,7 @@ void PlayerState_Attack::StateUpdate()
 		m_keyInput = true;
 	}
 
-	// アニメ速度制御：予約があれば加速
+	// アニメ速度制御
 	if (m_keyInput)
 	{
 		m_player->SetAnimeSpeed(150.0f);
@@ -107,8 +105,10 @@ void PlayerState_Attack::StateUpdate()
 	else
 	{
 		// エフェクト再生・移動停止
-		swordEffect->SetPlayEffect(true);
-		swordEffect->IsEffectPlaying();
+		if (auto effect = m_slashEffect.lock(); effect)
+		{
+			effect->SetPlayEffect(true);
+		}
 		m_player->SetIsMoving(Math::Vector3::Zero);
 	}
 

@@ -11,7 +11,7 @@
 void PlayerState_Attack2::StateStart()
 {
 	auto anime = m_player->GetAnimeModel()->GetAnimation("Attack2");
-	m_player->GetAnimator()->SetAnimation(anime, 0.3f, false);
+	m_player->GetAnimator()->SetAnimation(anime, 0.25f, false);
 	PlayerStateBase::StateStart();
 
 	m_attackParam = m_player->GetPlayerConfig().GetAttackParam();
@@ -25,11 +25,12 @@ void PlayerState_Attack2::StateStart()
 	}
 
 	m_keyInput = false;				// 次段コンボ予約フラグ初期化
+
+	SceneManager::Instance().GetObjectWeakPtr(m_slashEffect);
 }
 
 void PlayerState_Attack2::StateUpdate()
 {
-	SceneManager::Instance().GetObjectWeakPtr(m_slashEffect);
 
 	// 0.5秒間当たり判定有効
 	if (m_time <= 1.0 / 2)
@@ -46,7 +47,7 @@ void PlayerState_Attack2::StateUpdate()
 	// アニメ速度制御：予約があれば加速
 	if (m_keyInput)
 	{
-		m_player->SetAnimeSpeed(130.0f);
+		m_player->SetAnimeSpeed(170.0f);
 	}
 	else
 	{

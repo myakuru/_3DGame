@@ -42,18 +42,20 @@ void Player::PreUpdate()
 	sphere.Radius = 0.2f;
 	m_pDebugWire->AddDebugSphere(sphere.Center, sphere.Radius,kRedColor);
 
+
 	// カタナの取得
-	auto katana = m_katana.lock();
-	// 鞘の取得
-	auto scabbard = m_scabbard.lock();
+	if (auto katana = m_katana.lock(); katana)
+	{
+		katana->SetPlayerMatrix(m_mWorld);
+		katana->SetPlayerHandMatrix(m_mWorld);
+	}
 
-	if (!katana) return;
-	if (!scabbard) return;
+	if (auto scabbard = m_scabbard.lock(); scabbard)
+	{
+		scabbard->SetPlayerMatrix(m_mWorld);
+		scabbard->SetPlayerHandMatrix(m_mWorld);
+	}
 
-	katana->SetPlayerMatrix(m_mWorld);
-	katana->SetPlayerHandMatrix(m_mWorld);
-	scabbard->SetPlayerMatrix(m_mWorld);
-	scabbard->SetPlayerHandMatrix(m_mWorld);
 }
 
 void Player::PostUpdate()
@@ -70,17 +72,12 @@ void Player::SkirtUpdate()
 
 void Player::Update()
 {
+	KdGameObject::Update();
+
 	SceneManager::Instance().GetObjectWeakPtr(m_playerCamera);
 	SceneManager::Instance().GetObjectWeakPtr(m_enemy);
 	SceneManager::Instance().GetObjectWeakPtr(m_katana);
 	SceneManager::Instance().GetObjectWeakPtr(m_scabbard);
-
-	if (m_playerCamera.expired()) return;
-	//if (m_enemy.expired()) return;
-	if (m_katana.expired()) return;
-	if (m_scabbard.expired()) return;
-
-	KdGameObject::Update();
 
 	float deltaTime = Application::Instance().GetDeltaTime();
 

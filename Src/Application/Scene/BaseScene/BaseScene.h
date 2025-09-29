@@ -16,11 +16,10 @@ public :
 	void DrawSprite();
 	void DrawDebug();
 
-	virtual void JsonInput(const nlohmann::json& _json) {/*基底クラスではなにもしない*/ };
-	virtual void JsonSave(nlohmann::json& _json) const {/*基底クラスではなにもしない*/ };
-	virtual void LoadSceneSettingsFromJson(const std::string& filePath) {/*基底クラスではなにもしない*/ };
-
-	virtual void SaveSceneSettingsToJson(const std::string& filePath) const {/*基底クラスではなにもしない*/ };
+	virtual void JsonInput([[maybe_unused]] const nlohmann::json& _json) {/*基底クラスではなにもしない*/ }
+	virtual void JsonSave([[maybe_unused]] nlohmann::json& _json) const {/*基底クラスではなにもしない*/ }
+	virtual void LoadSceneSettingsFromJson([[maybe_unused]] const std::string& filePath) {/*基底クラスではなにもしない*/ }
+	virtual void SaveSceneSettingsToJson([[maybe_unused]] const std::string& filePath) const {/*基底クラスではなにもしない*/ }
 
 	virtual void DrawImGui() {/*基底クラスではなにもしない*/}
 

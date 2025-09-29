@@ -312,6 +312,7 @@
     <ClInclude Include="Src\Application\GameObject\Effect\BillBoardEffect\FieldEffect\FieldEffect.h" />
     <ClInclude Include="Src\Application\GameObject\Effect\CurvesEffect\CurvesEffect.h" />
     <ClInclude Include="Src\Application\GameObject\Effect\EffekseerEffect\AttacEffect1\AttacEffect1.h" />
+    <ClInclude Include="Src\Application\GameObject\Effect\EffekseerEffect\AvoidAttackSlashEffect\AvoidAttackSlashEffect.h" />
     <ClInclude Include="Src\Application\GameObject\Effect\EffekseerEffect\CloudEffect\CloudEffect.h" />
     <ClInclude Include="Src\Application\GameObject\Effect\EffekseerEffect\EffectPlay\EffectPlay.h" />
     <ClInclude Include="Src\Application\GameObject\Effect\EffekseerEffect\EffekseerEffectBase.h" />
@@ -333,6 +334,7 @@
     <ClInclude Include="Src\Application\GameObject\HUD\BlackBanner\BlackBanner.h" />
     <ClInclude Include="Src\Application\GameObject\HUD\EnemyHp\EnemyHp.h" />
     <ClInclude Include="Src\Application\GameObject\HUD\HpBar\HpBar.h" />
+    <ClInclude Include="Src\Application\GameObject\HUD\HUDManager.h" />
     <ClInclude Include="Src\Application\GameObject\HUD\InvestigationComplete\InvestigationComplete.h" />
     <ClInclude Include="Src\Application\GameObject\HUD\NormalUI\NormalUI.h" />
     <ClInclude Include="Src\Application\GameObject\HUD\NowHp\NowHp.h" />
@@ -451,6 +453,7 @@
     <ClCompile Include="Src\Application\GameObject\Effect\BillBoardEffect\FieldEffect\FieldEffect.cpp" />
     <ClCompile Include="Src\Application\GameObject\Effect\CurvesEffect\CurvesEffect.cpp" />
     <ClCompile Include="Src\Application\GameObject\Effect\EffekseerEffect\AttacEffect1\AttacEffect1.cpp" />
+    <ClCompile Include="Src\Application\GameObject\Effect\EffekseerEffect\AvoidAttackSlashEffect\AvoidAttackSlashEffect.cpp" />
     <ClCompile Include="Src\Application\GameObject\Effect\EffekseerEffect\CloudEffect\CloudEffect.cpp" />
     <ClCompile Include="Src\Application\GameObject\Effect\EffekseerEffect\EffectPlay\EffectPlay.cpp" />
     <ClCompile Include="Src\Application\GameObject\Effect\EffekseerEffect\EffekseerEffectBase.cpp" />
@@ -472,6 +475,7 @@
     <ClCompile Include="Src\Application\GameObject\HUD\BlackBanner\BlackBanner.cpp" />
     <ClCompile Include="Src\Application\GameObject\HUD\EnemyHp\EnemyHp.cpp" />
     <ClCompile Include="Src\Application\GameObject\HUD\HpBar\HpBar.cpp" />
+    <ClCompile Include="Src\Application\GameObject\HUD\HUDManager.cpp" />
     <ClCompile Include="Src\Application\GameObject\HUD\InvestigationComplete\InvestigationComplete.cpp" />
     <ClCompile Include="Src\Application\GameObject\HUD\NormalUI\NormalUI.cpp" />
     <ClCompile Include="Src\Application\GameObject\HUD\NowHp\NowHp.cpp" />

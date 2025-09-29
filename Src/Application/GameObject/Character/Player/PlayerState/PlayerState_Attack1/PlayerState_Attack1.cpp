@@ -32,12 +32,13 @@ void PlayerState_Attack1::StateStart()
 	m_effectOnce = false;
 
 	m_keyInput = false;
+
+	// エフェクトの取得
+	SceneManager::Instance().GetObjectWeakPtr(m_effect);
 }
 
 void PlayerState_Attack1::StateUpdate()
 {
-	// エフェクトの取得
-	SceneManager::Instance().GetObjectWeakPtr(m_effect);
 
 	// 0.5秒間当たり判定有効
 	if (m_time <= 1.0 / 2)

@@ -1,5 +1,7 @@
 ﻿#pragma once
 #include"../PlayerState.h"
+class GroundFreezes;
+class Rotation;
 class PlayerState_Attack4 :public PlayerStateBase
 {
 public:
@@ -10,7 +12,9 @@ private:
 
 	void StateStart() override;
 	void StateUpdate() override;
+	void StateEnd() override;
 
-	float m_time = 0.0f;
+	std::weak_ptr<GroundFreezes> m_groundFreezes;
+	std::weak_ptr<Rotation> m_rotation;
 
 };

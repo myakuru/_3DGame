@@ -228,7 +228,7 @@ void BaseScene::DrawSprite()
 	KdShaderManager::Instance().m_spriteShader.End();
 
 
-	//m_renderTargetUIPack.ClearTexture();
+	m_renderTargetUIPack.ClearTexture();
 }
 
 void BaseScene::DrawDebug()

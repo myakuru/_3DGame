@@ -17,14 +17,15 @@ void PlayerState_ChaegeAttack2::StateStart()
 	m_player->GetAnimator()->SetAnimation(anime, 0.25f, false);
 	PlayerStateBase::StateStart();
 
+	SceneManager::Instance().GetObjectWeakPtr(m_effect);
+	SceneManager::Instance().GetObjectWeakPtr(m_smokeEffect);
+	SceneManager::Instance().GetObjectWeakPtr(m_shineEffect);
+
 	m_player->m_onceEffect = false;
 }
 
 void PlayerState_ChaegeAttack2::StateUpdate()
 {
-	SceneManager::Instance().GetObjectWeakPtr(m_effect);
-	SceneManager::Instance().GetObjectWeakPtr(m_smokeEffect);
-	SceneManager::Instance().GetObjectWeakPtr(m_shineEffect);
 	
 	auto smokeEffect = m_smokeEffect.lock();
 	auto shineEffect = m_shineEffect.lock();

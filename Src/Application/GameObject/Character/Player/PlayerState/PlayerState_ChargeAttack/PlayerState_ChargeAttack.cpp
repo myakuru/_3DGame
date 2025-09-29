@@ -26,10 +26,7 @@ void PlayerState_ChargeAttack::StateStart()
 	{
 		camera->SetTargetLookAt({ 0.f,1.f,-2.0f });
 	}
-}
 
-void PlayerState_ChargeAttack::StateUpdate()
-{
 	SceneManager::Instance().GetObjectWeakPtr(m_shineEffect);
 	SceneManager::Instance().GetObjectWeakPtr(m_groundFreezes);
 
@@ -42,6 +39,10 @@ void PlayerState_ChargeAttack::StateUpdate()
 	{
 		effect->SetPlayEffect(true);
 	}
+}
+
+void PlayerState_ChargeAttack::StateUpdate()
+{
 
 	// アニメーション速度を変更
 	m_player->SetAnimeSpeed(80.0f);

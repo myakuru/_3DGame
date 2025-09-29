@@ -15,7 +15,6 @@ void Winner::Init()
 
 void Winner::Update()
 {
-	float deltatime = Application::Instance().GetDeltaTime();
 
 	if (SceneManager::Instance().m_gameClear)
 	{

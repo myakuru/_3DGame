@@ -73,6 +73,6 @@ void PlayerState_SpecialAttack::StateEnd()
 	if (auto camera = m_player->GetPlayerCamera().lock(); camera)
 	{
 		// カメラと、プレイヤーの距離を近づける（らーぷ）
-		camera->SetTargetLookAt({ 0.f,1.0f,-2.5f });
+		camera->SetTargetLookAt({ 0.0f,1.0f,-3.5f });
 	}
 }

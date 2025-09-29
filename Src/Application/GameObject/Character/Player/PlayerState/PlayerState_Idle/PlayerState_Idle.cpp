@@ -13,11 +13,17 @@
 #include"../PlayerState_Skill/PlayerState_Skill.h"
 #include"../../../../Weapon/Katana/Katana.h"
 #include"../../../../Weapon/WeaponKatanaScabbard/WeaponKatanaScabbard.h"
+#include"../../../../Camera/PlayerCamera/PlayerCamera.h"
 
 void PlayerState_Idle::StateStart()
 {
 	auto anime = m_player->GetAnimeModel()->GetAnimation("Idle");
 	m_player->GetAnimator()->SetAnimation(anime);
+
+	if (auto camera = m_player->GetPlayerCamera().lock(); camera)
+	{
+		camera->SetTargetLookAt({ 0.0f,1.0f,-3.5f });
+	}
 }
 
 void PlayerState_Idle::StateUpdate()
@@ -101,4 +107,5 @@ void PlayerState_Idle::StateUpdate()
 void PlayerState_Idle::StateEnd()
 {
 	m_player->m_isHit = false; // ダメージフラグをリセット
+
 }

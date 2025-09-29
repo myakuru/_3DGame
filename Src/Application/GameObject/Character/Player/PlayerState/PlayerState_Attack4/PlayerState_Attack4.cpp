@@ -2,13 +2,17 @@
 #include"../PlayerState_Sheathing-of-Katana/PlayerState_Sheathing-of-Katana.h"
 #include"../../../../../main.h"
 #include"../PlayerState_Attack1/PlayerState_Attack1.h"
+#include"../../../../../Scene/SceneManager.h"
 
 #include"../../../../Weapon/Katana/Katana.h"
+#include"../../../../Effect/EffekseerEffect/GroundFreezes/GroundFreezes.h"
+#include"../../../../Effect/EffekseerEffect/Rotation/Rotation.h"
+#include"../../../../Camera/PlayerCamera/PlayerCamera.h"
 
 void PlayerState_Attack4::StateStart()
 {
 	auto anime = m_player->GetAnimeModel()->GetAnimation("Attack4");
-	m_player->GetAnimator()->SetAnimation(anime, 0.3f, false);
+	m_player->GetAnimator()->SetAnimation(anime, 0.25f, false);
 
 	PlayerStateBase::StateStart();
 
@@ -19,13 +23,16 @@ void PlayerState_Attack4::StateStart()
 	}
 
 	m_time = 0.0f;
-
 	m_keyInput = false;
+
+	SceneManager::Instance().GetObjectWeakPtr(m_groundFreezes);
+	SceneManager::Instance().GetObjectWeakPtr(m_rotation);
 }
 
 void PlayerState_Attack4::StateUpdate()
 {
 	PlayerStateBase::StateUpdate();
+
 
 	float deltaTime = Application::Instance().GetDeltaTime();
 
@@ -72,7 +79,7 @@ void PlayerState_Attack4::StateUpdate()
 
 	if (m_time < 0.2f)
 	{
-		float dashSpeed = 0.7f;
+		float dashSpeed = 1.0f;
 		m_player->SetIsMoving(m_attackDirection * dashSpeed);
 		m_time += deltaTime;
 	}
@@ -80,5 +87,25 @@ void PlayerState_Attack4::StateUpdate()
 	{
 		// 移動を止める
 		m_player->SetIsMoving(Math::Vector3::Zero);
+
+		if (auto effect = m_groundFreezes.lock(); effect)
+		{
+			effect->SetPlayEffect(true);
+		}
+
+		if (auto effect = m_rotation.lock(); effect)
+		{
+			effect->SetPlayEffect(true);
+		}
+	}
+}
+
+void PlayerState_Attack4::StateEnd()
+{
+	PlayerStateBase::StateEnd();
+	// カメラの位置を変更
+	if (auto camera = m_player->GetPlayerCamera().lock(); camera)
+	{
+		camera->SetTargetLookAt({ 0.f,1.0f,-3.5f });
 	}
 }

@@ -340,6 +340,9 @@
     <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_RunEnd">
       <UniqueIdentifier>{4ab2ac0b-f325-40e5-aabc-3dfcfc3724d4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\GameObject\Effect\EffekseerEffect\AvoidAttackSlashEffect">
+      <UniqueIdentifier>{d606f49a-254a-4eaf-8d0a-a0202dac7fb4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -780,6 +783,12 @@
     <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_RunEnd\PlayerState_RunEnd.h">
       <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_RunEnd</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Effect\EffekseerEffect\AvoidAttackSlashEffect\AvoidAttackSlashEffect.h">
+      <Filter>Src\Application\GameObject\Effect\EffekseerEffect\AvoidAttackSlashEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\HUD\HUDManager.h">
+      <Filter>Src\Application\GameObject\HUD</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -1162,6 +1171,12 @@
     </ClCompile>
     <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_RunEnd\PlayerState_RunEnd.cpp">
       <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_RunEnd</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Effect\EffekseerEffect\AvoidAttackSlashEffect\AvoidAttackSlashEffect.cpp">
+      <Filter>Src\Application\GameObject\Effect\EffekseerEffect\AvoidAttackSlashEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\HUD\HUDManager.cpp">
+      <Filter>Src\Application\GameObject\HUD</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

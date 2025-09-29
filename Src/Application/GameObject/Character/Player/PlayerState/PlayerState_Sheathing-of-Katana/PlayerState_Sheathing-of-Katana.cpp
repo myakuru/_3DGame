@@ -1,7 +1,8 @@
 ﻿#include "PlayerState_Sheathing-of-Katana.h"
 #include"../PlayerState_Idle/PlayerState_Idle.h"
 #include"../PlayerState_Attack/PlayerState_Attack.h"
-
+#include"../PlayerState_BackWordAvoid/PlayerState_BackWordAvoid.h"
+#include "../PlayerState_FowardAvoid/PlayerState_FowardAvoid.h"
 #include"../../../../Weapon/Katana/Katana.h"
 #include"../../../../Weapon/WeaponKatanaScabbard/WeaponKatanaScabbard.h"
 
@@ -27,6 +28,13 @@ void PlayerState_SheathKatana::StateUpdate()
 		return;
 	}
 
+	if (KeyboardManager::GetInstance().IsKeyJustPressed(VK_RBUTTON))
+	{
+		auto attackState = std::make_shared<PlayerState_ForwardAvoid>();
+		m_player->ChangeState(attackState);
+		return;
+	}
+
 	if (m_player->GetAnimator()->IsAnimationEnd())
 	{
 		auto idleState = std::make_shared<PlayerState_Idle>();
@@ -40,12 +48,9 @@ void PlayerState_SheathKatana::StateUpdate()
 	
 	float time = m_player->GetAnimator()->GetTime();
 
-	//KdDebugGUI::Instance().AddLog(std::to_string(time).data());
-	//KdDebugGUI::Instance().AddLog("\n");
-
 	katana->SetShowTrail(false);
 
-	if (time >= 20.f)
+	if (time >= 20.0f)
 	{
 		katana->SetNowAttackState(true);
 		UpdateKatanaPos();

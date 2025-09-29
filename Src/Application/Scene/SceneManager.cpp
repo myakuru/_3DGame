@@ -54,6 +54,7 @@
 #include"../GameObject/Effect/EffekseerEffect/SwordFlash/SwordFlash.h"
 #include"../GameObject/Effect/EffekseerEffect/Rotation/Rotation.h"
 #include"../GameObject/Effect/EffekseerEffect/SlashEffect/SlashEffect.h"
+#include "../GameObject/Effect/EffekseerEffect/AvoidAttackSlashEffect/AvoidAttackSlashEffect.h"
 
 void SceneManager::Init()
 {
@@ -105,6 +106,7 @@ void SceneManager::Register() const
 	RegisterObject::GetInstance().Register<SwordFlash>();
 	RegisterObject::GetInstance().Register<Rotation>();
 	RegisterObject::GetInstance().Register<SlashAttack2Effect>();
+	RegisterObject::GetInstance().Register<AvoidAttackSlashEffect>();
 }
 
 void SceneManager::PreUpdate()

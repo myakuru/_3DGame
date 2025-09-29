@@ -1,19 +1,20 @@
 ﻿#include "PlayerState_AvoidAttack.h"
 #include"../../../../../main.h"
-#include"../PlayerState_Run/PlayerState_Run.h"
+#include"../PlayerState_Sheathing-of-Katana/PlayerState_Sheathing-of-Katana.h"
 
 void PlayerState_AvoidAttack::StateStart()
 {
 	auto anime = m_player->GetAnimeModel()->GetAnimation("AvoidAttack");
 	m_player->GetAnimator()->SetAnimation(anime, 0.25f, false);
 	PlayerStateBase::StateStart();
+	m_time = 0.0f;
 }
 
 void PlayerState_AvoidAttack::StateUpdate()
 {
 	if (m_player->GetAnimator()->IsAnimationEnd())
 	{
-		auto runState = std::make_shared<PlayerState_Run>();
+		auto runState = std::make_shared<PlayerState_SheathKatana>();
 		m_player->ChangeState(runState);
 		return;
 	}
@@ -25,13 +26,15 @@ void PlayerState_AvoidAttack::StateUpdate()
 		moveDir.Normalize();
 		m_player->UpdateQuaternionDirect(moveDir);
 	}
-	m_player->SetIsMoving(m_avoidDirection);
 
 	float deltaTime = Application::Instance().GetDeltaTime();
+
+	m_time += deltaTime;
+
 	if (m_time < 0.3f)
 	{
-		float dashSpeed = 1.0f;
-		m_player->SetIsMoving(m_avoidDirection * dashSpeed);
+		float dashSpeed = 2.0f;
+		m_player->SetIsMoving(m_attackDirection * dashSpeed);
 		m_time += deltaTime;
 	}
 	else
