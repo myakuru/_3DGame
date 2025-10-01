@@ -3,7 +3,9 @@
 #include"../PlayerState_Run/PlayerState_Run.h"
 #include"../../../../Weapon/Katana/Katana.h"
 #include"../PlayerState_Sheathing-of-Katana/PlayerState_Sheathing-of-Katana.h"
-
+#include"../../../../../Scene/SceneManager.h"
+#include"../../../../Effect/EffekseerEffect/ESkillEffect/ESkillEffect.h"
+	
 void PlayerState_Skill::StateStart()
 {
 	auto anime = m_player->GetAnimeModel()->GetAnimation("Eskill");
@@ -12,12 +14,26 @@ void PlayerState_Skill::StateStart()
 
 	PlayerStateBase::StateStart();
 
+	SceneManager::Instance().GetObjectWeakPtr(m_effect);
+
+	// 敵との当たり判定を無効化
+	m_player->SetAtkPlayer(true);
+
 	m_attackParam.m_dashTimer = 0.0f;
 }
 
 void PlayerState_Skill::StateUpdate()
 {
 	m_player->SetAnimeSpeed(100.0f);
+
+	// 攻撃中の移動方向で回転を更新
+	if (m_player->GetMovement() != Math::Vector3::Zero)
+	{
+		auto dir = m_player->GetMovement();
+		dir.y = 0.0f;
+		dir.Normalize();
+		m_player->UpdateQuaternionDirect(dir);
+	}
 
 	if (m_player->GetAnimator()->IsAnimationEnd())
 	{
@@ -29,9 +45,9 @@ void PlayerState_Skill::StateUpdate()
 	UpdateKatanaPos();
 
 	float deltaTime = Application::Instance().GetDeltaTime();
-	if (m_attackParam.m_dashTimer < 0.2f)
+	if (m_attackParam.m_dashTimer < 0.1f)
 	{
-		float dashSpeed = 1.0f;
+		float dashSpeed = 5.0f;
 		m_player->SetIsMoving(m_attackDirection * dashSpeed);
 		m_attackParam.m_dashTimer += deltaTime;
 	}
@@ -39,6 +55,10 @@ void PlayerState_Skill::StateUpdate()
 	{
 		// 移動を止める
 		m_player->SetIsMoving(Math::Vector3::Zero);
+		if (auto effect = m_effect.lock(); effect)
+		{
+			effect->SetPlayEffect(true);
+		}
 	}
 
 }
@@ -46,4 +66,12 @@ void PlayerState_Skill::StateUpdate()
 void PlayerState_Skill::StateEnd()
 {
 	PlayerStateBase::StateEnd();
+
+	if (auto effect = m_effect.lock(); effect)
+	{
+		effect->SetPlayEffect(false);
+	}
+
+	// 敵との当たり判定をもとに戻す
+	m_player->SetAtkPlayer(false);
 }

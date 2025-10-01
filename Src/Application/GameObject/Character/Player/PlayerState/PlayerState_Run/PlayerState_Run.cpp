@@ -16,6 +16,14 @@ void PlayerState_Run::StateStart()
 
 void PlayerState_Run::StateUpdate()
 {
+
+	if (KeyboardManager::GetInstance().IsKeyJustPressed(VK_RBUTTON))
+	{
+		auto state = std::make_shared<PlayerState_BackWordAvoid>();
+		m_player->ChangeState(state);
+		return;
+	}
+
 	UpdateUnsheathed();
 
 	m_player->UpdateMoveDirectionFromInput();
@@ -26,13 +34,6 @@ void PlayerState_Run::StateUpdate()
 		auto state = std::make_shared<PlayerState_RunEnd>();
 		m_player->ChangeState(state);
 		return;
-	}
-
-	if (KeyboardManager::GetInstance().IsKeyJustPressed(VK_RBUTTON))
-	{
-		auto state = std::make_shared<PlayerState_BackWordAvoid>();
-		m_player->ChangeState(state);
-		return; 
 	}
 
 	PlayerStateBase::StateUpdate();

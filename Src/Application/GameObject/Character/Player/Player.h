@@ -45,6 +45,8 @@ public:
 	const std::weak_ptr<WeaponKatanaScabbard>& GetScabbard() const { return m_scabbard; }
 	const std::weak_ptr<Enemy>& GetEnemy() const { return m_enemy; }
 
+	void SetAtkPlayer(bool flg) { m_isAtkPlayer = flg; }
+
 	PlayerConfig& GetPlayerConfig() { return m_playerConfig; }
 
 	// ダメージを受けた時の処理
@@ -71,28 +73,21 @@ public:
 
 private:
 
-	Math::Vector3 m_moveDirection = Math::Vector3::Zero; // 移動方向
-	
-	Math::Vector3 m_lastMoveDirection = Math::Vector3::Zero;
-
-	std::weak_ptr<Katana>	m_katana;	// カタナの参照
-	std::weak_ptr<WeaponKatanaScabbard>	m_scabbard;	// カタナの参照
-	std::weak_ptr<Enemy>	m_enemy;	// 敵の参照
-
-	PlayerStatus m_status;
-
-	bool m_nowAvoid = false;				// 回避中かどうか
-
-	float m_attackBossEnemyRadius = 2.0f;
-	float m_avoidStartTime = 0.0f; // 回避開始タイム
-
-	int m_chargeAttackCount = 0;      // 何回ダメージを与えたか
-	float m_chargeAttackTimer = 0.0f; // 経過時間
-	bool m_isChargeAttackActive = false; // 連続攻撃中か
-
-	Math::Vector2 m_cameraShakePower = Math::Vector2::Zero; // カメラシェイクの強さ
-	float m_cameraShakeTime = 0.0f; // カメラシェイクの時間
-
-	PlayerConfig m_playerConfig;
+	Math::Vector3 m_moveDirection = Math::Vector3::Zero;		// 移動方向
+	Math::Vector3 m_lastMoveDirection = Math::Vector3::Zero;	// 最後に移動した方向
+	std::weak_ptr<Katana>	m_katana;							// カタナの参照
+	std::weak_ptr<WeaponKatanaScabbard>	m_scabbard;				// カタナの参照
+	std::weak_ptr<Enemy>	m_enemy;							// 敵の参照
+	PlayerStatus m_status;										// プレイヤーのステータス
+	bool m_nowAvoid = false;									// 回避中かどうか
+	float m_attackBossEnemyRadius = 2.0f;						// ボスに攻撃する時の当たり判定の半径
+	float m_avoidStartTime = 0.0f;								// 回避開始タイム
+	int m_chargeAttackCount = 0;								// 何回ダメージを与えたか
+	float m_chargeAttackTimer = 0.0f;							// 経過時間
+	bool m_isChargeAttackActive = false;						// 連続攻撃中か
+	Math::Vector2 m_cameraShakePower = Math::Vector2::Zero;		// カメラシェイクの強さ
+	float m_cameraShakeTime = 0.0f;								// カメラシェイクの時間
+	PlayerConfig m_playerConfig;								// プレイヤーの設定
+	bool m_isAtkPlayer = false;									// プレイヤーと敵が接触したか どうか
 
 };

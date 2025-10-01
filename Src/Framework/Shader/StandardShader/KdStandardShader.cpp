@@ -654,14 +654,14 @@ bool KdStandardShader::Init()
 	m_cb4_Effect.Create();
 
 	std::shared_ptr<KdTexture> ds = std::make_shared<KdTexture>();
-	ds->CreateDepthStencil(static_cast<int>(std::pow(2.0f, 12.0f)), static_cast<int>(std::pow(2.0f, 12.0f)));
+	ds->CreateDepthStencil(static_cast<int>(std::pow(2.0f, 12.0f)), static_cast<int>(std::pow(2.0f, 10.0f)));
 	D3D11_VIEWPORT vp = {
 		0.0f, 0.0f,
 		static_cast<float>(ds->GetWidth()),
 		static_cast<float>(ds->GetHeight()),
 		0.0f, 1.0f };
 
-	m_depthMapFromLightRTPack.CreateRenderTarget(static_cast<int>(std::pow(2.0f, 12.0f)), static_cast<int>(std::pow(2.0f, 12.0f)), true, DXGI_FORMAT_R32_FLOAT);
+	m_depthMapFromLightRTPack.CreateRenderTarget(static_cast<int>(std::pow(2.0f, 10.0f)), static_cast<int>(std::pow(2.0f, 12.0f)), true, DXGI_FORMAT_R32_FLOAT);
 	m_depthMapFromLightRTPack.ClearTexture(kRedColor);
 
 	SetDissolveTexture(*KdAssets::Instance().m_textures.GetData("Asset/Textures/System/WhiteNoise.png"));

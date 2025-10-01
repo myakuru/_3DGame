@@ -2,6 +2,7 @@
 #include"../../../../../main.h"
 
 #include"../PlayerState_ChargeAttack2/PlayerState_ChaegeAttack2.h"
+#include"../PlayerState_FullCharge/PlayerState_FullCharge.h"
 #include"../../../../Weapon/Katana/Katana.h"
 #include"../../../../../Scene/SceneManager.h"
 #include"../../../../Camera/PlayerCamera/PlayerCamera.h"
@@ -47,10 +48,12 @@ void PlayerState_ChargeAttack::StateUpdate()
 	// アニメーション速度を変更
 	m_player->SetAnimeSpeed(80.0f);
 
-	// アニメーションが終了したら納刀する状態へ
 	if (m_player->GetAnimator()->IsAnimationEnd())
 	{
-		auto state = std::make_shared<PlayerState_ChaegeAttack2>();
+		//auto state = std::make_shared<PlayerState_ChaegeAttack2>();
+		//m_player->ChangeState(state);
+
+		auto state = std::make_shared<PlayerState_FullCharge>();
 		m_player->ChangeState(state);
 		return;
 	}
@@ -62,7 +65,7 @@ void PlayerState_ChargeAttack::StateUpdate()
 	//KdDebugGUI::Instance().AddLog(std::to_string(m_time).data());
 	//KdDebugGUI::Instance().AddLog("\n");
 
-	if (m_time >= 0.1f && m_time <= 0.2f)
+	if (m_time >= 0.0f && m_time <= 0.2f)
 	{
 		KdShaderManager::Instance().m_postProcessShader.SetEnableStrongBlur(true);
 	}

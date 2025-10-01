@@ -51,7 +51,7 @@ void PlayerCamera::PostUpdate()
 	m_targetRotation = GetRotationQuaternion();
 
 	// Slerpで補間
-	m_rotation = Math::Quaternion::Slerp(m_prevRotation, m_targetRotation, m_smooth * deltaTime);
+	m_rotation = Math::Quaternion::Slerp(m_prevRotation, m_targetRotation, m_rotationSmooth * deltaTime);
 
 	// クォータニオンを行列に変換
 	m_mRotation = Math::Matrix::CreateFromQuaternion(m_rotation);
@@ -76,7 +76,7 @@ void PlayerCamera::PostUpdate()
 	}
 	
 	// ターゲットの位置をラープさせる
-	m_targetLookAt = Math::Vector3::Lerp(m_targetLookAt, m_followRate, m_smooth * deltaTime);
+	m_targetLookAt = Math::Vector3::Lerp(m_targetLookAt, m_followRate, m_dhistanceSmooth * deltaTime);
 
 	// カメラの位置をターゲットの位置に設定
 	m_mWorld = Math::Matrix::CreateTranslation(m_targetLookAt);
@@ -84,7 +84,7 @@ void PlayerCamera::PostUpdate()
 
 	Math::Vector3 targetPos = m_spTarget->GetPos() + shakeOffset;
 
-	m_cameraPos = Math::Vector3::Lerp(m_cameraPos, targetPos, m_smooth * deltaTime);
+	m_cameraPos = Math::Vector3::Lerp(m_cameraPos, targetPos, m_dhistanceSmooth * deltaTime);
 
 	m_mWorld.Translation(m_mWorld.Translation() + m_cameraPos);
 
@@ -233,7 +233,8 @@ void PlayerCamera::ImGuiInspector()
 
 	ImGui::Text(U8("プレイヤーとカメラの距離"));
 	ImGui::DragFloat3("offsetPos", &m_followRate.x, 0.1f);
-	ImGui::DragFloat("Camera Smooth", &m_smooth, 0.01f);
+	ImGui::DragFloat("Camera Smooth", &m_dhistanceSmooth, 0.01f);
+	ImGui::DragFloat("Rotation Smooth", &m_rotationSmooth, 0.01f);
 	ImGui::DragFloat("FOV", &m_fov, 1.0f, 1.0f, 179.0f);
 
 
@@ -244,7 +245,8 @@ void PlayerCamera::JsonSave(nlohmann::json& _json) const
 {
 	CameraBase::JsonSave(_json);
 	_json["targetLookAt"] = JSON_MANAGER.VectorToJson(m_targetLookAt);
-	_json["smooth"] = m_smooth;
+	_json["smooth"] = m_dhistanceSmooth;
+	_json["rotationSmooth"] = m_rotationSmooth;
 	_json["fov"] = m_fov;
 }
 
@@ -252,7 +254,8 @@ void PlayerCamera::JsonInput(const nlohmann::json& _json)
 {
 	CameraBase::JsonInput(_json);
 	if(_json.contains("targetLookAt")) m_targetLookAt = JSON_MANAGER.JsonToVector(_json["targetLookAt"]);
-	if (_json.contains("smooth")) m_smooth = _json["smooth"].get<float>();
+	if (_json.contains("smooth")) m_dhistanceSmooth = _json["smooth"].get<float>();
+	if (_json.contains("rotationSmooth")) m_rotationSmooth = _json["rotationSmooth"].get<float>();
 	if (_json.contains("fov")) m_fov = _json["fov"].get<float>();
 }
 

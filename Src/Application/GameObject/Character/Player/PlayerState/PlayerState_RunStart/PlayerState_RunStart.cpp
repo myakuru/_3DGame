@@ -1,6 +1,8 @@
 ﻿#include "PlayerState_RunStart.h"
 #include"../PlayerState_Run/PlayerState_Run.h"
 #include"../PlayerState_Idle/PlayerState_Idle.h"
+#include "../PlayerState_BackWordAvoid/PlayerState_BackWordAvoid.h"
+#include"../PlayerState_Attack/PlayerState_Attack.h"
 
 void PlayerState_RunStart::StateStart()
 {
@@ -16,6 +18,20 @@ void PlayerState_RunStart::StateUpdate()
 {
 	// 移動方向を取得
 	Math::Vector3 moveDir = m_player->GetMoveDirection();
+
+	if (KeyboardManager::GetInstance().IsKeyJustPressed(VK_LBUTTON))
+	{
+		auto attackState = std::make_shared<PlayerState_Attack>();
+		m_player->ChangeState(attackState);
+		return;
+	}
+
+	if (KeyboardManager::GetInstance().IsKeyJustPressed(VK_RBUTTON))
+	{
+		auto attackState = std::make_shared<PlayerState_BackWordAvoid>();
+		m_player->ChangeState(attackState);
+		return;
+	}
 
 	// キー入力から移動方向を更新
 	m_player->UpdateMoveDirectionFromInput();

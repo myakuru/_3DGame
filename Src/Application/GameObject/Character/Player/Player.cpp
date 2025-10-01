@@ -34,6 +34,7 @@ void Player::Init()
 	m_pCollider->RegisterCollisionShape("PlayerSphere", sphere, KdCollider::TypeGround);
 
 	m_onceEffect = false;
+	m_isAtkPlayer = false;
 }
 
 void Player::PreUpdate()
@@ -64,10 +65,56 @@ void Player::PostUpdate()
 	// ライトの影の中心位置をプレイヤーに合わせる
 	auto& amb = KdShaderManager::Instance().WorkAmbientController();
 	amb.SetShadowCenter(m_position);
-}
 
-void Player::SkirtUpdate()
-{
+	if (m_isAtkPlayer) return;
+
+	KdCollider::SphereInfo enemyHit;
+	// 球の中心座標を設定
+	enemyHit.m_sphere.Center = m_position + Math::Vector3(0.0f, 0.5f, 0.0f);
+	// 球の半径を設定
+	enemyHit.m_sphere.Radius = 0.2f;
+	// アタリ判定をしたいタイプを設定
+	enemyHit.m_type = KdCollider::TypeEnemyHit; // 敵のアタリ判定
+	m_pDebugWire->AddDebugSphere(enemyHit.m_sphere.Center, enemyHit.m_sphere.Radius);
+
+	// 球に当たったオブジェクト情報を格納するリスト
+	std::list<KdCollider::CollisionResult> retSpherelist;
+
+	// 球とアタリ判定を行う
+	for (auto& obj : SceneManager::Instance().GetObjList())
+	{
+		obj->Intersects(enemyHit, &retSpherelist);
+	}
+
+	//  球にあたったリストから一番近いオブジェクトを探す
+	// オーバーした長さが1番長いものを探す。
+	float maxOverLap = 0.0f;
+	float hit = false;
+
+	// 当たった方向を格納する変数
+	Math::Vector3 hitDir;
+
+	for (auto& ret : retSpherelist)
+	{
+		// 球からはみ出た長さが１番長いものを探す。
+		if (maxOverLap < ret.m_overlapDistance)
+		{
+			maxOverLap = ret.m_overlapDistance;
+			hitDir = ret.m_hitDir;
+			hit = true;
+		}
+	}
+
+	if (hit)
+	{
+		// Y方向の押し出しを無効化（XZ平面のみ）
+		hitDir.y = 0.0f;
+		hitDir.Normalize();
+
+		//当たってたらその方向から押し出す
+		m_position += hitDir * maxOverLap;
+	}
+
 }
 
 void Player::Update()

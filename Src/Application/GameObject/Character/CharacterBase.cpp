@@ -155,8 +155,8 @@ void CharaBase::PostUpdate()
 	sphereInfo.m_sphere.Center = m_position + Math::Vector3(0.0f, 0.3f, 0.0f);
 	// 球の半径を設定
 	sphereInfo.m_sphere.Radius = 0.2f;
-	// アタリ判定をしたいタイプを設定
-	sphereInfo.m_type = KdCollider::TypeGround; // 敵のアタリ判定
+	// アタリ判定をしたいタイプを設定  
+	sphereInfo.m_type = KdCollider::TypeGround; // 地面とのアタリ判定
 
 	m_pDebugWire->AddDebugSphere(sphereInfo.m_sphere.Center, sphereInfo.m_sphere.Radius);
 
@@ -190,9 +190,6 @@ void CharaBase::PostUpdate()
 
 	if (hit)
 	{
-		// 正規化して押し出す方向を求める
-		hitDir.Normalize();
-
 		// Y方向の押し出しを無効化（XZ平面のみ）
 		hitDir.y = 0.0f;
 		hitDir.Normalize();

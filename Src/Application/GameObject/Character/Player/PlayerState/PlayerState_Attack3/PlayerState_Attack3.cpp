@@ -22,7 +22,7 @@ void PlayerState_Attack3::StateStart()
 	}
 
 	m_time = 0.0f;
-	m_keyInput = false;
+	m_LButtonkeyInput = false;
 
 	SceneManager::Instance().GetObjectWeakPtr(m_slashEffect);
 
@@ -47,13 +47,13 @@ void PlayerState_Attack3::StateUpdate()
 
 	if (KeyboardManager::GetInstance().IsKeyJustPressed(VK_LBUTTON))
 	{
-		m_keyInput = true;
+		m_LButtonkeyInput = true;
 	}
 
-	// アニメ速度制御：予約があれば加速
-	if (m_keyInput)
+	// アニメ速度制御
+	if (m_LButtonkeyInput)
 	{
-		m_player->SetAnimeSpeed(130.0f);
+		m_player->SetAnimeSpeed(100.0f);
 	}
 	else
 	{
@@ -63,7 +63,7 @@ void PlayerState_Attack3::StateUpdate()
 	// アニメ終了時の遷移
 	if (m_player->GetAnimator()->IsAnimationEnd())
 	{
-		if (m_keyInput)
+		if (m_LButtonkeyInput)
 		{
 			auto next = std::make_shared<PlayerState_Attack4>();
 			m_player->ChangeState(next);

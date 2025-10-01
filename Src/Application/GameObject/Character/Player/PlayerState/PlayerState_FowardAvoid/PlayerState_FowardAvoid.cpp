@@ -17,9 +17,8 @@ void PlayerState_ForwardAvoid::StateStart()
 
 	if (auto camera = m_player->GetPlayerCamera().lock(); camera)
 	{
-		camera->SetTargetLookAt({ 0.f,1.0f,-3.0f });
+		camera->SetTargetLookAt({ 0.f,1.0f,-5.5f });
 	}
-
 }
 
 void PlayerState_ForwardAvoid::StateUpdate()
@@ -48,7 +47,7 @@ void PlayerState_ForwardAvoid::StateUpdate()
 
 	UpdateUnsheathed();
 
-	float dashSpeed = -0.5f;
+	float dashSpeed = -0.7f;
 
 	m_player->SetIsMoving(forward * dashSpeed);
 }
@@ -59,5 +58,10 @@ void PlayerState_ForwardAvoid::StateEnd()
 
 	m_player->SetAvoidFlg(false);
 	m_player->SetAvoidStartTime(0.0f);
+
+	if (auto camera = m_player->GetPlayerCamera().lock(); camera)
+	{
+		camera->SetTargetLookAt({ 0.f,1.0f,-3.5f });
+	}
 
 }

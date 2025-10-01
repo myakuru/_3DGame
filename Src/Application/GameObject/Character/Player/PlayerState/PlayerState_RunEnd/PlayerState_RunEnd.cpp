@@ -1,5 +1,8 @@
 ﻿#include "PlayerState_RunEnd.h"
 #include"../PlayerState_Idle/PlayerState_Idle.h"
+#include "../PlayerState_BackWordAvoid/PlayerState_BackWordAvoid.h"
+#include"../PlayerState_Attack/PlayerState_Attack.h"
+
 #include"../../../../../main.h"
 
 void PlayerState_RunEnd::StateStart()
@@ -12,6 +15,20 @@ void PlayerState_RunEnd::StateStart()
 void PlayerState_RunEnd::StateUpdate()
 {
 	float deltaTime = Application::Instance().GetDeltaTime();
+
+	if (KeyboardManager::GetInstance().IsKeyJustPressed(VK_LBUTTON))
+	{
+		auto attackState = std::make_shared<PlayerState_Attack>();
+		m_player->ChangeState(attackState);
+		return;
+	}
+
+	if (KeyboardManager::GetInstance().IsKeyJustPressed(VK_RBUTTON))
+	{
+		auto attackState = std::make_shared<PlayerState_BackWordAvoid>();
+		m_player->ChangeState(attackState);
+		return;
+	}
 
 	// 攻撃中の移動方向で回転を更新
 	if (m_player->GetMovement() != Math::Vector3::Zero)

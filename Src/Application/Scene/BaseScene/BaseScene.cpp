@@ -233,15 +233,12 @@ void BaseScene::DrawSprite()
 
 void BaseScene::DrawDebug()
 {
-	WithDebugRenderTarget([&]()
-		{
-			KdShaderManager::Instance().m_StandardShader.BeginUnLit();
-			{
-				for (auto& obj : m_objList) obj->DrawDebug();
-				for (auto& obj : m_MapObjectList) obj->DrawDebug();
-			}
-			KdShaderManager::Instance().m_StandardShader.EndUnLit();
-		});
+	KdShaderManager::Instance().m_StandardShader.BeginUnLit();
+	{
+		for (auto& obj : m_objList) obj->DrawDebug();
+		for (auto& obj : m_MapObjectList) obj->DrawDebug();
+	}
+	KdShaderManager::Instance().m_StandardShader.EndUnLit();
 }
 
 void BaseScene::Event()

@@ -10,6 +10,9 @@
 #include"../../../../Effect/TrailEffect/TrailEffect.h"
 #include"../../../../Effect/EffekseerEffect/SwordFlash/SwordFlash.h"
 
+#include"../PlayerState_BackWordAvoid/PlayerState_BackWordAvoid.h"
+#include"../PlayerState_FowardAvoid/PlayerState_FowardAvoid.h"
+
 void PlayerState_Attack::StateStart()
 {
 	auto anime = m_player->GetAnimeModel()->GetAnimation("Attack");
@@ -29,7 +32,7 @@ void PlayerState_Attack::StateStart()
 		katana->SetNowAttackState(true);
 	}
 
-	m_keyInput = false;          // 次段コンボ予約フラグ初期化
+	m_LButtonkeyInput = false;          // 次段コンボ予約フラグ初期化
 	m_time = 0.0f;               // 当たり判定用
 
 	SceneManager::Instance().GetObjectWeakPtr(m_slashEffect);
@@ -52,16 +55,37 @@ void PlayerState_Attack::StateUpdate()
 		m_player->UpdateAttack();
 	}
 
-	float animTime = m_player->GetAnimator()->GetTime();
+	// 攻撃中の移動方向で回転を更新
+	if (m_player->GetMovement() != Math::Vector3::Zero)
+	{
+		Math::Vector3 moveDir = m_player->GetMovement();
+		moveDir.y = 0.0f;
+		moveDir.Normalize();
+		m_player->UpdateQuaternionDirect(moveDir);
+	}
+
+	if (KeyboardManager::GetInstance().IsKeyPressed('W') && KeyboardManager::GetInstance().IsKeyJustPressed(VK_RBUTTON))
+	{
+		auto sheath = std::make_shared<PlayerState_BackWordAvoid>();
+		m_player->ChangeState(sheath);
+		return;
+	}
+
+	if (KeyboardManager::GetInstance().IsKeyJustPressed(VK_RBUTTON))
+	{
+		auto sheath = std::make_shared<PlayerState_ForwardAvoid>();
+		m_player->ChangeState(sheath);
+		return;
+	}
 
 
 	if (KeyboardManager::GetInstance().IsKeyJustPressed(VK_LBUTTON))
 	{
-		m_keyInput = true;
+		m_LButtonkeyInput = true;
 	}
 
 	// アニメ速度制御
-	if (m_keyInput)
+	if (m_LButtonkeyInput)
 	{
 		m_player->SetAnimeSpeed(150.0f);
 	}
@@ -73,7 +97,7 @@ void PlayerState_Attack::StateUpdate()
 	// アニメ終了時の遷移
 	if (m_player->GetAnimator()->IsAnimationEnd())
 	{
-		if (m_keyInput)
+		if (m_LButtonkeyInput)
 		{
 			auto next = std::make_shared<PlayerState_Attack1>();
 			m_player->ChangeState(next);
@@ -84,15 +108,6 @@ void PlayerState_Attack::StateUpdate()
 			m_player->ChangeState(sheath);
 		}
 		return;
-	}
-
-	// 攻撃中の移動方向で回転を更新
-	if (m_player->GetMovement() != Math::Vector3::Zero)
-	{
-		Math::Vector3 moveDir = m_player->GetMovement();
-		moveDir.y = 0.0f;
-		moveDir.Normalize();
-		m_player->UpdateQuaternionDirect(moveDir);
 	}
 
 	// 先行ダッシュ処理

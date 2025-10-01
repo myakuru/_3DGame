@@ -41,6 +41,12 @@ public:
 		m_degree = rot;
 	}
 
+	// カメラの距離のスムージング係数を設定
+	void SetDistanceSmooth(float smooth) { m_dhistanceSmooth = smooth; }
+
+	// カメラの回転のスムージング係数を設定
+	void SetRotationSmooth(float smooth) { m_rotationSmooth = smooth; }
+
 private:
 
 	void UpdateCameraRayCast();
@@ -59,7 +65,8 @@ private:
 
 	Math::Vector2 m_shakePower = Math::Vector2::Zero; // シェイクの強さ
 
-	float m_smooth = 0.0f;		// カメラ追従のスムージング係数
+	float m_dhistanceSmooth = 0.0f; // カメラ距離のスムージング係数
+	float m_rotationSmooth = 0.0f; // カメラ回転のスムージング係数
 	float m_introTimer = 0.0f;	// Introカメラのタイマー
 	float m_fov = 60.0f;		// 視野角
 };

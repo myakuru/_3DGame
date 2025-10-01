@@ -31,6 +31,6 @@ protected:
 
 	float m_time = 0.0f;
 
-	bool m_keyInput = false;
+	bool m_LButtonkeyInput = false;
 
 };

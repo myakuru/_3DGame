@@ -17,7 +17,7 @@ void Enemy::Init()
 
 	m_pCollider->RegisterCollisionShape("EnemySphere", sphere, KdCollider::TypeDamage);
 
-	m_pCollider->RegisterCollisionShape("PlayerSphere", sphere, KdCollider::TypeGround);
+	//m_pCollider->RegisterCollisionShape("PlayerSphere", sphere, KdCollider::TypeEnemyHit);
 
 	StateInit();
 }

@@ -22,26 +22,25 @@ void PlayerState_Attack4::StateStart()
 		katana->SetNowAttackState(true);
 	}
 
-	m_time = 0.0f;
-	m_keyInput = false;
-
 	SceneManager::Instance().GetObjectWeakPtr(m_groundFreezes);
 	SceneManager::Instance().GetObjectWeakPtr(m_rotation);
+
+	m_time = 0.0f;
+	m_LButtonkeyInput = false;
 }
 
 void PlayerState_Attack4::StateUpdate()
 {
 	PlayerStateBase::StateUpdate();
 
-
 	float deltaTime = Application::Instance().GetDeltaTime();
 
 	if (KeyboardManager::GetInstance().IsKeyJustPressed(VK_LBUTTON))
 	{
-		m_keyInput = true;
+		m_LButtonkeyInput = true;
 	}
 
-	if (m_keyInput)
+	if (m_LButtonkeyInput)
 	{
 		m_player->SetAnimeSpeed(130.0f);
 	}
@@ -53,7 +52,7 @@ void PlayerState_Attack4::StateUpdate()
 	// アニメ終了時の遷移
 	if (m_player->GetAnimator()->IsAnimationEnd())
 	{
-		if (m_keyInput)
+		if (m_LButtonkeyInput)
 		{
 			auto next = std::make_shared<PlayerState_Attack1>();
 			m_player->ChangeState(next);
@@ -107,5 +106,15 @@ void PlayerState_Attack4::StateEnd()
 	if (auto camera = m_player->GetPlayerCamera().lock(); camera)
 	{
 		camera->SetTargetLookAt({ 0.f,1.0f,-3.5f });
+	}
+
+	if (auto effect = m_groundFreezes.lock(); effect)
+	{
+		effect->SetPlayEffect(false);
+	}
+
+	if (auto effect = m_rotation.lock(); effect)
+	{
+		effect->SetPlayEffect(false);
 	}
 }

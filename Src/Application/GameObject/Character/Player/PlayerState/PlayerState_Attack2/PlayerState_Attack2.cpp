@@ -5,6 +5,8 @@
 #include"../../../../Weapon/Katana/Katana.h"
 
 #include"../PlayerState_Attack3/PlayerState_Attack3.h"
+#include"../PlayerState_BackWordAvoid/PlayerState_BackWordAvoid.h"
+
 #include"../../../../../Scene/SceneManager.h"
 #include"../../../../Effect/EffekseerEffect/Rotation/Rotation.h"
 
@@ -24,7 +26,7 @@ void PlayerState_Attack2::StateStart()
 		katana->SetNowAttackState(true);
 	}
 
-	m_keyInput = false;				// 次段コンボ予約フラグ初期化
+	m_LButtonkeyInput = false;				// 次段コンボ予約フラグ初期化
 
 	SceneManager::Instance().GetObjectWeakPtr(m_slashEffect);
 }
@@ -39,15 +41,25 @@ void PlayerState_Attack2::StateUpdate()
 		m_time = 0.0f;
 	}
 
-	if (KeyboardManager::GetInstance().IsKeyJustPressed(VK_LBUTTON))
+	Math::Vector3 moveDir = m_player->GetMovement();
+
+	// 攻撃中の移動方向で回転を更新
+	if (m_player->GetMovement() != Math::Vector3::Zero)
 	{
-		m_keyInput = true;
+		moveDir.y = 0.0f;
+		moveDir.Normalize();
+		m_player->UpdateQuaternionDirect(moveDir);
 	}
 
-	// アニメ速度制御：予約があれば加速
-	if (m_keyInput)
+	if (KeyboardManager::GetInstance().IsKeyJustPressed(VK_LBUTTON))
 	{
-		m_player->SetAnimeSpeed(170.0f);
+		m_LButtonkeyInput = true;
+	}
+
+	// アニメ速度制御
+	if (m_LButtonkeyInput)
+	{
+		m_player->SetAnimeSpeed(150.0f);
 	}
 	else
 	{
@@ -57,7 +69,7 @@ void PlayerState_Attack2::StateUpdate()
 	// アニメ終了時の遷移
 	if (m_player->GetAnimator()->IsAnimationEnd())
 	{
-		if (m_keyInput)
+		if (m_LButtonkeyInput)
 		{
 			auto next = std::make_shared<PlayerState_Attack3>();
 			m_player->ChangeState(next);
@@ -71,15 +83,6 @@ void PlayerState_Attack2::StateUpdate()
 	}
 
 	UpdateKatanaPos();
-
-	// 攻撃中の移動方向で回転を更新
-	if (m_player->GetMovement() != Math::Vector3::Zero)
-	{
-		Math::Vector3 moveDir = m_player->GetMovement();
-		moveDir.y = 0.0f;
-		moveDir.Normalize();
-		m_player->UpdateQuaternionDirect(moveDir);
-	}
 
 	float deltaTime = Application::Instance().GetDeltaTime();
 	if (m_attackParam.m_dashTimer < 0.2f)

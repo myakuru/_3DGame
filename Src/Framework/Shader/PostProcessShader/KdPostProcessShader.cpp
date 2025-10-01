@@ -91,8 +91,8 @@ bool KdPostProcessShader::Init()
 	m_cb0_BrightInfo.Create();
 
 	// 1440pでレンダーターゲット生成
-	const int renderWidth = 2560;
-	const int renderHeight = 1440;
+	const int renderWidth = 1920;
+	const int renderHeight = 1080;
 
 	m_postEffectRTPack.CreateRenderTarget(renderWidth, renderHeight, true);
 	m_blurRTPack.CreateRenderTarget(renderWidth, renderHeight);

@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include"../PlayerState.h"
+class ESkillEffect;
 class PlayerState_Skill :public PlayerStateBase
 {
 public:
@@ -14,6 +15,8 @@ private:
 
 
 	PlayerState_Attack2Parameter m_attackParam;
+
+	std::weak_ptr<ESkillEffect> m_effect;
 
 
 	bool m_flag = false; // 攻撃フラグ

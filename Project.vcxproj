@@ -297,8 +297,10 @@
     <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_AvoidAttack\PlayerState_AvoidAttack.h" />
     <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_BackWordAvoid\PlayerState_BackWordAvoid.h" />
     <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_ChargeAttack2\PlayerState_ChaegeAttack2.h" />
+    <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_ChargeAttackMax\PlayerState_ChargeAttackMax.h" />
     <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_ChargeAttack\PlayerState_ChargeAttack.h" />
     <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_FowardAvoid\PlayerState_FowardAvoid.h" />
+    <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_FullCharge\PlayerState_FullCharge.h" />
     <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_Hit\PlayerState_Hit.h" />
     <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_Idle\PlayerState_Idle.h" />
     <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_RunEnd\PlayerState_RunEnd.h" />
@@ -316,6 +318,7 @@
     <ClInclude Include="Src\Application\GameObject\Effect\EffekseerEffect\CloudEffect\CloudEffect.h" />
     <ClInclude Include="Src\Application\GameObject\Effect\EffekseerEffect\EffectPlay\EffectPlay.h" />
     <ClInclude Include="Src\Application\GameObject\Effect\EffekseerEffect\EffekseerEffectBase.h" />
+    <ClInclude Include="Src\Application\GameObject\Effect\EffekseerEffect\ESkillEffect\ESkillEffect.h" />
     <ClInclude Include="Src\Application\GameObject\Effect\EffekseerEffect\GroundFreezes\GroundFreezes.h" />
     <ClInclude Include="Src\Application\GameObject\Effect\EffekseerEffect\Rotation\Rotation.h" />
     <ClInclude Include="Src\Application\GameObject\Effect\EffekseerEffect\ShineEffectBlue\ShineEffectBlue.h" />
@@ -438,8 +441,10 @@
     <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_AvoidAttack\PlayerState_AvoidAttack.cpp" />
     <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_BackWordAvoid\PlayerState_BackWordAvoid.cpp" />
     <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_ChargeAttack2\PlayerState_ChaegeAttack2.cpp" />
+    <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_ChargeAttackMax\PlayerState_ChargeAttackMax.cpp" />
     <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_ChargeAttack\PlayerState_ChargeAttack.cpp" />
     <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_FowardAvoid\PlayerState_FowardAvoid.cpp" />
+    <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_FullCharge\PlayerState_FullCharge.cpp" />
     <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_Hit\PlayerState_Hit.cpp" />
     <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_Idle\PlayerState_Idle.cpp" />
     <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_RunEnd\PlayerState_RunEnd.cpp" />
@@ -457,6 +462,7 @@
     <ClCompile Include="Src\Application\GameObject\Effect\EffekseerEffect\CloudEffect\CloudEffect.cpp" />
     <ClCompile Include="Src\Application\GameObject\Effect\EffekseerEffect\EffectPlay\EffectPlay.cpp" />
     <ClCompile Include="Src\Application\GameObject\Effect\EffekseerEffect\EffekseerEffectBase.cpp" />
+    <ClCompile Include="Src\Application\GameObject\Effect\EffekseerEffect\ESkillEffect\ESkillEffect.cpp" />
     <ClCompile Include="Src\Application\GameObject\Effect\EffekseerEffect\GroundFreezes\GroundFreezes.cpp" />
     <ClCompile Include="Src\Application\GameObject\Effect\EffekseerEffect\Rotation\Rotation.cpp" />
     <ClCompile Include="Src\Application\GameObject\Effect\EffekseerEffect\ShineEffectBlue\ShineEffectBlue.cpp" />

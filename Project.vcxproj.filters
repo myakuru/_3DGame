@@ -343,6 +343,15 @@
     <Filter Include="Src\Application\GameObject\Effect\EffekseerEffect\AvoidAttackSlashEffect">
       <UniqueIdentifier>{d606f49a-254a-4eaf-8d0a-a0202dac7fb4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\GameObject\Effect\EffekseerEffect\ESkillEffect">
+      <UniqueIdentifier>{d9593dfb-37b1-40b4-aae2-5d5049d97cd2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_ChargeAttackMax">
+      <UniqueIdentifier>{6c68bc13-bf81-42d9-8c9a-32d5d0e81962}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_FullCharge">
+      <UniqueIdentifier>{dd76955b-d077-4b4b-ada7-c8408942223d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -789,6 +798,15 @@
     <ClInclude Include="Src\Application\GameObject\HUD\HUDManager.h">
       <Filter>Src\Application\GameObject\HUD</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Effect\EffekseerEffect\ESkillEffect\ESkillEffect.h">
+      <Filter>Src\Application\GameObject\Effect\EffekseerEffect\ESkillEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_ChargeAttackMax\PlayerState_ChargeAttackMax.h">
+      <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_ChargeAttackMax</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_FullCharge\PlayerState_FullCharge.h">
+      <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_FullCharge</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -1177,6 +1195,15 @@
     </ClCompile>
     <ClCompile Include="Src\Application\GameObject\HUD\HUDManager.cpp">
       <Filter>Src\Application\GameObject\HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Effect\EffekseerEffect\ESkillEffect\ESkillEffect.cpp">
+      <Filter>Src\Application\GameObject\Effect\EffekseerEffect\ESkillEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_ChargeAttackMax\PlayerState_ChargeAttackMax.cpp">
+      <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_ChargeAttackMax</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_FullCharge\PlayerState_FullCharge.cpp">
+      <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_FullCharge</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
