@@ -41,6 +41,9 @@ public:
 	const ID3D11Device* GetDev() { return m_pDevice; }
 	ID3D11Device* WorkDev() { return m_pDevice; }
 
+	// スワップチェインと依存リソースのリサイズ
+	bool Resize(int w, int h);
+
 	// Direct3Dデバイスコンテキスト取得
 	const ID3D11DeviceContext* GetDevContext() { return m_pDeviceContext; }
 	ID3D11DeviceContext* WorkDevContext() { return m_pDeviceContext; }

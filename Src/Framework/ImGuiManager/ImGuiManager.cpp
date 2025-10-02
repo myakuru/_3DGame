@@ -9,10 +9,10 @@
 
 void ImGuiManager::Init()
 {
-	KdCSVData windowData("Asset/Data/WindowSettings.csv");
-	const std::vector<std::string>& sizeData = windowData.GetLine(0);
+	Math::Viewport vp;
+	KdDirect3D::Instance().CopyViewportInfo(vp);
 
-	m_gameSceneSize = ImVec2(atoi(sizeData[0].data()) / 2, atoi(sizeData[1].data()) / 2); // ゲームシーンのサイズを設定
+	m_gameSceneSize = ImVec2(vp.width / 2, vp.height / 2); // ゲームシーンのサイズを設定
 	m_gameSceneInMouse = false; // マウスがゲームシーン内にあるかどうか
 }
 
@@ -68,11 +68,41 @@ void ImGuiManager::MainMenuBar()
 
 		InGuiSceneSelect();
 
-		ImGui::SameLine(1280/2);
-		if (U8("実行"))
+		// Windowのサイズを変更
+		if (ImGui::Begin("WindowSize"))
 		{
-			ImGuiSelecetCamera();
+			ImGui::Text(U8("ゲーム画面のウィンドウサイズを変更"));
+
+			ImGui::Separator();
+			ImGui::Text(U8("プリセット"));
+			if (ImGui::Button("1280 x 720")) { m_windowSize = Math::Vector2(1280.0f, 720.0f); }
+			ImGui::SameLine();
+			if (ImGui::Button("1920 x 1080")) { m_windowSize = Math::Vector2(1920.0f, 1080.0f); }
+			ImGui::SameLine();
+			if (ImGui::Button("2560 x 1440")) { m_windowSize = Math::Vector2(2560.0f, 1440.0f); }
+
+			ImGui::Separator();
+			// 手動入力
+			float w = m_windowSize.x;
+			float h = m_windowSize.y;
+			if (ImGui::InputFloat("Width", &w, 1.0f, 10.0f, "%.0f")) { if (w < 1.0f) w = 1.0f; }
+			if (ImGui::InputFloat("Height", &h, 1.0f, 10.0f, "%.0f")) { if (h < 1.0f) h = 1.0f; }
+			m_windowSize.x = w;
+			m_windowSize.y = h;
+
+			ImGui::Text("Current: %.0f x %.0f", m_windowSize.x, m_windowSize.y);
+
+			ImGui::Separator();
+			if (ImGui::Button(U8("適用")))
+			{
+				Application::Instance().ResizeWindow((int)m_windowSize.x, (int)m_windowSize.y);
+			}
 		}
+		ImGui::End();
+
+		ImGui::SameLine(1280 / 2);
+
+		ImGuiSelecetCamera();
 
 		// シーンセレクタをメニューバーに配置
 
@@ -270,8 +300,8 @@ void ImGuiManager::ShowGameScene()
 			return;
 		}
 
-		KdCSVData windowData("Asset/Data/WindowSettings.csv");
-		const std::vector<std::string>& sizeData = windowData.GetLine(0);
+		Math::Viewport vp;
+		KdDirect3D::Instance().CopyViewportInfo(vp);
 
 		m_winSize = ImGui::GetWindowSize();
 
@@ -298,8 +328,8 @@ void ImGuiManager::ShowGameScene()
 			POINT mouse;
 			if (offsetX >= 0 && offsetY >= 0 && offsetX < m_gameSceneSize.x && offsetY < m_gameSceneSize.y)
 			{
-				float gameX = offsetX * (atoi(sizeData[0].data()) / m_gameSceneSize.x);
-				float gameY = offsetY * (atoi(sizeData[1].data()) / m_gameSceneSize.y);
+				float gameX = offsetX * (vp.width / m_gameSceneSize.x);
+				float gameY = offsetY * (vp.height / m_gameSceneSize.y);
 
 				mouse.x = static_cast<LONG>(gameX);
 				mouse.y = static_cast<LONG>(gameY);

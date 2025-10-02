@@ -1,6 +1,44 @@
 ﻿#include "Framework/KdFramework.h"
+#define NANOSVG_IMPLEMENTATION
+#define NANOSVGRAST_IMPLEMENTATION
+#include <nanosvg.h>
+#include <nanosvgrast.h>
 
 #include "KdTexture.h"
+
+static bool RasterizeSvgToRgba(const char* path, int targetW, int targetH,
+	std::vector<uint8_t>& outRGBA, int& outW, int& outH)
+{
+	const float dpi = 96.0f;
+	NSVGimage* svg = nsvgParseFromFile(path, "px", dpi);
+	if (!svg) return false;
+
+	// フォールバックサイズ（width/height が 0 の SVG 対応）
+	const int kFallbackSize = 512;
+
+	// 出力サイズ決定
+	const bool hasW = (svg->width > 0.0f);
+	const bool hasH = (svg->height > 0.0f);
+
+	outW = (targetW > 0) ? targetW : (hasW ? static_cast<int>(std::ceil(svg->width)) : kFallbackSize);
+	outH = (targetH > 0) ? targetH : (hasH ? static_cast<int>(std::ceil(svg->height)) : kFallbackSize);
+	if (outW <= 0 || outH <= 0) { nsvgDelete(svg); return false; }
+
+	// スケール決定（0 除算回避）
+	const float sx = hasW ? (static_cast<float>(outW) / svg->width) : 1.0f;
+	const float sy = hasH ? (static_cast<float>(outH) / svg->height) : 1.0f;
+	const float scale = std::min(sx, sy);
+
+	NSVGrasterizer* rast = nsvgCreateRasterizer();
+	if (!rast) { nsvgDelete(svg); return false; }
+
+	outRGBA.resize(static_cast<size_t>(outW) * outH * 4);
+	nsvgRasterize(rast, svg, 0.0f, 0.0f, scale, outRGBA.data(), outW, outH, outW * 4);
+
+	nsvgDeleteRasterizer(rast);
+	nsvgDelete(svg);
+	return true;
+}
 
 
 // 2D画像(resource)リソースから、最適なビューを作成する
@@ -207,12 +245,29 @@ bool KdTexture::Load(std::string_view filename, bool renderTarget, bool depthSte
 	Release();
 	if (filename.empty())return false;
 
-	// ファイル名をWideCharへ変換
-	std::wstring wFilename = sjis_to_wide(filename.data());
+	// ヌル終端文字列を確保（C API 対応）
+	const std::string pathStr(filename);
 
-	//------------------------------------
-	// 画像読み込み
-	//------------------------------------
+	// 拡張子（小文字）を取得
+	auto getLowerExt = [](std::string_view path) -> std::string {
+		const size_t dot = path.find_last_of('.');
+		if (dot == std::string_view::npos) return {};
+		std::string ext(path.substr(dot + 1));
+		for (auto& c : ext) c = static_cast<char>(::tolower(static_cast<unsigned char>(c)));
+		return ext;
+		};
+	const std::string ext = getLowerExt(filename);
+
+	// SVG なら NanoSVG でラスタライズしてテクスチャ作成
+	if (ext == "svg")
+	{
+		// ここで表示予定ピクセルに合わせて targetW/targetH を渡す
+		return LoadSvg(filename, m_desc.Width, m_desc.Height, renderTarget, generateMipmap);
+	}
+
+	// 以降は従来の DirectXTex/WIC 経路
+	// ファイル名をWideCharへ変換（ヌル終端の c_str を渡す）
+	std::wstring wFilename = sjis_to_wide(pathStr.c_str());
 
 	// Bind Flags
 	UINT bindFlags = 0;
@@ -220,23 +275,19 @@ bool KdTexture::Load(std::string_view filename, bool renderTarget, bool depthSte
 	if (renderTarget)bindFlags |= D3D11_BIND_RENDER_TARGET;
 	if (depthStencil)bindFlags |= D3D11_BIND_DEPTH_STENCIL;
 
-
-	// ※DirectX Texライブラリを使用して画像を読み込む
-
 	DirectX::TexMetadata meta;
 	DirectX::ScratchImage image;
 
 	bool bLoaded = false;
 
 	// WIC画像読み込み
-	//  WIC_FLAGS_ALL_FRAMES … gifアニメなどの複数フレームを読み込んでくれる
 	if (SUCCEEDED(DirectX::LoadFromWICFile(wFilename.c_str(), DirectX::WIC_FLAGS_ALL_FRAMES, &meta, image)))
 	{
 		bLoaded = true;
 	}
 
 	// DDS画像読み込み
-	if (bLoaded == false) {
+	if (!bLoaded) {
 		if (SUCCEEDED(DirectX::LoadFromDDSFile(wFilename.c_str(), DirectX::DDS_FLAGS_NONE, &meta, image)))
 		{
 			bLoaded = true;
@@ -244,7 +295,7 @@ bool KdTexture::Load(std::string_view filename, bool renderTarget, bool depthSte
 	}
 
 	// TGA画像読み込み
-	if (bLoaded == false) {
+	if (!bLoaded) {
 		if (SUCCEEDED(DirectX::LoadFromTGAFile(wFilename.c_str(), &meta, image)))
 		{
 			bLoaded = true;
@@ -252,7 +303,7 @@ bool KdTexture::Load(std::string_view filename, bool renderTarget, bool depthSte
 	}
 
 	// HDR画像読み込み
-	if (bLoaded == false) {
+	if (!bLoaded) {
 		if (SUCCEEDED(DirectX::LoadFromHDRFile(wFilename.c_str(), &meta, image)))
 		{
 			bLoaded = true;
@@ -260,12 +311,12 @@ bool KdTexture::Load(std::string_view filename, bool renderTarget, bool depthSte
 	}
 
 	// 読み込み失敗
-	if (bLoaded == false)
+	if (!bLoaded)
 	{
 		return false;
 	}
 
-	// ミップマップ生成
+	// ミップマップ生成（SVG以外）
 	if (meta.mipLevels == 1 && generateMipmap)
 	{
 		DirectX::ScratchImage mipChain;
@@ -276,29 +327,25 @@ bool KdTexture::Load(std::string_view filename, bool renderTarget, bool depthSte
 		}
 	}
 
-	//------------------------------------
-	// テクスチャリソース作成
-	//------------------------------------
+	// テクスチャ作成
 	ID3D11Texture2D* tex2D = nullptr;
 	if (FAILED(DirectX::CreateTextureEx(
-		KdDirect3D::Instance().WorkDev(),				// Direct3D Device
+		KdDirect3D::Instance().WorkDev(),
 		image.GetImages(),
 		image.GetImageCount(),
 		image.GetMetadata(),
-		D3D11_USAGE_DEFAULT,							// Usage
-		bindFlags,										// Bind Flags
-		0,												// CPU Access Flags
-		0,												// MiscFlags
-		DirectX::CREATETEX_FLAGS::CREATETEX_DEFAULT,	// CREATETEX_DEFAULT
+		D3D11_USAGE_DEFAULT,
+		bindFlags,
+		0,
+		0,
+		DirectX::CREATETEX_FLAGS::CREATETEX_DEFAULT,
 		(ID3D11Resource**)&tex2D)
 	)) {
 
 		return false;
 	}
 
-	//------------------------------------
-	// テクスチャリソース(m_resource)から、各ビューを作成する
-	//------------------------------------
+	// 各ビュー作成
 	if (KdCreateViewsFromTexture2D(tex2D, &m_srv, &m_rtv, &m_dsv) == false)
 	{
 		tex2D->Release();
@@ -310,7 +357,7 @@ bool KdTexture::Load(std::string_view filename, bool renderTarget, bool depthSte
 	tex2D->GetDesc(&m_desc);
 	tex2D->Release();
 
-	m_filepath = filename;
+	m_filepath = pathStr;
 
 	return true;
 }
@@ -455,7 +502,16 @@ void KdTexture::SetSRView(ID3D11ShaderResourceView* srv)
 	m_srv->AddRef();// 参照カウンタを増やしておく
 
 	// 画像情報取得
-	WorkResource()->GetDesc(&m_desc);
+	ID3D11Resource* res = nullptr;
+	m_srv->GetResource(&res);
+	if (res) {
+		ID3D11Texture2D* tex2D = nullptr;
+		if (SUCCEEDED(res->QueryInterface<ID3D11Texture2D>(&tex2D))) {
+			tex2D->GetDesc(&m_desc);
+			tex2D->Release();
+		}
+		res->Release();
+	}
 }
 
 void KdTexture::Release()
@@ -465,5 +521,84 @@ void KdTexture::Release()
 	KdSafeRelease(m_dsv);
 
 	m_filepath = "";
+}
+
+bool KdTexture::LoadSvg(std::string_view filename, int targetW, int targetH, bool renderTarget, bool generateMipmap)
+{
+	Release();
+	if (filename.empty()) return false;
+
+	const std::string pathStr(filename);
+
+	int w = 0, h = 0;
+	std::vector<uint8_t> rgba;
+	if (!RasterizeSvgToRgba(pathStr.c_str(), targetW, targetH, rgba, w, h)) {
+		return false;
+	}
+
+	ID3D11Texture2D* tex2D = nullptr;
+
+	if (generateMipmap) {
+		// CPUでミップチェーンを生成（縮小品質を改善）
+		DirectX::Image base{};
+		base.width = static_cast<size_t>(w);
+		base.height = static_cast<size_t>(h);
+		base.format = DXGI_FORMAT_R8G8B8A8_UNORM; // 必要なら _SRGB へ
+		base.rowPitch = static_cast<size_t>(w) * 4;
+		base.slicePitch = base.rowPitch * static_cast<size_t>(h);
+		base.pixels = rgba.data();
+
+		DirectX::ScratchImage mipChain;
+		if (FAILED(DirectX::GenerateMipMaps(base, DirectX::TEX_FILTER_DEFAULT, 0, mipChain))) {
+			return false;
+		}
+
+		if (FAILED(DirectX::CreateTextureEx(
+			KdDirect3D::Instance().WorkDev(),
+			mipChain.GetImages(),
+			mipChain.GetImageCount(),
+			mipChain.GetMetadata(),
+			D3D11_USAGE_DEFAULT,
+			D3D11_BIND_SHADER_RESOURCE | (renderTarget ? D3D11_BIND_RENDER_TARGET : 0),
+			0,
+			0,
+			DirectX::CREATETEX_FLAGS::CREATETEX_DEFAULT,
+			reinterpret_cast<ID3D11Resource**>(&tex2D)))) {
+			return false;
+		}
+	}
+	else {
+		D3D11_TEXTURE2D_DESC desc{};
+		desc.Width = static_cast<UINT>(w);
+		desc.Height = static_cast<UINT>(h);
+		desc.MipLevels = 1;
+		desc.ArraySize = 1;
+		desc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+		desc.SampleDesc.Count = 1;
+		desc.Usage = D3D11_USAGE_DEFAULT;
+		desc.BindFlags = D3D11_BIND_SHADER_RESOURCE | (renderTarget ? D3D11_BIND_RENDER_TARGET : 0);
+
+		D3D11_SUBRESOURCE_DATA srd{};
+		srd.pSysMem = rgba.data();
+		srd.SysMemPitch = static_cast<UINT>(w * 4);
+
+		if (!Create(desc, &srd)) { return false; }
+
+		m_filepath = pathStr;
+		return true;
+	}
+
+	// 各ビュー作成
+	if (!KdCreateViewsFromTexture2D(tex2D, &m_srv, &m_rtv, &m_dsv)) {
+		tex2D->Release();
+		Release();
+		return false;
+	}
+
+	tex2D->GetDesc(&m_desc);
+	tex2D->Release();
+
+	m_filepath = pathStr;
+	return true;
 }
 

@@ -67,25 +67,34 @@ void KdDebugGUI::GuiProcess()
 
 	// ===== DockSpaceの追加 =====
 	{
-		// メインウィンドウのフラグ設定
-		ImGuiWindowFlags window_flags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking;
-		const ImGuiViewport* viewport = ImGui::GetMainViewport();
+		ImGuiViewport* viewport = ImGui::GetMainViewport();
+
+		// 余白なしで全面DockSpace
+		ImGui::SetNextWindowViewport(viewport->ID);
 		ImGui::SetNextWindowPos(viewport->WorkPos);
 		ImGui::SetNextWindowSize(viewport->WorkSize);
-		ImGui::SetNextWindowViewport(viewport->ID);
-		window_flags |= ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove;
-		window_flags |= ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus;
+
+		// メインメニューバーを別で描く場合は MenuBar フラグ不要
+		ImGuiWindowFlags window_flags =
+			ImGuiWindowFlags_NoDocking |
+			ImGuiWindowFlags_NoTitleBar |
+			ImGuiWindowFlags_NoCollapse |
+			ImGuiWindowFlags_NoResize |
+			ImGuiWindowFlags_NoMove |
+			ImGuiWindowFlags_NoBringToFrontOnFocus |
+			ImGuiWindowFlags_NoNavFocus;
 
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
-		ImGui::Begin("DockSpace", nullptr, window_flags);
-		ImGui::PopStyleVar(2);
+		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
 
-		// DockSpaceの作成
+		// ImGui推奨のオーバービューポート版を使用
+		ImGui::Begin("DockSpaceHost", nullptr, window_flags);
 		ImGuiID dockspace_id = ImGui::GetID("DockSpace");
-		ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), ImGuiDockNodeFlags_None);
-
+		ImGui::DockSpace(dockspace_id, ImVec2(0, 0), ImGuiDockNodeFlags_None);
 		ImGui::End();
+
+		ImGui::PopStyleVar(3);
 	}
 
 

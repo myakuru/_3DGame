@@ -233,13 +233,4 @@ void BaseScene::Event()
 
 void BaseScene::Init()
 {
-	KdCSVData windowData("Asset/Data/WindowSettings.csv");
-	const std::vector<std::string>& sizeData = windowData.GetLine(0);
-
-	m_renderTargetPack.CreateRenderTarget(atoi(sizeData[0].data()), atoi(sizeData[1].data()), true);
-	m_renderTargetUIPack.CreateRenderTarget(1920,1080, true);
-
-	m_gameWindowSizeX = atoi(sizeData[0].data());
-	m_gameWindowSizeY = atoi(sizeData[1].data());
-
 }

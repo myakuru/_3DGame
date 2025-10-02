@@ -167,6 +167,16 @@ public :
 		m_effectActive = _active;
 	}
 
+	void SetCutInScene(bool _cutIn)
+	{
+		m_CutInScene = _cutIn;
+	}
+
+	bool IsCutInScene() const
+	{
+		return m_CutInScene;
+	}
+
 
 private :
 
@@ -199,6 +209,8 @@ private :
 	bool m_isIntro = false;		// Introカメラかどうか
 
 	bool m_effectActive = true; // 最初のUpdateかどうか
+
+	bool m_CutInScene = false; // カットインシーンかどうか
 
 
 public:

@@ -1,5 +1,80 @@
 ﻿#include "Framework/KdFramework.h"
 
+bool KdDirect3D::Resize(int w, int h)
+{
+	if (!m_pGISwapChain || !m_pDevice || !m_pDeviceContext) return false;
+
+	// 既存のRT/Z依存リソースを解放
+	m_backBuffer = nullptr;
+	m_zBuffer = nullptr;
+
+	// スワップチェインのバッファをリサイズ
+	HRESULT hr = m_pGISwapChain->ResizeBuffers(
+		0, // バッファ数は変更しない
+		w, h,
+		DXGI_FORMAT_UNKNOWN, // 既定のフォーマットを維持
+		DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH
+	);
+	if (FAILED(hr)) {
+		return false;
+	}
+
+	// バックバッファを再取得・再作成
+	ID3D11Texture2D* pBackBuffer = nullptr;
+	if (FAILED(m_pGISwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)&pBackBuffer))) {
+		return false;
+	}
+	m_backBuffer = std::make_shared<KdTexture>();
+	if (!m_backBuffer->Create(pBackBuffer)) {
+		pBackBuffer->Release();
+		return false;
+	}
+	pBackBuffer->Release();
+
+	// Zバッファ再作成
+	{
+		D3D11_TEXTURE2D_DESC desc = {};
+		desc.Usage = D3D11_USAGE_DEFAULT;
+		desc.Format = DXGI_FORMAT_R24G8_TYPELESS;
+		desc.BindFlags = D3D11_BIND_DEPTH_STENCIL | D3D11_BIND_SHADER_RESOURCE;
+		desc.Width = (UINT)w;
+		desc.Height = (UINT)h;
+		desc.CPUAccessFlags = 0;
+		desc.MipLevels = 1;
+		desc.ArraySize = 1;
+		desc.SampleDesc.Count = 1;
+		desc.SampleDesc.Quality = 0;
+
+		m_zBuffer = std::make_shared<KdTexture>();
+		if (m_zBuffer->Create(desc) == false) {
+			return false;
+		}
+	}
+
+	// 新しいRT/Zをセット
+	{
+		ID3D11RenderTargetView* rtvs[] = { m_backBuffer->WorkRTView() };
+		m_pDeviceContext->OMSetRenderTargets(1, rtvs, m_zBuffer->WorkDSView());
+	}
+
+	// ビューポート更新
+	{
+		D3D11_VIEWPORT vp{};
+		vp.Width = (float)w;
+		vp.Height = (float)h;
+		vp.MinDepth = 0.0f;
+		vp.MaxDepth = 1.0f;
+		vp.TopLeftX = 0;
+		vp.TopLeftY = 0;
+		m_pDeviceContext->RSSetViewports(1, &vp);
+	}
+
+	m_windowWidth = w;
+	m_windowHeight = h;
+
+	return true;
+}
+
 void KdDirect3D::CopyViewportInfo(Math::Viewport& out) const
 {
 	UINT numVPs = 1;

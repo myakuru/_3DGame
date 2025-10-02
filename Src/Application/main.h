@@ -35,6 +35,8 @@ public:
 		return m_fpsController.m_timeScale;
 	}
 
+	void ResizeWindow(int w, int h);
+
 private:
 
 	void KdBeginUpdate();

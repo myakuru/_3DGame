@@ -137,6 +137,12 @@ public:
 		Release();
 	}
 
+	// SVGを指定ピクセルサイズにラスタライズして読み込む
+	// targetW/targetH は 0 の場合、SVGの宣言サイズ(無ければフォールバック)を使用
+	bool LoadSvg(std::string_view filename, int targetW, int targetH, bool renderTarget = false, bool generateMipmap = true);
+
+
+
 private:
 
 	// シェーダリソースビュー(読み取り用)
@@ -156,4 +162,7 @@ private:
 	// コピー禁止用
 	KdTexture(const KdTexture& src) = delete;
 	void operator=(const KdTexture& src) = delete;
+	// 幅・高さ・DESC を取得
+	const D3D11_TEXTURE2D_DESC& GetDesc() const { return m_desc; }
+
 };

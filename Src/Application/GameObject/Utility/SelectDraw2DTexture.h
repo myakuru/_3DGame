@@ -68,11 +68,11 @@ protected:
 		// .~ 以降の拡張子を識別するために部分文字列を取得
 		std::string ext = _path.substr(_path.find_last_of('.') + 1);
 
-		if (ext == "png" || ext == "PNG")
+		if (ext == "png" || ext == "PNG" || ext == "svg")
 		{
 			_path = m_path;
 			// テクスチャ読み込み
-			m_texture = KdAssets::Instance().m_textures.GetData(m_path);
+			m_texture->Load(m_path);
 			return true;
 		}
 

@@ -18,6 +18,14 @@ void TestScene::Event()
 		m_fogDensity = 0.001f;
 	}
 
+	if (SceneManager::Instance().IsCutInScene())
+	{
+		KdShaderManager::Instance().m_postProcessShader.SetBrightThreshold(m_brightThreshold);
+		KdShaderManager::Instance().WorkAmbientController().SetFogEnable(true, true);
+		KdShaderManager::Instance().WorkAmbientController().SetDistanceFog({ m_fogColor }, m_fogDensity);
+		KdShaderManager::Instance().WorkAmbientController().SetheightFog({ m_highFogColor }, m_highFogHeight, m_lowFogHeight, m_highFogDistance);
+	}
+
 	if (KeyboardManager::GetInstance().IsKeyPressed('P'))
 	{
 		KdShaderManager::Instance().m_postProcessShader.SetEnableNoise(true);	// ノイズON

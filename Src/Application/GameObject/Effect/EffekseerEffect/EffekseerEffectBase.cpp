@@ -8,9 +8,9 @@ void EffekseerEffectBase::Init()
 	KdGameObject::Init();
 
 	// 画面の大きさが変わっても問題ないようにする
-	KdCSVData windowData("Asset/Data/WindowSettings.csv");
-	const std::vector<std::string>& sizeData = windowData.GetLine(0);
-	KdEffekseerManager::GetInstance().Create(atoi(sizeData[0].data()), atoi(sizeData[1].data()));
+	Math::Viewport vp;
+	KdDirect3D::Instance().CopyViewportInfo(vp);
+	KdEffekseerManager::GetInstance().Create(vp.width, vp.height);
 
 	m_once = false;
 	m_load = false;

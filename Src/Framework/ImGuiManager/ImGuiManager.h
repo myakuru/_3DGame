@@ -32,6 +32,8 @@ public:
 
 	bool GetGameSceneInMouse() const { return m_gameSceneInMouse; }
 
+	Math::Vector2 GetWindowSize() const { return m_windowSize; }
+
 private:
 
 	std::weak_ptr<TPSCamera> m_tpsCamera;
@@ -56,6 +58,8 @@ private:
 
 	float offsetX = 0.0f;
 	float offsetY = 0.0f;
+
+	Math::Vector2 m_windowSize = Math::Vector2(1920, 1080);
 
 	bool m_gameSceneInMouse = false;
 
