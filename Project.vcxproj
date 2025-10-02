@@ -297,6 +297,9 @@
     <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_AvoidAttack\PlayerState_AvoidAttack.h" />
     <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_BackWordAvoid\PlayerState_BackWordAvoid.h" />
     <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_ChargeAttack2\PlayerState_ChaegeAttack2.h" />
+    <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_ChargeAttackMax1\PlayerState_ChargeAttackMax1.h" />
+    <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_ChargeAttackMax2\PlayerState_ChargeAttackMax2.h" />
+    <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_ChargeAttackMax3\PlayerState_ChargeAttackMax3.h" />
     <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_ChargeAttackMax\PlayerState_ChargeAttackMax.h" />
     <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_ChargeAttack\PlayerState_ChargeAttack.h" />
     <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_FowardAvoid\PlayerState_FowardAvoid.h" />
@@ -441,6 +444,9 @@
     <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_AvoidAttack\PlayerState_AvoidAttack.cpp" />
     <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_BackWordAvoid\PlayerState_BackWordAvoid.cpp" />
     <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_ChargeAttack2\PlayerState_ChaegeAttack2.cpp" />
+    <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_ChargeAttackMax1\PlayerState_ChargeAttackMax1.cpp" />
+    <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_ChargeAttackMax2\PlayerState_ChargeAttackMax2.cpp" />
+    <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_ChargeAttackMax3\PlayerState_ChargeAttackMax3.cpp" />
     <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_ChargeAttackMax\PlayerState_ChargeAttackMax.cpp" />
     <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_ChargeAttack\PlayerState_ChargeAttack.cpp" />
     <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_FowardAvoid\PlayerState_FowardAvoid.cpp" />

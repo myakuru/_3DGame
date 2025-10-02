@@ -7,7 +7,18 @@ const uint32_t HpBar::TypeID = KdGameObject::GenerateTypeID();
 
 void HpBar::DrawSprite()
 {
-	KdShaderManager::Instance().m_spriteShader.SetMatrix(m_mWorld);
+	// 現在のビューポートサイズ取得
+	Math::Viewport vp;
+	KdDirect3D::Instance().CopyViewportInfo(vp);
+
+	// スケーリング
+	const float sx = vp.width / kRefW;
+	const float sy = vp.height / kRefH;
+
+	Math::Matrix uiScale = Math::Matrix::CreateScale(sx, sy, 1.0f);
+
+
+	KdShaderManager::Instance().m_spriteShader.SetMatrix(m_mWorld * uiScale);
 
 		KdShaderManager::Instance().m_spriteShader.DrawTex(
 			m_texture,

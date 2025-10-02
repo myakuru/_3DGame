@@ -1,6 +1,6 @@
 ﻿#include "PlayerState_ChargeAttackMax.h"
 #include"../../../../../main.h"
-#include"../PlayerState_Idle/PlayerState_Idle.h"
+#include"../PlayerState_ChargeAttackMax1/PlayerState_ChargeAttackMax1.h"
 #include"../../../Enemy/Enemy.h"
 #include"../../../../Camera/PlayerCamera/PlayerCamera.h"
 
@@ -13,16 +13,16 @@ void PlayerState_ChargeAttackMax::StateStart()
 
 	// 敵との当たり判定を無効化
 	m_player->SetAtkPlayer(true);
+
+	// アニメーション速度を変更
+	m_player->SetAnimeSpeed(100.0f);
 }
 
 void PlayerState_ChargeAttackMax::StateUpdate()
 {
-	// アニメーション速度を変更
-	m_player->SetAnimeSpeed(100.0f);
-
 	if (m_player->GetAnimator()->IsAnimationEnd())
 	{
-		auto state = std::make_shared<PlayerState_Idle>();
+		auto state = std::make_shared<PlayerState_ChargeAttackMax1>();
 		m_player->ChangeState(state);
 		return;
 	}
@@ -45,7 +45,7 @@ void PlayerState_ChargeAttackMax::StateUpdate()
 	if (auto enemy = m_player->GetEnemy().lock(); enemy)
 	{
 		// 敵の奥に行くようにする距離
-		constexpr float overshootDist = 3.5f;
+		constexpr float overshootDist = 5.f;
 
 		// 攻撃方向が指定されていない場合は敵の方向に向かう
 		Math::Vector3 fallbackDir = enemy->GetPos() - m_player->GetPos();
@@ -75,9 +75,12 @@ void PlayerState_ChargeAttackMax::StateUpdate()
 			// カメラをキャラの後ろに回す（セッター使用）
 			if (auto camera = m_player->GetPlayerCamera().lock(); camera)
 			{
-				constexpr Math::Vector3 kCamOffset = { 0.0f, 1.2f, -3.5f };
+				constexpr Math::Vector3 kCamOffset = { 0.0f, 1.2f, -4.0f };
 				camera->SetTargetLookAt(kCamOffset);
+				// カメラの回転を滑らかに
 				camera->SetRotationSmooth(4.0f);
+				// カメラの距離を滑らかに
+				camera->SetDistanceSmooth(3.0f);
 
 				// キャラ前方からヨー角(deg)を計算してカメラ回転に反映
 				if (fallbackDir != Math::Vector3::Zero)
@@ -92,8 +95,8 @@ void PlayerState_ChargeAttackMax::StateUpdate()
 		else
 		{
 			toDesired.Normalize();
-			float maxStep = 20.0f * deltaTime;
-			float speedThisFrame = (distance < maxStep) ? (distance / deltaTime) : 20.0f;
+			float maxStep = 10.0f * deltaTime;
+			float speedThisFrame = (distance < maxStep) ? (distance / deltaTime) : 10.0f;
 			m_player->SetIsMoving(toDesired * speedThisFrame);
 			m_time += deltaTime;
 		}

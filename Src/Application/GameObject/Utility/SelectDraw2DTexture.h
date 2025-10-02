@@ -7,15 +7,34 @@ public:
 
 	void DrawSprite() override
 	{
-		KdShaderManager::Instance().m_spriteShader.SetMatrix(m_mWorld);
+		// 現在のビューポートサイズ取得
+		Math::Viewport vp;
+		KdDirect3D::Instance().CopyViewportInfo(vp);
+
+		// 伸張（Stretch）：XとYを個別にスケーリング（画面サイズにピッタリ）
+		const float sx = vp.width / kRefW;
+		const float sy = vp.height / kRefH;
+
+		// 等方（Fit）にしたい場合は以下を使う（必要なら切替）
+		 const float s  = std::min(sx, sy);
+		 Math::Matrix uiScale = Math::Matrix::CreateScale(s, s, 1.0f);
+
+		//Math::Matrix uiScale = Math::Matrix::CreateScale(sx, sy, 1.0f);
+
+		// UIスケールをワールド行列に後掛け（平行移動も含め全体をスケール）
+		Math::Matrix m = m_mWorld * uiScale;
+
+		KdShaderManager::Instance().m_spriteShader.SetMatrix(m);
 		if (m_bDrawTexture)
+		{
 			KdShaderManager::Instance().m_spriteShader.DrawTex(
 				m_texture,
-				static_cast<int>(m_position.x),
+				static_cast<int>(m_position.x), // 1920x1080基準の座標そのまま
 				static_cast<int>(m_position.y),
 				nullptr,
 				&m_color
 			);
+		}
 		KdShaderManager::Instance().m_spriteShader.SetMatrix(Math::Matrix::Identity);
 	}
 
@@ -42,7 +61,7 @@ public:
 		if (_json.contains("drawFlags")) m_bDrawTexture = _json["drawFlags"].get<bool>();
 	}
 
-private:
+protected:
 
 	bool ModelLoad(std::string _path) override
 	{
@@ -61,5 +80,9 @@ private:
 	}
 
 	bool m_bDrawTexture = false;
+
+	// 基準解像度
+	const float kRefW = 1920.0f;
+	const float kRefH = 1080.0f;
 
 };

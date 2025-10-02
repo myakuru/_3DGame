@@ -13,10 +13,7 @@ void InvestigationComplete::Init()
 void InvestigationComplete::DrawSprite()
 {
 	if (m_isComplete) return;
-
-	KdShaderManager::Instance().m_spriteShader.SetMatrix(m_mWorld);
 	SelectDraw2DTexture::DrawSprite();
-	KdShaderManager::Instance().m_spriteShader.SetMatrix(Math::Matrix::Identity);
 }
 
 void InvestigationComplete::Update()

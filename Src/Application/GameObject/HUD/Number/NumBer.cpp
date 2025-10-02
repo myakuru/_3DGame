@@ -28,7 +28,17 @@ void NumBer::Update()
 
 void NumBer::DrawSprite()
 {
-	KdShaderManager::Instance().m_spriteShader.SetMatrix(m_mWorld);
+	// 現在のビューポートサイズ取得
+	Math::Viewport vp;
+	KdDirect3D::Instance().CopyViewportInfo(vp);
+
+	// 伸張（Stretch）：XとYを個別にスケーリング（画面サイズにピッタリ）
+	const float sx = vp.width / kRefW;
+	const float sy = vp.height / kRefH;
+
+	Math::Matrix uiScale = Math::Matrix::CreateScale(sx, sy, 1.0f);
+
+	KdShaderManager::Instance().m_spriteShader.SetMatrix(m_mWorld * uiScale);
 
 	// m_displayTimeの値を文字列化
 	std::string numStr = std::to_string(m_displayTime);

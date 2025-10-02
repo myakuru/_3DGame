@@ -14,15 +14,7 @@ void Scoring::Init()
 
 void Scoring::DrawSprite()
 {
-	KdShaderManager::Instance().m_spriteShader.SetMatrix(m_mWorld);
-		KdShaderManager::Instance().m_spriteShader.DrawTex(
-			m_texture,
-			static_cast<int>(m_position.x),
-			static_cast<int>(m_position.y),
-			&m_srcRect,
-			&m_color
-		);
-	KdShaderManager::Instance().m_spriteShader.SetMatrix(Math::Matrix::Identity);
+	SelectDraw2DTexture::DrawSprite();
 }
 
 void Scoring::Update()

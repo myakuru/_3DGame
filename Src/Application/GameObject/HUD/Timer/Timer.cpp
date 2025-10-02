@@ -79,7 +79,16 @@ void Timer::DrawSprite()
 {
 	if (m_notDraw) return; // 描画しないフラグが立っている場合は何もしない
 
-	KdShaderManager::Instance().m_spriteShader.SetMatrix(m_mWorld);
+	// 現在のビューポートサイズ取得
+	Math::Viewport vp;
+	KdDirect3D::Instance().CopyViewportInfo(vp);
+
+	const float sx = vp.width / kRefW;
+	const float sy = vp.height / kRefH;
+
+	Math::Matrix uiScale = Math::Matrix::CreateScale(sx, sy, 1.0f);
+
+	KdShaderManager::Instance().m_spriteShader.SetMatrix(m_mWorld * uiScale);
 
 	int time = std::min(m_displayTime, 99 * 60 * 60 + 99 * 60 + 99); //99:99:99
 

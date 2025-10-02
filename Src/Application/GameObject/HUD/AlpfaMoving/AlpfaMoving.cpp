@@ -30,7 +30,5 @@ void AlpfaMoving::Update()
 
 void AlpfaMoving::DrawSprite()
 {
-	KdShaderManager::Instance().m_spriteShader.SetMatrix(m_mWorld);
 	SelectDraw2DTexture::DrawSprite();
-	KdShaderManager::Instance().m_spriteShader.SetMatrix(Math::Matrix::Identity);
 }

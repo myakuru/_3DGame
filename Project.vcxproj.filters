@@ -13,9 +13,6 @@
     <Filter Include="Src\Framework\Direct3D">
       <UniqueIdentifier>{f193abd5-e51c-466e-a937-722bc9175e9a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Src\Framework\Utility">
-      <UniqueIdentifier>{f5d733b1-5031-4659-a9d4-0dd3add1e5fb}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Src\Framework\Window">
       <UniqueIdentifier>{cb022f2a-c5a2-449b-9b70-5110aff8550f}</UniqueIdentifier>
     </Filter>
@@ -351,6 +348,18 @@
     </Filter>
     <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_FullCharge">
       <UniqueIdentifier>{dd76955b-d077-4b4b-ada7-c8408942223d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_ChargeAttackMax1">
+      <UniqueIdentifier>{39275c22-6887-4c34-9c98-295b07fec0f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_ChargeAttackMax2">
+      <UniqueIdentifier>{24e37e07-a611-43d4-a5e1-29edcc8a790f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_ChargeAttackMax3">
+      <UniqueIdentifier>{1ba911da-1f87-4212-8c3c-6d9cc33a2ee7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Framework\Utility">
+      <UniqueIdentifier>{f5d733b1-5031-4659-a9d4-0dd3add1e5fb}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -807,6 +816,15 @@
     <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_FullCharge\PlayerState_FullCharge.h">
       <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_FullCharge</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_ChargeAttackMax1\PlayerState_ChargeAttackMax1.h">
+      <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_ChargeAttackMax1</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_ChargeAttackMax2\PlayerState_ChargeAttackMax2.h">
+      <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_ChargeAttackMax2</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_ChargeAttackMax3\PlayerState_ChargeAttackMax3.h">
+      <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_ChargeAttackMax3</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -1204,6 +1222,15 @@
     </ClCompile>
     <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_FullCharge\PlayerState_FullCharge.cpp">
       <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_FullCharge</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_ChargeAttackMax1\PlayerState_ChargeAttackMax1.cpp">
+      <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_ChargeAttackMax1</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_ChargeAttackMax2\PlayerState_ChargeAttackMax2.cpp">
+      <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_ChargeAttackMax2</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_ChargeAttackMax3\PlayerState_ChargeAttackMax3.cpp">
+      <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_ChargeAttackMax3</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
