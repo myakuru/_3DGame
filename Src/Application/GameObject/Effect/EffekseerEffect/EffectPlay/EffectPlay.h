@@ -5,7 +5,7 @@ class EffectPlay : public EffekseerEffectBase
 public:
 	static const uint32_t TypeID;
 
-	EffectPlay() { m_type = TypeID; }
+	EffectPlay() { m_typeID = TypeID; }
 	~EffectPlay() override =  default;
 
 };

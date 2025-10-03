@@ -61,7 +61,7 @@ void CharaBase::Update()
 
 	float deltaTime = Application::Instance().GetDeltaTime();
 
-	m_animator->AdvanceTime(m_modelWork->WorkNodes(), deltaTime);
+	m_animator->AdvanceTime(m_modelWork->WorkNodes(), m_fixedFrameRate * deltaTime);
 	m_modelWork->CalcNodeMatrices();
 
 	m_isMoving = m_movement.LengthSquared() > 0;

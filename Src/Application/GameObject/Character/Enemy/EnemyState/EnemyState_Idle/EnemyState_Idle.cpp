@@ -5,12 +5,15 @@
 void EnemyState_Idle::StateStart()
 {
 	auto anime = m_enemy->GetAnimeModel()->GetAnimation("Idle");
-	m_enemy->GetAnimator()->SetAnimation(anime, 0.25f, true);
-	m_enemy->SetAnimeSpeed(120.0f);
+	m_enemy->GetAnimator()->SetAnimation(anime);
+
+	m_enemy->SetAnimeSpeed(60.0f);
+
 }
 
 void EnemyState_Idle::StateUpdate()
 {
+
 	// 移動量リセット
 	m_enemy->SetIsMoving(Math::Vector3::Zero);
 

@@ -102,11 +102,6 @@ void Katana::DrawBright()
 	KdShaderManager::Instance().m_StandardShader.DrawPolygon(*m_trailPolygon, Math::Matrix::Identity, m_trailColor);
 }
 
-void Katana::DrawUnLit()
-{
-	//KdShaderManager::Instance().m_StandardShader.DrawPolygon(*m_trailPolygon, Math::Matrix::Identity, m_trailColor);
-}
-
 void Katana::UpdateHand()
 {
 	m_swordHandData.m_weaponRotationMatrix = Math::Matrix::CreateFromYawPitchRoll

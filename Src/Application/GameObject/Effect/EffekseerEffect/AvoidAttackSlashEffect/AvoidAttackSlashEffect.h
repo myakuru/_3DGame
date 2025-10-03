@@ -5,6 +5,6 @@ class AvoidAttackSlashEffect : public EffekseerEffectBase
 public:
 
 	static const uint32_t TypeID;
-	AvoidAttackSlashEffect() { m_type = TypeID; }
+	AvoidAttackSlashEffect() { m_typeID = TypeID; }
 	~AvoidAttackSlashEffect() override = default;
 };

@@ -6,6 +6,6 @@ public:
 
 	static const uint32_t TypeID;
 
-	GroundFreezes() { m_type = TypeID; }
+	GroundFreezes() { m_typeID = TypeID; }
 	~GroundFreezes() override = default;
 };

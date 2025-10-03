@@ -6,7 +6,7 @@ public:
 	
 	static const uint32_t TypeID;
 
-	AttackEffect_second() { m_type = TypeID; }
+	AttackEffect_second() { m_typeID = TypeID; }
 	~AttackEffect_second() override = default;
 
 	void EffectReset();

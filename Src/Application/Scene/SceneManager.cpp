@@ -58,6 +58,8 @@
 #include"../GameObject/Effect/EffekseerEffect/ESkillEffect/ESkillEffect.h"
 #include"../GameObject/CutInCube/CutInCube.h"
 #include"../GameObject/Effect/EffekseerEffect/SpecialAttack/SpecialAttack.h"
+#include"../GameObject/Weapon/EnemySword/EnemySword.h"
+#include"../GameObject/Weapon/EnemyShield/EnemyShield.h"
 
 void SceneManager::Init()
 {
@@ -68,16 +70,17 @@ void SceneManager::Init()
 
 void SceneManager::Register() const
 {
+	// カメラ
 	RegisterObject::GetInstance().Register<TPSCamera>();
 	RegisterObject::GetInstance().Register<FPSCamera>();
 	RegisterObject::GetInstance().Register<PlayerCamera>();
+
+	// スカイスフィア
 	RegisterObject::GetInstance().Register<SkySphere>();
+
+	// UI系
 	RegisterObject::GetInstance().Register<NormalUI>();
 	RegisterObject::GetInstance().Register<AlpfaMoving>();
-	RegisterObject::GetInstance().Register<Map>();
-	RegisterObject::GetInstance().Register<Player>();
-	RegisterObject::GetInstance().Register<Katana>();
-	RegisterObject::GetInstance().Register<Enemy>();
 	RegisterObject::GetInstance().Register<ScaleMoving>();
 	RegisterObject::GetInstance().Register<Scoring>();
 	RegisterObject::GetInstance().Register<Timer>();
@@ -85,20 +88,28 @@ void SceneManager::Register() const
 	RegisterObject::GetInstance().Register<NumBer>();
 	RegisterObject::GetInstance().Register<NowHp>();
 	RegisterObject::GetInstance().Register<SpecialMove>();
-	RegisterObject::GetInstance().Register<Winner>();
 	RegisterObject::GetInstance().Register<InvestigationComplete>();
 	RegisterObject::GetInstance().Register<BlackBanner>();
 	RegisterObject::GetInstance().Register<ResultScore>();
-	RegisterObject::GetInstance().Register<Collision>();
-	RegisterObject::GetInstance().Register<ForwardEffect>();
-	RegisterObject::GetInstance().Register<CurvesEffect>();
-	RegisterObject::GetInstance().Register<AttackEffect>();
-	RegisterObject::GetInstance().Register<FieldEffect>();
-	RegisterObject::GetInstance().Register<WeaponKatanaScabbard>();
-	RegisterObject::GetInstance().Register<AttackEffect_second>();
-	RegisterObject::GetInstance().Register<TrailEffect>();
-	RegisterObject::GetInstance().Register<Attack4Effect>();
+	RegisterObject::GetInstance().Register<Winner>();
 
+	// Map系
+	RegisterObject::GetInstance().Register<Map>();
+
+	// キャラクター系
+	RegisterObject::GetInstance().Register<Player>();
+	RegisterObject::GetInstance().Register<Enemy>();
+
+	// 武器系
+	RegisterObject::GetInstance().Register<Katana>();
+	RegisterObject::GetInstance().Register<WeaponKatanaScabbard>();
+	RegisterObject::GetInstance().Register<EnemySword>();
+	RegisterObject::GetInstance().Register<EnemyShield>();
+
+	// 当たり判定系
+	RegisterObject::GetInstance().Register<Collision>();
+
+	// Effekseer系
 	RegisterObject::GetInstance().Register<EffectPlay>();
 	RegisterObject::GetInstance().Register<AttacEffect1>();
 	RegisterObject::GetInstance().Register<CloudEffect>();
@@ -113,6 +124,15 @@ void SceneManager::Register() const
 	RegisterObject::GetInstance().Register<ESkillEffect>();
 	RegisterObject::GetInstance().Register<SpecialAttack>();
 
+
+	// 使われてないけど一応登録しとく系
+	RegisterObject::GetInstance().Register<ForwardEffect>();
+	RegisterObject::GetInstance().Register<CurvesEffect>();
+	RegisterObject::GetInstance().Register<AttackEffect>();
+	RegisterObject::GetInstance().Register<FieldEffect>();
+	RegisterObject::GetInstance().Register<AttackEffect_second>();
+	RegisterObject::GetInstance().Register<TrailEffect>();
+	RegisterObject::GetInstance().Register<Attack4Effect>();
 	RegisterObject::GetInstance().Register<CutInCube>();
 }
 

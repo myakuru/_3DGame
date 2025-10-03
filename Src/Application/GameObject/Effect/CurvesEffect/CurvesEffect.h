@@ -7,7 +7,7 @@ public:
 
 	static const uint32_t TypeID;
 
-	CurvesEffect() { m_type = TypeID; }
+	CurvesEffect() { m_typeID = TypeID; }
 	~CurvesEffect() override = default;
 
 	void Init() override;

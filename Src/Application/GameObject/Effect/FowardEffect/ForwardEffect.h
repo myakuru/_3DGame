@@ -6,7 +6,7 @@ public:
 
 	static const uint32_t TypeID;
 
-	ForwardEffect() { m_type = TypeID; }
+	ForwardEffect() { m_typeID = TypeID; }
 	~ForwardEffect() override = default;
 
 	void Init() override;

@@ -4,6 +4,8 @@
 #include"EnemyState/EnemyState_Idle/EnemyState_Idle.h"
 #include"EnemyState/EnemyState_Hit/EnemyState_Hit.h"
 #include"../../Camera/PlayerCamera/PlayerCamera.h"
+#include"../../Weapon/EnemySword/EnemySword.h"
+#include"../../Weapon/EnemyShield/EnemyShield.h"
 
 const uint32_t Enemy::TypeID = KdGameObject::GenerateTypeID();
 
@@ -24,13 +26,18 @@ void Enemy::Init()
 
 void Enemy::Update()
 {
+
+	SceneManager::Instance().GetObjectWeakPtr(m_enemySword);
+	SceneManager::Instance().GetObjectWeakPtr(m_enemyShield);
+
+	// 地面に立つようにY座標を調整
 	m_position.y = 1.0f;
 
 	// 球の中心座標と半径を設定
 	sphere.Center = m_position + Math::Vector3(0.0f, 0.7f, 0.0f); // 敵の位置＋オフセット
 	sphere.Radius = 0.2f; // 半径0.5
 
-	m_pDebugWire->AddDebugSphere(sphere.Center, sphere.Radius,kBlueColor);
+	m_pDebugWire->AddDebugSphere(sphere.Center, sphere.Radius, kBlueColor);
 
 	SceneManager::Instance().GetObjectWeakPtr(m_wpPlayer);
 
@@ -78,6 +85,26 @@ void Enemy::Update()
 	}
 
 	CharaBase::Update();
+
+
+	// 敵の剣の行列を更新
+	if (auto sword = m_enemySword.lock(); sword)
+	{
+		if (auto rightHandNode = m_modelWork->FindWorkNode("weapon_r"); rightHandNode)
+		{
+			sword->SetEnemyRightHandMatrix(rightHandNode->m_worldTransform);
+			sword->SetEnemyMatrix(m_mWorld);
+		}
+	}
+
+	if (auto shield = m_enemyShield.lock(); shield)
+	{
+		if (auto leftHandNode = m_modelWork->FindWorkNode("weapon_l"); leftHandNode)
+		{
+			shield->SetEnemyLeftHandMatrix(leftHandNode->m_worldTransform);
+			shield->SetEnemyMatrix(m_mWorld);
+		}
+	}
 }
 
 void Enemy::DrawLit()

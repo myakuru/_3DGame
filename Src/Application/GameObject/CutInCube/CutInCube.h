@@ -7,7 +7,7 @@ public:
 
 	static const uint32_t TypeID;
 
-	CutInCube() { m_type = TypeID; }
+	CutInCube() { m_typeID = TypeID; }
 	~CutInCube() override = default;
 
 private:

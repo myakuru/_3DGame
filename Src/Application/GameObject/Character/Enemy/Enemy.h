@@ -1,7 +1,9 @@
 ﻿#pragma once
-class Player;
 #include "../CharacterBase.h"
 #include"../../HitDamage/HitDamage.h"
+class Player;
+class EnemySword;
+class EnemyShield;
 class Enemy :public CharaBase
 {
 public:
@@ -26,6 +28,16 @@ public:
 	const std::weak_ptr<Player>& GetPlayerWeakPtr() const
 	{
 		return m_wpPlayer;
+	}
+
+	const std::weak_ptr<EnemySword>& GetEnemySword() const
+	{
+		return m_enemySword;
+	}
+
+	const std::weak_ptr<EnemyShield>& GetEnemyShield() const
+	{
+		return m_enemyShield;
 	}
 
 	void UpdateAttack();
@@ -81,6 +93,9 @@ private:
 	float m_attackFrame = 0.0f;			// 攻撃判定フレーム
 
 	EnemyStatus m_status;				// 敵のステータス
+
+	std::weak_ptr<EnemySword> m_enemySword; // 敵の剣
+	std::weak_ptr<EnemyShield> m_enemyShield; // 敵の盾
 
 	std::shared_ptr<HitDamage> m_spHitDamage;
 };

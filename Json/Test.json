@@ -69,9 +69,9 @@
     "moveSpeed": 0.14000000059604645,
     "path": "Asset\\Models\\Player\\Perula\\Player\\Perula.gltf",
     "pos": {
-      "x": -4.0,
+      "x": 7.0682597160339355,
       "y": 1.0,
-      "z": 4.0
+      "z": -5.304572582244873
     },
     "rotateSpeed": 30.0,
     "scale": {
@@ -157,8 +157,8 @@
       "z": 1.0
     },
     "deg": {
-      "x": 14.999995231628418,
-      "y": 96.71554565429688,
+      "x": 4.350007057189941,
+      "y": -20.83943748474121,
       "z": 0.0
     },
     "fov": 50.0,
@@ -178,8 +178,8 @@
     "smooth": 8.0,
     "targetLookAt": {
       "x": 0.0,
-      "y": 1.000000238418579,
-      "z": -3.500000476837158
+      "y": 1.0000003576278687,
+      "z": -3.5000007152557373
     },
     "type": 32
   },
@@ -709,7 +709,7 @@
       "z": 0.41960784792900085
     },
     "deg": {
-      "x": -0.09399999678134918,
+      "x": -0.05752083286643028,
       "y": -0.03200000151991844,
       "z": 0.0
     },
@@ -731,9 +731,9 @@
     "Name": "class Scoring",
     "color": {
       "w": 1.0,
-      "x": 1.0,
-      "y": 0.4300000071525574,
-      "z": 0.03999999910593033
+      "x": 0.7099999785423279,
+      "y": 0.23999999463558197,
+      "z": 1.0
     },
     "deg": {
       "x": 0.0,
@@ -1675,6 +1675,116 @@
       "z": 0.4000000059604645
     },
     "type": 21
+  },
+  {
+    "Name": "class EnemySword",
+    "color": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "deg": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
+      "DrawLit": false,
+      "DrawToon": false,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "handWeaponDeg": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "katanaHandOffset": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "katanaOffset": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "path": "Asset\\Models\\Weapon\\EnemySword\\EnemySowrd.gltf",
+    "pos": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "type": 42,
+    "weaponDeg": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    }
+  },
+  {
+    "Name": "class EnemyShield",
+    "color": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "deg": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
+      "DrawLit": false,
+      "DrawToon": false,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "handWeaponDeg": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "katanaHandOffset": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "katanaOffset": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "path": "Asset\\Models\\Weapon\\Shield\\Shield.gltf",
+    "pos": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "type": 32,
+    "weaponDeg": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    }
   },
   {
     "Name": "class FPSCamera",

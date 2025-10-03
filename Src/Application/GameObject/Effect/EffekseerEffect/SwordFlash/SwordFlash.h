@@ -6,7 +6,7 @@ public:
 
 	static const uint32_t TypeID;
 
-	SwordFlash() { m_type = TypeID; }
+	SwordFlash() { m_typeID = TypeID; }
 	~SwordFlash() override = default;
 
 };

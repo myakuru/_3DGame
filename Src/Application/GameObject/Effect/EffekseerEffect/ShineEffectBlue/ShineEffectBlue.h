@@ -6,7 +6,7 @@ public:
 
 	static const uint32_t TypeID;
 
-	ShineEffectBlue() { m_type = TypeID; }
+	ShineEffectBlue() { m_typeID = TypeID; }
 	~ShineEffectBlue() override = default;
 
 };

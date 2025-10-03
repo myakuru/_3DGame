@@ -6,7 +6,7 @@ class FieldEffect : public SelectDraw3dPolygon
 public:
 	static const uint32_t TypeID;
 
-	FieldEffect() { m_type = TypeID; }
+	FieldEffect() { m_typeID = TypeID; }
 	~FieldEffect() override = default;
 
 private:

@@ -100,9 +100,6 @@
     <Filter Include="Src\Application\GameObject\Weapon">
       <UniqueIdentifier>{8fcb7635-df4d-4884-9a74-5118c6dad539}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Src\Application\GameObject\Weapon\Katana">
-      <UniqueIdentifier>{95a40f35-61cf-4a0e-a64c-c157a1b41705}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Src\Application\GameObject\Utility">
       <UniqueIdentifier>{d73ea3c3-885e-48e6-ac48-0a0a6b8aab01}</UniqueIdentifier>
     </Filter>
@@ -366,6 +363,15 @@
     </Filter>
     <Filter Include="Src\Application\GameObject\Effect\EffekseerEffect\SpecialAttack">
       <UniqueIdentifier>{2ebb3b70-3590-49e6-a97d-85f7796f15e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Weapon\EnemySword">
+      <UniqueIdentifier>{07692688-4f3a-4e54-b0b6-2c9636f2df46}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Weapon\Katana">
+      <UniqueIdentifier>{95a40f35-61cf-4a0e-a64c-c157a1b41705}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Weapon\EnemyShield">
+      <UniqueIdentifier>{74c9622f-922c-4354-8536-7eaddf2af641}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -837,6 +843,12 @@
     <ClInclude Include="Src\Application\GameObject\Effect\EffekseerEffect\SpecialAttack\SpecialAttack.h">
       <Filter>Src\Application\GameObject\Effect\EffekseerEffect\SpecialAttack</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Weapon\EnemySword\EnemySword.h">
+      <Filter>Src\Application\GameObject\Weapon\EnemySword</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Weapon\EnemyShield\EnemyShield.h">
+      <Filter>Src\Application\GameObject\Weapon\EnemyShield</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -1249,6 +1261,12 @@
     </ClCompile>
     <ClCompile Include="Src\Application\GameObject\Effect\EffekseerEffect\SpecialAttack\SpecialAttack.cpp">
       <Filter>Src\Application\GameObject\Effect\EffekseerEffect\SpecialAttack</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Weapon\EnemySword\EnemySword.cpp">
+      <Filter>Src\Application\GameObject\Weapon\EnemySword</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Weapon\EnemyShield\EnemyShield.cpp">
+      <Filter>Src\Application\GameObject\Weapon\EnemyShield</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -6,7 +6,7 @@ public:
 
 	static const uint32_t TypeID;
 
-	SlashAttack2Effect() { m_type = TypeID; }
+	SlashAttack2Effect() { m_typeID = TypeID; }
 	~SlashAttack2Effect() override = default;
 
 };

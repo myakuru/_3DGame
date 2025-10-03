@@ -6,8 +6,8 @@
 void EnemyState_Run::StateStart()
 {
 	auto anime = m_enemy->GetAnimeModel()->GetAnimation("Run");
-	m_enemy->GetAnimator()->SetAnimation(anime, 0.25f, true);
-	m_enemy->SetAnimeSpeed(120.0f);
+	m_enemy->GetAnimator()->SetAnimation(anime, 1.0f, true);
+	m_enemy->SetAnimeSpeed(60.0f);
 }
 
 void EnemyState_Run::StateUpdate()

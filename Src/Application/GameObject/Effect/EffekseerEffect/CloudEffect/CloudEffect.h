@@ -5,7 +5,7 @@ class CloudEffect : public EffekseerEffectBase
 public:
 	static const uint32_t TypeID;
 
-	CloudEffect() { m_type = TypeID; }
+	CloudEffect() { m_typeID = TypeID; }
 	~CloudEffect() override = default;
 
 private:

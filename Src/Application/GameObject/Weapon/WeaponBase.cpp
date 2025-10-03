@@ -43,3 +43,25 @@ void WeaponBase::JsonInput(const nlohmann::json& _json)
 	if (_json.contains("scale")) m_swordData.m_scale = JSON_MANAGER.JsonToVector(_json["scale"]);
 	if (_json.contains("handWeaponDeg")) m_swordHandData.m_weaponDeg = JSON_MANAGER.JsonToVector(_json["handWeaponDeg"]);
 }
+
+Math::Matrix WeaponBase::ToRotationMatrix(const Math::Vector3& deg)
+{
+	return Math::Matrix::CreateFromYawPitchRoll(
+		DirectX::XMConvertToRadians(deg.y),
+		DirectX::XMConvertToRadians(deg.x),
+		DirectX::XMConvertToRadians(deg.z));
+}
+
+Math::Matrix WeaponBase::ComposeWeaponMatrix(const SwordData& trsSrc, const SwordData& attachSrc, const Math::Vector3& offset, const Math::Matrix& ownerWorld) const
+{
+	Math::Matrix rot = ToRotationMatrix(trsSrc.m_weaponDeg);
+	Math::Matrix scl = Math::Matrix::CreateScale(trsSrc.m_scale);
+
+	// ボーンの回転・拡縮成分を無視して平行移動のみ使用
+	Math::Matrix bone = attachSrc.m_weaponBonesMatrix;
+	bone.Translation(attachSrc.m_weaponBonesMatrix.Translation());
+
+	Math::Matrix transOffset = Math::Matrix::CreateTranslation(offset);
+
+	return transOffset * scl * rot * bone * ownerWorld;
+}

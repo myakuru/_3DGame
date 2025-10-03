@@ -6,6 +6,6 @@ public:
 
 	static const uint32_t TypeID;
 
-	SpecialAttack() { m_type = TypeID; }
+	SpecialAttack() { m_typeID = TypeID; }
 	~SpecialAttack() override = default;
 };

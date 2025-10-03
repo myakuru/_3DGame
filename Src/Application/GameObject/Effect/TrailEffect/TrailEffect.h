@@ -5,7 +5,7 @@ class TrailEffect : public KdGameObject
 public:
 
 	static const uint32_t TypeID;
-	TrailEffect() { m_type = TypeID; }
+	TrailEffect() { m_typeID = TypeID; }
 	~TrailEffect() override = default;
 
 	void Clear() { m_trailPolygon->ClearPoints(); }

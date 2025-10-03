@@ -358,6 +358,8 @@
     <ClInclude Include="Src\Application\GameObject\Utility\SelectDraw3dModel.h" />
     <ClInclude Include="Src\Application\GameObject\Utility\SelectDraw3dPolygon.h" />
     <ClInclude Include="Src\Application\GameObject\Utility\Time.h" />
+    <ClInclude Include="Src\Application\GameObject\Weapon\EnemyShield\EnemyShield.h" />
+    <ClInclude Include="Src\Application\GameObject\Weapon\EnemySword\EnemySword.h" />
     <ClInclude Include="Src\Application\GameObject\Weapon\Katana\Katana.h" />
     <ClInclude Include="Src\Application\GameObject\Weapon\WeaponBase.h" />
     <ClInclude Include="Src\Application\GameObject\Weapon\WeaponKatanaScabbard\WeaponKatanaScabbard.h" />
@@ -503,6 +505,8 @@
     <ClCompile Include="Src\Application\GameObject\Map\Map.cpp" />
     <ClCompile Include="Src\Application\GameObject\ResultScore\ResultScore.cpp" />
     <ClCompile Include="Src\Application\GameObject\SkySphere\SkySphere.cpp" />
+    <ClCompile Include="Src\Application\GameObject\Weapon\EnemyShield\EnemyShield.cpp" />
+    <ClCompile Include="Src\Application\GameObject\Weapon\EnemySword\EnemySword.cpp" />
     <ClCompile Include="Src\Application\GameObject\Weapon\Katana\Katana.cpp" />
     <ClCompile Include="Src\Application\GameObject\Weapon\WeaponBase.cpp" />
     <ClCompile Include="Src\Application\GameObject\Weapon\WeaponKatanaScabbard\WeaponKatanaScabbard.cpp" />
