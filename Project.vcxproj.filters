@@ -364,6 +364,9 @@
     <Filter Include="Src\Application\GameObject\CutInCube">
       <UniqueIdentifier>{d7638287-757d-481a-8970-1df57062321d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\GameObject\Effect\EffekseerEffect\SpecialAttack">
+      <UniqueIdentifier>{2ebb3b70-3590-49e6-a97d-85f7796f15e1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -831,6 +834,9 @@
     <ClInclude Include="Src\Application\GameObject\CutInCube\CutInCube.h">
       <Filter>Src\Application\GameObject\CutInCube</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Effect\EffekseerEffect\SpecialAttack\SpecialAttack.h">
+      <Filter>Src\Application\GameObject\Effect\EffekseerEffect\SpecialAttack</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -1240,6 +1246,9 @@
     </ClCompile>
     <ClCompile Include="Src\Application\GameObject\CutInCube\CutInCube.cpp">
       <Filter>Src\Application\GameObject\CutInCube</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Effect\EffekseerEffect\SpecialAttack\SpecialAttack.cpp">
+      <Filter>Src\Application\GameObject\Effect\EffekseerEffect\SpecialAttack</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -4,6 +4,8 @@
 #include"../PlayerState_Sheathing-of-Katana/PlayerState_Sheathing-of-Katana.h"
 #include"../../../../Camera/PlayerCamera/PlayerCamera.h"
 #include"../../../../Weapon/Katana/Katana.h"
+#include"../../../../../Scene/SceneManager.h"
+#include"../../../../Effect/EffekseerEffect/SpecialAttack/SpecialAttack.h"
 
 void PlayerState_SpecialAttack::StateStart()
 {
@@ -17,6 +19,9 @@ void PlayerState_SpecialAttack::StateStart()
 	{
 		katana->SetNowAttackState(true);
 	}
+
+	SceneManager::Instance().GetObjectWeakPtr(m_specialAttackEffect);
+
 }
 
 void PlayerState_SpecialAttack::StateUpdate()
@@ -46,17 +51,19 @@ void PlayerState_SpecialAttack::StateUpdate()
 
 	float deltaTime = Application::Instance().GetDeltaTime();
 
-	if (m_time < 0.2f)
+	m_time += deltaTime;
+
+	if (m_time >= 1.0f)
 	{
-		float dashSpeed = 0.0f;
-		m_player->SetIsMoving(m_attackDirection * dashSpeed);
-		m_time += deltaTime;
+		if (auto effect = m_specialAttackEffect.lock(); effect)
+		{
+			effect->SetPlayEffect(true);
+		}
 	}
-	else
-	{
-		// 移動を止める
-		m_player->SetIsMoving(Math::Vector3::Zero);
-	}
+	
+	// 移動を止める
+	m_player->SetIsMoving(Math::Vector3::Zero);
+	
 
 	// カタナ関連
 	if (auto katana = m_player->GetKatana().lock(); katana)
@@ -74,5 +81,10 @@ void PlayerState_SpecialAttack::StateEnd()
 	{
 		// カメラと、プレイヤーの距離を近づける（らーぷ）
 		camera->SetTargetLookAt({ 0.0f,1.0f,-3.5f });
+	}
+
+	if (auto effect = m_specialAttackEffect.lock(); effect)
+	{
+		effect->SetPlayEffect(false);
 	}
 }

@@ -157,8 +157,8 @@
       "z": 1.0
     },
     "deg": {
-      "x": 7.950014591217041,
-      "y": -255.57998657226563,
+      "x": 14.999995231628418,
+      "y": 96.71554565429688,
       "z": 0.0
     },
     "fov": 50.0,
@@ -169,7 +169,7 @@
       "y": 0.0,
       "z": 0.0
     },
-    "rotationSmooth": 4.0,
+    "rotationSmooth": 8.0,
     "scale": {
       "x": 1.0,
       "y": 1.0,
@@ -178,8 +178,8 @@
     "smooth": 8.0,
     "targetLookAt": {
       "x": 0.0,
-      "y": 1.0000003576278687,
-      "z": -3.4999992847442627
+      "y": 1.000000238418579,
+      "z": -3.500000476837158
     },
     "type": 32
   },
@@ -1300,7 +1300,7 @@
     },
     "fixedFps": 60.0,
     "moveSpeed": 0.0,
-    "path": "Asset\\Models\\Enemy\\Enemy.gltf",
+    "path": "Asset\\Models\\Enemy\\Aetherius\\Aetherius.gltf",
     "pos": {
       "x": 9.5,
       "y": 1.0,
@@ -1649,44 +1649,32 @@
     "type": 32
   },
   {
-    "Name": "class CutInCube",
+    "EffectSpeed": 20.0,
+    "Name": "class SpecialAttack",
     "color": {
       "w": 1.0,
-      "x": 0.0,
-      "y": 0.40369105339050293,
-      "z": 0.9803921580314636
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
     },
     "deg": {
+      "x": 0.0,
+      "y": -90.0,
+      "z": 0.0
+    },
+    "distance": 5.0,
+    "path": "Asset\\Data\\Effect\\EVFX_Slash\\VFX\\effects\\SLASH.efkefc",
+    "pos": {
       "x": 0.0,
       "y": 0.0,
       "z": 0.0
     },
-    "drawFlags": {
-      "DrawBright": false,
-      "DrawGradation": false,
-      "DrawGrayScale": false,
-      "DrawLit": false,
-      "DrawToon": false,
-      "DrawUnLit": false,
-      "GenerateDepthMapFromLight": false
-    },
-    "offset": {
-      "x": 0.0,
-      "y": 4.809999942779541,
-      "z": 0.0
-    },
-    "path": "Asset\\Collition\\Circle.gltf",
-    "pos": {
-      "x": -4.0,
-      "y": 1.0,
-      "z": 4.0
-    },
     "scale": {
-      "x": 0.30000001192092896,
-      "y": 0.30000001192092896,
-      "z": 0.30000001192092896
+      "x": 0.4000000059604645,
+      "y": 0.4000000059604645,
+      "z": 0.4000000059604645
     },
-    "type": 32
+    "type": 21
   },
   {
     "Name": "class FPSCamera",

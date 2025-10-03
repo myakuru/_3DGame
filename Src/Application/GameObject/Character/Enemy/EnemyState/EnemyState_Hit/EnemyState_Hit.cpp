@@ -4,7 +4,7 @@
 void EnemyState_Hit::StateStart()
 {
 	auto anime = m_enemy->GetAnimeModel()->GetAnimation("Damage");
-	m_enemy->GetAnimator()->SetAnimation(anime, false);
+	m_enemy->GetAnimator()->SetAnimation(anime, 0.25f, false);
 }
 
 void EnemyState_Hit::StateUpdate()

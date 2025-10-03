@@ -5,7 +5,8 @@
 void EnemyState_Idle::StateStart()
 {
 	auto anime = m_enemy->GetAnimeModel()->GetAnimation("Idle");
-	m_enemy->GetAnimator()->SetAnimation(anime, true);
+	m_enemy->GetAnimator()->SetAnimation(anime, 0.25f, true);
+	m_enemy->SetAnimeSpeed(120.0f);
 }
 
 void EnemyState_Idle::StateUpdate()

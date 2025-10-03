@@ -57,6 +57,7 @@
 #include "../GameObject/Effect/EffekseerEffect/AvoidAttackSlashEffect/AvoidAttackSlashEffect.h"
 #include"../GameObject/Effect/EffekseerEffect/ESkillEffect/ESkillEffect.h"
 #include"../GameObject/CutInCube/CutInCube.h"
+#include"../GameObject/Effect/EffekseerEffect/SpecialAttack/SpecialAttack.h"
 
 void SceneManager::Init()
 {
@@ -110,6 +111,8 @@ void SceneManager::Register() const
 	RegisterObject::GetInstance().Register<SlashAttack2Effect>();
 	RegisterObject::GetInstance().Register<AvoidAttackSlashEffect>();
 	RegisterObject::GetInstance().Register<ESkillEffect>();
+	RegisterObject::GetInstance().Register<SpecialAttack>();
+
 	RegisterObject::GetInstance().Register<CutInCube>();
 }
 

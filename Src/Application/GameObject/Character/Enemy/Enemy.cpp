@@ -17,7 +17,7 @@ void Enemy::Init()
 
 	m_pCollider->RegisterCollisionShape("EnemySphere", sphere, KdCollider::TypeDamage);
 
-	//m_pCollider->RegisterCollisionShape("PlayerSphere", sphere, KdCollider::TypeEnemyHit);
+	m_pCollider->RegisterCollisionShape("PlayerSphere", sphere, KdCollider::TypeEnemyHit);
 
 	StateInit();
 }
@@ -44,7 +44,7 @@ void Enemy::Update()
 	{
 		Application::Instance().SetFpsScale(1.f); // スローモーションにする
 		SceneManager::Instance().SetDrawGrayScale(false);
-		m_attackFrame = 0.0f; // 必要ならリセット
+		m_attackFrame = 0.0f;
 	}
 
 	// ヒット処理。

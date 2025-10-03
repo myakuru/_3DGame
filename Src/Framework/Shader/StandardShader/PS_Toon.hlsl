@@ -7,6 +7,7 @@ Texture2D g_dirShadowMap : register(t10); // 平行光シャドウマップ
 Texture2D g_metalRoughTex : register(t1); // メタリック/ラフネステクスチャ
 Texture2D g_emissiveTex : register(t2); // 発光テクスチャ
 Texture2D g_normalTex : register(t3); // 法線マップ
+Texture2D g_dissolveTex : register(t11);	// ディゾルブマップ
 
 // サンプラ
 SamplerState g_ss : register(s0);
@@ -27,6 +28,13 @@ float BlinnPhong(float3 lightDir, float3 vCam, float3 normal, float specPower)
 
 float4 main(VSOutput In) : SV_Target0
 {
+	// ディゾルブによる描画スキップ
+	float discardValue = g_dissolveTex.Sample(g_ss, In.UV).r;
+	if (discardValue < g_dissolveValue)
+	{
+		discard;
+	}
+	
 	// ベースカラー取得
 	float4 baseColor = g_baseTex.Sample(g_ss, In.UV) * g_BaseColor * In.Color;
 

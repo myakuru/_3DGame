@@ -6,7 +6,8 @@
 void EnemyState_Run::StateStart()
 {
 	auto anime = m_enemy->GetAnimeModel()->GetAnimation("Run");
-	m_enemy->GetAnimator()->SetAnimation(anime, true);
+	m_enemy->GetAnimator()->SetAnimation(anime, 0.25f, true);
+	m_enemy->SetAnimeSpeed(120.0f);
 }
 
 void EnemyState_Run::StateUpdate()
@@ -38,13 +39,13 @@ void EnemyState_Run::StateUpdate()
 		m_enemy->SetRotation(rotMat);
 		m_enemy->SetIsMoving(dir);
 	}
-	else
-	{
-		// Attackステートに移行
-		//auto attack = std::make_shared<EnemyState_Attack>();
-		//m_enemy->ChangeState(attack);
-		//return;
-	}
+	//else
+	//{
+	//	//Attackステートに移行
+	//	auto attack = std::make_shared<EnemyState_Attack>();
+	//	m_enemy->ChangeState(attack);
+	//	return;
+	//}
 
 }
 

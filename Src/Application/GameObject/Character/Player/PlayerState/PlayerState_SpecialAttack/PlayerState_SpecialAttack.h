@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include"../PlayerState.h"
+class SpecialAttack;
 class PlayerState_SpecialAttack :public PlayerStateBase
 {
 public:
@@ -11,5 +12,7 @@ private:
 	void StateStart() override;
 	void StateUpdate() override;
 	void StateEnd() override;
+
+	std::weak_ptr<SpecialAttack> m_specialAttackEffect;
 
 };
