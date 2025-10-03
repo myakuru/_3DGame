@@ -11,7 +11,8 @@ void FPSCamera::Init()
 	// 基準点(ターゲット)の目線
 	m_mLocalPos = Math::Matrix::CreateTranslation(0, 1.5f, 0.0f);
 
-	SetCursorPos(m_FixMousePos.x, m_FixMousePos.y);
+	// 起動時にカーソルを動かさない。現在位置を保持
+	GetCursorPos(&m_FixMousePos);
 }
 
 void FPSCamera::CameraUpdate()

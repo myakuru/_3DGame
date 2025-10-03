@@ -19,6 +19,9 @@ void Player::Init()
 
 	m_animator->SetAnimation(m_modelWork->GetData()->GetAnimation("Idle"));
 
+	// ノードの再計算
+	m_modelWork->CalcNodeMatrices();
+
 	StateInit();
 
 	m_position = Math::Vector3(-4.0f, 1.2f, 4.0f);
@@ -35,6 +38,14 @@ void Player::Init()
 
 	m_onceEffect = false;
 	m_isAtkPlayer = false;
+
+	// 残像描画用 Work を元データで生成
+	if (auto* src = GetModelWork())
+	{
+		m_afterImageWork = std::make_unique<KdModelWork>(src->GetData());
+	}
+
+	m_dissever = 1.0f;
 }
 
 void Player::PreUpdate()
@@ -115,6 +126,16 @@ void Player::PostUpdate()
 		m_position += hitDir * maxOverLap;
 	}
 
+	CaptureAfterImage();
+
+}
+
+void Player::DrawBright()
+{
+	if (m_afterImageEnable)
+	{
+		DrawAfterImages();
+	}
 }
 
 void Player::Update()
@@ -334,5 +355,76 @@ void Player::UpdateMoveDirectionFromInput()
 	{
 		m_moveDirection.Normalize();
 		m_lastMoveDirection = m_moveDirection; // 入力があった時だけ更新
+	}
+}
+
+void Player::CaptureAfterImage()
+{
+	if (!m_afterImageEnable) return;
+
+	// モデルワークが無効なら処理しない
+	KdModelWork* work = GetModelWork();
+	if (!work || !work->IsEnable()) return;
+
+	// m_afterImageIntervalを超えるまでカウンタを進める
+	if (m_afterImageCounter++ < m_afterImageInterval) return;
+	m_afterImageCounter = 0;
+
+	// ノード worldTransform をスナップショット
+	const auto& nodes = work->GetNodes();
+
+	AfterImageFrame frame;
+
+	// ノード worldTransform を保存
+	frame.nodeWorlds.resize(nodes.size());
+
+	// 各ノードの worldTransform を保存
+	for (size_t i = 0; i < nodes.size(); ++i)
+	{
+		frame.nodeWorlds[i] = nodes[i].m_worldTransform;
+	}
+	// 現在の m_mWorld を保存
+	frame.ownerWorld = m_mWorld;
+
+	Math::Matrix scale = Math::Matrix::CreateScale(1,1,1);
+
+	frame.ownerWorld = scale * frame.ownerWorld;
+
+	// 先頭に追加し、上限を超えたら末尾を捨てる
+	m_afterImages.push_front(std::move(frame));
+	while ((int)m_afterImages.size() > m_afterImageMax) m_afterImages.pop_back();
+}
+
+void Player::DrawAfterImages()
+{
+	if (!m_afterImageEnable) return;
+	if (!m_afterImageWork) return;
+	if (m_afterImages.empty()) return;
+
+	auto& stdShader = KdShaderManager::Instance().m_StandardShader;
+
+	// 古いもの→新しいものの順
+	for (int i = (int)m_afterImages.size() -1; i >= 0; --i)
+	{
+		// フレームデータ取得
+		const auto& frameData = m_afterImages[i];
+
+		// ノード数が異なる場合はスキップ
+		auto& workNodes = m_afterImageWork->WorkNodes();
+		if (workNodes.size() != frameData.nodeWorlds.size()) continue;
+
+		// ノード worldTransform を上書き
+		for (size_t nodeIndex = 0; nodeIndex < workNodes.size(); ++nodeIndex)
+		{
+			workNodes[nodeIndex].m_worldTransform = frameData.nodeWorlds[nodeIndex];
+		}
+
+		m_afterImageWork->SetNeedCalcNodeMatrices(false);
+
+		// 残像の描画
+		float a = 0.01f;
+		Math::Vector3 color = {0,1,1};
+		KdShaderManager::Instance().m_StandardShader.SetDissolve(0.85f, &a, &color);
+		stdShader.DrawModel(*m_afterImageWork, frameData.ownerWorld, m_afterImageColor);
 	}
 }

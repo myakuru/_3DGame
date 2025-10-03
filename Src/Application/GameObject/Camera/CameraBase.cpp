@@ -7,9 +7,6 @@ void CameraBase::Init()
 	{
 		m_spCamera = std::make_shared<KdCamera>();
 	}
-	// ↓画面中央座標
-	m_FixMousePos.x = 640;
-	m_FixMousePos.y = 360;
 }
 
 void CameraBase::PreDraw()
@@ -95,18 +92,34 @@ void CameraBase::UpdateRotateByMouse()
 	if (nowTab && !prevTab)
 	{
 		m_enabled = !m_enabled;
-		SwitchShowCursor(false);
+
+		if (m_enabled)
+		{
+			// 有効化時に固定点をウィンドウ中央に設定し、一度だけカーソルを移動
+			HWND hwnd = Application::Instance().GetWindowHandle();
+			RECT rc{};
+			GetClientRect(hwnd, &rc);
+			POINT center{ (rc.right - rc.left) / 2, (rc.bottom - rc.top) / 2 };
+			ClientToScreen(hwnd, &center);
+			m_FixMousePos = center;
+			SetCursorPos(m_FixMousePos.x, m_FixMousePos.y);
+
+			SwitchShowCursor(false);
+		}
+		else
+		{
+			SwitchShowCursor(true);
+		}
 	}
 
+	// 有効/無効の維持
 	if (m_enabled) SwitchShowCursor(false);
-
 	if (!m_enabled) SwitchShowCursor(true);
 
 	prevTab = nowTab;
 
 	if (m_enabled)
 	{
-
 		// マウスでカメラを回転させる処理
 		POINT _nowPos;
 		GetCursorPos(&_nowPos);
@@ -115,9 +128,10 @@ void CameraBase::UpdateRotateByMouse()
 		_mouseMove.x = _nowPos.x - m_FixMousePos.x;
 		_mouseMove.y = _nowPos.y - m_FixMousePos.y;
 
+		// 毎フレーム、固定点に戻す
 		SetCursorPos(m_FixMousePos.x, m_FixMousePos.y);
 
-		// 実際にカメラを回転させる処理(0.15はただの補正値)
+		// 実際にカメラを回転させる処理(0.15は補正値)
 		m_degree.x += _mouseMove.y * 0.15f;
 		m_degree.y += _mouseMove.x * 0.15f;
 	}

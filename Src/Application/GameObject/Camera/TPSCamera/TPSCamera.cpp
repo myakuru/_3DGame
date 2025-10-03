@@ -12,7 +12,8 @@ void TPSCamera::Init()
 	// 注視点
 	m_mLocalPos = Math::Matrix::CreateTranslation(0, 2.f, -2.0f);
 
-	SetCursorPos(m_FixMousePos.x, m_FixMousePos.y);
+	// 起動時にカーソルを動かさない。現在位置を保持
+	GetCursorPos(&m_FixMousePos);
 }
 
 void TPSCamera::PostUpdate()

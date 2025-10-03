@@ -23,6 +23,7 @@ public:
 	void Init() override;
 	void PreUpdate() override;
 	void PostUpdate() override;
+	void DrawBright() override;
 	void Update() override;
 	void UpdateAttack();
 	void UpdateChargeAttack();
@@ -70,6 +71,19 @@ public:
 	const Math::Vector2& GetCameraShakePower() const { return m_cameraShakePower; }
 	float GetCameraShakeTime() const { return m_cameraShakeTime; }
 
+
+	// 残像処理
+
+	// 残像の有効/設定
+	void SetAfterImageEnable(bool enable) { m_afterImageEnable = enable; }
+	void SetAfterImageMax(size_t max) { m_afterImageMax = (int)max; }
+	void SetAfterImageInterval(int frameInterval) { m_afterImageInterval = frameInterval; }
+	void SetAfterImageColor(const Math::Color& col) { m_afterImageColor = col; }
+
+	// 更新/描画フック
+	void CaptureAfterImage();   // PostUpdate などで呼ぶ
+	void DrawAfterImages();     // Draw の前後で呼ぶ
+
 private:
 
 	Math::Vector3 m_moveDirection = Math::Vector3::Zero;		// 移動方向
@@ -88,5 +102,26 @@ private:
 	float m_cameraShakeTime = 0.0f;								// カメラシェイクの時間
 	PlayerConfig m_playerConfig;								// プレイヤーの設定
 	bool m_isAtkPlayer = false;									// プレイヤーと敵が接触したか どうか
+
+
+	// 残像関連
+	struct AfterImageFrame
+	{
+		std::vector<Math::Matrix> nodeWorlds; // 各ノードの worldTransform（モデルローカル空間）
+		Math::Matrix ownerWorld = Math::Matrix::Identity; // その時点の m_mWorld
+		float alpha = 1.0f; // このフレームの不透明度
+	};
+
+	// 残像設定・状態
+	bool m_afterImageEnable = true;
+	int  m_afterImageMax = 5;
+	int  m_afterImageInterval = 3; // 何フレームごとに保存するか
+	int  m_afterImageCounter = 0;	// カウンタ
+	Math::Color m_afterImageColor = {0,1,1,0.5f}; // 基本色（半透明白）
+
+	std::deque<AfterImageFrame> m_afterImages;
+
+	// 描画用テンポラリ Work（元モデルと同じ Data を参照）
+	std::unique_ptr<KdModelWork> m_afterImageWork;
 
 };

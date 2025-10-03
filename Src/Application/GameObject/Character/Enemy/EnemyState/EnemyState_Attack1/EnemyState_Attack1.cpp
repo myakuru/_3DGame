@@ -5,6 +5,8 @@
 
 void EnemyState_Attack1::StateStart()
 {
+	EnemyStateBase::StateStart();
+
 	auto anime = m_enemy->GetAnimeModel()->GetAnimation("Attack1");
 	m_enemy->GetAnimator()->SetAnimation(anime, 0.25f, false);
 	m_enemy->m_onceEffect = false;
@@ -14,7 +16,20 @@ void EnemyState_Attack1::StateStart()
 
 void EnemyState_Attack1::StateUpdate()
 {
-	//m_enemy->SetAnimeSpeed(120.0f);
+	// 攻撃中の移動方向で回転を更新
+	if (m_enemy->GetMovement() != Math::Vector3::Zero)
+	{
+		Math::Vector3 moveDir = m_enemy->GetMovement();
+		moveDir.y = 0.0f;
+		moveDir.Normalize();
+		m_enemy->UpdateQuaternionDirect(moveDir);
+	}
+
+	// 0.5秒間当たり判定有効
+	if (m_time >= 0.5 && m_time <= 0.7)
+	{
+		m_enemy->UpdateAttack();
+	}
 
 	float deltaTime = Application::Instance().GetDeltaTime();
 

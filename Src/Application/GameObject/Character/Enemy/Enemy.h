@@ -85,7 +85,6 @@ private:
 	bool m_Expired = false;				// 敵を消滅させるかどうか
 	bool m_isHit = false;				// ヒット判定
 	bool m_isAtkPlayer = false;
-	float m_dissever = 0.0f;			// 敵のディゾルブ値
 
 	int m_getDamage = 0;				// 受けるダメージ量
 

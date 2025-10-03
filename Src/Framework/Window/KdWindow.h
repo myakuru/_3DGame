@@ -34,6 +34,10 @@ public:
 	// 解放
 	void Release();
 
+	void SetBorderlessFullscreen(bool enable);
+	bool IsBorderlessFullscreen() const { return m_borderless; }
+
+
 	//
 	~KdWindow() {
 		Release();
@@ -72,5 +76,9 @@ private:
 	static LRESULT CALLBACK callWindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 	LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
+
+	bool  m_borderless = false;
+	DWORD m_savedStyle = 0;
+	RECT  m_savedRect = { 0,0,0,0 };
 
 };

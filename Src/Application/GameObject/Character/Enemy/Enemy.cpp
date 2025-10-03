@@ -13,6 +13,8 @@ void Enemy::Init()
 {
 	CharaBase::Init();
 
+	m_rotateSpeed = 10.0f;
+
 	m_animator->SetAnimation(m_modelWork->GetData()->GetAnimation("Idle"));
 
 	m_pCollider = std::make_unique<KdCollider>();
@@ -138,23 +140,22 @@ void Enemy::UpdateAttack()
 
 	if (!player) return;
 
-	// プレイヤーが回避中か判定
-	if (player->GetAvoidFlg())
-	{
-		int avoidFrame = Application::Instance().GetDeltaTime() - player->GetAvoidStartTime();
-		if (avoidFrame >= 0 && avoidFrame <= 30) // 3フレーム以内ならジャスト回避
-		{
-			Application::Instance().SetFpsScale(0.5f); // スローモーションにする
-			SceneManager::Instance().SetDrawGrayScale(true);
-			return; // ダメージ処理をスキップ
-		}
-	}
-
-
 	// 当たり判定
 	std::list<KdCollider::CollisionResult> results;
 	if (player->Intersects(attackSphere, &results))
 	{
+		// プレイヤーが回避中か判定
+		if (player->GetAvoidFlg())
+		{
+			int avoidFrame = Application::Instance().GetDeltaTime() - player->GetAvoidStartTime();
+			if (avoidFrame >= 0 && avoidFrame <= 30) // 3フレーム以内ならジャスト回避
+			{
+				Application::Instance().SetFpsScale(0.5f); // スローモーションにする
+				SceneManager::Instance().SetDrawGrayScale(true);
+				return; // ダメージ処理をスキップ
+			}
+		}
+
 		if (!m_onceEffect)
 		{
 			// 敵にダメージを与える処理
@@ -229,6 +230,8 @@ void Enemy::ImGuiInspector()
 
 	ImGui::DragFloat(U8("重力の大きさ"), &m_gravitySpeed, 0.01f);
 	ImGui::DragFloat(U8("アニメーション速度"), &m_fixedFrameRate, 1.f);
+	ImGui::Text(U8("プレイヤーの回転速度"));
+	ImGui::DragFloat(U8("回転速度"), &m_rotateSpeed, 0.1f);
 
 	ImGui::Text(U8("現在の状態"));
 	ImGui::DragFloat(U8("移動速度"), &m_moveSpeed, 0.1f);
@@ -240,6 +243,7 @@ void Enemy::JsonInput(const nlohmann::json& _json)
 	if (_json.contains("GravitySpeed")) m_gravitySpeed = _json["GravitySpeed"].get<float>();
 	if (_json.contains("fixedFps")) m_fixedFrameRate = _json["fixedFps"].get<float>();
 	if (_json.contains("moveSpeed")) m_moveSpeed = _json["moveSpeed"].get<float>();
+	if (_json.contains("rotationspeed")) m_rotateSpeed = _json["rotationspeed"].get<float>();
 }
 
 void Enemy::JsonSave(nlohmann::json& _json) const
@@ -248,6 +252,7 @@ void Enemy::JsonSave(nlohmann::json& _json) const
 	_json["GravitySpeed"] = m_gravitySpeed;
 	_json["fixedFps"] = m_fixedFrameRate;
 	_json["moveSpeed"] = m_moveSpeed;
+	_json["rotationspeed"] = m_rotateSpeed;
 }
 
 void Enemy::UpdateQuaternion(Math::Vector3& _moveVector)

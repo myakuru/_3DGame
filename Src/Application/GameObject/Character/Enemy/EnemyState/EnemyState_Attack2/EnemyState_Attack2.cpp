@@ -1,8 +1,10 @@
 ﻿#include "EnemyState_Attack2.h"
-#include"../EnemyState_Idle/EnemyState_Idle.h"
+#include"../EnemyState_Attack3/EnemState_Attack3.h"
 
 void EnemyState_Attack2::StateStart()
 {
+	EnemyStateBase::StateStart();
+
 	auto anime = m_enemy->GetAnimeModel()->GetAnimation("Attack2");
 	m_enemy->GetAnimator()->SetAnimation(anime, 0.25f, false);
 	m_enemy->m_onceEffect = false;
@@ -10,7 +12,20 @@ void EnemyState_Attack2::StateStart()
 
 void EnemyState_Attack2::StateUpdate()
 {
-	//m_enemy->SetAnimeSpeed(60.0f);
+	// 攻撃中の移動方向で回転を更新
+	if (m_enemy->GetMovement() != Math::Vector3::Zero)
+	{
+		Math::Vector3 moveDir = m_enemy->GetMovement();
+		moveDir.y = 0.0f;
+		moveDir.Normalize();
+		m_enemy->UpdateQuaternionDirect(moveDir);
+	}
+
+	// 0.5秒間当たり判定有効
+	if (m_time >= 0.5 && m_time <= 0.7)
+	{
+		m_enemy->UpdateAttack();
+	}
 
 	float deltaTime = Application::Instance().GetDeltaTime();
 
@@ -27,7 +42,7 @@ void EnemyState_Attack2::StateUpdate()
 
 	if (m_enemy->GetAnimator()->IsAnimationEnd())
 	{
-		auto attack = std::make_shared<EnemyState_Idle>();
+		auto attack = std::make_shared<EnemState_Attack3>();
 		m_enemy->ChangeState(attack);
 		return;
 	}

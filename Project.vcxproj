@@ -282,6 +282,7 @@
     <ClInclude Include="Src\Application\GameObject\Character\Enemy\EnemyState\EnemyStateBase.h" />
     <ClInclude Include="Src\Application\GameObject\Character\Enemy\EnemyState\EnemyState_Attack1\EnemyState_Attack1.h" />
     <ClInclude Include="Src\Application\GameObject\Character\Enemy\EnemyState\EnemyState_Attack2\EnemyState_Attack2.h" />
+    <ClInclude Include="Src\Application\GameObject\Character\Enemy\EnemyState\EnemyState_Attack3\EnemState_Attack3.h" />
     <ClInclude Include="Src\Application\GameObject\Character\Enemy\EnemyState\EnemyState_Attack\EnemyState_Attack.h" />
     <ClInclude Include="Src\Application\GameObject\Character\Enemy\EnemyState\EnemyState_Hit\EnemyState_Hit.h" />
     <ClInclude Include="Src\Application\GameObject\Character\Enemy\EnemyState\EnemyState_Idle\EnemyState_Idle.h" />
@@ -432,8 +433,10 @@
     <ClCompile Include="Src\Application\GameObject\Camera\TPSCamera\TPSCamera.cpp" />
     <ClCompile Include="Src\Application\GameObject\Character\CharacterBase.cpp" />
     <ClCompile Include="Src\Application\GameObject\Character\Enemy\Enemy.cpp" />
+    <ClCompile Include="Src\Application\GameObject\Character\Enemy\EnemyState\EnemyStateBase.cpp" />
     <ClCompile Include="Src\Application\GameObject\Character\Enemy\EnemyState\EnemyState_Attack1\EnemyState_Attack1.cpp" />
     <ClCompile Include="Src\Application\GameObject\Character\Enemy\EnemyState\EnemyState_Attack2\EnemyState_Attack2.cpp" />
+    <ClCompile Include="Src\Application\GameObject\Character\Enemy\EnemyState\EnemyState_Attack3\EnemState_Attack3.cpp" />
     <ClCompile Include="Src\Application\GameObject\Character\Enemy\EnemyState\EnemyState_Attack\EnemyState_Attack.cpp" />
     <ClCompile Include="Src\Application\GameObject\Character\Enemy\EnemyState\EnemyState_Hit\EnemyState_Hit.cpp" />
     <ClCompile Include="Src\Application\GameObject\Character\Enemy\EnemyState\EnemyState_Idle\EnemyState_Idle.cpp" />

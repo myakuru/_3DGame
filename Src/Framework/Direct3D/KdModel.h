@@ -148,6 +148,10 @@ public:
 	const std::vector<Node>& GetNodes() const { return m_coppiedNodes; }
 	std::vector<Node>& WorkNodes() { m_needCalcNode = true; return m_coppiedNodes; }
 
+	// ノード行列の再計算が必要かフラグを明示的に設定
+	void SetNeedCalcNodeMatrices(bool flag) { m_needCalcNode = flag; }
+
+
 	// アニメーションデータ取得
 	const std::shared_ptr<KdAnimationData> GetAnimation(std::string_view animName) const { return !m_spData ? nullptr : m_spData->GetAnimation(animName); }
 	const std::shared_ptr<KdAnimationData> GetAnimation(int index) const { return !m_spData ? nullptr : m_spData->GetAnimation(index); }

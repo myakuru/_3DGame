@@ -6,7 +6,7 @@
 void EnemyState_Run::StateStart()
 {
 	auto anime = m_enemy->GetAnimeModel()->GetAnimation("Run");
-	m_enemy->GetAnimator()->SetAnimation(anime, 1.0f, true);
+	m_enemy->GetAnimator()->SetAnimation(anime);
 	m_enemy->SetAnimeSpeed(60.0f);
 }
 
@@ -31,22 +31,21 @@ void EnemyState_Run::StateUpdate()
 		// 追いかける
 		Math::Vector3 dir = playerPos - enemyPos;
 		dir.y = 0.0f;
-		dir.Normalize();
+		if (dir != Math::Vector3::Zero) dir.Normalize();
 
-		float yaw = std::atan2(-dir.x, -dir.z);
-		Math::Quaternion rotMat = Math::Quaternion::CreateFromAxisAngle(Math::Vector3(0, 1, 0), yaw);
+		// LookRotationで正しい向きに
+		Math::Quaternion rot = Math::Quaternion::LookRotation(dir, Math::Vector3::Up);
+		m_enemy->SetRotation(rot);
 
-		m_enemy->SetRotation(rotMat);
 		m_enemy->SetIsMoving(dir);
 	}
-	//else
-	//{
-	//	//Attackステートに移行
-	//	auto attack = std::make_shared<EnemyState_Attack>();
-	//	m_enemy->ChangeState(attack);
-	//	return;
-	//}
-
+	else
+	{
+		//Attackステートに移行
+		auto attack = std::make_shared<EnemyState_Attack>();
+		m_enemy->ChangeState(attack);
+		return;
+	}
 }
 
 void EnemyState_Run::StateEnd()

@@ -4,6 +4,13 @@ bool KdDirect3D::Resize(int w, int h)
 {
 	if (!m_pGISwapChain || !m_pDevice || !m_pDeviceContext) return false;
 
+	 // バインド解除（ResizeBuffers前の安定化）
+    m_pDeviceContext->OMSetRenderTargets(0, nullptr, nullptr);
+    ID3D11ShaderResourceView* nullSRV[8] = {};
+    m_pDeviceContext->PSSetShaderResources(0, 8, nullSRV);
+    m_pDeviceContext->VSSetShaderResources(0, 8, nullSRV);
+
+
 	// 既存のRT/Z依存リソースを解放
 	m_backBuffer = nullptr;
 	m_zBuffer = nullptr;
@@ -217,7 +224,7 @@ bool KdDirect3D::Init(HWND hWnd, int w, int h, bool deviceDebug, std::string& er
 	DXGISwapChainDesc.OutputWindow = hWnd;
 	DXGISwapChainDesc.Windowed = TRUE;
 	DXGISwapChainDesc.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
-	DXGISwapChainDesc.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
+	DXGISwapChainDesc.Flags = 0;
 	if (FAILED(factory->CreateSwapChain(m_pDevice, &DXGISwapChainDesc, &m_pGISwapChain))) {
 		errMsg = "スワップチェイン作成失敗";
 
@@ -248,7 +255,7 @@ bool KdDirect3D::Init(HWND hWnd, int w, int h, bool deviceDebug, std::string& er
 
 	
 	// ALT+Enterでフルスクリーン不可にする
-	/*{
+	{
 		IDXGIDevice* pDXGIDevice;
 		m_pDevice->QueryInterface<IDXGIDevice>(&pDXGIDevice);
 
@@ -263,7 +270,7 @@ bool KdDirect3D::Init(HWND hWnd, int w, int h, bool deviceDebug, std::string& er
 		pDXGIDevice->Release();
 		pDXGIAdapter->Release();
 		pIDXGIFactory->Release();
-	}*/
+	}
 
 
 	//=========================================================

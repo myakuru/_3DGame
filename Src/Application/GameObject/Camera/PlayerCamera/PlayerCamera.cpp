@@ -17,9 +17,11 @@ void PlayerCamera::Init()
 	KdEffekseerManager::GetInstance().SetCamera(m_spCamera);
 
 	m_pDebugWire = std::make_unique<KdDebugWireFrame>();
-	SetCursorPos(m_FixMousePos.x, m_FixMousePos.y);
 
 	m_cameraPos = Math::Vector3(-4.0f, 1.2f, 4.0f);
+
+	// 起動時にカーソルを動かさない。現在位置を保持
+	GetCursorPos(&m_FixMousePos);
 
 	// 初期のカメラのターゲット座標を設定
 	m_followRate = m_targetLookAt;

@@ -3,6 +3,8 @@
 
 void EnemyState_Attack::StateStart()
 {
+	EnemyStateBase::StateStart();
+
 	auto anime = m_enemy->GetAnimeModel()->GetAnimation("Attack");
 	m_enemy->GetAnimator()->SetAnimation(anime, 0.25f, false);
 	m_enemy->m_onceEffect = false;
@@ -10,8 +12,6 @@ void EnemyState_Attack::StateStart()
 
 void EnemyState_Attack::StateUpdate()
 {
-	//m_enemy->SetAnimeSpeed(120.0f);
-
 	float deltaTime = Application::Instance().GetDeltaTime();
 
 	m_time += deltaTime;

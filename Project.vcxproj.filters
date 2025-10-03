@@ -373,6 +373,9 @@
     <Filter Include="Src\Application\GameObject\Weapon\EnemyShield">
       <UniqueIdentifier>{74c9622f-922c-4354-8536-7eaddf2af641}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\GameObject\Character\Enemy\EnemyState\EnemState_Attack3">
+      <UniqueIdentifier>{70d5936f-e347-4fef-83f3-1d969ac6d5b2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -849,6 +852,9 @@
     <ClInclude Include="Src\Application\GameObject\Weapon\EnemyShield\EnemyShield.h">
       <Filter>Src\Application\GameObject\Weapon\EnemyShield</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Character\Enemy\EnemyState\EnemyState_Attack3\EnemState_Attack3.h">
+      <Filter>Src\Application\GameObject\Character\Enemy\EnemyState\EnemState_Attack3</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -1267,6 +1273,12 @@
     </ClCompile>
     <ClCompile Include="Src\Application\GameObject\Weapon\EnemyShield\EnemyShield.cpp">
       <Filter>Src\Application\GameObject\Weapon\EnemyShield</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Character\Enemy\EnemyState\EnemyState_Attack3\EnemState_Attack3.cpp">
+      <Filter>Src\Application\GameObject\Character\Enemy\EnemyState\EnemState_Attack3</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Character\Enemy\EnemyState\EnemyStateBase.cpp">
+      <Filter>Src\Application\GameObject\Character\Enemy\EnemyState</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -156,6 +156,8 @@ protected:
 	// 2Dテクスチャの初期化
 	std::shared_ptr <KdTexture> m_texture = std::make_shared<KdTexture>();
 
+	float m_dissever = 0.0f;			// ディゾルブ値
+
 	// 位置
 	Math::Vector3 m_position = Math::Vector3::Zero;
 	// 拡大率

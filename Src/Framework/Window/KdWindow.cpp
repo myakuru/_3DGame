@@ -78,6 +78,56 @@ void KdWindow::Release()
 	}
 }
 
+void KdWindow::SetBorderlessFullscreen(bool enable)
+{
+	if (!m_hWnd) return;
+
+	if (enable && !m_borderless) 
+	{
+		// スタイル・位置保存
+		m_savedStyle = GetWindowLong(m_hWnd, GWL_STYLE);
+
+		// Windowの矩形情報を取得
+		GetWindowRect(m_hWnd, &m_savedRect);
+
+		// モニタ全面へ
+		HMONITOR mon = MonitorFromWindow(m_hWnd, MONITOR_DEFAULTTONEAREST);
+
+		// モニタ情報構造体
+		MONITORINFO mi{ sizeof(mi) };
+
+		// モニタ情報を取得
+		GetMonitorInfo(mon, &mi);
+
+		// Windowのスタイルを変更し、位置・サイズをモニタ全面に
+		SetWindowLong(m_hWnd, GWL_STYLE, WS_POPUP | WS_VISIBLE);
+
+		// ウィンドウ位置・サイズを変更　：モニターの位置・サイズに合わせてフルスクリーンにするイメージ
+		SetWindowPos(m_hWnd, HWND_TOP,
+			mi.rcMonitor.left, mi.rcMonitor.top,
+			mi.rcMonitor.right - mi.rcMonitor.left,
+			mi.rcMonitor.bottom - mi.rcMonitor.top,
+			SWP_FRAMECHANGED | SWP_NOOWNERZORDER);
+
+		// ウィンドウを再表示
+		ShowWindow(m_hWnd, SW_SHOW);
+
+		m_borderless = true;
+	}
+	else if (!enable && m_borderless) {
+		// 以前のウィンドウスタイル・位置に戻す
+		SetWindowLong(m_hWnd, GWL_STYLE, m_savedStyle);
+		SetWindowPos(m_hWnd, nullptr,
+			m_savedRect.left, m_savedRect.top,
+			m_savedRect.right - m_savedRect.left,
+			m_savedRect.bottom - m_savedRect.top,
+			SWP_FRAMECHANGED | SWP_NOZORDER | SWP_NOOWNERZORDER);
+		ShowWindow(m_hWnd, SW_SHOW);
+
+		m_borderless = false;
+	}
+}
+
 bool KdWindow::ProcessMessage()
 {
 	m_mouseWheelVal = 0;
@@ -156,6 +206,27 @@ LRESULT KdWindow::WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPar
 	case WM_DESTROY:
 		RemoveProp(hWnd, L"GameWindowInstance");
 		PostQuitMessage(0);
+		break;
+	case WM_SYSKEYDOWN:
+		// ALT+Enter検出（lParamのbit29がALT）
+		if (wParam == VK_RETURN && (lParam & (1 << 29))) {
+			SetBorderlessFullscreen(!IsBorderlessFullscreen());
+			return 0;
+		}
+		break;
+
+	case WM_MENUCHAR:
+		// メニューが無いときのALT系入力でビープになるのを抑止
+		return MAKELRESULT(0, MNC_CLOSE);
+	case WM_SIZE:
+		if (wParam != SIZE_MINIMIZED) {
+			UINT newW = LOWORD(lParam);
+			UINT newH = HIWORD(lParam);
+			if (newW && newH) {
+				// バックバッファのみリサイズ
+				KdDirect3D::Instance().Resize((int)newW, (int)newH);
+			}
+		}
 		break;
 	default:
 		// メッセージのデフォルト処理
