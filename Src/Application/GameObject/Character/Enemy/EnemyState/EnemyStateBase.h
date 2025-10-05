@@ -19,6 +19,9 @@ protected:
 
 	Math::Vector3 m_attackDirection = Math::Vector3::Zero;
 
+	Math::Vector3 m_playerPos = Math::Vector3::Zero;
+	Math::Vector3 m_enemyPos = Math::Vector3::Zero;
+
 	Enemy* m_enemy = nullptr;
 	float m_time = 0.0f;
 

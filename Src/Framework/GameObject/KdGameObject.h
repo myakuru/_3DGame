@@ -162,7 +162,9 @@ protected:
 	Math::Vector3 m_position = Math::Vector3::Zero;
 	// 拡大率
 	Math::Vector3 m_scale = Math::Vector3::One;
-	//Math::Quaternion m_rot = Math::Quaternion::Identity; // 回転
+	// 回転用クォータニオン
+	Math::Quaternion m_rotation = Math::Quaternion::Identity;
+
 	// 回転角度（デグリー）
 	Math::Vector3 m_degree = Math::Vector3::Zero;
 	// カラー

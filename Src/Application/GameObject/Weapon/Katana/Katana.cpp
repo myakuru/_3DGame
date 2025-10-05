@@ -15,6 +15,8 @@ void Katana::Init()
 	m_trailPolygon->SetLength(50);
 	m_trailTex = KdAssets::Instance().m_textures.GetData("Asset/Textures/trajectory.png");
 
+	m_scale = { 0.004f,0.004f,0.004f };
+
 	m_trailPolygon->SetMaterial(m_trailTex);
 	m_showTrail = false;
 }

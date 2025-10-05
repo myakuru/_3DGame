@@ -86,6 +86,18 @@ public:
 		}
 	}
 
+	// マップフラグを初期化する
+	void InitDrawFlags()
+	{
+		m_bGenerateDepthMapFromLight = false;
+		m_bDrawLit = false;
+		m_bDrawUnLit = false;
+		m_bDrawBright = false;
+		m_bDrawToon = false;
+		m_bDrawGradation = false;
+		m_bDrawGrayScale = false;
+	}
+
 private:
 
 	bool m_bGenerateDepthMapFromLight = false;	// ライトからの深度マップを生成するかどうか

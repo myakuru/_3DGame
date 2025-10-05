@@ -48,8 +48,15 @@ void EnemyState_Attack1::StateUpdate()
 		return;
 	}
 
-	// 移動量リセット
-	m_enemy->SetIsMoving(Math::Vector3::Zero);
+	if (m_time < 0.2f)
+	{
+		const float dashSpeed = 2.0f;
+		m_enemy->SetIsMoving(m_attackDirection * dashSpeed);
+	}
+	else
+	{
+		m_enemy->SetIsMoving(Math::Vector3::Zero);
+	}
 }
 
 void EnemyState_Attack1::StateEnd()

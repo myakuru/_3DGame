@@ -74,17 +74,22 @@ public:
 
 	// 残像処理
 
-	// 残像の有効/設定
-	void SetAfterImageEnable(bool enable) { m_afterImageEnable = enable; }
-	void SetAfterImageMax(size_t max) { m_afterImageMax = (int)max; }
-	void SetAfterImageInterval(int frameInterval) { m_afterImageInterval = frameInterval; }
-	void SetAfterImageColor(const Math::Color& col) { m_afterImageColor = col; }
-
 	// 更新/描画フック
-	void CaptureAfterImage();   // PostUpdate などで呼ぶ
-	void DrawAfterImages();     // Draw の前後で呼ぶ
+	void CaptureAfterImage();
+	void DrawAfterImages();
+
+	// 残像の状態設定(残像を使用するか？、残像の最台数、残像を何秒間表示するか、カラー)
+	void AddAfterImage(bool _flg = false, int _max = 0, int _nterval = 0, const Math::Color& _color = {0,0,0,0})
+	{
+		m_afterImageEnable = _flg;
+		m_afterImageMax = _max;
+		m_afterImageInterval = _nterval;
+		m_afterImageColor = _color;
+	}
 
 private:
+
+	void ApplyHorizontalMove(const Math::Vector3& inputMove, float deltaTime);
 
 	Math::Vector3 m_moveDirection = Math::Vector3::Zero;		// 移動方向
 	Math::Vector3 m_lastMoveDirection = Math::Vector3::Zero;	// 最後に移動した方向
@@ -113,15 +118,25 @@ private:
 	};
 
 	// 残像設定・状態
-	bool m_afterImageEnable = true;
-	int  m_afterImageMax = 5;
-	int  m_afterImageInterval = 3; // 何フレームごとに保存するか
+	bool m_afterImageEnable = false;
+	int  m_afterImageMax = 1;
+	int  m_afterImageInterval = 1; // 何フレームごとに保存するか
 	int  m_afterImageCounter = 0;	// カウンタ
-	Math::Color m_afterImageColor = {0,1,1,0.5f}; // 基本色（半透明白）
+	Math::Color m_afterImageColor = {0,1,1,0.1f}; // 基本色（半透明白）
+
 
 	std::deque<AfterImageFrame> m_afterImages;
 
 	// 描画用テンポラリ Work（元モデルと同じ Data を参照）
 	std::unique_ptr<KdModelWork> m_afterImageWork;
+
+	Math::Vector3 m_prevPosition{};          // 前フレームのワールド位置
+	float         m_forwardRayYOffset = 0.35f; // プレイヤー中心(腰程度)の高さ
+	float         m_forwardRayMargin = 0.02f; // 壁手前で残すマージン
+	float         m_forwardRayExtra = 0.05f; // 余剰距離(浮動小数ヒット安定用)
+
+	float kBumpSphereRadius = 0.2f; // 壁にめり込むのを防ぐための球の半径
+	float kBumpSphereYOffset = 0.3f; // プレイヤー中心(腰程度)の高さ	
+	float kCollisionMargin = 0.01f; // 壁にめり込まないための余白
 
 };

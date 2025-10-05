@@ -13,4 +13,7 @@ public:
 	void DrawGrayScale() override;
 
 	uint32_t GetTypeID() const override { return m_typeID; }
+
+private:
+	void Init() override;
 };

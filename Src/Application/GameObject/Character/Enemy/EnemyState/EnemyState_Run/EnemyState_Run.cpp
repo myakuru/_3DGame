@@ -2,6 +2,7 @@
 #include"../../../Player/Player.h"
 #include"../EnemyState_Idle/EnemyState_Idle.h"
 #include"../EnemyState_Attack/EnemyState_Attack.h"
+#include"../EnemyState_Walk_Right/EnemyState_Walk_Right.h"
 
 void EnemyState_Run::StateStart()
 {
@@ -12,12 +13,14 @@ void EnemyState_Run::StateStart()
 
 void EnemyState_Run::StateUpdate()
 {
-	auto player = m_enemy->GetPlayerWeakPtr();
-	Math::Vector3 playerPos = player.lock()->GetPos();
-	Math::Vector3 enemyPos = m_enemy->GetPos();
+	if (auto player = m_enemy->GetPlayerWeakPtr().lock(); player)
+	{
+		m_playerPos = player->GetPos();
+		m_enemyPos = m_enemy->GetPos();
+	}
 
 	// 距離計算
-	float distance = (playerPos - enemyPos).Length();
+	float distance = (m_playerPos - m_enemyPos).Length();
 
 	if (distance >= 6.0f)
 	{
@@ -29,7 +32,7 @@ void EnemyState_Run::StateUpdate()
 	else if (distance >= 3.0f)
 	{
 		// 追いかける
-		Math::Vector3 dir = playerPos - enemyPos;
+		Math::Vector3 dir = m_playerPos - m_enemyPos;
 		dir.y = 0.0f;
 		if (dir != Math::Vector3::Zero) dir.Normalize();
 
@@ -42,7 +45,7 @@ void EnemyState_Run::StateUpdate()
 	else
 	{
 		//Attackステートに移行
-		auto attack = std::make_shared<EnemyState_Attack>();
+		auto attack = std::make_shared<EnemyState_Walk_Right>();
 		m_enemy->ChangeState(attack);
 		return;
 	}

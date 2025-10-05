@@ -3,7 +3,9 @@
 
 void EnemyState_Hit::StateStart()
 {
-	auto anime = m_enemy->GetAnimeModel()->GetAnimation("Damage");
+	EnemyStateBase::StateStart();
+
+	auto anime = m_enemy->GetAnimeModel()->GetAnimation("Hit");
 	m_enemy->GetAnimator()->SetAnimation(anime, 0.25f, false);
 }
 
@@ -19,10 +21,17 @@ void EnemyState_Hit::StateUpdate()
 		return;
 	}
 
-	m_enemy->SetIsMoving(Math::Vector3::Zero);
+	if (m_time < 0.2f)
+	{
+		const float dashSpeed = -1.0f;
+		m_enemy->SetIsMoving(m_attackDirection * dashSpeed);
+	}
+	else
+	{
+		m_enemy->SetIsMoving(Math::Vector3::Zero);
+	}
 }
 
 void EnemyState_Hit::StateEnd()
 {
-	m_enemy->SetAnimeSpeed(120.0f);
 }

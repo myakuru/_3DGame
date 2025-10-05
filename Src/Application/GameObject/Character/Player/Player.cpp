@@ -91,11 +91,21 @@ void Player::PostUpdate()
 	// 球に当たったオブジェクト情報を格納するリスト
 	std::list<KdCollider::CollisionResult> retSpherelist;
 
-	// 球とアタリ判定を行う
-	for (auto& obj : SceneManager::Instance().GetObjList())
+	SceneManager::Instance().GetObjectWeakPtr(m_enemy);
+
+	auto enemy = m_enemy.lock();
+
+	if (!enemy) return;
+
+	if (enemy->Intersects(enemyHit, &retSpherelist))
 	{
-		obj->Intersects(enemyHit, &retSpherelist);
+		m_isHit = true;
 	}
+	else
+	{
+		m_isHit = false;
+	}
+
 
 	//  球にあたったリストから一番近いオブジェクトを探す
 	// オーバーした長さが1番長いものを探す。
@@ -150,24 +160,27 @@ void Player::Update()
 	float deltaTime = Application::Instance().GetDeltaTime();
 
 	m_animator->AdvanceTime(m_modelWork->WorkNodes(), m_fixedFrameRate * deltaTime);
+	m_modelWork->CalcNodeMatrices();
 
 	m_isMoving = m_movement.LengthSquared() > 0;
 
-	// 移動関係
+	// 移動前位置を保存
+	m_prevPosition = m_position;
+
+	// 重力更新
 	m_gravity += m_gravitySpeed * deltaTime;
 
-	// 最終的な移動量
-	m_position.x += m_movement.x * m_moveSpeed * m_fixedFrameRate * deltaTime;
-	m_position.z += m_movement.z * m_moveSpeed * m_fixedFrameRate * deltaTime;
+	// 水平移動
+	ApplyHorizontalMove(m_movement, deltaTime);
+
+	// 垂直
 	m_position.y += m_gravity;
 
 	m_stateManager.Update();
 
-	// 最終的なワールド行列計算
 	Math::Matrix scale = Math::Matrix::CreateScale(m_scale);
 	Math::Matrix quaternion = Math::Matrix::CreateFromQuaternion(m_rotation);
 	Math::Matrix translation = Math::Matrix::CreateTranslation(m_position);
-
 	m_mWorld = scale * quaternion * translation;
 
 }
@@ -188,7 +201,6 @@ void Player::UpdateAttack()
 	attackSphere.m_type = KdCollider::TypeDamage;
 
 	m_pDebugWire->AddDebugSphere(attackSphere.m_sphere.Center, attackSphere.m_sphere.Radius); // デバッグ用の球を追加
-
 
 	SceneManager::Instance().GetObjectWeakPtr(m_enemy);
 
@@ -424,7 +436,74 @@ void Player::DrawAfterImages()
 		// 残像の描画
 		float a = 0.01f;
 		Math::Vector3 color = {0,1,1};
-		KdShaderManager::Instance().m_StandardShader.SetDissolve(0.85f, &a, &color);
+		KdShaderManager::Instance().m_StandardShader.SetDissolve(0.0f, &a, &color);
 		stdShader.DrawModel(*m_afterImageWork, frameData.ownerWorld, m_afterImageColor);
+	}
+}
+
+void Player::ApplyHorizontalMove(const Math::Vector3& inputMove, float deltaTime)
+{
+	if (inputMove == Math::Vector3::Zero) return;
+
+	// ワールドに既にカメラ回転等を反映済み前提で呼ぶならそのまま
+	Math::Vector3 desired = inputMove * m_moveSpeed * m_fixedFrameRate * deltaTime;
+	float desiredLen = desired.Length();
+	if (desiredLen <= FLT_EPSILON) return;
+
+	Math::Vector3 dir = desired / desiredLen;
+
+	// レイ(スイープ)を組む
+	KdCollider::RayInfo ray;
+	ray.m_pos = m_prevPosition + Math::Vector3(0.0f, kBumpSphereYOffset, 0.0f);
+	ray.m_dir = dir;
+	ray.m_range = desiredLen + kBumpSphereRadius; // 半径分も伸ばす
+	ray.m_type = KdCollider::TypeBump;
+
+	// デバック
+	m_pDebugWire->AddDebugLine(ray.m_pos, ray.m_dir, ray.m_range, kRedColor);
+
+	std::list<KdCollider::CollisionResult> rayHits;
+	for (auto& obj : SceneManager::Instance().GetObjList())
+	{
+		obj->Intersects(ray, &rayHits);
+	}
+
+	bool blocked = false;
+	float bestOverlap = 0.0f;
+	Math::Vector3 hitPos{};
+	for (auto& h : rayHits)
+	{
+		if (bestOverlap < h.m_overlapDistance)
+		{
+			bestOverlap = h.m_overlapDistance;
+			hitPos = h.m_hitPos;
+			blocked = true;
+		}
+	}
+
+	if (blocked)
+	{
+		// 衝突点までの実距離
+		float hitDist = (hitPos - ray.m_pos).Length();
+
+		// 衝突点手前(球が触れる直前)までの許可距離
+		float allow = std::max(0.0f, hitDist - kBumpSphereRadius - kCollisionMargin);
+
+		// 位置をクランプ
+		m_position = m_prevPosition + dir * allow;
+
+
+
+		// これ以上進ませないため入力移動を殺す
+		// (スライドさせたいなら法線成分だけゼロにして再計算する)
+		// 今回は「絶対に止まる」要求なので全停止。
+		// ※ m_movement が他で再利用されるならここでゼロ化
+		m_movement = Math::Vector3::Zero;
+
+	}
+	else
+	{
+		// 衝突なし そのまま移動
+		m_position = m_prevPosition + desired;
 	}
 }

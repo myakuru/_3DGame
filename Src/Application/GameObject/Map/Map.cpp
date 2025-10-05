@@ -22,3 +22,8 @@ void Map::DrawGrayScale()
 	KdShaderManager::Instance().m_StandardShader.DrawModel(*m_model, m_mWorld, m_color);
 	//KdShaderManager::Instance().UndoRasterizerState();
 }
+
+void Map::Init()
+{
+	SelectDraw3dModel::Init();
+}

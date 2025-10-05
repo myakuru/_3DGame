@@ -49,7 +49,7 @@ public:
 
 private:
 
-	void UpdateCameraRayCast();
+	void UpdateCameraRayCast(const Math::Vector3& _anchor);
 
 	Math::Vector3 m_targetLookAt = Math::Vector3::Zero;
 	Math::Vector3 m_introCamPos = Math::Vector3::Zero;	// Introカメラの位置
@@ -69,4 +69,26 @@ private:
 	float m_rotationSmooth = 0.0f; // カメラ回転のスムージング係数
 	float m_introTimer = 0.0f;	// Introカメラのタイマー
 	float m_fov = 60.0f;		// 視野角
+
+	// --- カメラ衝突補正用 追加メンバ ---
+	float m_currentCamDistance = -1.0f;      // 現在補正後の使用距離
+	float m_camHitSmoothIn = 18.0f;      // 障害物に近づく(距離を縮める)ときの収束速度
+	float m_camHitSmoothOut = 6.0f;       // 障害物から離れる(距離を伸ばす)ときの収束速度
+	float m_obstacleMargin = 0.30f;      // 壁とのマージン
+	float m_minCamDistance = 0.60f;      // これ以下には詰めない(プレイヤーを貫通しない距離)
+	float m_prevHitDist = -1.0f;      // 前フレームのヒット距離(ノイズ抑制)
+	float m_hitDistSmoothing = 0.0f;       // 内部平滑化(0:なし～1:即時) 例:0.35f
+
+	// 衝突前の理想カメラ位置（毎フレーム生成、衝突で変更しない）
+	Math::Vector3 m_desiredCameraPos = Math::Vector3::Zero;
+
+	// 衝突ヒステリシス
+	bool  m_isBlocked = false;   // 現在遮蔽中フラグ
+	float m_clearTimer = 0.0f;    // 解除監視タイマー
+	float m_blockReleaseTime = 0.20f;  // 遮蔽物が完全消えたと判定するまでの猶予(秒)
+
+	// 衝突後にすぐ伸ばさないための伸張ディレイ（任意）
+	float m_expandDelayTime = 0.10f;
+	float m_expandDelayTimer = 0.0f;
+
 };

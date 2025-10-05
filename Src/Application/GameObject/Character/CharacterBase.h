@@ -3,6 +3,7 @@
 #include"../../../MyFramework/State/StateManager/StateManager.h"
 class EnemyStateBase;
 class PlayerCamera;
+class Collision;
 class CharaBase:public SelectDraw3dModel
 {
 public:
@@ -76,7 +77,6 @@ protected:
 	// 行列関係
 	Math::Matrix m_mRotation = Math::Matrix::Identity;
 
-	Math::Quaternion m_rotation = Math::Quaternion::Identity; // 回転用クォータニオン
 
 	/// <summary>
 	/// 移動関係
@@ -87,9 +87,9 @@ protected:
 
 	// カメラへの参照
 	std::weak_ptr<PlayerCamera> m_playerCamera;
+	// 当たり判定オブジェクト
+	std::weak_ptr<Collision> m_collision;
 
 	DirectX::BoundingSphere sphere;
-
-	KdTrailPolygon m_trailPolygon; // トレイルポリゴン
 
 };

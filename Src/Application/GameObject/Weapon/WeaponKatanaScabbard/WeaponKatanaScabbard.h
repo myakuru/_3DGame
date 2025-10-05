@@ -11,6 +11,7 @@ public:
 
 private:
 
+	void Init() override;
 	void Update() override;
 	void UpdateMatrix();
 	void ImGuiInspector() override;

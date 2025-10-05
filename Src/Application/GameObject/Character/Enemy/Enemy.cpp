@@ -28,12 +28,12 @@ void Enemy::Init()
 
 void Enemy::Update()
 {
-
 	SceneManager::Instance().GetObjectWeakPtr(m_enemySword);
 	SceneManager::Instance().GetObjectWeakPtr(m_enemyShield);
 
 	// 地面に立つようにY座標を調整
 	m_position.y = 1.0f;
+
 
 	// 球の中心座標と半径を設定
 	sphere.Center = m_position + Math::Vector3(0.0f, 0.7f, 0.0f); // 敵の位置＋オフセット
@@ -87,7 +87,6 @@ void Enemy::Update()
 	}
 
 	CharaBase::Update();
-
 
 	// 敵の剣の行列を更新
 	if (auto sword = m_enemySword.lock(); sword)
@@ -163,6 +162,8 @@ void Enemy::UpdateAttack()
 			m_isAtkPlayer = true;				 // ヒットチェックを行う
 			player->m_isHit = true;				 // プレイヤーのヒットフラグを立てる
 			m_onceEffect = true;				 // 1回だけ再生
+
+
 
 		}
 	}

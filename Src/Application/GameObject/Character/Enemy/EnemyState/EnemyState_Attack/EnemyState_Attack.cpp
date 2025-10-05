@@ -8,6 +8,8 @@ void EnemyState_Attack::StateStart()
 	auto anime = m_enemy->GetAnimeModel()->GetAnimation("Attack");
 	m_enemy->GetAnimator()->SetAnimation(anime, 0.25f, false);
 	m_enemy->m_onceEffect = false;
+
+	m_time = 0.0f;
 }
 
 void EnemyState_Attack::StateUpdate()
@@ -29,8 +31,15 @@ void EnemyState_Attack::StateUpdate()
 		return;
 	}
 
-	// 移動量リセット
-	m_enemy->SetIsMoving(Math::Vector3::Zero);
+	if (m_time < 0.2f)
+	{
+		const float dashSpeed = 2.0f;
+		m_enemy->SetIsMoving(m_attackDirection * dashSpeed);
+	}
+	else
+	{
+		m_enemy->SetIsMoving(Math::Vector3::Zero);
+	}
 
 }
 

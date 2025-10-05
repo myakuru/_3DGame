@@ -2,6 +2,12 @@
 
 const uint32_t WeaponKatanaScabbard::TypeID = KdGameObject::GenerateTypeID();
 
+void WeaponKatanaScabbard::Init()
+{
+	WeaponBase::Init();
+	m_scale = { 0.004f,0.004f,0.004f };
+}
+
 void WeaponKatanaScabbard::Update()
 {
 	WeaponBase::Update();

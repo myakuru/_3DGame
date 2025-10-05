@@ -2,6 +2,7 @@
 #include"../../main.h"
 #include"../../Scene/SceneManager.h"
 #include"../Camera/PlayerCamera/PlayerCamera.h"
+#include"../Collition/Collition.h"
 
 void CharaBase::Init()
 {
@@ -66,21 +67,20 @@ void CharaBase::Update()
 
 	m_isMoving = m_movement.LengthSquared() > 0;
 
-	// 移動関係
+	// 重力更新
 	m_gravity += m_gravitySpeed * deltaTime;
 
-	// 最終的な移動量
+	// 水平
 	m_position.x += m_movement.x * m_moveSpeed * m_fixedFrameRate * deltaTime;
 	m_position.z += m_movement.z * m_moveSpeed * m_fixedFrameRate * deltaTime;
+	// 垂直
 	m_position.y += m_gravity;
 
 	m_stateManager.Update();
 
-	// 最終的なワールド行列計算
 	Math::Matrix scale = Math::Matrix::CreateScale(m_scale);
 	Math::Matrix quaternion = Math::Matrix::CreateFromQuaternion(m_rotation);
 	Math::Matrix translation = Math::Matrix::CreateTranslation(m_position);
-
 	m_mWorld = scale * quaternion * translation;
 }
 
@@ -107,16 +107,20 @@ void CharaBase::PostUpdate()
 	rayInfo.m_range = enableStepHigh + m_gravity;
 
 	// アタリ判定したいタイプを設定
-	rayInfo.m_type = KdCollider::TypeGround;
+	rayInfo.m_type = KdCollider::TypeBump;
 
 	m_pDebugWire->AddDebugLine(rayInfo.m_pos, rayInfo.m_dir, rayInfo.m_range);
 
 	// レイに当たったオブジェクト情報を格納するリスト
 	std::list<KdCollider::CollisionResult> retRayList;
-	// 作成したレイ情報でオブジェクトリストと当たり判定をする
-	for (auto& obj : SceneManager::Instance().GetObjList())
+	
+	SceneManager::Instance().GetObjectWeakPtr(m_collision);
+
+	auto collisionObj = m_collision.lock();
+
+	if (collisionObj)
 	{
-		obj->Intersects(rayInfo, &retRayList);
+		collisionObj->Intersects(rayInfo, &retRayList);
 	}
 
 	// レイに当たったリストから一番近いオブジェクトを検出
@@ -156,17 +160,16 @@ void CharaBase::PostUpdate()
 	// 球の半径を設定
 	sphereInfo.m_sphere.Radius = 0.2f;
 	// アタリ判定をしたいタイプを設定  
-	sphereInfo.m_type = KdCollider::TypeGround; // 地面とのアタリ判定
+	sphereInfo.m_type = KdCollider::TypeBump;
 
 	m_pDebugWire->AddDebugSphere(sphereInfo.m_sphere.Center, sphereInfo.m_sphere.Radius);
 
 	// 球に当たったオブジェクト情報を格納するリスト
 	std::list<KdCollider::CollisionResult> retSpherelist;
 
-	// 球とアタリ判定を行う
-	for (auto& obj : SceneManager::Instance().GetObjList())
+	if (collisionObj)
 	{
-		obj->Intersects(sphereInfo, &retSpherelist);
+		collisionObj->Intersects(sphereInfo, &retSpherelist);
 	}
 
 	//  球にあたったリストから一番近いオブジェクトを探す

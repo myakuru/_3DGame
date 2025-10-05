@@ -37,14 +37,21 @@ void EnemyState_Attack2::StateUpdate()
 		m_enemy->UpdateAttack();
 	}
 
-	// 移動量リセット
-	m_enemy->SetIsMoving(Math::Vector3::Zero);
-
 	if (m_enemy->GetAnimator()->IsAnimationEnd())
 	{
 		auto attack = std::make_shared<EnemState_Attack3>();
 		m_enemy->ChangeState(attack);
 		return;
+	}
+
+	if (m_time < 0.2f)
+	{
+		const float dashSpeed = 2.0f;
+		m_enemy->SetIsMoving(m_attackDirection * dashSpeed);
+	}
+	else
+	{
+		m_enemy->SetIsMoving(Math::Vector3::Zero);
 	}
 
 }
