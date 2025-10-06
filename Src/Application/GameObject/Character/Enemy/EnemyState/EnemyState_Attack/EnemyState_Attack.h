@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include"../EnemyStateBase.h"
+class EnemyShineBlue;
 class EnemyState_Attack : public EnemyStateBase
 {
 public:
@@ -10,5 +11,7 @@ private:
 	void StateStart() override;
 	void StateUpdate() override;
 	void StateEnd() override;
+
+	std::weak_ptr<EnemyShineBlue> m_shineEffectBlue;
 
 };

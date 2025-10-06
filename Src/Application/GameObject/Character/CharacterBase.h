@@ -92,4 +92,15 @@ protected:
 
 	DirectX::BoundingSphere sphere;
 
+
+	// レイ関係
+	Math::Vector3 m_prevPosition{};          // 前フレームのワールド位置
+	float         m_forwardRayYOffset = 0.35f; // プレイヤー中心(腰程度)の高さ
+	float         m_forwardRayMargin = 0.02f; // 壁手前で残すマージン
+	float         m_forwardRayExtra = 0.05f; // 余剰距離(浮動小数ヒット安定用)
+
+	float kBumpSphereRadius = 0.2f; // 壁にめり込むのを防ぐための球の半径
+	float kBumpSphereYOffset = 0.3f; // プレイヤー中心(腰程度)の高さ	
+	float kCollisionMargin = 0.01f; // 壁にめり込まないための余白
+
 };

@@ -76,6 +76,7 @@ void TestScene::Init()
 	SceneManager::Instance().SetIntroCamera(true); // カメラのイントロを開始
 
 	KdShaderManager::Instance().m_postProcessShader.SetBrightThreshold(m_brightThreshold);
+	KdShaderManager::Instance().WorkAmbientController().SetAmbientLight(m_anviLightColor);
 	KdShaderManager::Instance().WorkAmbientController().SetFogEnable(m_fogEnable, m_fogUseRange);
 	KdShaderManager::Instance().WorkAmbientController().SetDistanceFog({ m_fogColor }, m_fogDensity);
 	KdShaderManager::Instance().WorkAmbientController().SetheightFog({ m_highFogColor }, m_highFogHeight, m_lowFogHeight, m_highFogDistance);
@@ -108,6 +109,10 @@ void TestScene::DrawImGui()
 		ImGui::ColorEdit3(U8("平行光の色"), &m_directionalLightColor.x);
 
 		ImGui::Separator();
+		ImGui::Text(U8("環境光の調整"));
+		ImGui::ColorEdit4(U8("環境光の色"), &m_anviLightColor.x);
+
+		ImGui::Separator();
 
 		ImGui::Checkbox(U8("霧を使う"), &m_fogEnable);
 		ImGui::Checkbox(U8("距離で霧を使う"), &m_fogUseRange);
@@ -125,6 +130,8 @@ void TestScene::DrawImGui()
 
 	KdShaderManager::Instance().WorkAmbientController().SetDirLight(m_directionalLightDir, m_directionalLightColor);
 	KdShaderManager::Instance().WorkAmbientController().SetDirLightShadowArea(m_lightingArea, m_dirLightHeight);
+
+	KdShaderManager::Instance().WorkAmbientController().SetAmbientLight(m_anviLightColor);
 }
 
 void TestScene::JsonInput(const nlohmann::json& _json)
@@ -142,6 +149,7 @@ void TestScene::JsonInput(const nlohmann::json& _json)
 	if (_json.contains("m_directionalLightColor")) m_directionalLightColor = JSON_MANAGER.JsonToVector(_json["m_directionalLightColor"]);
 	if (_json.contains("m_lightingArea")) m_lightingArea = JSON_MANAGER.JsonToVector2(_json["m_lightingArea"]);
 	if (_json.contains("m_dirLightHeight")) m_dirLightHeight = _json["m_dirLightHeight"];
+	if (_json.contains("m_anviLightColor")) m_anviLightColor = JSON_MANAGER.JsonToVector4(_json["m_anviLightColor"]);
 }
 
 void TestScene::JsonSave(nlohmann::json& _json) const
@@ -159,6 +167,7 @@ void TestScene::JsonSave(nlohmann::json& _json) const
 	_json["m_directionalLightColor"] = JSON_MANAGER.VectorToJson(m_directionalLightColor);
 	_json["m_lightingArea"] = JSON_MANAGER.Vector2ToJson(m_lightingArea);
 	_json["m_dirLightHeight"] = m_dirLightHeight;
+	_json["m_anviLightColor"] = JSON_MANAGER.Vector4ToJson(m_anviLightColor);
 }
 
 void TestScene::SaveSceneSettingsToJson(const std::string& filePath) const

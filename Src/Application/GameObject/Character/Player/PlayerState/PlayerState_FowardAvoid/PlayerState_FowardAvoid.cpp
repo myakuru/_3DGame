@@ -6,6 +6,7 @@
 #include"../../../../Weapon/WeaponKatanaScabbard/WeaponKatanaScabbard.h"
 #include"../PlayerState_AvoidAttack/PlayerState_AvoidAttack.h"
 #include"../../../../Camera/PlayerCamera/PlayerCamera.h"
+#include"../../../Enemy/Enemy.h"
 
 void PlayerState_ForwardAvoid::StateStart()
 {
@@ -13,22 +14,56 @@ void PlayerState_ForwardAvoid::StateStart()
 	m_player->GetAnimator()->SetAnimation(anime, 0.25f, false);
 
 	m_player->SetAvoidFlg(true);
-	m_player->SetAvoidStartTime(Application::Instance().GetDeltaTime()); // 現在の時間を記録
 
 	if (auto camera = m_player->GetPlayerCamera().lock(); camera)
 	{
-		camera->SetTargetLookAt({ 0.f,1.0f,-5.5f });
+		camera->SetTargetLookAt({ 0.f,1.0f,-4.5f });
+	}
+
+	m_time = 0.0f;
+
+	// アニメーション速度を変更
+	m_player->SetAnimeSpeed(120.0f);
+
+	// 回避時の処理
+	m_player->SetAvoidStartTime(0.0f);
+
+	if (auto enemy = m_player->GetEnemy().lock(); enemy)
+	{
+		// ジャスト回避成功時の残像エフェクト
+		if (enemy->GetJustAvoidSuccess() == true)
+		{
+			m_player->AddAfterImage(true, 5, 1.0f, Math::Color(0.0f, 1.0f, 1.0f, 0.2f), 0.7f);
+		}
 	}
 }
 
 void PlayerState_ForwardAvoid::StateUpdate()
 {
-	m_player->SetAnimeSpeed(120.0f);
+	float deltaTime = Application::Instance().GetDeltaTime();
+	m_time += deltaTime; // これが回避開始からの経過時間になる
 
-	// プレイヤーの前方ベクトル
+	// 経過時間を Player クラスに伝える
+	m_player->SetAvoidStartTime(m_time);
+
+	// 途中で敵のジャスト回避成功フラグが立ったら残像発生
+	if (!m_afterImagePlayed) 
+	{
+		if (auto enemy = m_player->GetEnemy().lock(); enemy)
+		{
+			if (enemy->GetJustAvoidSuccess()) 
+			{
+				m_player->AddAfterImage(true, 5, 1.0f, Math::Color(0.0f, 1.0f, 1.0f, 0.2f), 0.7f);
+				m_afterImagePlayed = true;
+			}
+		}
+	}
+
+	// 前方ベクトルを取得
 	Math::Vector3 forward = Math::Vector3::TransformNormal(Math::Vector3::Forward, Math::Matrix::CreateFromQuaternion(m_player->GetRotationQuaternion()));
 	forward.Normalize();
 
+	// 回避中に攻撃ボタンが押されたら回避攻撃へ移行
 	if (KeyboardManager::GetInstance().IsKeyJustPressed(VK_LBUTTON))
 	{
 		auto state = std::make_shared<PlayerState_AvoidAttack>();
@@ -36,6 +71,7 @@ void PlayerState_ForwardAvoid::StateUpdate()
 		return;
 	}
 
+	// アニメーションが終了したらIdleへ移行
 	if (m_player->GetAnimator()->IsAnimationEnd())
 	{
 		auto idleState = std::make_shared<PlayerState_Idle>();
@@ -45,11 +81,19 @@ void PlayerState_ForwardAvoid::StateUpdate()
 
 	PlayerStateBase::StateUpdate();
 
+	// 刀は鞘の中にある状態
 	UpdateUnsheathed();
 
-	float dashSpeed = -0.7f;
-
-	m_player->SetIsMoving(forward * dashSpeed);
+	// 回避中の移動処理
+	if (m_time < 0.2f)
+	{
+		const float dashSpeed = -1.4f;
+		m_player->SetIsMoving(forward * dashSpeed);
+	}
+	else
+	{
+		m_player->SetIsMoving(Math::Vector3::Zero);
+	}
 }
 
 void PlayerState_ForwardAvoid::StateEnd()
@@ -64,4 +108,9 @@ void PlayerState_ForwardAvoid::StateEnd()
 		camera->SetTargetLookAt({ 0.f,1.0f,-3.5f });
 	}
 
+	if (auto enemy = m_player->GetEnemy().lock(); enemy)
+	{
+		enemy->SetJustAvoidSuccess(false);
+		m_player->AddAfterImage();
+	}
 }

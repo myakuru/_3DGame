@@ -16,10 +16,14 @@ void PlayerState_ChargeAttackMax::StateStart()
 
 	// アニメーション速度を変更
 	m_player->SetAnimeSpeed(100.0f);
+
+	// 残像の設定
+	m_player->AddAfterImage(true, 5, 2, Math::Color(0.0f, 1.0f, 1.0f, 0.2f));
 }
 
 void PlayerState_ChargeAttackMax::StateUpdate()
 {
+
 	if (m_player->GetAnimator()->IsAnimationEnd())
 	{
 		auto state = std::make_shared<PlayerState_ChargeAttackMax1>();
@@ -108,4 +112,7 @@ void PlayerState_ChargeAttackMax::StateEnd()
 	PlayerStateBase::StateEnd();
 	// 敵との当たり判定をもとに戻す
 	m_player->SetAtkPlayer(false);
+
+	// 残像の設定を元に戻す
+	m_player->AddAfterImage();
 }

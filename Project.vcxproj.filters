@@ -379,6 +379,18 @@
     <Filter Include="Src\Application\GameObject\Character\Enemy\EnemyState\EnemyState_Walk_Right">
       <UniqueIdentifier>{90fbbbe7-612f-4906-89cc-361fa09827ca}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_FowardAvoidFast">
+      <UniqueIdentifier>{f6c06f2d-6ec1-4d34-8d33-f1e152b1013d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Character\Enemy\EnemyState\EnemyState_Walk_Left">
+      <UniqueIdentifier>{33e1bce7-e0c1-451e-8993-8cb271d30d74}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Effect\EffekseerEffect\EnemyShineBlue">
+      <UniqueIdentifier>{89f9fe6b-67cd-46b5-b7d6-1f2d37a6cd7a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Field">
+      <UniqueIdentifier>{48e67031-5f77-4eda-ad03-d092f050c6a7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -861,6 +873,18 @@
     <ClInclude Include="Src\Application\GameObject\Character\Enemy\EnemyState\EnemyState_Walk_Right\EnemyState_Walk_Right.h">
       <Filter>Src\Application\GameObject\Character\Enemy\EnemyState\EnemyState_Walk_Right</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_FowardAvoidFast\PlayerState_FowardAvoidFast.h">
+      <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_FowardAvoidFast</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Character\Enemy\EnemyState\EnemyState_Walk_Left\EnemyState_Walk_Left.h">
+      <Filter>Src\Application\GameObject\Character\Enemy\EnemyState\EnemyState_Walk_Left</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Effect\EffekseerEffect\EnemyShineBlue\EnemyShineBlue.h">
+      <Filter>Src\Application\GameObject\Effect\EffekseerEffect\EnemyShineBlue</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Field\Field.h">
+      <Filter>Src\Application\GameObject\Field</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -1288,6 +1312,18 @@
     </ClCompile>
     <ClCompile Include="Src\Application\GameObject\Character\Enemy\EnemyState\EnemyState_Walk_Right\EnemyState_Walk_Right.cpp">
       <Filter>Src\Application\GameObject\Character\Enemy\EnemyState\EnemyState_Walk_Right</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_FowardAvoidFast\PlayerState_FowardAvoidFast.cpp">
+      <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_FowardAvoidFast</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Character\Enemy\EnemyState\EnemyState_Walk_Left\EnemyState_Walk_Left.cpp">
+      <Filter>Src\Application\GameObject\Character\Enemy\EnemyState\EnemyState_Walk_Left</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Effect\EffekseerEffect\EnemyShineBlue\EnemyShineBlue.cpp">
+      <Filter>Src\Application\GameObject\Effect\EffekseerEffect\EnemyShineBlue</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Field\Field.cpp">
+      <Filter>Src\Application\GameObject\Field</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -24,9 +24,9 @@ void Player::Init()
 
 	StateInit();
 
-	m_position = Math::Vector3(-4.0f, 1.2f, 4.0f);
+	//m_position = Math::Vector3(-4.0f, 1.2f, 4.0f);
 
-	m_position.y = 1.0f;
+	//m_position.y = 1.0f;
 
 	// 初期向きを-90度（Y軸）に設定
 	m_rotation = Math::Quaternion::CreateFromAxisAngle(Math::Vector3::Up, DirectX::XMConvertToRadians(-90.0f));
@@ -45,7 +45,9 @@ void Player::Init()
 		m_afterImageWork = std::make_unique<KdModelWork>(src->GetData());
 	}
 
-	m_dissever = 1.0f;
+	m_dissever = 0.0f;
+
+	m_isHit = false;
 }
 
 void Player::PreUpdate()
@@ -73,6 +75,10 @@ void Player::PreUpdate()
 void Player::PostUpdate()
 {
 	CharaBase::PostUpdate();
+
+	// 残像処理
+	CaptureAfterImage();
+
 	// ライトの影の中心位置をプレイヤーに合わせる
 	auto& amb = KdShaderManager::Instance().WorkAmbientController();
 	amb.SetShadowCenter(m_position);
@@ -93,19 +99,10 @@ void Player::PostUpdate()
 
 	SceneManager::Instance().GetObjectWeakPtr(m_enemy);
 
-	auto enemy = m_enemy.lock();
-
-	if (!enemy) return;
-
-	if (enemy->Intersects(enemyHit, &retSpherelist))
+	if (auto enemy = m_enemy.lock(); enemy)
 	{
-		m_isHit = true;
+		enemy->Intersects(enemyHit, &retSpherelist);
 	}
-	else
-	{
-		m_isHit = false;
-	}
-
 
 	//  球にあたったリストから一番近いオブジェクトを探す
 	// オーバーした長さが1番長いものを探す。
@@ -134,10 +131,8 @@ void Player::PostUpdate()
 
 		//当たってたらその方向から押し出す
 		m_position += hitDir * maxOverLap;
+		m_gravitySpeed = 0.0f;
 	}
-
-	CaptureAfterImage();
-
 }
 
 void Player::DrawBright()
@@ -182,6 +177,18 @@ void Player::Update()
 	Math::Matrix quaternion = Math::Matrix::CreateFromQuaternion(m_rotation);
 	Math::Matrix translation = Math::Matrix::CreateTranslation(m_position);
 	m_mWorld = scale * quaternion * translation;
+
+
+	// ヒット処理。
+	if (m_isHit)
+	{
+		// ダメージステートに変更
+		auto spDamageState = std::make_shared<PlayerState_Hit>();
+		ChangeState(spDamageState);
+
+		m_isHit = false;	// ダメージフラグをリセット
+		return;
+	}
 
 }
 
@@ -372,7 +379,15 @@ void Player::UpdateMoveDirectionFromInput()
 
 void Player::CaptureAfterImage()
 {
-	if (!m_afterImageEnable) return;
+
+
+	if (!m_afterImageEnable)
+	{
+		// 残像無効ならクリアして終了
+		m_afterImages.clear();
+		m_afterImageCounter = 0;
+		return;
+	}
 
 	// モデルワークが無効なら処理しない
 	KdModelWork* work = GetModelWork();
@@ -380,7 +395,7 @@ void Player::CaptureAfterImage()
 
 	// m_afterImageIntervalを超えるまでカウンタを進める
 	if (m_afterImageCounter++ < m_afterImageInterval) return;
-	m_afterImageCounter = 0;
+	m_afterImageCounter = 0.0f;
 
 	// ノード worldTransform をスナップショット
 	const auto& nodes = work->GetNodes();
@@ -436,7 +451,7 @@ void Player::DrawAfterImages()
 		// 残像の描画
 		float a = 0.01f;
 		Math::Vector3 color = {0,1,1};
-		KdShaderManager::Instance().m_StandardShader.SetDissolve(0.0f, &a, &color);
+		KdShaderManager::Instance().m_StandardShader.SetDissolve(m_dissever, &a, &color);
 		stdShader.DrawModel(*m_afterImageWork, frameData.ownerWorld, m_afterImageColor);
 	}
 }

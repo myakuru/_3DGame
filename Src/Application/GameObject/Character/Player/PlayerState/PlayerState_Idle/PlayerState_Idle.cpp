@@ -5,7 +5,7 @@
 
 #include"../../../../../Scene/SceneManager.h"
 
-#include"../PlayerState_RunStart/PlayerState_RunStart.h"
+#include"../PlayerState_Run/PlayerState_Run.h"
 #include"../PlayerState_Attack/PlayerState_Attack.h"
 #include"../PlayerState_FowardAvoid/PlayerState_FowardAvoid.h"
 #include"../PlayerState_ChargeAttack/PlayerState_ChargeAttack.h"
@@ -14,6 +14,8 @@
 #include"../../../../Weapon/Katana/Katana.h"
 #include"../../../../Weapon/WeaponKatanaScabbard/WeaponKatanaScabbard.h"
 #include"../../../../Camera/PlayerCamera/PlayerCamera.h"
+#include"../../../Enemy/Enemy.h"
+#include"../PlayerState_SpecialAttack/PlayerState_SpecialAttack.h"
 
 void PlayerState_Idle::StateStart()
 {
@@ -38,7 +40,7 @@ void PlayerState_Idle::StateUpdate()
 		KeyboardManager::GetInstance().IsKeyPressed('S') ||
 		KeyboardManager::GetInstance().IsKeyPressed('D'))
 	{
-		auto spRunState = std::make_shared<PlayerState_RunStart>();
+		auto spRunState = std::make_shared<PlayerState_Run>();
 		m_player->ChangeState(spRunState);
 		return;
 	}
@@ -53,7 +55,7 @@ void PlayerState_Idle::StateUpdate()
 	}
 
 	// 押し続けている間に0.3秒超えたらチャージ攻撃
-	if (m_lButtonPressing && lButtonDuration >= 0.3f)
+	if (m_lButtonPressing && lButtonDuration >= 0.2f)
 	{
 		m_lButtonPressing = false;
 		auto chargeAttackState = std::make_shared<PlayerState_ChargeAttack>();
@@ -61,7 +63,12 @@ void PlayerState_Idle::StateUpdate()
 		return;
 	}
 
-	PlayerStateBase::StateUpdate();
+	if (KeyboardManager::GetInstance().IsKeyJustPressed('Q'))
+	{
+		auto specialAttackState = std::make_shared<PlayerState_SpecialAttack>();
+		m_player->ChangeState(specialAttackState);
+		return;
+	}
 
 	// 離した瞬間に0.3秒未満なら通常攻撃
 	if (m_lButtonPressing && KeyboardManager::GetInstance().IsKeyJustReleased(VK_LBUTTON))
@@ -91,14 +98,6 @@ void PlayerState_Idle::StateUpdate()
 		return;
 	}
 
-	// ダメージを受けたらHitステートへ
-	if (m_player->m_isHit)
-	{
-		auto spHitState = std::make_shared<PlayerState_Hit>();
-		m_player->ChangeState(spHitState);
-		return;
-	}
-
 	// 移動量リセット
 	m_player->SetIsMoving(Math::Vector3::Zero);
 
@@ -106,6 +105,4 @@ void PlayerState_Idle::StateUpdate()
 
 void PlayerState_Idle::StateEnd()
 {
-	m_player->m_isHit = false; // ダメージフラグをリセット
-
 }

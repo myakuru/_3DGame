@@ -22,7 +22,8 @@ bool KdDirect3D::Resize(int w, int h)
 		DXGI_FORMAT_UNKNOWN, // 既定のフォーマットを維持
 		DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH
 	);
-	if (FAILED(hr)) {
+	if (FAILED(hr))
+	{
 		return false;
 	}
 

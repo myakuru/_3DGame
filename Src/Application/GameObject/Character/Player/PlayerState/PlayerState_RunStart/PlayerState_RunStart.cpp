@@ -19,22 +19,9 @@ void PlayerState_RunStart::StateUpdate()
 	// 移動方向を取得
 	Math::Vector3 moveDir = m_player->GetMoveDirection();
 
-	if (KeyboardManager::GetInstance().IsKeyJustPressed(VK_LBUTTON))
-	{
-		auto attackState = std::make_shared<PlayerState_Attack>();
-		m_player->ChangeState(attackState);
-		return;
-	}
 
-	if (KeyboardManager::GetInstance().IsKeyJustPressed(VK_RBUTTON))
-	{
-		auto attackState = std::make_shared<PlayerState_BackWordAvoid>();
-		m_player->ChangeState(attackState);
-		return;
-	}
 
-	// キー入力から移動方向を更新
-	m_player->UpdateMoveDirectionFromInput();
+	PlayerStateBase::StateUpdate();
 
 	if (m_player->GetAnimator()->IsAnimationEnd())
 	{
@@ -51,8 +38,6 @@ void PlayerState_RunStart::StateUpdate()
 	}
 
 	UpdateUnsheathed();
-
-	if (!m_player->GetPlayerCamera().lock()) return;
 
 	m_player->UpdateQuaternion(moveDir);
 	m_player->SetIsMoving(moveDir);

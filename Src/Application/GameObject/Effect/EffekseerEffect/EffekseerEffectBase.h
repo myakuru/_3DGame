@@ -1,5 +1,6 @@
 ﻿#pragma once
 class Player;
+class Enemy;
 class EffekseerEffectBase : public KdGameObject
 {
 public:
@@ -21,6 +22,7 @@ protected:
 	virtual void EffectUpdate();
 
 	std::weak_ptr<Player> m_player;
+	std::weak_ptr<Enemy> m_enemy;
 
 	void ImGuiInspector() override;
 	void JsonSave(nlohmann::json& _json) const override;

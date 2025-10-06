@@ -3,12 +3,18 @@
 #include"../PlayerState_Attack/PlayerState_Attack.h"
 
 #include"../../../../Weapon/Katana/Katana.h"
+#include"../../../../../main.h"
+
+#include"../../../Enemy/Enemy.h"
 
 void PlayerState_Hit::StateStart()
 {
 	auto anime = m_player->GetAnimeModel()->GetAnimation("Hit");
 	m_player->GetAnimator()->SetAnimation(anime, 0.25f, false);
-	m_player->m_onceEffect = false;
+
+	PlayerStateBase::StateStart();
+
+	m_time = 0.0f;
 }
 
 void PlayerState_Hit::StateUpdate()
@@ -33,10 +39,24 @@ void PlayerState_Hit::StateUpdate()
 		return;
 	}
 
-	m_player->SetIsMoving(Math::Vector3::Zero);
+
+
+	float deltaTime = Application::Instance().GetDeltaTime();
+
+	if (m_time < 0.2f)
+	{
+		float dashSpeed = -0.5f;
+		m_player->SetIsMoving(m_attackDirection * dashSpeed);
+		m_time += deltaTime;
+	}
+	else
+	{
+		m_player->SetIsMoving(Math::Vector3::Zero);
+	}
 }
 
 void PlayerState_Hit::StateEnd()
 {
 	PlayerStateBase::StateEnd();
+	m_player->SetHitCheck(false);
 }

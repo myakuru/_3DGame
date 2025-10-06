@@ -8,7 +8,7 @@ class PlayerStateBase;
 struct PlayerStatus
 {
 	int hp = 1000;		// ヒットポイント
-	int attack = 2500;	// 攻撃力
+	int attack = 1;	// 攻撃力
 	int hpMax = 1000;	// 最大ヒットポイント
 };
 class Player :public CharaBase
@@ -64,7 +64,6 @@ public:
 	void SetAvoidStartTime(float time) { m_avoidStartTime = time; }
 	float GetAvoidStartTime() const { return m_avoidStartTime; }
 
-	bool m_isHit = false;						// ヒット判定用
 
 	PlayerStatus& GetPlayerStatus() { return m_status; }
 
@@ -79,12 +78,30 @@ public:
 	void DrawAfterImages();
 
 	// 残像の状態設定(残像を使用するか？、残像の最台数、残像を何秒間表示するか、カラー)
-	void AddAfterImage(bool _flg = false, int _max = 0, int _nterval = 0, const Math::Color& _color = {0,0,0,0})
+	void AddAfterImage(bool _flg = false, int _max = 0, float _nterval = 0, const Math::Color& _color = {0,0,0,0},float dissever = 0.0f)
 	{
 		m_afterImageEnable = _flg;
 		m_afterImageMax = _max;
 		m_afterImageInterval = _nterval;
 		m_afterImageColor = _color;
+		m_dissever = dissever;
+	}
+
+	// 残像のリセット
+	void ResetAfterImage()
+	{
+		m_afterImages.clear();
+		m_afterImageCounter = 0;
+	}
+
+	void SetHitCheck(bool _isHit)
+	{
+		m_isHit = _isHit;
+	}
+
+	bool GetHitCheck() const
+	{
+		return m_isHit;
 	}
 
 private:
@@ -120,23 +137,16 @@ private:
 	// 残像設定・状態
 	bool m_afterImageEnable = false;
 	int  m_afterImageMax = 1;
-	int  m_afterImageInterval = 1; // 何フレームごとに保存するか
-	int  m_afterImageCounter = 0;	// カウンタ
+	float  m_afterImageInterval = 0.1f; // 何フレームごとに保存するか
+	float  m_afterImageCounter = 0.0f;	// カウンタ
 	Math::Color m_afterImageColor = {0,1,1,0.1f}; // 基本色（半透明白）
 
+	bool m_isHit = false;						// ヒット判定用
 
 	std::deque<AfterImageFrame> m_afterImages;
 
 	// 描画用テンポラリ Work（元モデルと同じ Data を参照）
 	std::unique_ptr<KdModelWork> m_afterImageWork;
 
-	Math::Vector3 m_prevPosition{};          // 前フレームのワールド位置
-	float         m_forwardRayYOffset = 0.35f; // プレイヤー中心(腰程度)の高さ
-	float         m_forwardRayMargin = 0.02f; // 壁手前で残すマージン
-	float         m_forwardRayExtra = 0.05f; // 余剰距離(浮動小数ヒット安定用)
-
-	float kBumpSphereRadius = 0.2f; // 壁にめり込むのを防ぐための球の半径
-	float kBumpSphereYOffset = 0.3f; // プレイヤー中心(腰程度)の高さ	
-	float kCollisionMargin = 0.01f; // 壁にめり込まないための余白
 
 };

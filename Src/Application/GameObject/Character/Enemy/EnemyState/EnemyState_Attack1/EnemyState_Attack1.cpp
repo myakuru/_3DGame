@@ -9,9 +9,9 @@ void EnemyState_Attack1::StateStart()
 
 	auto anime = m_enemy->GetAnimeModel()->GetAnimation("Attack1");
 	m_enemy->GetAnimator()->SetAnimation(anime, 0.25f, false);
-	m_enemy->m_onceEffect = false;
 
 	m_time = 0.0f;
+
 }
 
 void EnemyState_Attack1::StateUpdate()
@@ -26,9 +26,11 @@ void EnemyState_Attack1::StateUpdate()
 	}
 
 	// 0.5秒間当たり判定有効
-	if (m_time >= 0.5 && m_time <= 0.7)
+	if (!m_hasHitPlayer && m_time >= 0.5f && m_time <= 1.5f)
 	{
 		m_enemy->UpdateAttack();
+		m_enemy->SetOnceEffect(false);
+		m_hasHitPlayer = true;
 	}
 
 	float deltaTime = Application::Instance().GetDeltaTime();

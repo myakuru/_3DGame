@@ -15,13 +15,12 @@ void PlayerState_BackWordAvoid::StateStart()
 	m_player->SetAvoidFlg(true);
 	m_player->SetAvoidStartTime(Application::Instance().GetDeltaTime()); // 現在の時間を記録
 
-	m_player->AddAfterImage(true, 5, 2, Math::Color(0.0f, 1.0f, 1.0f, 0.2f));
+	m_player->SetAnimeSpeed(120.0f);
 
 }
 
 void PlayerState_BackWordAvoid::StateUpdate()
 {
-	m_player->SetAnimeSpeed(120.0f);
 
 	Math::Vector3 forward = Math::Vector3::TransformNormal(Math::Vector3::Forward, Math::Matrix::CreateFromQuaternion(m_player->GetRotationQuaternion()));
 	forward.Normalize();
@@ -42,9 +41,9 @@ void PlayerState_BackWordAvoid::StateUpdate()
 
 	PlayerStateBase::StateUpdate();
 
-	UpdateKatanaPos();
+	//UpdateKatanaPos();
 
-	float dashSpeed = 4.0f;
+	float dashSpeed = 1.0f;
 	
 	m_player->SetIsMoving(forward * dashSpeed);
 
@@ -56,6 +55,4 @@ void PlayerState_BackWordAvoid::StateEnd()
 
 	m_player->SetAvoidFlg(false);
 	m_player->SetAvoidStartTime(0.0f); // 現在の時間を記録
-
-	m_player->AddAfterImage();
 }

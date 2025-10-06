@@ -10,6 +10,7 @@ public:
 
 	void SetEnemy(Enemy* player) { m_enemy = player; }
 
+
 protected:
 
 	void StateStart() override = 0;
@@ -24,5 +25,7 @@ protected:
 
 	Enemy* m_enemy = nullptr;
 	float m_time = 0.0f;
+
+	bool m_hasHitPlayer = false;
 
 };

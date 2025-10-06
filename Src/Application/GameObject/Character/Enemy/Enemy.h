@@ -72,11 +72,19 @@ public:
 
 	struct EnemyStatus
 	{
-		int hp = 20000;				// 体力
+		int hp = 2000000;				// 体力
 		int attack = 10;			// 攻撃力
 	};
 
-	bool m_onceEffect = false;
+
+	// 回避成功フラグの取得
+	bool GetJustAvoidSuccess() const { return m_justAvoidSuccess; }
+	void SetJustAvoidSuccess(bool flag) { m_justAvoidSuccess = flag; }
+
+	// OneceEffectの取得
+	bool GetOnceEffect() const { return m_onceEffect; }
+
+	void SetOnceEffect(bool flag) { m_onceEffect = flag; }
 
 private:
 
@@ -97,4 +105,10 @@ private:
 	std::weak_ptr<EnemyShield> m_enemyShield; // 敵の盾
 
 	std::shared_ptr<HitDamage> m_spHitDamage;
+
+	// ジャスト回避成功フラグ
+	bool m_justAvoidSuccess = false;
+
+	bool m_onceEffect = false;
+
 };

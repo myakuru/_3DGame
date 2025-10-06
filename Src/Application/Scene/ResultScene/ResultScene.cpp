@@ -5,6 +5,7 @@
 void ResultScene::Event()
 {
 	KdShaderManager::Instance().m_postProcessShader.SetBrightThreshold(m_brightThreshold);
+	KdShaderManager::Instance().WorkAmbientController().SetAmbientLight(m_anviLightColor);
 	KdShaderManager::Instance().WorkAmbientController().SetFogEnable(m_fogEnable, m_fogUseRange);
 	KdShaderManager::Instance().WorkAmbientController().SetDistanceFog({ m_fogColor }, m_fogDensity);
 	KdShaderManager::Instance().WorkAmbientController().SetheightFog({ 0.4f, 0.3f, 0.3f }, 100.0f, 0.0f, 0.0f);

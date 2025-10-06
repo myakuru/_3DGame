@@ -109,6 +109,7 @@ protected :
 	float m_highFogDistance = 0.0f;
 	Math::Vector3 m_directionalLightDir = { 1,1,1 };
 	Math::Vector3 m_directionalLightColor = { 1.0f,1.0f,1.0f };
+	Math::Vector4 m_anviLightColor = { 0.2f,0.2f,0.2f,0.2f };
 
 	Math::Vector2 m_lightingArea = { 1.0f, 1.0f };
 	float m_dirLightHeight = 1.0f;

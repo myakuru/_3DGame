@@ -29,6 +29,8 @@ protected:
 	Math::Vector3 currentRootTranslation = Math::Vector3::Zero;
 	Math::Vector3 m_attackDirection = Math::Vector3::Zero;
 
+	bool m_isKeyPressing = false;
+
 	float m_time = 0.0f;
 
 	bool m_LButtonkeyInput = false;

@@ -6,6 +6,7 @@
 #include"../../Camera/PlayerCamera/PlayerCamera.h"
 #include"../../Weapon/EnemySword/EnemySword.h"
 #include"../../Weapon/EnemyShield/EnemyShield.h"
+#include"../../Collition/Collition.h"
 
 const uint32_t Enemy::TypeID = KdGameObject::GenerateTypeID();
 
@@ -24,16 +25,14 @@ void Enemy::Init()
 	m_pCollider->RegisterCollisionShape("PlayerSphere", sphere, KdCollider::TypeEnemyHit);
 
 	StateInit();
+
+	m_isAtkPlayer = false;
 }
 
 void Enemy::Update()
 {
 	SceneManager::Instance().GetObjectWeakPtr(m_enemySword);
 	SceneManager::Instance().GetObjectWeakPtr(m_enemyShield);
-
-	// 地面に立つようにY座標を調整
-	m_position.y = 1.0f;
-
 
 	// 球の中心座標と半径を設定
 	sphere.Center = m_position + Math::Vector3(0.0f, 0.7f, 0.0f); // 敵の位置＋オフセット
@@ -42,8 +41,6 @@ void Enemy::Update()
 	m_pDebugWire->AddDebugSphere(sphere.Center, sphere.Radius, kBlueColor);
 
 	SceneManager::Instance().GetObjectWeakPtr(m_wpPlayer);
-
-	if (m_wpPlayer.expired()) return;
 
 	float deltaTime = Application::Instance().GetUnscaledDeltaTime();
 
@@ -117,7 +114,7 @@ void Enemy::DrawLit()
 
 void Enemy::UpdateAttack()
 {
-	m_isAtkPlayer = false;
+	m_isAtkPlayer = false; // ヒットチェックを行わない
 
 	// クォータニオンから前方向ベクトルを取得
 	Math::Vector3 forward = Math::Vector3::TransformNormal(Math::Vector3::Forward, Math::Matrix::CreateFromQuaternion(m_rotation));
@@ -134,7 +131,6 @@ void Enemy::UpdateAttack()
 
 	m_pDebugWire->AddDebugSphere(attackSphere.m_sphere.Center, attackSphere.m_sphere.Radius); // デバッグ用の球を追加
 
-
 	auto player = m_wpPlayer.lock();
 
 	if (!player) return;
@@ -149,6 +145,7 @@ void Enemy::UpdateAttack()
 			int avoidFrame = Application::Instance().GetDeltaTime() - player->GetAvoidStartTime();
 			if (avoidFrame >= 0 && avoidFrame <= 30) // 3フレーム以内ならジャスト回避
 			{
+				m_justAvoidSuccess = true;
 				Application::Instance().SetFpsScale(0.5f); // スローモーションにする
 				SceneManager::Instance().SetDrawGrayScale(true);
 				return; // ダメージ処理をスキップ
@@ -157,14 +154,10 @@ void Enemy::UpdateAttack()
 
 		if (!m_onceEffect)
 		{
-			// 敵にダメージを与える処理
-			player->TakeDamage(m_status.attack); // ダメージを与える
-			m_isAtkPlayer = true;				 // ヒットチェックを行う
-			player->m_isHit = true;				 // プレイヤーのヒットフラグを立てる
-			m_onceEffect = true;				 // 1回だけ再生
-
-
-
+			player->TakeDamage(m_status.attack);
+			player->SetHitCheck(true);          // プレイヤー側 Hit ステート遷移用
+			m_isAtkPlayer = true;               // 敵攻撃1ステート中は再実行させない
+			m_onceEffect = true;
 		}
 	}
 }
@@ -179,17 +172,18 @@ void Enemy::PostUpdate()
 	// 球の半径を設定
 	sphereInfo.m_sphere.Radius = 0.2f;
 	// アタリ判定をしたいタイプを設定
-	sphereInfo.m_type = KdCollider::TypeGround; // 敵のアタリ判定
+	sphereInfo.m_type = KdCollider::TypeBump; // 地面のアタリ判定
 
 	m_pDebugWire->AddDebugSphere(sphereInfo.m_sphere.Center, sphereInfo.m_sphere.Radius);
 
 	// 球に当たったオブジェクト情報を格納するリスト
 	std::list<KdCollider::CollisionResult> retSpherelist;
 
-	// 球とアタリ判定を行う
-	for (auto& obj : SceneManager::Instance().GetObjList())
+	SceneManager::Instance().GetObjectWeakPtr(m_collision);
+
+	if (auto collisionObj = m_collision.lock(); collisionObj)
 	{
-		obj->Intersects(sphereInfo, &retSpherelist);
+		collisionObj->Intersects(sphereInfo, &retSpherelist);
 	}
 
 	// 球にあたったリストから一番近いオブジェクトを探す
@@ -273,6 +267,9 @@ void Enemy::UpdateQuaternion(Math::Vector3& _moveVector)
 
 void Enemy::StateInit()
 {
+	m_isAtkPlayer = false;
+	m_onceEffect = false;
+
 	// 初期状態を設定
 	auto state = std::make_shared<EnemyState_Idle>();
 	ChangeState(state);

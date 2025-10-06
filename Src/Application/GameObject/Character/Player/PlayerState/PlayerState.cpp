@@ -2,6 +2,8 @@
 #include"../../../Weapon/Katana/Katana.h"
 #include"../../../Weapon/WeaponKatanaScabbard/WeaponKatanaScabbard.h"
 #include"../PlayerState/PlayerState_SpecialAttack/PlayerState_SpecialAttack.h"
+#include"../PlayerState/PlayerState_FowardAvoidFast/PlayerState_FowardAvoidFast.h"
+#include"../PlayerState/PlayerState_BackWordAvoid/PlayerState_BackWordAvoid.h"
 
 
 void PlayerStateBase::StateStart()
@@ -34,16 +36,12 @@ void PlayerStateBase::StateStart()
 	{
 		katana->SetNowAttackState(false);
 	}
+
+	m_isKeyPressing = false;
 }
 
 void PlayerStateBase::StateUpdate()
 {
-	if (KeyboardManager::GetInstance().IsKeyJustPressed('Q'))
-	{
-		auto specialAttackState = std::make_shared<PlayerState_SpecialAttack>();
-		m_player->ChangeState(specialAttackState);
-		return;
-	}
 }
 
 void PlayerStateBase::StateEnd()

@@ -23,4 +23,7 @@ void EnemyStateBase::StateStart()
 			m_enemy->SetRotation(rot);
 		}
 	}
+
+	m_time = 0.0f;
+	m_hasHitPlayer = false;
 }

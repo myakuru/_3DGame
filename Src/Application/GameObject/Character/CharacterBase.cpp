@@ -24,12 +24,12 @@ void CharaBase::UpdateQuaternion(Math::Vector3& _moveVector)
 	if (_moveVector == Math::Vector3::Zero) return;
 
 	SceneManager::Instance().GetObjectWeakPtr(m_playerCamera);
-	if (m_playerCamera.expired()) return;
 
-	const auto camera = m_playerCamera.lock();
-
-	// カメラのY軸回転と移動ベクトルをかけ合わせて、WASDから入力された値に基づく方向を計算
-	_moveVector = Math::Vector3::TransformNormal(_moveVector, camera->GetRotationYMatrix());
+	if (auto camera = m_playerCamera.lock(); camera)
+	{
+		// カメラのY軸回転と移動ベクトルをかけ合わせて、WASDから入力された値に基づく方向を計算
+		_moveVector = Math::Vector3::TransformNormal(_moveVector, camera->GetRotationYMatrix());
+	}
 
 	_moveVector.Normalize();
 
@@ -146,6 +146,7 @@ void CharaBase::PostUpdate()
 	{
 		m_gravity = 0.0f;	// 重力をリセット
 		m_position = groundPos;
+		//m_gravitySpeed = 0.0f; // 落下速度をリセット
 	}
 
 	//=====================================================

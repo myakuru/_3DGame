@@ -1,7 +1,7 @@
 ﻿#include "EnemyState_Walk_Right.h"
 #include"../../../Player/Player.h"
 #include"../EnemyState_Idle/EnemyState_Idle.h"
-#include"../EnemyState_Attack/EnemyState_Attack.h"
+#include"../EnemyState_Walk_Left/EnemyState_Walk_Left.h"
 #include"../../../../../main.h"
 
 void EnemyState_Walk_Right::StateStart()
@@ -22,22 +22,22 @@ void EnemyState_Walk_Right::StateUpdate()
 
 
 	// 自身の横方向ベクトル
-	Math::Vector3 right = Math::Vector3::TransformNormal
+	Math::Vector3 left = Math::Vector3::TransformNormal
 	(
-		Math::Vector3::Right, 
+		Math::Vector3::Left, 
 		Math::Matrix::CreateFromQuaternion(m_enemy->GetRotationQuaternion())
 	);
 
-	right.Normalize();
+	left.Normalize();
 
 	// 右に少しずつ移動
-	m_enemy->SetIsMoving(-right * 0.5f);
+	m_enemy->SetIsMoving(left * 0.2f);
 
-	if(m_time >= 5.0f)
+	if(m_time >= 2.0f)
 	{
 		//Attackステートに移行
-		auto attack = std::make_shared<EnemyState_Attack>();
-		m_enemy->ChangeState(attack);
+		auto state = std::make_shared<EnemyState_Walk_Left>();
+		m_enemy->ChangeState(state);
 		return;
 	}
 	

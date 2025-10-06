@@ -77,8 +77,8 @@ private:
 	LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
 
-	bool  m_borderless = false;
-	DWORD m_savedStyle = 0;
-	RECT  m_savedRect = { 0,0,0,0 };
+	bool  m_borderless = false;			// 枠無しフルスクリーン中？
+	DWORD m_savedStyle = 0;				// 元のウィンドウスタイル保存用
+	RECT  m_savedRect = { 0,0,0,0 };	// 元のウィンドウ位置保存用
 
 };

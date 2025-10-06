@@ -16,7 +16,7 @@
 void PlayerState_Attack::StateStart()
 {
 	auto anime = m_player->GetAnimeModel()->GetAnimation("Attack");
-	m_player->GetAnimator()->SetAnimation(anime, 0.3f, false);
+	m_player->GetAnimator()->SetAnimation(anime, 0.25f, false);
 	
 
 	PlayerStateBase::StateStart();
@@ -87,11 +87,11 @@ void PlayerState_Attack::StateUpdate()
 	// アニメ速度制御
 	if (m_LButtonkeyInput)
 	{
-		m_player->SetAnimeSpeed(150.0f);
+		m_player->SetAnimeSpeed(180.0f);
 	}
 	else
 	{
-		m_player->SetAnimeSpeed(80.0f);
+		m_player->SetAnimeSpeed(150.0f);
 	}
 
 	// アニメ終了時の遷移

@@ -12,7 +12,14 @@ void EnemState_Attack3::StateStart()
 
 void EnemState_Attack3::StateUpdate()
 {
-	m_enemy->SetAnimeSpeed(60.0f);
+
+	//当たり判定有効
+	if (!m_hasHitPlayer && m_time >= 0.0f && m_time <= 2.7f)
+	{
+		m_enemy->UpdateAttack();
+		m_enemy->SetOnceEffect(false);
+		m_hasHitPlayer = true;
+	}
 	
 	// 移動量リセット
 	m_enemy->SetIsMoving(Math::Vector3::Zero);

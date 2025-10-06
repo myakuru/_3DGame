@@ -60,6 +60,8 @@
 #include"../GameObject/Effect/EffekseerEffect/SpecialAttack/SpecialAttack.h"
 #include"../GameObject/Weapon/EnemySword/EnemySword.h"
 #include"../GameObject/Weapon/EnemyShield/EnemyShield.h"
+#include"../GameObject/Effect/EffekseerEffect/EnemyShineBlue/EnemyShineBlue.h"
+#include"../GameObject/Field/Field.h"
 
 void SceneManager::Init()
 {
@@ -95,6 +97,7 @@ void SceneManager::Register() const
 
 	// Map系
 	RegisterObject::GetInstance().Register<Map>();
+	RegisterObject::GetInstance().Register<Field>();
 
 	// キャラクター系
 	RegisterObject::GetInstance().Register<Player>();
@@ -123,6 +126,7 @@ void SceneManager::Register() const
 	RegisterObject::GetInstance().Register<AvoidAttackSlashEffect>();
 	RegisterObject::GetInstance().Register<ESkillEffect>();
 	RegisterObject::GetInstance().Register<SpecialAttack>();
+	RegisterObject::GetInstance().Register<EnemyShineBlue>();
 
 
 	// 使われてないけど一応登録しとく系
