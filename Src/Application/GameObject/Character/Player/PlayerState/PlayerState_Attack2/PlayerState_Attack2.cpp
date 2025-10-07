@@ -33,6 +33,9 @@ void PlayerState_Attack2::StateStart()
 
 void PlayerState_Attack2::StateUpdate()
 {
+	float deltaTime = Application::Instance().GetDeltaTime();
+
+	m_time += deltaTime;
 
 	// 0.5秒間当たり判定有効
 	if (m_time <= 1.0 / 2)
@@ -84,7 +87,6 @@ void PlayerState_Attack2::StateUpdate()
 
 	UpdateKatanaPos();
 
-	float deltaTime = Application::Instance().GetDeltaTime();
 	if (m_attackParam.m_dashTimer < 0.2f)
 	{
 		float dashSpeed = 0.5f;

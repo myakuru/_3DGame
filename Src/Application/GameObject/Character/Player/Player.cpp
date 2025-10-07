@@ -10,6 +10,7 @@
 #include"PlayerState/PlayerState_Hit/PlayerState_Hit.h"
 
 #include"../Enemy/Enemy.h"
+#include"../../Collition/Collition.h"
 
 const uint32_t Player::TypeID = KdGameObject::GenerateTypeID();
 
@@ -131,7 +132,6 @@ void Player::PostUpdate()
 
 		//当たってたらその方向から押し出す
 		m_position += hitDir * maxOverLap;
-		m_gravitySpeed = 0.0f;
 	}
 }
 
@@ -478,9 +478,15 @@ void Player::ApplyHorizontalMove(const Math::Vector3& inputMove, float deltaTime
 	m_pDebugWire->AddDebugLine(ray.m_pos, ray.m_dir, ray.m_range, kRedColor);
 
 	std::list<KdCollider::CollisionResult> rayHits;
-	for (auto& obj : SceneManager::Instance().GetObjList())
+
+	SceneManager::Instance().GetObjectWeakPtrList(m_collisionList);
+
+	for(auto & weakCol : m_collisionList)
 	{
-		obj->Intersects(ray, &rayHits);
+		if (auto col = weakCol.lock(); col)
+		{
+			col->Intersects(ray, &rayHits);
+		}
 	}
 
 	bool blocked = false;
@@ -506,8 +512,6 @@ void Player::ApplyHorizontalMove(const Math::Vector3& inputMove, float deltaTime
 
 		// 位置をクランプ
 		m_position = m_prevPosition + dir * allow;
-
-
 
 		// これ以上進ませないため入力移動を殺す
 		// (スライドさせたいなら法線成分だけゼロにして再計算する)

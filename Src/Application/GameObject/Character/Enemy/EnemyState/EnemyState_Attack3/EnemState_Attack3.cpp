@@ -14,9 +14,9 @@ void EnemState_Attack3::StateUpdate()
 {
 
 	//当たり判定有効
-	if (!m_hasHitPlayer && m_time >= 0.0f && m_time <= 2.7f)
+	if (!m_hasHitPlayer && m_time >= 0.0f && m_time <= 5.0f)
 	{
-		m_enemy->UpdateAttack();
+		//m_enemy->UpdateAttack();
 		m_enemy->SetOnceEffect(false);
 		m_hasHitPlayer = true;
 	}

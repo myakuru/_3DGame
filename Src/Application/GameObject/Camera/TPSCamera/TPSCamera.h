@@ -21,4 +21,9 @@ public:
 		return m_mWorld;
 	}
 
+	bool m_resultInitialized = false;
+	// Result 固定用
+	Math::Vector3 m_resultStartPos{};
+	Math::Matrix  m_resultStartRot{};
+
 };

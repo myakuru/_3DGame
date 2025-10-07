@@ -6,7 +6,7 @@ const uint32_t Collision::TypeID = KdGameObject::GenerateTypeID();
 
 Collision::Collision()
 {
-	m_type = TypeID;
+	m_typeID = TypeID;
 }
 
 void Collision::Init()
@@ -14,6 +14,8 @@ void Collision::Init()
 	SelectDraw3dModel::Init();
 	// 描画フラグを初期化
 	InitDrawFlags();
+
+	m_pCollider->RegisterCollisionShape("Mesh", std::make_unique<KdModelCollision>(m_model, KdCollider::TypeGround));
 
 	m_pCollider->RegisterCollisionShape("Mesh", std::make_unique<KdModelCollision>(m_model, KdCollider::TypeBump));
 

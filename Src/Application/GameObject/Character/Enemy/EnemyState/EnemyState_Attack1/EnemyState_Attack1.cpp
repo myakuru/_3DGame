@@ -25,22 +25,16 @@ void EnemyState_Attack1::StateUpdate()
 		m_enemy->UpdateQuaternionDirect(moveDir);
 	}
 
-	// 0.5秒間当たり判定有効
-	if (!m_hasHitPlayer && m_time >= 0.5f && m_time <= 1.5f)
-	{
-		m_enemy->UpdateAttack();
-		m_enemy->SetOnceEffect(false);
-		m_hasHitPlayer = true;
-	}
 
 	float deltaTime = Application::Instance().GetDeltaTime();
 
 	m_time += deltaTime;
 
 	// 0.5秒間当たり判定有効
-	if (m_time <= 1.0 / 2)
+	if (m_time >= 0.0f && m_time <= 1.0f)
 	{
 		m_enemy->UpdateAttack();
+		m_enemy->SetOnceEffect(false);
 	}
 
 	if (m_enemy->GetAnimator()->IsAnimationEnd())

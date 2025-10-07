@@ -41,7 +41,7 @@ void PlayerState_BackWordAvoid::StateUpdate()
 
 	PlayerStateBase::StateUpdate();
 
-	//UpdateKatanaPos();
+	UpdateUnsheathed();
 
 	float dashSpeed = 1.0f;
 	

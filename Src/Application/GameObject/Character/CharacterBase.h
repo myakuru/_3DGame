@@ -89,6 +89,7 @@ protected:
 	std::weak_ptr<PlayerCamera> m_playerCamera;
 	// 当たり判定オブジェクト
 	std::weak_ptr<Collision> m_collision;
+	std::list<std::weak_ptr<Collision>> m_collisionList;
 
 	DirectX::BoundingSphere sphere;
 

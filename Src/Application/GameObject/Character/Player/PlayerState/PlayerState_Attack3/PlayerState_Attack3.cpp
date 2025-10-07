@@ -21,6 +21,8 @@ void PlayerState_Attack3::StateStart()
 		katana->SetNowAttackState(true);
 	}
 
+	m_player->m_onceEffect = false;
+
 	m_time = 0.0f;
 	m_LButtonkeyInput = false;
 
@@ -44,6 +46,15 @@ void PlayerState_Attack3::StateUpdate()
 	PlayerStateBase::StateUpdate();
 
 	float deltaTime = Application::Instance().GetDeltaTime();
+
+	m_time += deltaTime;
+
+	// 0.5秒間当たり判定有効
+	if (m_time <= 1.0 / 2)
+	{
+		m_player->UpdateAttack();
+		m_time = 0.0f;
+	}
 
 	if (KeyboardManager::GetInstance().IsKeyJustPressed(VK_LBUTTON))
 	{
@@ -88,11 +99,11 @@ void PlayerState_Attack3::StateUpdate()
 		m_player->UpdateQuaternionDirect(moveDir);
 	}
 
-	if (m_time < 0.2f)
+	if (m_attackParam.m_dashTimer < 0.2f)
 	{
 		float dashSpeed = 0.7f;
 		m_player->SetIsMoving(m_attackDirection * dashSpeed);
-		m_time += deltaTime;
+		m_attackParam.m_dashTimer += deltaTime;
 	}
 	else
 	{

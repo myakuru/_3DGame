@@ -68,10 +68,11 @@ public:
 		return (m_time >= m_spAnimation->m_maxLength);
 	}
 
-	float GetTime() const { return m_blendTimer.GetNowFrame(); }
+	float GetTime() { return m_blendTimer.GetProgress(); }
 	
 	// アニメーションの更新
 	void AdvanceTime(std::vector<KdModelWork::Node>& rNodes, float speed = 1.0f);
+
 
 private:
 

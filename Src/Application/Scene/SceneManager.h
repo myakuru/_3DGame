@@ -74,6 +74,21 @@ public :
 		}
 	}
 
+	// 指定された型の全オブジェクトの weak_ptr を収集
+	template<class T>
+	void GetObjectWeakPtrList(std::list<std::weak_ptr<T>>& outPtrList)
+	{
+		outPtrList.clear();
+		uint32_t typeId = T::TypeID;
+		for (auto& obj : GetObjList())
+		{
+			if (obj->GetTypeID() == typeId)
+			{
+				outPtrList.emplace_back(std::static_pointer_cast<T>(obj));
+			}
+		}
+	}
+
 	// カメラのオブジェクトを取得
 	template<typename T>
 	std::shared_ptr<T> FindCameraObj()

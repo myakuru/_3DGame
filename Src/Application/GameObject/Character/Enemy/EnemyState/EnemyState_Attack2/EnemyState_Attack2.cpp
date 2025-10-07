@@ -21,9 +21,9 @@ void EnemyState_Attack2::StateUpdate()
 	}
 
 	// 0.5秒間当たり判定有効
-	if (!m_hasHitPlayer && m_time >= 0.0f && m_time <= 0.5f)
+	if (!m_hasHitPlayer && m_time >= 0.0f && m_time <= 5.0f)
 	{
-		m_enemy->UpdateAttack();
+		//m_enemy->UpdateAttack();
 		m_enemy->SetOnceEffect(false);
 		m_hasHitPlayer = true;
 	}

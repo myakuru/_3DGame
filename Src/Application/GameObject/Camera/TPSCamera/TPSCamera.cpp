@@ -26,11 +26,6 @@ void TPSCamera::PostUpdate()
 		UpdateMoveKey();
 
 		UpdateResultCamera();
-
-
-		m_mWorld = m_mLocalPos * m_mRotation;
-		m_mWorld.Translation(m_position);
-		m_spCamera->SetCameraMatrix(m_mWorld);
 	}
 }
 

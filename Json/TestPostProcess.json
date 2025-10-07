@@ -6,16 +6,16 @@
     "z": 0.0
   },
   "m_brightThreshold": 0.6000000238418579,
-  "m_dirLightHeight": 5.0,
+  "m_dirLightHeight": 30.0,
   "m_directionalLightColor": {
-    "x": 0.0,
-    "y": 0.0,
-    "z": 0.0
+    "x": 0.37254899740219116,
+    "y": 0.3451556861400604,
+    "z": 0.3451556861400604
   },
   "m_directionalLightDir": {
-    "x": 213.5,
-    "y": -135.6999969482422,
-    "z": -36.20000076293945
+    "x": 1.0,
+    "y": -1.0,
+    "z": 1.0
   },
   "m_fogColor": {
     "x": 0.5816993117332458,
@@ -33,8 +33,8 @@
   "m_highFogDistance": 30.0,
   "m_highFogHeight": 70.0,
   "m_lightingArea": {
-    "x": 5.0,
-    "y": 5.0
+    "x": 25.0,
+    "y": 25.0
   },
   "m_lowFogHeight": -100.0
 }

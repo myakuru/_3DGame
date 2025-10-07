@@ -28,12 +28,17 @@ void EnemyState_Attack::StateUpdate()
 
 	m_time += deltaTime;
 
+	// アニメーション再生時間を取得
+	float animeTime = m_enemy->GetAnimator()->GetTime();
+
+	KdDebugGUI::Instance().AddLog("EnemyAttackAnimeTime:%f", animeTime);
+	KdDebugGUI::Instance().AddLog("\n");
+
 	// 0.5秒間当たり判定有効
-	if (!m_hasHitPlayer && m_time >= 0.1f && m_time <= 0.5f)
+	if (m_time >= 0.0f && m_time <= 1.0f)
 	{
 		m_enemy->UpdateAttack();
 		m_enemy->SetOnceEffect(false);
-		m_hasHitPlayer = true;
 	}
 
 	if (m_enemy->GetAnimator()->IsAnimationEnd())

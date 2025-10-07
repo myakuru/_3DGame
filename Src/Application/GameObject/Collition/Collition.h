@@ -10,8 +10,6 @@ public:
 	Collision();
 	~Collision() override = default;
 
-	uint32_t GetTypeID() const override { return m_typeID; }
-
 private:
 
 	void Init() override;

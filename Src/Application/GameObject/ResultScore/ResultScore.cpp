@@ -51,16 +51,15 @@ void ResultScore::Update()
 		m_distance = 15.0f;
 	}
 
-	// オブジェクトの位置をカメラのX軸＋m_distance、Y=80、Z=100に固定
-	m_position.x = cameraPos.x + forward.x * m_distance;
-	m_position.y = cameraPos.y + forward.y * m_distance;
-	m_position.z = cameraPos.z + forward.z * m_distance;
+	m_mWorld = Math::Matrix::CreateScale(m_scale);
+	m_mWorld *= Math::Matrix::CreateFromYawPitchRoll
+	(
+		DirectX::XMConvertToRadians(m_degree.y),
+		DirectX::XMConvertToRadians(m_degree.x),
+		DirectX::XMConvertToRadians(m_degree.z)
+	);
 
-	// --- ビルボード処理（Y軸のみ反映＋自分のY軸回転） ---
-	m_mWorld =
-		Math::Matrix::CreateScale(m_scale) *
-		cameraRot *
-		Math::Matrix::CreateTranslation(m_position);
+	m_mWorld.Translation(m_position + cameraPos + forward * m_distance);
 }
 
 void ResultScore::DrawGradation()

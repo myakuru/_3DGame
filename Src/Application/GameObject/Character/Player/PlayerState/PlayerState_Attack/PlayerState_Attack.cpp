@@ -19,7 +19,7 @@ void PlayerState_Attack::StateStart()
 	m_player->GetAnimator()->SetAnimation(anime, 0.25f, false);
 	
 
-	PlayerStateBase::StateStart();
+	//PlayerStateBase::StateStart();
 
 	m_attackParam = m_player->GetPlayerConfig().GetAttack2Param();
 	m_attackParam.m_dashTimer = 0.0f;
@@ -40,6 +40,10 @@ void PlayerState_Attack::StateStart()
 
 void PlayerState_Attack::StateUpdate()
 {
+
+	float animeTime = m_player->GetAnimator()->GetTime();
+
+	KdDebugGUI::Instance().AddLog(U8("Attack2アニメ時間: %f"), animeTime);
 
 	if (m_player->GetEnemy().lock())
 	{
@@ -87,11 +91,12 @@ void PlayerState_Attack::StateUpdate()
 	// アニメ速度制御
 	if (m_LButtonkeyInput)
 	{
-		m_player->SetAnimeSpeed(180.0f);
+		// アニメーションを途中で切る
+		m_player->SetAnimeSpeed(150.0f);
 	}
 	else
 	{
-		m_player->SetAnimeSpeed(150.0f);
+		m_player->SetAnimeSpeed(100.0f);
 	}
 
 	// アニメ終了時の遷移

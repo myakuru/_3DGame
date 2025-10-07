@@ -22,6 +22,8 @@ void PlayerState_Attack4::StateStart()
 		katana->SetNowAttackState(true);
 	}
 
+	m_player->m_onceEffect = false;
+
 	SceneManager::Instance().GetObjectWeakPtr(m_groundFreezes);
 	SceneManager::Instance().GetObjectWeakPtr(m_rotation);
 
@@ -34,6 +36,15 @@ void PlayerState_Attack4::StateUpdate()
 	PlayerStateBase::StateUpdate();
 
 	float deltaTime = Application::Instance().GetDeltaTime();
+
+	m_time += deltaTime;
+
+	// 0.5秒間当たり判定有効
+	if (m_time <= 1.0 / 2)
+	{
+		m_player->UpdateAttack();
+		m_time = 0.0f;
+	}
 
 	if (KeyboardManager::GetInstance().IsKeyJustPressed(VK_LBUTTON))
 	{
@@ -76,15 +87,16 @@ void PlayerState_Attack4::StateUpdate()
 
 	UpdateKatanaPos();
 
-	if (m_time < 0.2f)
+	if (m_attackParam.m_dashTimer < 0.2f)
 	{
 		float dashSpeed = 1.0f;
 		m_player->SetIsMoving(m_attackDirection * dashSpeed);
-		m_time += deltaTime;
+		m_attackParam.m_dashTimer += deltaTime;
 	}
 	else
 	{
 		// 移動を止める
+
 		m_player->SetIsMoving(Math::Vector3::Zero);
 
 		if (auto effect = m_groundFreezes.lock(); effect)
@@ -117,4 +129,6 @@ void PlayerState_Attack4::StateEnd()
 	{
 		effect->SetPlayEffect(false);
 	}
+
+	m_player->SetIsMoving(Math::Vector3::Zero);
 }

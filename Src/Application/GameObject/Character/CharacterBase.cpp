@@ -107,7 +107,7 @@ void CharaBase::PostUpdate()
 	rayInfo.m_range = enableStepHigh + m_gravity;
 
 	// アタリ判定したいタイプを設定
-	rayInfo.m_type = KdCollider::TypeBump;
+	rayInfo.m_type = KdCollider::TypeGround;
 
 	m_pDebugWire->AddDebugLine(rayInfo.m_pos, rayInfo.m_dir, rayInfo.m_range);
 
@@ -146,7 +146,6 @@ void CharaBase::PostUpdate()
 	{
 		m_gravity = 0.0f;	// 重力をリセット
 		m_position = groundPos;
-		//m_gravitySpeed = 0.0f; // 落下速度をリセット
 	}
 
 	//=====================================================

@@ -40,6 +40,10 @@ void PlayerState_Attack1::StateStart()
 void PlayerState_Attack1::StateUpdate()
 {
 
+	float deltaTime = Application::Instance().GetDeltaTime();
+
+	m_time += deltaTime;
+
 	// 0.5秒間当たり判定有効
 	if (m_time <= 1.0 / 2)
 	{
@@ -87,7 +91,6 @@ void PlayerState_Attack1::StateUpdate()
 		m_player->UpdateQuaternionDirect(moveDir);
 	}
 
-	float deltaTime = Application::Instance().GetDeltaTime();
 	if (m_attackParam.m_dashTimer < 0.2f)
 	{
 		float dashSpeed = 1.0f;
