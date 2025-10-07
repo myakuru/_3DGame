@@ -51,34 +51,25 @@ void PlayerState_Attack1::StateUpdate()
 		m_time = 0.0f;
 	}
 
+	float animeTime = m_player->GetAnimator()->GetTime();
+
 	if (KeyboardManager::GetInstance().IsKeyJustPressed(VK_LBUTTON))
 	{
 		m_LButtonkeyInput = true;
 	}
 
-	// アニメ速度制御：予約があれば加速
-	if (m_LButtonkeyInput)
+	if (m_LButtonkeyInput && animeTime > 0.9f)
 	{
-		m_player->SetAnimeSpeed(150.0f);
-	}
-	else
-	{
-		m_player->SetAnimeSpeed(100.0f);
+		auto next = std::make_shared<PlayerState_Attack2>();
+		m_player->ChangeState(next);
+		return;
 	}
 
 	// アニメ終了時の遷移
 	if (m_player->GetAnimator()->IsAnimationEnd())
 	{
-		if (m_LButtonkeyInput)
-		{
-			auto next = std::make_shared<PlayerState_Attack2>();
-			m_player->ChangeState(next);
-		}
-		else
-		{
-			auto sheath = std::make_shared<PlayerState_SheathKatana>();
-			m_player->ChangeState(sheath);
-		}
+		auto sheath = std::make_shared<PlayerState_SheathKatana>();
+		m_player->ChangeState(sheath);
 		return;
 	}
 

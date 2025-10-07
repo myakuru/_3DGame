@@ -19,7 +19,7 @@ void PlayerState_Attack::StateStart()
 	m_player->GetAnimator()->SetAnimation(anime, 0.25f, false);
 	
 
-	//PlayerStateBase::StateStart();
+	PlayerStateBase::StateStart();
 
 	m_attackParam = m_player->GetPlayerConfig().GetAttack2Param();
 	m_attackParam.m_dashTimer = 0.0f;
@@ -32,8 +32,8 @@ void PlayerState_Attack::StateStart()
 		katana->SetNowAttackState(true);
 	}
 
-	m_LButtonkeyInput = false;          // 次段コンボ予約フラグ初期化
-	m_time = 0.0f;               // 当たり判定用
+	m_LButtonkeyInput = false;		// 次段コンボ予約フラグ初期化
+	m_time = 0.0f;					// 当たり判定用
 
 	SceneManager::Instance().GetObjectWeakPtr(m_slashEffect);
 }
@@ -44,6 +44,8 @@ void PlayerState_Attack::StateUpdate()
 	float animeTime = m_player->GetAnimator()->GetTime();
 
 	KdDebugGUI::Instance().AddLog(U8("Attack2アニメ時間: %f"), animeTime);
+	KdDebugGUI::Instance().AddLog("\n");
+
 
 	if (m_player->GetEnemy().lock())
 	{
@@ -88,30 +90,18 @@ void PlayerState_Attack::StateUpdate()
 		m_LButtonkeyInput = true;
 	}
 
-	// アニメ速度制御
-	if (m_LButtonkeyInput)
+	if (m_LButtonkeyInput && animeTime > 0.9f)
 	{
-		// アニメーションを途中で切る
-		m_player->SetAnimeSpeed(150.0f);
-	}
-	else
-	{
-		m_player->SetAnimeSpeed(100.0f);
+		auto next = std::make_shared<PlayerState_Attack1>();
+		m_player->ChangeState(next);
+		return;
 	}
 
 	// アニメ終了時の遷移
 	if (m_player->GetAnimator()->IsAnimationEnd())
 	{
-		if (m_LButtonkeyInput)
-		{
-			auto next = std::make_shared<PlayerState_Attack1>();
-			m_player->ChangeState(next);
-		}
-		else
-		{
-			auto sheath = std::make_shared<PlayerState_SheathKatana>();
-			m_player->ChangeState(sheath);
-		}
+		auto sheath = std::make_shared<PlayerState_SheathKatana>();
+		m_player->ChangeState(sheath);
 		return;
 	}
 

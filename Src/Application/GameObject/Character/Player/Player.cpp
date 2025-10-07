@@ -209,31 +209,34 @@ void Player::UpdateAttack()
 
 	m_pDebugWire->AddDebugSphere(attackSphere.m_sphere.Center, attackSphere.m_sphere.Radius); // デバッグ用の球を追加
 
-	SceneManager::Instance().GetObjectWeakPtr(m_enemy);
+	SceneManager::Instance().GetObjectWeakPtrList(m_enemies);
 
-	auto enemy = m_enemy.lock();
-
-	if (!enemy) return;
-	
-	// 当たり判定
-	std::list<KdCollider::CollisionResult> results;
-	if (enemy->Intersects(attackSphere, &results))
+	for (const auto& enemy : m_enemies)
 	{
-		if (!m_onceEffect)
+		if (auto enemyPtr = enemy.lock())
 		{
-			// 敵にダメージを与える処理
-			enemy->Damage(m_status.attack); // ダメージを与える
-			enemy->SetEnemyHit(true);		// ヒットチェックを行う
-			m_onceEffect = true;			// 1回だけ再生
-
-			// カメラシェイク
-			if (auto camera = m_playerCamera.lock(); camera)
+			// 当たり判定
+			std::list<KdCollider::CollisionResult> results;
+			if (enemyPtr->Intersects(attackSphere, &results))
 			{
-				camera->StartShake({0.3f,0.3f}, 0.2f);
-			}
+				if (!m_onceEffect)
+				{
+					// 敵にダメージを与える処理
+					enemyPtr->Damage(m_status.attack); // ダメージを与える
+					enemyPtr->SetEnemyHit(true);		// ヒットチェックを行う
+					m_onceEffect = true;			// 1回だけ再生
 
+					// カメラシェイク
+					if (auto camera = m_playerCamera.lock(); camera)
+					{
+						camera->StartShake({ 0.3f,0.3f }, 0.2f);
+					}
+				}
+
+			}
 		}
 	}
+	
 }
 
 void Player::UpdateChargeAttack()
@@ -241,6 +244,8 @@ void Player::UpdateChargeAttack()
 	// クォータニオンから前方向ベクトルを取得
 	Math::Vector3 forward = Math::Vector3::TransformNormal(Math::Vector3::Forward, Math::Matrix::CreateFromQuaternion(m_rotation));
 	forward.Normalize();
+
+	float deltaTime = Application::Instance().GetDeltaTime();
 
 	// 球の当たり判定情報作成
 	KdCollider::SphereInfo attackSphere;
@@ -250,50 +255,53 @@ void Player::UpdateChargeAttack()
 
 	m_pDebugWire->AddDebugSphere(attackSphere.m_sphere.Center, attackSphere.m_sphere.Radius);
 
-	SceneManager::Instance().GetObjectWeakPtr(m_enemy);
-	auto enemy = m_enemy.lock();
-	if (!enemy) return;
+	SceneManager::Instance().GetObjectWeakPtrList(m_enemies);
 
-	float deltaTime = Application::Instance().GetDeltaTime();
-
-	// 0.3秒間隔で5回ダメージを与える処理
-	if (m_isChargeAttackActive)
+	for (const auto& enemy : m_enemies)
 	{
-		m_chargeAttackTimer += deltaTime;
-
-		if (m_chargeAttackCount < 5 && m_chargeAttackTimer >= 0.3f)
+		if (auto enemyPtr = enemy.lock())
 		{
-			std::list<KdCollider::CollisionResult> results;
-			if (enemy->Intersects(attackSphere, &results))
-			{
-				// 毎回ダメージを与える
-				enemy->Damage(m_status.attack);
-				enemy->SetEnemyHit(true);
 
-				// カメラシェイク
-				if (auto camera = m_playerCamera.lock(); camera)
+			// 0.3秒間隔で5回ダメージを与える処理
+			if (m_isChargeAttackActive)
+			{
+				m_chargeAttackTimer += deltaTime;
+
+				if (m_chargeAttackCount < 5 && m_chargeAttackTimer >= 0.3f)
 				{
-					camera->StartShake({ 0.3f,0.3f }, 0.3f);
+					std::list<KdCollider::CollisionResult> results;
+					if (enemyPtr->Intersects(attackSphere, &results))
+					{
+						// 毎回ダメージを与える
+						enemyPtr->Damage(m_status.attack);
+						enemyPtr->SetEnemyHit(true);
+
+						// カメラシェイク
+						if (auto camera = m_playerCamera.lock(); camera)
+						{
+							camera->StartShake({ 0.3f,0.3f }, 0.3f);
+						}
+					}
+					m_chargeAttackCount++;
+					m_chargeAttackTimer = 0.0f;
+				}
+
+				// 5回終わったら終了
+				if (m_chargeAttackCount >= 5)
+				{
+					m_isChargeAttackActive = false;
 				}
 			}
-			m_chargeAttackCount++;
-			m_chargeAttackTimer = 0.0f;
-		}
-
-		// 5回終わったら終了
-		if (m_chargeAttackCount >= 5)
-		{
-			m_isChargeAttackActive = false;
-		}
-	}
-	else
-	{
-		if (!m_onceEffect)
-		{
-			m_isChargeAttackActive = true;
-			m_chargeAttackCount = 0;
-			m_chargeAttackTimer = 0.3f;
-			m_onceEffect = true;
+			else
+			{
+				if (!m_onceEffect)
+				{
+					m_isChargeAttackActive = true;
+					m_chargeAttackCount = 0;
+					m_chargeAttackTimer = 0.3f;
+					m_onceEffect = true;
+				}
+			}
 		}
 	}
 }

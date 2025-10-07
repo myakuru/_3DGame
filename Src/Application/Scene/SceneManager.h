@@ -61,7 +61,7 @@ public :
 		return nullptr;
 	}
 
-	// 指定されたオブジェクトのウェークポインタを取得
+	// 単体のオブジェクトのウィークポインタを取得
 	template<class T>
 	void GetObjectWeakPtr(std::weak_ptr<T>& outPtr)
 	{
@@ -74,7 +74,7 @@ public :
 		}
 	}
 
-	// 指定された型の全オブジェクトの weak_ptr を収集
+	// 複数オブジェクトが存在する場合の取得
 	template<class T>
 	void GetObjectWeakPtrList(std::list<std::weak_ptr<T>>& outPtrList)
 	{

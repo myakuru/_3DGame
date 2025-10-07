@@ -8,14 +8,40 @@
 
 void PlayerStateBase::StateStart()
 {
-	// 敵の方向ベクトルを計算
-	if (auto enemy = m_player->GetEnemy().lock(); enemy)
+	// 敵が複数いる場合は最も近い敵の方向ベクトルを計算
+	std::shared_ptr<Enemy> nearestEnemy;
+
+	// 最小距離の初期値を大きな値に設定
+	float minDistSq = std::numeric_limits<float>::max();
+
+	// 敵リストをループして最も近い敵を見つける
+	for (const auto& weakEnemy : m_player->GetEnemies())
 	{
-		Math::Vector3 playerPos = m_player->GetPos();
-		Math::Vector3 enemyPos = enemy->GetPos();
-		m_attackDirection = enemyPos - playerPos;
+		// 一時的にシェアポインタを取得
+		if (auto enemy = weakEnemy.lock())
+		{
+			// 敵の位置を取得して距離を計算
+			Math::Vector3 enemyPos = enemy->GetPos();
+
+			// プレイヤーとの距離の二乗を計算（平方根を取らないことで計算コストを削減）
+			float distSq = (enemyPos - m_player->GetPos()).LengthSquared();
+
+			// 最小距離を更新
+			if (distSq < minDistSq)
+			{
+				// 最も近い敵を更新
+				minDistSq = distSq;
+				nearestEnemy = enemy;
+			}
+		}
+	}
+
+	if (nearestEnemy)
+	{
+		Math::Vector3 enemyPos = nearestEnemy->GetPos();
+		m_attackDirection = enemyPos - m_player->GetPos();
 		m_attackDirection.y = 0.0f;
-		if (m_attackDirection != Math::Vector3::Zero)
+		if (m_attackDirection != Math::Vector3::Zero) 
 		{
 			m_attackDirection.Normalize();
 			m_player->UpdateQuaternionDirect(m_attackDirection); // カメラ回転を掛けない

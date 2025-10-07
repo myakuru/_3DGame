@@ -56,35 +56,29 @@ void PlayerState_Attack3::StateUpdate()
 		m_time = 0.0f;
 	}
 
-	if (KeyboardManager::GetInstance().IsKeyJustPressed(VK_LBUTTON))
+	// コンボ受付
 	{
-		m_LButtonkeyInput = true;
-	}
+		float animeTime = m_player->GetAnimator()->GetTime();
 
-	// アニメ速度制御
-	if (m_LButtonkeyInput)
-	{
-		m_player->SetAnimeSpeed(100.0f);
-	}
-	else
-	{
-		m_player->SetAnimeSpeed(80.0f);
-	}
+		if (KeyboardManager::GetInstance().IsKeyJustPressed(VK_LBUTTON))
+		{
+			m_LButtonkeyInput = true;
+		}
 
-	// アニメ終了時の遷移
-	if (m_player->GetAnimator()->IsAnimationEnd())
-	{
-		if (m_LButtonkeyInput)
+		if (m_LButtonkeyInput && animeTime > 0.9f)
 		{
 			auto next = std::make_shared<PlayerState_Attack4>();
 			m_player->ChangeState(next);
+			return;
 		}
-		else
+
+		// アニメ終了時の遷移
+		if (m_player->GetAnimator()->IsAnimationEnd())
 		{
 			auto sheath = std::make_shared<PlayerState_SheathKatana>();
 			m_player->ChangeState(sheath);
+			return;
 		}
-		return;
 	}
 
 	UpdateKatanaPos();

@@ -51,8 +51,10 @@ void CharaBase::UpdateQuaternionDirect(const Math::Vector3& direction)
 	Math::Vector3 dir = direction;
 	dir.Normalize();
 
-	// 向きたい方向をクォータニオンに変換 第1引数：前を向く方向, 第2引数：どっちが上か
-	Math::Quaternion targetRotation = Math::Quaternion::LookRotation(dir, Math::Vector3::Up);
+	float targetYaw = atan2(-dir.x, -dir.z);
+
+	Math::Quaternion targetRotation = Math::Quaternion::CreateFromAxisAngle(Math::Vector3::Up, targetYaw);
+	
 	m_rotation = Math::Quaternion::Slerp(m_rotation, targetRotation, deltaTime * m_rotateSpeed);
 }
 
