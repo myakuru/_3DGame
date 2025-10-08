@@ -35,4 +35,7 @@ protected:
 
 	bool m_LButtonkeyInput = false;
 
+	float m_animeTime = 0.0f;
+	float m_maxAnimeTime = 0.0f;
+
 };

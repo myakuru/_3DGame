@@ -4,7 +4,7 @@ struct KdFrameTimer
 {
 	void Update(float speedRate = 1.0f)
 	{
-		m_nowTime = std::clamp(m_nowTime + (1.0f * speedRate), 0.0f, m_endTime);
+		m_nowTime = std::clamp(m_nowTime + speedRate, 0.0f, m_endTime);
 	}
 
 	void SetFrame(float endFrame)

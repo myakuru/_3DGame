@@ -11,7 +11,7 @@
 
 void PlayerState_Attack4::StateStart()
 {
-	auto anime = m_player->GetAnimeModel()->GetAnimation("Attack4");
+	auto anime = m_player->GetAnimeModel()->GetAnimation("newAttack5");
 	m_player->GetAnimator()->SetAnimation(anime, 0.25f, false);
 
 	PlayerStateBase::StateStart();
@@ -29,10 +29,29 @@ void PlayerState_Attack4::StateStart()
 
 	m_time = 0.0f;
 	m_LButtonkeyInput = false;
+
+	m_player->SetAnimeSpeed(80.0f);
 }
 
 void PlayerState_Attack4::StateUpdate()
 {
+	// アニメーション時間のデバッグ表示
+	{
+		m_animeTime = m_player->GetAnimator()->GetPlayProgress();
+
+		m_maxAnimeTime = m_player->GetAnimator()->GetMaxAnimationTime();
+
+		if (m_animeTime > m_maxAnimeTime)
+		{
+			KdDebugGUI::Instance().AddLog(U8("Attack4アニメ時間: %f"), m_animeTime);
+			KdDebugGUI::Instance().AddLog("\n");
+		}
+		else
+		{
+			m_animeTime = m_maxAnimeTime;
+		}
+	}
+
 	PlayerStateBase::StateUpdate();
 
 	float deltaTime = Application::Instance().GetDeltaTime();
@@ -49,31 +68,6 @@ void PlayerState_Attack4::StateUpdate()
 	if (KeyboardManager::GetInstance().IsKeyJustPressed(VK_LBUTTON))
 	{
 		m_LButtonkeyInput = true;
-	}
-
-	if (m_LButtonkeyInput)
-	{
-		m_player->SetAnimeSpeed(130.0f);
-	}
-	else
-	{
-		m_player->SetAnimeSpeed(80.0f);
-	}
-
-	// アニメ終了時の遷移
-	if (m_player->GetAnimator()->IsAnimationEnd())
-	{
-		if (m_LButtonkeyInput)
-		{
-			auto next = std::make_shared<PlayerState_Attack1>();
-			m_player->ChangeState(next);
-		}
-		else
-		{
-			auto sheath = std::make_shared<PlayerState_SheathKatana>();
-			m_player->ChangeState(sheath);
-		}
-		return;
 	}
 
 	// 攻撃中の移動方向で回転を更新
@@ -107,6 +101,22 @@ void PlayerState_Attack4::StateUpdate()
 		if (auto effect = m_rotation.lock(); effect)
 		{
 			effect->SetPlayEffect(true);
+		}
+
+		// コンボ受付
+		if (m_LButtonkeyInput)
+		{
+			// 80%以降で受付
+			if (m_animeTime < 0.8f) return;
+			auto next = std::make_shared<PlayerState_Attack1>();
+			m_player->ChangeState(next);
+			return;
+		}
+		else if (m_player->GetAnimator()->IsAnimationEnd())
+		{
+			auto sheath = std::make_shared<PlayerState_SheathKatana>();
+			m_player->ChangeState(sheath);
+			return;
 		}
 	}
 }

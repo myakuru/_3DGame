@@ -12,6 +12,9 @@ public:
 	}
 	~Field() override = default;
 
-	uint32_t GetTypeID() const override { return m_typeID; }
+private:
+
+	void DrawToon() override;
+	void DrawGrayScale() override;
 
 };

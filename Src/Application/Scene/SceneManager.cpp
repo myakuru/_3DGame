@@ -62,6 +62,7 @@
 #include"../GameObject/Weapon/EnemyShield/EnemyShield.h"
 #include"../GameObject/Effect/EffekseerEffect/EnemyShineBlue/EnemyShineBlue.h"
 #include"../GameObject/Field/Field.h"
+#include"../GameObject/Effect/EffekseerEffect/SpecialAttack1/SpecialAttack1.h"
 
 void SceneManager::Init()
 {
@@ -127,6 +128,7 @@ void SceneManager::Register() const
 	RegisterObject::GetInstance().Register<ESkillEffect>();
 	RegisterObject::GetInstance().Register<SpecialAttack>();
 	RegisterObject::GetInstance().Register<EnemyShineBlue>();
+	RegisterObject::GetInstance().Register<SpecialAttack1>();
 
 
 	// 使われてないけど一応登録しとく系

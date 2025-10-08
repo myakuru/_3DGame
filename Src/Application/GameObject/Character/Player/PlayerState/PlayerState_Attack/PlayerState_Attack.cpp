@@ -15,7 +15,7 @@
 
 void PlayerState_Attack::StateStart()
 {
-	auto anime = m_player->GetAnimeModel()->GetAnimation("Attack");
+	auto anime = m_player->GetAnimeModel()->GetAnimation("newAttack1");
 	m_player->GetAnimator()->SetAnimation(anime, 0.25f, false);
 	
 
@@ -36,16 +36,24 @@ void PlayerState_Attack::StateStart()
 	m_time = 0.0f;					// 当たり判定用
 
 	SceneManager::Instance().GetObjectWeakPtr(m_slashEffect);
+	m_player->SetAnimeSpeed(100.0f);
 }
 
 void PlayerState_Attack::StateUpdate()
 {
 
-	float animeTime = m_player->GetAnimator()->GetTime();
+	// アニメーション時間のデバッグ表示
+	{
+		m_animeTime = m_player->GetAnimator()->GetPlayProgress();
 
-	KdDebugGUI::Instance().AddLog(U8("Attack2アニメ時間: %f"), animeTime);
-	KdDebugGUI::Instance().AddLog("\n");
+		m_maxAnimeTime = m_player->GetAnimator()->GetMaxAnimationTime();
 
+		if (m_animeTime > m_maxAnimeTime)
+		{
+			KdDebugGUI::Instance().AddLog(U8("Attackアニメ時間: %f"), m_animeTime);
+			KdDebugGUI::Instance().AddLog("\n");
+		}
+	}
 
 	if (m_player->GetEnemy().lock())
 	{
@@ -90,21 +98,6 @@ void PlayerState_Attack::StateUpdate()
 		m_LButtonkeyInput = true;
 	}
 
-	if (m_LButtonkeyInput && animeTime > 0.9f)
-	{
-		auto next = std::make_shared<PlayerState_Attack1>();
-		m_player->ChangeState(next);
-		return;
-	}
-
-	// アニメ終了時の遷移
-	if (m_player->GetAnimator()->IsAnimationEnd())
-	{
-		auto sheath = std::make_shared<PlayerState_SheathKatana>();
-		m_player->ChangeState(sheath);
-		return;
-	}
-
 	// 先行ダッシュ処理
 	if (m_attackParam.m_dashTimer < 0.2f)
 	{
@@ -120,6 +113,22 @@ void PlayerState_Attack::StateUpdate()
 			effect->SetPlayEffect(true);
 		}
 		m_player->SetIsMoving(Math::Vector3::Zero);
+
+		// コンボ受付
+		if (m_LButtonkeyInput)
+		{
+			// 70%以降で受付
+			if (m_animeTime < 0.8f) return;
+			auto next = std::make_shared<PlayerState_Attack1>();
+			m_player->ChangeState(next);
+			return;
+		}
+		else if (m_player->GetAnimator()->IsAnimationEnd())
+		{
+			auto sheath = std::make_shared<PlayerState_SheathKatana>();
+			m_player->ChangeState(sheath);
+			return;
+		}
 	}
 
 	PlayerStateBase::StateUpdate();

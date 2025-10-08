@@ -1,7 +1,7 @@
 ﻿#include "PlayerState_SpecialAttack.h"
 
 #include"../../../../../main.h"
-#include"../PlayerState_Sheathing-of-Katana/PlayerState_Sheathing-of-Katana.h"
+#include"../PlayerState_SpecialAttack1/PlayerState_SpecialAttack1.h"
 #include"../../../../Camera/PlayerCamera/PlayerCamera.h"
 #include"../../../../Weapon/Katana/Katana.h"
 #include"../../../../../Scene/SceneManager.h"
@@ -22,17 +22,18 @@ void PlayerState_SpecialAttack::StateStart()
 
 	SceneManager::Instance().GetObjectWeakPtr(m_specialAttackEffect);
 
+	// アニメーション再生速度を変更
+	m_player->SetAnimeSpeed(60.0f);
+
 }
 
 void PlayerState_SpecialAttack::StateUpdate()
 {
-	// アニメーション再生速度を変更
-	m_player->SetAnimeSpeed(60.0f);
 
 	if (m_player->GetAnimator()->IsAnimationEnd())
 	{
-		auto sheathState = std::make_shared<PlayerState_SheathKatana>();
-		m_player->ChangeState(sheathState);
+		auto state = std::make_shared<PlayerState_SpecialAttack1>();
+		m_player->ChangeState(state);
 		return;
 	}
 

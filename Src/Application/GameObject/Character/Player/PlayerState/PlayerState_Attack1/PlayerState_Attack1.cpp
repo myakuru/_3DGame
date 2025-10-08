@@ -11,7 +11,7 @@
 
 void PlayerState_Attack1::StateStart()
 {
-	auto anime = m_player->GetAnimeModel()->GetAnimation("Attack1");
+	auto anime = m_player->GetAnimeModel()->GetAnimation("newAttack2");
 	m_player->GetAnimator()->SetAnimation(anime, 0.25f, false);
 	
 
@@ -35,10 +35,28 @@ void PlayerState_Attack1::StateStart()
 
 	// エフェクトの取得
 	SceneManager::Instance().GetObjectWeakPtr(m_effect);
+
+	m_player->SetAnimeSpeed(100.0f);
 }
 
 void PlayerState_Attack1::StateUpdate()
 {
+	// アニメーション時間のデバッグ表示
+	{
+		m_animeTime = m_player->GetAnimator()->GetPlayProgress();
+
+		m_maxAnimeTime = m_player->GetAnimator()->GetMaxAnimationTime();
+
+		if (m_animeTime > m_maxAnimeTime)
+		{
+			KdDebugGUI::Instance().AddLog(U8("Attack1アニメ時間: %f"), m_animeTime);
+			KdDebugGUI::Instance().AddLog("\n");
+		}
+		else
+		{
+			m_animeTime = m_maxAnimeTime;
+		}
+	}
 
 	float deltaTime = Application::Instance().GetDeltaTime();
 
@@ -51,26 +69,10 @@ void PlayerState_Attack1::StateUpdate()
 		m_time = 0.0f;
 	}
 
-	float animeTime = m_player->GetAnimator()->GetTime();
 
 	if (KeyboardManager::GetInstance().IsKeyJustPressed(VK_LBUTTON))
 	{
 		m_LButtonkeyInput = true;
-	}
-
-	if (m_LButtonkeyInput && animeTime > 0.9f)
-	{
-		auto next = std::make_shared<PlayerState_Attack2>();
-		m_player->ChangeState(next);
-		return;
-	}
-
-	// アニメ終了時の遷移
-	if (m_player->GetAnimator()->IsAnimationEnd())
-	{
-		auto sheath = std::make_shared<PlayerState_SheathKatana>();
-		m_player->ChangeState(sheath);
-		return;
 	}
 
 	// 攻撃中の移動方向で回転を更新
@@ -103,6 +105,23 @@ void PlayerState_Attack1::StateUpdate()
 			m_effectOnce = true;
 			UpdateEffect();
 		}
+
+		// コンボ受付
+		if (m_LButtonkeyInput)
+		{
+			// 80%以降で受付
+			if (m_animeTime < 0.8f) return;
+			auto next = std::make_shared<PlayerState_Attack2>();
+			m_player->ChangeState(next);
+			return;
+		}
+		else if (m_player->GetAnimator()->IsAnimationEnd())
+		{
+			auto sheath = std::make_shared<PlayerState_SheathKatana>();
+			m_player->ChangeState(sheath);
+			return;
+		}
+
 	}
 
 

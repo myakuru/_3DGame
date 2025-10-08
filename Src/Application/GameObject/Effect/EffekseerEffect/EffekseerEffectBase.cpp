@@ -3,6 +3,11 @@
 #include"../../../Scene/SceneManager.h"
 #include"../../../main.h"
 
+bool EffekseerEffectBase::IsEffectEnd() const
+{
+	return !m_isEffectPlaying && !m_load;
+}
+
 void EffekseerEffectBase::Init()
 {
 	KdGameObject::Init();
@@ -83,6 +88,11 @@ void EffekseerEffectBase::EffectUpdate()
 void EffekseerEffectBase::DrawEffect()
 {
 	// Effekseerの描画
+	//KdEffekseerManager::GetInstance().Draw();
+}
+
+void EffekseerEffectBase::DrawToon()
+{
 	KdEffekseerManager::GetInstance().Draw();
 }
 

@@ -2,6 +2,7 @@
 #include"../PlayerState_Idle/PlayerState_Idle.h"
 #include "../PlayerState_BackWordAvoid/PlayerState_BackWordAvoid.h"
 #include"../PlayerState_Attack/PlayerState_Attack.h"
+#include"../PlayerState_Run/PlayerState_Run.h"
 
 #include"../../../../../main.h"
 
@@ -27,6 +28,17 @@ void PlayerState_RunEnd::StateUpdate()
 	{
 		auto attackState = std::make_shared<PlayerState_BackWordAvoid>();
 		m_player->ChangeState(attackState);
+		return;
+	}
+
+	// キー入力から移動方向を更新
+	m_player->UpdateMoveDirectionFromInput();
+
+	// キー入力されたらRun状態に戻る
+	if (m_player->GetMoveDirection() != Math::Vector3::Zero)
+	{
+		auto state = std::make_shared<PlayerState_Run>();
+		m_player->ChangeState(state);
 		return;
 	}
 

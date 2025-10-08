@@ -457,7 +457,7 @@ void Player::DrawAfterImages()
 		m_afterImageWork->SetNeedCalcNodeMatrices(false);
 
 		// 残像の描画
-		float a = 0.01f;
+		float a = 1.0f;
 		Math::Vector3 color = {0,1,1};
 		KdShaderManager::Instance().m_StandardShader.SetDissolve(m_dissever, &a, &color);
 		stdShader.DrawModel(*m_afterImageWork, frameData.ownerWorld, m_afterImageColor);

@@ -14,6 +14,9 @@ void PlayerState_FowardAvoidFast::StateStart()
 	m_player->AddAfterImage(true, 5, 2.0f, Math::Color(0.0f, 1.0f, 1.0f, 0.2f));
 
 	m_player->SetAnimeSpeed(120.0f);
+
+	// 敵との当たり判定を無効化
+	m_player->SetAtkPlayer(true);
 }
 
 void PlayerState_FowardAvoidFast::StateUpdate()
@@ -54,4 +57,6 @@ void PlayerState_FowardAvoidFast::StateEnd()
 
 	m_player->AddAfterImage();
 
+	// 敵との当たり判定を有効化
+	m_player->SetAtkPlayer(false);
 }

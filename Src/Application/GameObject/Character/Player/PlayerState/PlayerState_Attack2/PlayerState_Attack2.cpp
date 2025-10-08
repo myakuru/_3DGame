@@ -12,7 +12,7 @@
 
 void PlayerState_Attack2::StateStart()
 {
-	auto anime = m_player->GetAnimeModel()->GetAnimation("Attack2");
+	auto anime = m_player->GetAnimeModel()->GetAnimation("newAttack3");
 	m_player->GetAnimator()->SetAnimation(anime, 0.25f, false);
 	PlayerStateBase::StateStart();
 
@@ -29,10 +29,30 @@ void PlayerState_Attack2::StateStart()
 	m_LButtonkeyInput = false;				// 次段コンボ予約フラグ初期化
 
 	SceneManager::Instance().GetObjectWeakPtr(m_slashEffect);
+
+	m_player->SetAnimeSpeed(80.0f);
+
 }
 
 void PlayerState_Attack2::StateUpdate()
 {
+	// アニメーション時間のデバッグ表示
+	{
+		m_animeTime = m_player->GetAnimator()->GetPlayProgress();
+
+		m_maxAnimeTime = m_player->GetAnimator()->GetMaxAnimationTime();
+
+		if (m_animeTime > m_maxAnimeTime)
+		{
+			KdDebugGUI::Instance().AddLog(U8("Attack2アニメ時間: %f"), m_animeTime);
+			KdDebugGUI::Instance().AddLog("\n");
+		}
+		else
+		{
+			m_animeTime = m_maxAnimeTime;
+		}
+	}
+
 	float deltaTime = Application::Instance().GetDeltaTime();
 
 	m_time += deltaTime;
@@ -56,18 +76,10 @@ void PlayerState_Attack2::StateUpdate()
 
 	// コンボ受付
 	{
-		float animeTime = m_player->GetAnimator()->GetTime();
 
 		if (KeyboardManager::GetInstance().IsKeyJustPressed(VK_LBUTTON))
 		{
 			m_LButtonkeyInput = true;
-		}
-
-		if (m_LButtonkeyInput && animeTime > 0.9f)
-		{
-			auto next = std::make_shared<PlayerState_Attack3>();
-			m_player->ChangeState(next);
-			return;
 		}
 
 		// アニメ終了時の遷移
@@ -96,6 +108,22 @@ void PlayerState_Attack2::StateUpdate()
 
 		// 移動を止める
 		m_player->SetIsMoving(Math::Vector3::Zero);
+
+		// コンボ受付
+		if (m_LButtonkeyInput)
+		{
+			// 80%以降で受付
+			if (m_animeTime < 0.4f) return;
+			auto next = std::make_shared<PlayerState_Attack3>();
+			m_player->ChangeState(next);
+			return;
+		}
+		else if (m_player->GetAnimator()->IsAnimationEnd())
+		{
+			auto sheath = std::make_shared<PlayerState_SheathKatana>();
+			m_player->ChangeState(sheath);
+			return;
+		}
 	}
 }
 

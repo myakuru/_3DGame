@@ -391,6 +391,12 @@
     <Filter Include="Src\Application\GameObject\Field">
       <UniqueIdentifier>{48e67031-5f77-4eda-ad03-d092f050c6a7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_SpecialAttack1">
+      <UniqueIdentifier>{de27f75c-fa70-4bbd-94fc-8397638a6aee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Effect\EffekseerEffect\SpecialAttack1">
+      <UniqueIdentifier>{117c2922-7c99-4482-984e-5301cf713807}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -885,6 +891,12 @@
     <ClInclude Include="Src\Application\GameObject\Field\Field.h">
       <Filter>Src\Application\GameObject\Field</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_SpecialAttack1\PlayerState_SpecialAttack1.h">
+      <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_SpecialAttack1</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Effect\EffekseerEffect\SpecialAttack1\SpecialAttack1.h">
+      <Filter>Src\Application\GameObject\Effect\EffekseerEffect\SpecialAttack1</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -1324,6 +1336,12 @@
     </ClCompile>
     <ClCompile Include="Src\Application\GameObject\Field\Field.cpp">
       <Filter>Src\Application\GameObject\Field</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_SpecialAttack1\PlayerState_SpecialAttack1.cpp">
+      <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_SpecialAttack1</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Effect\EffekseerEffect\SpecialAttack1\SpecialAttack1.cpp">
+      <Filter>Src\Application\GameObject\Effect\EffekseerEffect\SpecialAttack1</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

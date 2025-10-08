@@ -10,7 +10,7 @@
 
 void PlayerState_Attack3::StateStart()
 {
-	auto anime = m_player->GetAnimeModel()->GetAnimation("Attack3");
+	auto anime = m_player->GetAnimeModel()->GetAnimation("newAttack4");
 	m_player->GetAnimator()->SetAnimation(anime, 0.25f, false);
 
 	PlayerStateBase::StateStart();
@@ -38,10 +38,31 @@ void PlayerState_Attack3::StateStart()
 	{
 		camera->SetTargetLookAt({ 0.f,1.0f,-5.0f });
 	}
+
+	// 残像の設定
+	m_player->AddAfterImage(true, 3, 1, Math::Color(0.0f, 1.0f, 1.0f, 1.0f), 0.7f);
+
+	m_player->SetAnimeSpeed(80.0f);
 }
 
 void PlayerState_Attack3::StateUpdate()
 {
+	// アニメーション時間のデバッグ表示
+	{
+		m_animeTime = m_player->GetAnimator()->GetPlayProgress();
+
+		m_maxAnimeTime = m_player->GetAnimator()->GetMaxAnimationTime();
+
+		if (m_animeTime > m_maxAnimeTime)
+		{
+			KdDebugGUI::Instance().AddLog(U8("Attack3アニメ時間: %f"), m_animeTime);
+			KdDebugGUI::Instance().AddLog("\n");
+		}
+		else
+		{
+			m_animeTime = m_maxAnimeTime;
+		}
+	}
 
 	PlayerStateBase::StateUpdate();
 
@@ -58,26 +79,9 @@ void PlayerState_Attack3::StateUpdate()
 
 	// コンボ受付
 	{
-		float animeTime = m_player->GetAnimator()->GetTime();
-
 		if (KeyboardManager::GetInstance().IsKeyJustPressed(VK_LBUTTON))
 		{
 			m_LButtonkeyInput = true;
-		}
-
-		if (m_LButtonkeyInput && animeTime > 0.9f)
-		{
-			auto next = std::make_shared<PlayerState_Attack4>();
-			m_player->ChangeState(next);
-			return;
-		}
-
-		// アニメ終了時の遷移
-		if (m_player->GetAnimator()->IsAnimationEnd())
-		{
-			auto sheath = std::make_shared<PlayerState_SheathKatana>();
-			m_player->ChangeState(sheath);
-			return;
 		}
 	}
 
@@ -103,6 +107,22 @@ void PlayerState_Attack3::StateUpdate()
 	{
 		// 移動を止める
 		m_player->SetIsMoving(Math::Vector3::Zero);
+
+		// コンボ受付
+		if (m_LButtonkeyInput)
+		{
+			// 80%以降で受付
+			if (m_animeTime < 0.6f) return;
+			auto next = std::make_shared<PlayerState_Attack4>();
+			m_player->ChangeState(next);
+			return;
+		}
+		else if (m_player->GetAnimator()->IsAnimationEnd())
+		{
+			auto sheath = std::make_shared<PlayerState_SheathKatana>();
+			m_player->ChangeState(sheath);
+			return;
+		}
 	}
 
 }
@@ -116,4 +136,6 @@ void PlayerState_Attack3::StateEnd()
 	{
 		effect->SetPlayEffect(false);
 	}
+
+	m_player->AddAfterImage();
 }

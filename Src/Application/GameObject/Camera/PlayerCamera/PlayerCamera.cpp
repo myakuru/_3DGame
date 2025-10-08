@@ -80,7 +80,7 @@ void PlayerCamera::PostUpdate()
 	Math::Vector3 anchor = playerPos + Math::Vector3(0, 1.0f, 0); // 必要なら 1.2f などチューニング
 
 	// 障害物補正
-	UpdateCameraRayCast(anchor);
+	//UpdateCameraRayCast(anchor);
 
 	// 最終的にカメラ行列適用
 	m_spCamera->SetCameraMatrix(m_mWorld);

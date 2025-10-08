@@ -271,3 +271,25 @@ void KdAnimator::AdvanceTime(std::vector<KdModelWork::Node>& rNodes, float speed
 		}
 	}
 }
+
+float KdAnimator::GetPlayTime() const
+{
+	const KdAnimator* pActive = m_pNextAnimator ? m_pNextAnimator.get() : m_pNowAnimator.get();
+	if (pActive) return pActive->m_time;
+	return m_time;
+}
+
+float KdAnimator::GetPlayLength() const
+{
+	const KdAnimator* pActive = m_pNextAnimator ? m_pNextAnimator.get() : m_pNowAnimator.get();
+	if (pActive && pActive->m_spAnimation) return pActive->m_spAnimation->m_maxLength;
+	if (m_spAnimation) return m_spAnimation->m_maxLength;
+	return 0.0f;
+}
+
+float KdAnimator::GetPlayProgress() const
+{
+	float len = GetPlayLength();
+	if (len <= 0.0f) return 0.0f;
+	return GetPlayTime() / len;
+}

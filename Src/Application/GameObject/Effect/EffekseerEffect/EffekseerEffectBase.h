@@ -13,11 +13,15 @@ public:
 	// エフェクトが再生中か
 	bool IsEffectPlaying() const { return m_isEffectPlaying; }
 
+	// エフェクトが再生終了したか
+	bool IsEffectEnd() const;
+
 protected:
 
 	void Init() override;
 	void Update() override;
 	void DrawEffect() override;
+	void DrawToon() override;
 
 	virtual void EffectUpdate();
 

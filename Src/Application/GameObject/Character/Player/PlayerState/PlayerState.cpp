@@ -41,7 +41,7 @@ void PlayerStateBase::StateStart()
 		Math::Vector3 enemyPos = nearestEnemy->GetPos();
 		m_attackDirection = enemyPos - m_player->GetPos();
 		m_attackDirection.y = 0.0f;
-		if (m_attackDirection != Math::Vector3::Zero) 
+		if (m_attackDirection != Math::Vector3::Zero)
 		{
 			m_attackDirection.Normalize();
 			m_player->UpdateQuaternionDirect(m_attackDirection); // カメラ回転を掛けない
@@ -64,6 +64,9 @@ void PlayerStateBase::StateStart()
 	}
 
 	m_isKeyPressing = false;
+	m_time = 0.0f;
+	m_animeTime = 0.0f;
+	m_maxAnimeTime = 0.0f;
 }
 
 void PlayerStateBase::StateUpdate()

@@ -68,11 +68,25 @@ public:
 		return (m_time >= m_spAnimation->m_maxLength);
 	}
 
-	float GetTime() { return m_blendTimer.GetProgress(); }
+	float GetTime() { return m_blendTimer.GetNowFrame(); }
+
+	// アニメーションの最大の長さを取得
+	float GetMaxAnimationTime() const
+	{
+		if (m_spAnimation) { return m_spAnimation->m_maxLength; }
+		return 0.0f;
+	}
 	
 	// アニメーションの更新
 	void AdvanceTime(std::vector<KdModelWork::Node>& rNodes, float speed = 1.0f);
 
+
+	// 実アニメの再生時間(ブレンド中は Next 優先)
+	float GetPlayTime() const;
+	// 実アニメの総長
+	float GetPlayLength() const;
+	// 0～1 の進行率
+	float GetPlayProgress() const;
 
 private:
 
