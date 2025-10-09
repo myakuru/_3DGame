@@ -34,16 +34,13 @@ void HitDamage::Update()
 			// 敵のワールド座標を取得
 			Math::Vector3 enemyPos = enemyPtr->GetPos();
 
-			// Initで生成したm_offsetを使う
-			Math::Vector3 worldPos = enemyPos + m_offset;
-
 			// ワールド座標→スクリーン座標へ変換
-			camera->ConvertWorldToScreenDetail(worldPos, m_screenPos);
+			camera->ConvertWorldToScreenDetail(enemyPos, m_screenPos);
 		}
 	}
 
 	// m_scale.xを0.1まで徐々に減少
-	if (m_scale.x > 0.1f) 
+	if (m_scale.x > 0.1f)
 	{
 		m_scale.x -= 0.01f;
 		if (m_scale.x < 0.1f)
@@ -59,14 +56,6 @@ void HitDamage::Update()
 	float amplitude = (m_scale.x - 0.1f) * 2.0f; // xが小さくなるほどバウンド幅も小さく
 	m_scale.y = 1.0f + amplitude * std::sin(bounceTime);
 
-	m_mWorld = Math::Matrix::CreateScale(m_scale);
-	m_mWorld *= Math::Matrix::CreateFromYawPitchRoll(
-		DirectX::XMConvertToRadians(m_degree.y),
-		DirectX::XMConvertToRadians(m_degree.x),
-		DirectX::XMConvertToRadians(m_degree.z)
-	);
-	m_mWorld.Translation(m_position);
-
 	float deltaTime = Application::Instance().GetUnscaledDeltaTime();
 	m_timer -= deltaTime;
 
@@ -78,7 +67,24 @@ void HitDamage::Update()
 
 void HitDamage::DrawSprite()
 {
-	KdShaderManager::Instance().m_spriteShader.SetMatrix(m_mWorld);
+	// 現在のビューポートサイズ取得
+	Math::Viewport vp;
+	KdDirect3D::Instance().CopyViewportInfo(vp);
+
+	// 伸張（Stretch）：XとYを個別にスケーリング（画面サイズにピッタリ）
+	const float sx = vp.width / kRefW;
+	const float sy = vp.height / kRefH;
+
+	// 等方（Fit）にしたい場合は以下を使う（必要なら切替）
+	const float scale = std::min(sx, sy);
+	Math::Matrix uiScale = Math::Matrix::CreateScale(scale, scale, 1.0f);
+
+	//Math::Matrix uiScale = Math::Matrix::CreateScale(sx, sy, 1.0f);
+
+	// UIスケールをワールド行列に後掛け（平行移動も含め全体をスケール）
+	Math::Matrix matrix = m_mWorld * uiScale;
+
+	KdShaderManager::Instance().m_spriteShader.SetMatrix(matrix);
 
 	std::string numStr = std::to_string(m_displayTime);
 

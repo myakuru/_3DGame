@@ -12,11 +12,6 @@ void Scoring::Init()
 	m_srcRect = { 0,0,50,50 };
 }
 
-void Scoring::DrawSprite()
-{
-	SelectDraw2DTexture::DrawSprite();
-}
-
 void Scoring::Update()
 {
 	// 残り秒数を取得

@@ -11,7 +11,6 @@ public:
 private:
 
 	void Init() override;
-	void DrawSprite() override;
 	void Update() override;
 
 	Math::Rectangle m_srcRect;	// スコアの表示位置

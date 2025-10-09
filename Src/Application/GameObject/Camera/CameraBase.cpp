@@ -138,4 +138,6 @@ void CameraBase::UpdateRotateByMouse()
 
 	// 回転制御
 	m_degree.x = std::clamp(m_degree.x, -45.f, 45.f);
+	if (m_degree.y > 360.f) m_degree.y -= 360.f;
+	if (m_degree.y < 0.f) m_degree.y += 360.f;
 }
