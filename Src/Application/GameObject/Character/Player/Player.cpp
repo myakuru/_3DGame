@@ -98,11 +98,14 @@ void Player::PostUpdate()
 	// 球に当たったオブジェクト情報を格納するリスト
 	std::list<KdCollider::CollisionResult> retSpherelist;
 
-	SceneManager::Instance().GetObjectWeakPtr(m_enemy);
+	SceneManager::Instance().GetObjectWeakPtrList(m_enemies);
 
-	if (auto enemy = m_enemy.lock(); enemy)
+	for (const auto& enemy : m_enemies)
 	{
-		enemy->Intersects(enemyHit, &retSpherelist);
+		if (auto enemyPtr = enemy.lock())
+		{
+			enemyPtr->Intersects(enemyHit, &retSpherelist);
+		}
 	}
 
 	//  球にあたったリストから一番近いオブジェクトを探す
@@ -126,16 +129,18 @@ void Player::PostUpdate()
 
 	if (hit)
 	{
-		// Y方向の押し出しを無効化（XZ平面のみ）
 		hitDir.y = 0.0f;
-		hitDir.Normalize();
+		if (hitDir.LengthSquared() > 0) hitDir.Normalize();
 
-		//当たってたらその方向から押し出す
-		m_position += hitDir * maxOverLap;
+		// 両者が等しく離れる想定 → プレイヤー側は半分だけ動く
+		Math::Vector3 push = hitDir * (maxOverLap * 0.5f);
+
+		// 壁を貫通しないようスイープして移動
+		ApplyPushWithCollision(push);
 	}
 }
 
-void Player::DrawBright()
+void Player::DrawUnLit()
 {
 	if (m_afterImageEnable)
 	{
@@ -192,54 +197,7 @@ void Player::Update()
 
 }
 
-void Player::UpdateAttack()
-{
-	// クォータニオンから前方向ベクトルを取得
-	Math::Vector3 forward = Math::Vector3::TransformNormal(Math::Vector3::Forward, Math::Matrix::CreateFromQuaternion(m_rotation));
-	forward.Normalize();
-
-	// 球の当たり判定情報作成
-	KdCollider::SphereInfo attackSphere;
-	// 球の中心座標を設定
-	attackSphere.m_sphere.Center = m_position + Math::Vector3(0.0f, 0.5f, 0.0f) + forward * 1.1f;
-	// 球の半径を設定
-	attackSphere.m_sphere.Radius = m_attackBossEnemyRadius;
-	// アタリ判定をしたいタイプを設定
-	attackSphere.m_type = KdCollider::TypeDamage;
-
-	m_pDebugWire->AddDebugSphere(attackSphere.m_sphere.Center, attackSphere.m_sphere.Radius); // デバッグ用の球を追加
-
-	SceneManager::Instance().GetObjectWeakPtrList(m_enemies);
-
-	for (const auto& enemy : m_enemies)
-	{
-		if (auto enemyPtr = enemy.lock())
-		{
-			// 当たり判定
-			std::list<KdCollider::CollisionResult> results;
-			if (enemyPtr->Intersects(attackSphere, &results))
-			{
-				if (!m_onceEffect)
-				{
-					// 敵にダメージを与える処理
-					enemyPtr->Damage(m_status.attack); // ダメージを与える
-					enemyPtr->SetEnemyHit(true);		// ヒットチェックを行う
-					m_onceEffect = true;			// 1回だけ再生
-
-					// カメラシェイク
-					if (auto camera = m_playerCamera.lock(); camera)
-					{
-						camera->StartShake({ 0.3f,0.3f }, 0.2f);
-					}
-				}
-
-			}
-		}
-	}
-	
-}
-
-void Player::UpdateChargeAttack()
+void Player::UpdateAttackCollision(float _radius, float _distance, int _attackCount, float _attackTimer, Math::Vector2 _cameraShakePow, float _cameraTime)
 {
 	// クォータニオンから前方向ベクトルを取得
 	Math::Vector3 forward = Math::Vector3::TransformNormal(Math::Vector3::Forward, Math::Matrix::CreateFromQuaternion(m_rotation));
@@ -249,61 +207,76 @@ void Player::UpdateChargeAttack()
 
 	// 球の当たり判定情報作成
 	KdCollider::SphereInfo attackSphere;
-	attackSphere.m_sphere.Center = m_position + Math::Vector3(0.0f, 0.5f, 0.0f) + forward * 1.1f;
-	attackSphere.m_sphere.Radius = 10.0f;
+	attackSphere.m_sphere.Center = m_position + Math::Vector3(0.0f, 0.5f, 0.0f) + forward * _distance;
+	attackSphere.m_sphere.Radius = _radius;
 	attackSphere.m_type = KdCollider::TypeDamage;
 
 	m_pDebugWire->AddDebugSphere(attackSphere.m_sphere.Center, attackSphere.m_sphere.Radius);
 
+	// 複数の敵に当たる可能性があるのでリストで取得
 	SceneManager::Instance().GetObjectWeakPtrList(m_enemies);
 
-	for (const auto& enemy : m_enemies)
+	if (!m_onceEffect)
 	{
-		if (auto enemyPtr = enemy.lock())
+		m_isChargeAttackActive = true;
+		m_chargeAttackCount = 0;
+		m_chargeAttackTimer = _attackTimer;
+		m_onceEffect = true;
+	}
+
+	// アクティブじゃないときは処理しない
+	if (!m_isChargeAttackActive) return;
+
+	// タイマー更新
+	m_chargeAttackTimer += deltaTime;
+
+	// count分攻撃したら終了
+	if (m_chargeAttackCount < _attackCount && m_chargeAttackTimer >= _attackTimer)
+	{
+		bool hitAny = false;
+
+		// 円の中に入った時を攻撃判定とする
+		for (const auto& enemyies : m_enemies)
 		{
-
-			// 0.3秒間隔で5回ダメージを与える処理
-			if (m_isChargeAttackActive)
+			if (auto enemyPtr = enemyies.lock())
 			{
-				m_chargeAttackTimer += deltaTime;
-
-				if (m_chargeAttackCount < 5 && m_chargeAttackTimer >= 0.3f)
+				std::list<KdCollider::CollisionResult> retSpherelist;
+				enemyPtr->Intersects(attackSphere, &retSpherelist);
+				if (!retSpherelist.empty())
 				{
+					// ダメージを与える
 					std::list<KdCollider::CollisionResult> results;
 					if (enemyPtr->Intersects(attackSphere, &results))
 					{
-						// 毎回ダメージを与える
 						enemyPtr->Damage(m_status.attack);
 						enemyPtr->SetEnemyHit(true);
-
-						// カメラシェイク
-						if (auto camera = m_playerCamera.lock(); camera)
-						{
-							camera->StartShake({ 0.3f,0.3f }, 0.3f);
-						}
+						hitAny = true;
 					}
-					m_chargeAttackCount++;
-					m_chargeAttackTimer = 0.0f;
-				}
-
-				// 5回終わったら終了
-				if (m_chargeAttackCount >= 5)
-				{
-					m_isChargeAttackActive = false;
-				}
-			}
-			else
-			{
-				if (!m_onceEffect)
-				{
-					m_isChargeAttackActive = true;
-					m_chargeAttackCount = 0;
-					m_chargeAttackTimer = 0.3f;
-					m_onceEffect = true;
 				}
 			}
 		}
+
+		// カメラシェイク
+		if (hitAny)
+		{
+			if (auto camera = m_playerCamera.lock(); camera)
+			{
+				camera->StartShake(_cameraShakePow, _cameraTime);
+			}
+		}
+
+		// 攻撃回数を増やす
+		m_chargeAttackCount++;
+		m_chargeAttackTimer = 0.0f;
+
+		// 攻撃回数に達したら終了
+		if (m_chargeAttackCount >= _attackCount)
+		{
+			m_isChargeAttackActive = false;
+		}
+
 	}
+
 }
 
 void Player::ImGuiInspector()
@@ -532,5 +505,62 @@ void Player::ApplyHorizontalMove(const Math::Vector3& inputMove, float deltaTime
 	{
 		// 衝突なし そのまま移動
 		m_position = m_prevPosition + desired;
+	}
+}
+
+void Player::ApplyPushWithCollision(const Math::Vector3& rawPush)
+{
+	if (rawPush.LengthSquared() <= 1e-8f) return;
+
+	// 水平のみ扱う（既存処理と整合）
+	Math::Vector3 push = rawPush;
+	push.y = 0.0f;
+	float len = push.Length();
+	if (len <= 1e-6f) return;
+	Math::Vector3 dir = push / len;
+
+	// スイープレイ生成（ApplyHorizontalMove と同等思想）
+	KdCollider::RayInfo ray;
+	ray.m_pos = m_position + Math::Vector3(0.0f, kBumpSphereYOffset, 0.0f);
+	ray.m_dir = dir;
+	ray.m_range = len + kBumpSphereRadius;
+	ray.m_type = KdCollider::TypeBump;
+
+	std::list<KdCollider::CollisionResult> rayHits;
+	SceneManager::Instance().GetObjectWeakPtrList(m_collisionList);
+	for (auto& wk : m_collisionList)
+	{
+		if (auto col = wk.lock())
+		{
+			col->Intersects(ray, &rayHits);
+		}
+	}
+
+	bool blocked = false;
+	float bestOverlap = 0.0f;
+	Math::Vector3 hitPos{};
+	for (auto& h : rayHits)
+	{
+		if (bestOverlap < h.m_overlapDistance)
+		{
+			bestOverlap = h.m_overlapDistance;
+			hitPos = h.m_hitPos;
+			blocked = true;
+		}
+	}
+
+	if (blocked)
+	{
+		float hitDist = (hitPos - ray.m_pos).Length();
+		float allow = std::max(0.0f, hitDist - kBumpSphereRadius - kCollisionMargin);
+		if (allow > 0.0f)
+		{
+			m_position += dir * allow;
+		}
+		// 衝突点を超える押し出しは捨てる（滑らせたいなら法線投影をここで実施）
+	}
+	else
+	{
+		m_position += push;
 	}
 }

@@ -23,10 +23,22 @@ public:
 	void Init() override;
 	void PreUpdate() override;
 	void PostUpdate() override;
-	void DrawBright() override;
+	void DrawUnLit() override;
 	void Update() override;
-	void UpdateAttack();
-	void UpdateChargeAttack();
+	// 攻撃の当たり判定(攻撃半径、攻撃距離、攻撃回数、攻撃間隔、カメラシェイクの強さ、カメラシェイクの時間)
+	void UpdateAttackCollision(float _radius = 10.f,float _distance = 1.1f,
+		int _attackCount = 5,float _attackTimer = 0.3f,
+		Math::Vector2 _cameraShakePow = { 0.3f,0.3f },float _cameraTime = 0.3f);
+
+	// 当たり判定リセット
+	void ResetAttackCollision()
+	{
+		m_chargeAttackCount = 0;
+		m_chargeAttackTimer = 0.0f;
+		m_isChargeAttackActive = false;
+		m_onceEffect = false;
+	}
+
 	void ImGuiInspector() override;
 	void JsonInput(const nlohmann::json& _json) override;
 	void JsonSave(nlohmann::json& _json) const override;
@@ -108,6 +120,8 @@ public:
 private:
 
 	void ApplyHorizontalMove(const Math::Vector3& inputMove, float deltaTime);
+	void ApplyPushWithCollision(const Math::Vector3& rawPush);
+
 
 	Math::Vector3 m_moveDirection = Math::Vector3::Zero;		// 移動方向
 	Math::Vector3 m_lastMoveDirection = Math::Vector3::Zero;	// 最後に移動した方向

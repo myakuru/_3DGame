@@ -17,7 +17,7 @@ public:
 
 private:
 
-	std::weak_ptr<Enemy> m_enemy;
+	std::list<std::weak_ptr<Enemy>> m_enemies;
 	std::weak_ptr<PlayerCamera> m_camera;
 
 	Math::Vector3 m_screenPos = Math::Vector3::Zero;

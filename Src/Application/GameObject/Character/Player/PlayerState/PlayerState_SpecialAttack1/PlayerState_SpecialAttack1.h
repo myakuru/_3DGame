@@ -18,6 +18,6 @@ private:
 
 	std::weak_ptr<SpecialAttack1> m_effect;
 
-	bool m_effectOnce = false;
-
+	bool m_effectOnce = false;       // 再生要求を出したか
+	bool m_effectStarted = false;    // 実際に再生が始まったか（IsPlaying が最初に true になった）
 };

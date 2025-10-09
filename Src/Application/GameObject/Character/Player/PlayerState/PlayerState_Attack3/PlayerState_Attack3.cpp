@@ -5,6 +5,9 @@
 #include"../../../../../Scene/SceneManager.h"
 #include"../../../../Effect/EffekseerEffect/SlashEffect/SlashEffect.h"
 #include"../../../../Camera/PlayerCamera/PlayerCamera.h"
+
+#include"../PlayerState_BackWordAvoid/PlayerState_BackWordAvoid.h"
+#include"../PlayerState_FowardAvoid/PlayerState_FowardAvoid.h"
 	
 #include"../../../../Weapon/Katana/Katana.h"
 
@@ -21,7 +24,8 @@ void PlayerState_Attack3::StateStart()
 		katana->SetNowAttackState(true);
 	}
 
-	m_player->m_onceEffect = false;
+	// 当たり判定リセット
+	m_player->ResetAttackCollision();
 
 	m_time = 0.0f;
 	m_LButtonkeyInput = false;
@@ -36,7 +40,7 @@ void PlayerState_Attack3::StateStart()
 	// カメラの位置を変更
 	if (auto camera = m_player->GetPlayerCamera().lock(); camera)
 	{
-		camera->SetTargetLookAt({ 0.f,1.0f,-5.0f });
+		camera->SetTargetLookAt({ 0.f,1.0f,-4.5f });
 	}
 
 	// 残像の設定
@@ -64,6 +68,23 @@ void PlayerState_Attack3::StateUpdate()
 		}
 	}
 
+	if (m_animeTime >= 0.1f && m_animeTime <= 0.2f)
+	{
+		KdShaderManager::Instance().m_postProcessShader.SetEnableStrongBlur(true);
+	}
+	else if(m_animeTime >= 0.5f && m_animeTime <= 0.6f)
+	{
+		KdShaderManager::Instance().m_postProcessShader.SetEnableStrongBlur(true);
+	}
+	else if(m_animeTime >= 0.8f && m_animeTime <= 0.9f)
+	{
+		KdShaderManager::Instance().m_postProcessShader.SetEnableStrongBlur(true);
+	}
+	else
+	{
+		KdShaderManager::Instance().m_postProcessShader.SetEnableStrongBlur(false);
+	}
+
 	PlayerStateBase::StateUpdate();
 
 	float deltaTime = Application::Instance().GetDeltaTime();
@@ -71,10 +92,24 @@ void PlayerState_Attack3::StateUpdate()
 	m_time += deltaTime;
 
 	// 0.5秒間当たり判定有効
-	if (m_time <= 1.0 / 2)
+	
+	m_player->UpdateAttackCollision(10.0f, 1.1f, 5, 0.5f, { 0.3f, 0.0f }, 0.3f);
+
+	// 回避入力受付
 	{
-		m_player->UpdateAttack();
-		m_time = 0.0f;
+		if (KeyboardManager::GetInstance().IsKeyPressed('W') && KeyboardManager::GetInstance().IsKeyJustPressed(VK_RBUTTON))
+		{
+			auto sheath = std::make_shared<PlayerState_BackWordAvoid>();
+			m_player->ChangeState(sheath);
+			return;
+		}
+
+		if (KeyboardManager::GetInstance().IsKeyJustPressed(VK_RBUTTON))
+		{
+			auto sheath = std::make_shared<PlayerState_ForwardAvoid>();
+			m_player->ChangeState(sheath);
+			return;
+		}
 	}
 
 	// コンボ受付
@@ -111,8 +146,8 @@ void PlayerState_Attack3::StateUpdate()
 		// コンボ受付
 		if (m_LButtonkeyInput)
 		{
-			// 80%以降で受付
-			if (m_animeTime < 0.6f) return;
+			// 70%以降で受付
+			if (m_animeTime < 0.7f) return;
 			auto next = std::make_shared<PlayerState_Attack4>();
 			m_player->ChangeState(next);
 			return;
@@ -135,6 +170,7 @@ void PlayerState_Attack3::StateEnd()
 	if (auto effect = m_slashEffect.lock(); effect)
 	{
 		effect->SetPlayEffect(false);
+		effect->StopEffect();
 	}
 
 	m_player->AddAfterImage();

@@ -24,7 +24,7 @@ void PlayerState_Idle::StateStart()
 
 	if (auto camera = m_player->GetPlayerCamera().lock(); camera)
 	{
-		camera->SetTargetLookAt({ 0.0f,1.0f,-3.5f });
+		camera->SetTargetLookAt({ 0.0f,1.0f,-2.5f });
 	}
 }
 

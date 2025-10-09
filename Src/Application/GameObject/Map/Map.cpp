@@ -11,9 +11,9 @@ Map::Map()
 void Map::DrawToon()
 {
 	//KdShaderManager::Instance().m_StandardShader.SetUVTiling({ 10,10 });
-	KdShaderManager::Instance().ChangeRasterizerState(KdRasterizerState::CullNone);
+	//KdShaderManager::Instance().ChangeRasterizerState(KdRasterizerState::CullNone);
 	KdShaderManager::Instance().m_StandardShader.DrawModel(*m_model, m_mWorld, m_color);
-	KdShaderManager::Instance().UndoRasterizerState();
+	//KdShaderManager::Instance().UndoRasterizerState();
 }
 
 void Map::DrawGrayScale()

@@ -8,13 +8,26 @@ public:
 	EffekseerEffectBase() = default;
 	~EffekseerEffectBase() override = default;
 
-	void SetPlayEffect(bool once) { m_load = once; }
+	void SetPlayEffect(bool once) 
+	{
+		m_load = once;
+	}
 
 	// エフェクトが再生中か
 	bool IsEffectPlaying() const { return m_isEffectPlaying; }
 
-	// エフェクトが再生終了したか
-	bool IsEffectEnd() const;
+	// エフェクトを終了させる
+	void StopEffect()
+	{
+		if (auto effect = m_wpEffect.lock(); effect)
+		{
+			effect->StopEffect();
+			m_isEffectPlaying = false;
+		}
+		m_load = false;
+	}
+
+	// エフェクト再生
 
 protected:
 

@@ -116,13 +116,14 @@ void CharaBase::PostUpdate()
 	// レイに当たったオブジェクト情報を格納するリスト
 	std::list<KdCollider::CollisionResult> retRayList;
 	
-	SceneManager::Instance().GetObjectWeakPtr(m_collision);
+	SceneManager::Instance().GetObjectWeakPtrList(m_collisionList);
 
-	auto collisionObj = m_collision.lock();
-
-	if (collisionObj)
+	for (auto& collision : m_collisionList)
 	{
-		collisionObj->Intersects(rayInfo, &retRayList);
+		if (auto collisionObj = collision.lock(); collisionObj)
+		{
+			collisionObj->Intersects(rayInfo, &retRayList);
+		}
 	}
 
 	// レイに当たったリストから一番近いオブジェクトを検出
@@ -169,9 +170,12 @@ void CharaBase::PostUpdate()
 	// 球に当たったオブジェクト情報を格納するリスト
 	std::list<KdCollider::CollisionResult> retSpherelist;
 
-	if (collisionObj)
+	for (auto& collision : m_collisionList)
 	{
-		collisionObj->Intersects(sphereInfo, &retSpherelist);
+		if (auto collisionObj = collision.lock(); collisionObj)
+		{
+			collisionObj->Intersects(rayInfo, &retRayList);
+		}
 	}
 
 	//  球にあたったリストから一番近いオブジェクトを探す

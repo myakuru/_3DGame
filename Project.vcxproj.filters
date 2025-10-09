@@ -397,6 +397,9 @@
     <Filter Include="Src\Application\GameObject\Effect\EffekseerEffect\SpecialAttack1">
       <UniqueIdentifier>{117c2922-7c99-4482-984e-5301cf713807}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\GameObject\Effect\EffekseerEffect\SpeedAttackEffect">
+      <UniqueIdentifier>{7916243b-2ec1-4339-8c67-d522a406f0ad}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -897,6 +900,9 @@
     <ClInclude Include="Src\Application\GameObject\Effect\EffekseerEffect\SpecialAttack1\SpecialAttack1.h">
       <Filter>Src\Application\GameObject\Effect\EffekseerEffect\SpecialAttack1</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Effect\EffekseerEffect\SpeedAttackEffect\SpeedAttackEffect.h">
+      <Filter>Src\Application\GameObject\Effect\EffekseerEffect\SpeedAttackEffect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -1342,6 +1348,9 @@
     </ClCompile>
     <ClCompile Include="Src\Application\GameObject\Effect\EffekseerEffect\SpecialAttack1\SpecialAttack1.cpp">
       <Filter>Src\Application\GameObject\Effect\EffekseerEffect\SpecialAttack1</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Effect\EffekseerEffect\SpeedAttackEffect\SpeedAttackEffect.cpp">
+      <Filter>Src\Application\GameObject\Effect\EffekseerEffect\SpeedAttackEffect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

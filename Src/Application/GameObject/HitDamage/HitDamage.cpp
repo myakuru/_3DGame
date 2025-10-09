@@ -14,30 +14,33 @@ void HitDamage::Init()
 	m_color = Math::Vector4(0.26f, 0.79f, 0.93f, 1.f);
 
 	// ここで一度だけランダムオフセット生成
-	float angle = KdRandom::GetFloat(0.0f, DirectX::XM_2PI);
-	float radiusY = KdRandom::GetFloat(-0.1f, 0.1f);
-	m_offset = Math::Vector3(std::cos(angle) * radiusY, 0.0f, std::sin(angle) * radiusY);
+	float radiusY = KdRandom::GetFloat(-0.5f, 0.5f);
+	m_offset = Math::Vector3(0, 0, 0);
 }
 
 void HitDamage::Update()
 {
-	SceneManager::Instance().GetObjectWeakPtr(m_enemy);
+	SceneManager::Instance().GetObjectWeakPtrList(m_enemies);
 	SceneManager::Instance().GetObjectWeakPtr(m_camera);
 
 	auto camera = m_camera.lock()->GetCamera();
-	auto enemy = m_enemy.lock();
 
-	if (!enemy) return;
 	if (!camera) return;
 
-	// 敵のワールド座標を取得
-	Math::Vector3 enemyPos = enemy->GetPos();
+	for (const auto& enemy : m_enemies)
+	{
+		if (auto enemyPtr = enemy.lock())
+		{
+			// 敵のワールド座標を取得
+			Math::Vector3 enemyPos = enemyPtr->GetPos();
 
-	// Initで生成したm_offsetを使う
-	Math::Vector3 worldPos = enemyPos + m_offset;
+			// Initで生成したm_offsetを使う
+			Math::Vector3 worldPos = enemyPos + m_offset;
 
-	// ワールド座標→スクリーン座標へ変換
-	camera->ConvertWorldToScreenDetail(worldPos, m_screenPos);
+			// ワールド座標→スクリーン座標へ変換
+			camera->ConvertWorldToScreenDetail(worldPos, m_screenPos);
+		}
+	}
 
 	// m_scale.xを0.1まで徐々に減少
 	if (m_scale.x > 0.1f) 

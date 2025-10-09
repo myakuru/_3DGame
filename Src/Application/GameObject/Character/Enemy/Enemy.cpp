@@ -179,11 +179,14 @@ void Enemy::PostUpdate()
 	// 球に当たったオブジェクト情報を格納するリスト
 	std::list<KdCollider::CollisionResult> retSpherelist;
 
-	SceneManager::Instance().GetObjectWeakPtr(m_collision);
+	SceneManager::Instance().GetObjectWeakPtrList(m_collisionList);
 
-	if (auto collisionObj = m_collision.lock(); collisionObj)
+	for(auto & weakCol : m_collisionList)
 	{
-		collisionObj->Intersects(sphereInfo, &retSpherelist);
+		if (auto col = weakCol.lock(); col)
+		{
+			col->Intersects(sphereInfo, &retSpherelist);
+		}
 	}
 
 	// 球にあたったリストから一番近いオブジェクトを探す

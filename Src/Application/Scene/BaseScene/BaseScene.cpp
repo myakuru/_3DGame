@@ -177,8 +177,8 @@ void BaseScene::Draw()
 	// Toonシェーダー
 	KdShaderManager::Instance().m_StandardShader.BeginToon();
 	{
-		for (auto& obj : m_objList) obj->DrawToon();
 		for (auto& obj : m_drawObjectList) obj->DrawToon();
+		for (auto& obj : m_objList) obj->DrawToon();
 	}
 	KdShaderManager::Instance().m_StandardShader.EndToon();
 

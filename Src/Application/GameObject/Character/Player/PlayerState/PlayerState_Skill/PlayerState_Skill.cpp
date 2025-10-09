@@ -20,6 +20,9 @@ void PlayerState_Skill::StateStart()
 	m_player->SetAtkPlayer(true);
 
 	m_attackParam.m_dashTimer = 0.0f;
+
+	// 残像の設定
+	m_player->AddAfterImage(true, 10, 0.05f, { 0.0f,0.5f,1.0f,0.5f }, 0.5f);
 }
 
 void PlayerState_Skill::StateUpdate()
@@ -74,4 +77,7 @@ void PlayerState_Skill::StateEnd()
 
 	// 敵との当たり判定をもとに戻す
 	m_player->SetAtkPlayer(false);
+
+	// 残像のリセット
+	m_player->AddAfterImage(false);
 }

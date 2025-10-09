@@ -3,11 +3,6 @@
 #include"../../../Scene/SceneManager.h"
 #include"../../../main.h"
 
-bool EffekseerEffectBase::IsEffectEnd() const
-{
-	return !m_isEffectPlaying && !m_load;
-}
-
 void EffekseerEffectBase::Init()
 {
 	KdGameObject::Init();
@@ -19,6 +14,8 @@ void EffekseerEffectBase::Init()
 
 	m_once = false;
 	m_load = false;
+
+	m_isEffectPlaying = false;
 
 }
 
@@ -76,6 +73,7 @@ void EffekseerEffectBase::EffectUpdate()
 		{
 			// 終了したので参照破棄
 			m_wpEffect.reset();
+			m_isEffectPlaying = false;
 		}
 	}
 	else
@@ -102,6 +100,16 @@ void EffekseerEffectBase::ImGuiInspector()
 
 	ImGui::DragFloat(U8("エフェクトの出現位置"), &m_distance, 0.1f);
 	ImGui::DragFloat(U8("エフェクトの再生速度"), &m_effectSpeed, 0.1f);
+	
+	// エフェクト再生ボタン
+	if (ImGui::Button(U8("エフェクト再生")))
+	{
+		m_load = true;
+	}
+	if (ImGui::Button(U8("エフェクト停止")))
+	{
+		StopEffect();
+	}
 }
 
 void EffekseerEffectBase::JsonSave(nlohmann::json& _json) const

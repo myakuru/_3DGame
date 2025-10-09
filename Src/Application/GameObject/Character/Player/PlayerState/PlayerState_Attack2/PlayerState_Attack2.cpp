@@ -5,20 +5,23 @@
 #include"../../../../Weapon/Katana/Katana.h"
 
 #include"../PlayerState_Attack3/PlayerState_Attack3.h"
+
 #include"../PlayerState_BackWordAvoid/PlayerState_BackWordAvoid.h"
+#include"../PlayerState_FowardAvoid/PlayerState_FowardAvoid.h"
 
 #include"../../../../../Scene/SceneManager.h"
 #include"../../../../Effect/EffekseerEffect/Rotation/Rotation.h"
 
 void PlayerState_Attack2::StateStart()
 {
-	auto anime = m_player->GetAnimeModel()->GetAnimation("newAttack3");
+	auto anime = m_player->GetAnimeModel()->GetAnimation("Attack1");
 	m_player->GetAnimator()->SetAnimation(anime, 0.25f, false);
 	PlayerStateBase::StateStart();
 
 	m_attackParam = m_player->GetPlayerConfig().GetAttackParam();
 
-	m_player->m_onceEffect = false;
+	// 当たり判定リセット
+	m_player->ResetAttackCollision();
 
 	// 攻撃時はtrueにする
 	if (auto katana = m_player->GetKatana().lock(); katana)
@@ -57,12 +60,8 @@ void PlayerState_Attack2::StateUpdate()
 
 	m_time += deltaTime;
 
-	// 0.5秒間当たり判定有効
-	if (m_time <= 1.0 / 2)
-	{
-		m_player->UpdateAttack();
-		m_time = 0.0f;
-	}
+	m_player->UpdateAttackCollision(10.0f, 1.1f, 1, 0.3f, { 0.0f, 0.3f }, 0.3f);
+	
 
 	Math::Vector3 moveDir = m_player->GetMovement();
 
@@ -72,6 +71,23 @@ void PlayerState_Attack2::StateUpdate()
 		moveDir.y = 0.0f;
 		moveDir.Normalize();
 		m_player->UpdateQuaternionDirect(moveDir);
+	}
+
+	// 回避入力受付
+	{
+		if (KeyboardManager::GetInstance().IsKeyPressed('W') && KeyboardManager::GetInstance().IsKeyJustPressed(VK_RBUTTON))
+		{
+			auto sheath = std::make_shared<PlayerState_BackWordAvoid>();
+			m_player->ChangeState(sheath);
+			return;
+		}
+
+		if (KeyboardManager::GetInstance().IsKeyJustPressed(VK_RBUTTON))
+		{
+			auto sheath = std::make_shared<PlayerState_ForwardAvoid>();
+			m_player->ChangeState(sheath);
+			return;
+		}
 	}
 
 	// コンボ受付
@@ -112,7 +128,7 @@ void PlayerState_Attack2::StateUpdate()
 		// コンボ受付
 		if (m_LButtonkeyInput)
 		{
-			// 80%以降で受付
+			// 40%以降で受付
 			if (m_animeTime < 0.4f) return;
 			auto next = std::make_shared<PlayerState_Attack3>();
 			m_player->ChangeState(next);
@@ -134,5 +150,6 @@ void PlayerState_Attack2::StateEnd()
 	if (auto effect = m_slashEffect.lock(); effect)
 	{
 		effect->SetPlayEffect(false);
+		effect->StopEffect();
 	}
 }

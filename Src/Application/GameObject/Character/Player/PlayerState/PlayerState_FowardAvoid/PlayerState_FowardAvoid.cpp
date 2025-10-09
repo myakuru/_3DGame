@@ -85,9 +85,9 @@ void PlayerState_ForwardAvoid::StateUpdate()
 	UpdateUnsheathed();
 
 	// 回避中の移動処理
-	if (m_time < 0.2f)
+	if (m_time < 0.3f)
 	{
-		const float dashSpeed = -1.4f;
+		const float dashSpeed = -1.0f;
 		m_player->SetIsMoving(forward * dashSpeed);
 	}
 	else

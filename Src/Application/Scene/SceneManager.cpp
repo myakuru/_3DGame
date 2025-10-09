@@ -63,6 +63,7 @@
 #include"../GameObject/Effect/EffekseerEffect/EnemyShineBlue/EnemyShineBlue.h"
 #include"../GameObject/Field/Field.h"
 #include"../GameObject/Effect/EffekseerEffect/SpecialAttack1/SpecialAttack1.h"
+#include"../GameObject/Effect/EffekseerEffect/SpeedAttackEffect/SpeedAttackEffect.h"
 
 void SceneManager::Init()
 {
@@ -129,6 +130,7 @@ void SceneManager::Register() const
 	RegisterObject::GetInstance().Register<SpecialAttack>();
 	RegisterObject::GetInstance().Register<EnemyShineBlue>();
 	RegisterObject::GetInstance().Register<SpecialAttack1>();
+	RegisterObject::GetInstance().Register<SpeedAttackEffect>();
 
 
 	// 使われてないけど一応登録しとく系

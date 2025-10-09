@@ -19,8 +19,6 @@ void PlayerState_RunStart::StateUpdate()
 	// 移動方向を取得
 	Math::Vector3 moveDir = m_player->GetMoveDirection();
 
-
-
 	PlayerStateBase::StateUpdate();
 
 	if (m_player->GetAnimator()->IsAnimationEnd())

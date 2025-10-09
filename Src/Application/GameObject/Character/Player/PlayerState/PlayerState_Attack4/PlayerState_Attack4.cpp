@@ -9,6 +9,9 @@
 #include"../../../../Effect/EffekseerEffect/Rotation/Rotation.h"
 #include"../../../../Camera/PlayerCamera/PlayerCamera.h"
 
+#include"../PlayerState_BackWordAvoid/PlayerState_BackWordAvoid.h"
+#include"../PlayerState_FowardAvoid/PlayerState_FowardAvoid.h"
+
 void PlayerState_Attack4::StateStart()
 {
 	auto anime = m_player->GetAnimeModel()->GetAnimation("newAttack5");
@@ -22,7 +25,8 @@ void PlayerState_Attack4::StateStart()
 		katana->SetNowAttackState(true);
 	}
 
-	m_player->m_onceEffect = false;
+	// 当たり判定リセット
+	m_player->ResetAttackCollision();
 
 	SceneManager::Instance().GetObjectWeakPtr(m_groundFreezes);
 	SceneManager::Instance().GetObjectWeakPtr(m_rotation);
@@ -59,10 +63,23 @@ void PlayerState_Attack4::StateUpdate()
 	m_time += deltaTime;
 
 	// 0.5秒間当たり判定有効
-	if (m_time <= 1.0 / 2)
+	m_player->UpdateAttackCollision(10.0f, 1.1f, 7, 0.4f, { 0.2f, 0.2f }, 0.3f);
+
+	// 回避入力受付
 	{
-		m_player->UpdateAttack();
-		m_time = 0.0f;
+		if (KeyboardManager::GetInstance().IsKeyPressed('W') && KeyboardManager::GetInstance().IsKeyJustPressed(VK_RBUTTON))
+		{
+			auto sheath = std::make_shared<PlayerState_BackWordAvoid>();
+			m_player->ChangeState(sheath);
+			return;
+		}
+
+		if (KeyboardManager::GetInstance().IsKeyJustPressed(VK_RBUTTON))
+		{
+			auto sheath = std::make_shared<PlayerState_ForwardAvoid>();
+			m_player->ChangeState(sheath);
+			return;
+		}
 	}
 
 	if (KeyboardManager::GetInstance().IsKeyJustPressed(VK_LBUTTON))
@@ -106,8 +123,8 @@ void PlayerState_Attack4::StateUpdate()
 		// コンボ受付
 		if (m_LButtonkeyInput)
 		{
-			// 80%以降で受付
-			if (m_animeTime < 0.8f) return;
+			// 90%以降で受付
+			if (m_animeTime < 0.9f) return;
 			auto next = std::make_shared<PlayerState_Attack1>();
 			m_player->ChangeState(next);
 			return;
@@ -127,17 +144,19 @@ void PlayerState_Attack4::StateEnd()
 	// カメラの位置を変更
 	if (auto camera = m_player->GetPlayerCamera().lock(); camera)
 	{
-		camera->SetTargetLookAt({ 0.f,1.0f,-3.5f });
+		camera->SetTargetLookAt({ 0.f,1.0f,-2.5f });
 	}
 
 	if (auto effect = m_groundFreezes.lock(); effect)
 	{
 		effect->SetPlayEffect(false);
+		effect->StopEffect();
 	}
 
 	if (auto effect = m_rotation.lock(); effect)
 	{
 		effect->SetPlayEffect(false);
+		effect->StopEffect();
 	}
 
 	m_player->SetIsMoving(Math::Vector3::Zero);

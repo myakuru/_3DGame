@@ -17,14 +17,14 @@ void PlayerState_Attack::StateStart()
 {
 	auto anime = m_player->GetAnimeModel()->GetAnimation("newAttack1");
 	m_player->GetAnimator()->SetAnimation(anime, 0.25f, false);
-	
 
 	PlayerStateBase::StateStart();
 
 	m_attackParam = m_player->GetPlayerConfig().GetAttack2Param();
 	m_attackParam.m_dashTimer = 0.0f;
 
-	m_player->m_onceEffect = false;
+	// 当たり判定リセット
+	m_player->ResetAttackCollision();
 
 	// 攻撃時はtrueにする
 	if (auto katana = m_player->GetKatana().lock(); katana)
@@ -64,10 +64,9 @@ void PlayerState_Attack::StateUpdate()
 	m_time += deltaTime;
 
 	// 当たり判定有効時間: 最初の0.5秒のみ
-	if (m_time <= 0.5f)
-	{
-		m_player->UpdateAttack();
-	}
+	
+	m_player->UpdateAttackCollision(2.0f, 1.1f, 1, 0.3f, { 0.3f, 0.0f }, 0.3f);
+	
 
 	// 攻撃中の移動方向で回転を更新
 	if (m_player->GetMovement() != Math::Vector3::Zero)
@@ -150,5 +149,6 @@ void PlayerState_Attack::StateEnd()
 	if (auto swordEffect = m_slashEffect.lock(); swordEffect)
 	{
 		swordEffect->SetPlayEffect(false);
+		swordEffect->StopEffect();
 	}
 }
