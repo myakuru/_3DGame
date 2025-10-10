@@ -400,6 +400,9 @@
     <Filter Include="Src\Application\GameObject\Effect\EffekseerEffect\SpeedAttackEffect">
       <UniqueIdentifier>{7916243b-2ec1-4339-8c67-d522a406f0ad}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\GameObject\Camera\TitleCamera">
+      <UniqueIdentifier>{971e0a81-7ee6-4649-92e3-c514eaf3563e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -903,6 +906,9 @@
     <ClInclude Include="Src\Application\GameObject\Effect\EffekseerEffect\SpeedAttackEffect\SpeedAttackEffect.h">
       <Filter>Src\Application\GameObject\Effect\EffekseerEffect\SpeedAttackEffect</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Camera\TitleCamera\TitleCamera.h">
+      <Filter>Src\Application\GameObject\Camera\TitleCamera</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -1351,6 +1357,9 @@
     </ClCompile>
     <ClCompile Include="Src\Application\GameObject\Effect\EffekseerEffect\SpeedAttackEffect\SpeedAttackEffect.cpp">
       <Filter>Src\Application\GameObject\Effect\EffekseerEffect\SpeedAttackEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Camera\TitleCamera\TitleCamera.cpp">
+      <Filter>Src\Application\GameObject\Camera\TitleCamera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

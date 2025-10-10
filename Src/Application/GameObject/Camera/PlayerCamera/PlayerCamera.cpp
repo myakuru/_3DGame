@@ -26,7 +26,11 @@ void PlayerCamera::Init()
 	// 初期のカメラのターゲット座標を設定
 	m_followRate = m_targetLookAt;
 
-	m_spCamera->SetProjectionMatrix(m_fov);
+	m_fovShake = { m_fov,0.0f };
+
+	m_fovShakeTarget = m_fovShake;
+
+	m_spCamera->SetProjectionMatrix(m_fovShakeTarget.x);
 }
 
 void PlayerCamera::PostUpdate()
@@ -45,12 +49,22 @@ void PlayerCamera::PostUpdate()
 		return;
 	}
 
+	if (SceneManager::Instance().IsIntroCamera())
+	{
+		UpdateIntroCamera();
+		return;
+	}
+
 	// 回転更新
 	UpdateRotateByMouse();
 
 	m_targetRotation = GetRotationQuaternion();
 	m_rotation = Math::Quaternion::Slerp(m_prevRotation, m_targetRotation, m_rotationSmooth * deltaTime);
 	m_mRotation = Math::Matrix::CreateFromQuaternion(m_rotation);
+
+	m_fovShake = { m_fov,0.0f };
+
+	m_fovShakeTarget = Math::Vector2::Lerp(m_fovShakeTarget, m_fovShake, deltaTime);
 
 	// シェイク
 	Math::Vector3 shakeOffset = Math::Vector3::Zero;
@@ -80,7 +94,7 @@ void PlayerCamera::PostUpdate()
 	Math::Vector3 anchor = playerPos + Math::Vector3(0, 1.0f, 0); // 必要なら 1.2f などチューニング
 
 	// 障害物補正
-	//UpdateCameraRayCast(anchor);
+	UpdateCameraRayCast(anchor);
 
 	// 最終的にカメラ行列適用
 	m_spCamera->SetCameraMatrix(m_mWorld);

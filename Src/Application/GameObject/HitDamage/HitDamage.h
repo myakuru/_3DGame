@@ -15,6 +15,8 @@ public:
 
 	void SetDamage(int damage) { m_displayTime = damage; }
 
+	void SetTrackEnemy(const std::weak_ptr<Enemy>& enemy) { m_enemy = enemy; }
+
 private:
 
 	std::list<std::weak_ptr<Enemy>> m_enemies;
@@ -27,4 +29,13 @@ private:
 
 	float m_timer = 0.0f;
 
+	Math::Vector3 m_enemyPos = Math::Vector3::Zero;
+
+	std::weak_ptr<Enemy> m_enemy;
+
+	Math::Rectangle m_srcRect;
+	int m_textureSizeX = 0;
+	int m_textureSizeY = 0;
+
+	bool m_foundHitEnemy = false;
 };

@@ -64,9 +64,8 @@ void PlayerState_Attack::StateUpdate()
 	m_time += deltaTime;
 
 	// 当たり判定有効時間: 最初の0.5秒のみ
-	
-	m_player->UpdateAttackCollision(2.0f, 1.1f, 1, 0.3f, { 0.3f, 0.0f }, 0.3f);
-	
+	m_player->UpdateAttackCollision(3.0f, 3.0f, 1, m_maxAnimeTime, { 0.5f, 0.0f }, 0.3f);
+
 
 	// 攻撃中の移動方向で回転を更新
 	if (m_player->GetMovement() != Math::Vector3::Zero)

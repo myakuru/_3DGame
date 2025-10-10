@@ -1,6 +1,6 @@
 ﻿#include "PlayerState_FowardAvoidFast.h"
 #include"../../../../../main.h"
-#include"../PlayerState_Idle/PlayerState_Idle.h"
+#include"../PlayerState_RunEnd/PlayerState_RunEnd.h"
 #include"../PlayerState_AvoidAttack/PlayerState_AvoidAttack.h"
 
 void PlayerState_FowardAvoidFast::StateStart()
@@ -33,7 +33,7 @@ void PlayerState_FowardAvoidFast::StateUpdate()
 
 	if (m_player->GetAnimator()->IsAnimationEnd())
 	{
-		auto idleState = std::make_shared<PlayerState_Idle>();
+		auto idleState = std::make_shared<PlayerState_RunEnd>();
 		m_player->ChangeState(idleState);
 		return;
 	}

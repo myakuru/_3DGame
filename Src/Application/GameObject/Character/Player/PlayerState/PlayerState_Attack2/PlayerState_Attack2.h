@@ -1,6 +1,6 @@
 ﻿#pragma once
 #include"../PlayerState.h"
-class Rotation;
+class AttacEffect1;
 class PlayerState_Attack2 : public PlayerStateBase
 {
 public:
@@ -15,7 +15,7 @@ private:
 
 	PlayerState_AttackParameter m_attackParam;
 
-	std::weak_ptr<Rotation> m_slashEffect;
+	std::weak_ptr<AttacEffect1> m_slashEffect;
 
 
 	bool m_flag = false; // 攻撃フラグ

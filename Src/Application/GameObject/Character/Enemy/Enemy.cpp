@@ -64,9 +64,9 @@ void Enemy::Update()
 		m_spHitDamage = std::make_shared<HitDamage>();
 		m_spHitDamage->Init();
 		m_spHitDamage->SetDamage(m_getDamage);
+		m_spHitDamage->SetTrackEnemy(std::static_pointer_cast<Enemy>(shared_from_this()));
 		SceneManager::Instance().AddObject(m_spHitDamage);
-
-		m_isHit = false;	// ダメージフラグをリセット
+		m_isHit = false;
 		return;
 	}
 

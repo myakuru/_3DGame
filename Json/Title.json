@@ -27,36 +27,9 @@
     "type": 32
   },
   {
-    "Name": "class TPSCamera",
-    "color": {
-      "w": 1.0,
-      "x": 1.0,
-      "y": 1.0,
-      "z": 1.0
-    },
-    "deg": {
-      "x": -9.29999828338623,
-      "y": 10.050000190734863,
-      "z": 0.0
-    },
-    "moveSpeed": 50.0,
-    "path": "Asset/Models/Sky/Sky.gltf",
-    "pos": {
-      "x": -2.9731321334838867,
-      "y": -1.999292254447937,
-      "z": -18.424121856689453
-    },
-    "scale": {
-      "x": 1.0,
-      "y": 1.0,
-      "z": 1.0
-    },
-    "type": 32
-  },
-  {
     "Name": "class AlpfaMoving",
     "color": {
-      "w": 0.3067106306552887,
+      "w": 0.31310105323791504,
       "x": 1.0,
       "y": 1.0,
       "z": 1.0
@@ -108,6 +81,200 @@
     "type": 32
   },
   {
+    "Name": "class TitleCamera",
+    "color": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "deg": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "m_endPos": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": -0.30000001192092896
+    },
+    "m_moveSpeed": 0.10000000149011612,
+    "m_startPos": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "moveSpeed": 50.0,
+    "path": "Asset/Models/Sky/Sky.gltf",
+    "pos": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": -0.26927220821380615
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "type": 32
+  },
+  {
+    "Name": "class Field",
+    "color": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "deg": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
+      "DrawLit": false,
+      "DrawToon": false,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "path": "Asset/Models/Sky/Sky.gltf",
+    "pos": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "type": 32
+  },
+  {
+    "DashTime": 0.0,
+    "DashTime1": 0.0,
+    "DashTime2": 0.0,
+    "GravitySpeed": 0.0,
+    "Name": "class Player",
+    "cameraShake": {
+      "x": 0.0,
+      "y": 0.0
+    },
+    "cameraShakeTime": 0.0,
+    "color": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "deg": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
+      "DrawLit": false,
+      "DrawToon": false,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "fixedFps": 60.0,
+    "moveSpeed": 0.0,
+    "path": "Asset/Models/Sky/Sky.gltf",
+    "pos": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "rotateSpeed": 0.0,
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "type": 32
+  },
+  {
+    "Name": "class SkySphere",
+    "color": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "deg": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
+      "DrawLit": false,
+      "DrawToon": false,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "path": "Asset/Models/Sky/Sky.gltf",
+    "pos": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "type": 32
+  },
+  {
+    "GravitySpeed": 0.0,
+    "Name": "class Enemy",
+    "color": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "deg": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
+      "DrawLit": false,
+      "DrawToon": false,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "fixedFps": 60.0,
+    "moveSpeed": 0.0,
+    "path": "Asset/Models/Sky/Sky.gltf",
+    "pos": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "rotationspeed": 10.0,
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "type": 32
+  },
+  {
     "Name": "class FPSCamera",
     "color": {
       "w": 1.0,
@@ -116,12 +283,12 @@
       "z": 1.0
     },
     "deg": {
-      "x": -12.000072479248047,
-      "y": 2881.343994140625,
+      "x": -3.000072956085205,
+      "y": 356.39398193359375,
       "z": 0.0
     },
     "moveSpeed": 10.0,
-    "path": "Asset/Models/Sky/Sky.gltf",
+    "path": "Asset\\Map\\Map.gltf",
     "pos": {
       "x": -0.17685124278068542,
       "y": 0.06702317297458649,
@@ -143,6 +310,41 @@
       "z": 1.0
     },
     "deg": {
+      "x": -4.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
+      "DrawLit": true,
+      "DrawToon": false,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "path": "Asset\\TitleMap\\TitleMap.gltf",
+    "pos": {
+      "x": -0.30000001192092896,
+      "y": 0.5,
+      "z": 2.0
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "type": 32
+  },
+  {
+    "Name": "class Map",
+    "color": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "deg": {
       "x": 0.0,
       "y": 0.0,
       "z": 0.0
@@ -152,11 +354,46 @@
       "DrawGradation": false,
       "DrawGrayScale": false,
       "DrawLit": false,
-      "DrawToon": true,
+      "DrawToon": false,
       "DrawUnLit": false,
       "GenerateDepthMapFromLight": false
     },
-    "path": "Asset\\3DAssets\\TV\\TV.gltf",
+    "path": "Asset\\Map2\\Map.gltf",
+    "pos": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "type": 32
+  },
+  {
+    "Name": "class Map",
+    "color": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "deg": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
+      "DrawLit": false,
+      "DrawToon": false,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "path": "Asset\\3DAssets\\Buildong7\\Building7.gltf",
     "pos": {
       "x": 0.0,
       "y": 0.0,

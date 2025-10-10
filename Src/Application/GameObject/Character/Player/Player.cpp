@@ -199,13 +199,11 @@ void Player::Update()
 
 void Player::UpdateAttackCollision(float _radius, float _distance, int _attackCount, float _attackTimer, Math::Vector2 _cameraShakePow, float _cameraTime)
 {
-	// クォータニオンから前方向ベクトルを取得
 	Math::Vector3 forward = Math::Vector3::TransformNormal(Math::Vector3::Forward, Math::Matrix::CreateFromQuaternion(m_rotation));
 	forward.Normalize();
 
 	float deltaTime = Application::Instance().GetDeltaTime();
 
-	// 球の当たり判定情報作成
 	KdCollider::SphereInfo attackSphere;
 	attackSphere.m_sphere.Center = m_position + Math::Vector3(0.0f, 0.5f, 0.0f) + forward * _distance;
 	attackSphere.m_sphere.Radius = _radius;
@@ -213,50 +211,39 @@ void Player::UpdateAttackCollision(float _radius, float _distance, int _attackCo
 
 	m_pDebugWire->AddDebugSphere(attackSphere.m_sphere.Center, attackSphere.m_sphere.Radius);
 
-	// 複数の敵に当たる可能性があるのでリストで取得
 	SceneManager::Instance().GetObjectWeakPtrList(m_enemies);
 
+	// 初回セットアップ: 初期タイマを0に
 	if (!m_onceEffect)
 	{
 		m_isChargeAttackActive = true;
 		m_chargeAttackCount = 0;
-		m_chargeAttackTimer = _attackTimer;
+		m_chargeAttackTimer = 0.0f;
 		m_onceEffect = true;
 	}
 
-	// アクティブじゃないときは処理しない
 	if (!m_isChargeAttackActive) return;
 
-	// タイマー更新
 	m_chargeAttackTimer += deltaTime;
 
-	// count分攻撃したら終了
 	if (m_chargeAttackCount < _attackCount && m_chargeAttackTimer >= _attackTimer)
 	{
 		bool hitAny = false;
 
-		// 円の中に入った時を攻撃判定とする
 		for (const auto& enemyies : m_enemies)
 		{
 			if (auto enemyPtr = enemyies.lock())
 			{
-				std::list<KdCollider::CollisionResult> retSpherelist;
-				enemyPtr->Intersects(attackSphere, &retSpherelist);
-				if (!retSpherelist.empty())
+				std::list<KdCollider::CollisionResult> results;
+				if (enemyPtr->Intersects(attackSphere, &results) && !results.empty())
 				{
-					// ダメージを与える
-					std::list<KdCollider::CollisionResult> results;
-					if (enemyPtr->Intersects(attackSphere, &results))
-					{
-						enemyPtr->Damage(m_status.attack);
-						enemyPtr->SetEnemyHit(true);
-						hitAny = true;
-					}
+					enemyPtr->Damage(m_status.attack);
+					enemyPtr->SetEnemyHit(true);
+					hitAny = true;
 				}
 			}
 		}
 
-		// カメラシェイク
 		if (hitAny)
 		{
 			if (auto camera = m_playerCamera.lock(); camera)
@@ -265,18 +252,14 @@ void Player::UpdateAttackCollision(float _radius, float _distance, int _attackCo
 			}
 		}
 
-		// 攻撃回数を増やす
 		m_chargeAttackCount++;
 		m_chargeAttackTimer = 0.0f;
 
-		// 攻撃回数に達したら終了
 		if (m_chargeAttackCount >= _attackCount)
 		{
 			m_isChargeAttackActive = false;
 		}
-
 	}
-
 }
 
 void Player::ImGuiInspector()

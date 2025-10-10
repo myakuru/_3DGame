@@ -60,8 +60,8 @@
       "DrawBright": false,
       "DrawGradation": false,
       "DrawGrayScale": false,
-      "DrawLit": false,
-      "DrawToon": true,
+      "DrawLit": true,
+      "DrawToon": false,
       "DrawUnLit": false,
       "GenerateDepthMapFromLight": true
     },
@@ -69,9 +69,9 @@
     "moveSpeed": 0.14000000059604645,
     "path": "Asset\\Models\\Player\\Perula\\Player\\Perula.gltf",
     "pos": {
-      "x": 13.996389389038086,
+      "x": 30.94853401184082,
       "y": 9.899999618530273,
-      "z": -72.41558837890625
+      "z": -74.34098815917969
     },
     "rotateSpeed": 30.0,
     "scale": {
@@ -130,16 +130,16 @@
       "z": 0.004000000189989805
     },
     "trailColor": {
-      "w": 0.19607843458652496,
-      "x": 0.16695500910282135,
-      "y": 0.8315014839172363,
-      "z": 0.9460784196853638
+      "w": 0.7843137383460999,
+      "x": 0.47058823704719543,
+      "y": 0.9686274528503418,
+      "z": 1.0
     },
-    "trailKatanaPoint": 200.0,
+    "trailKatanaPoint": 250.0,
     "trailScale": {
-      "x": 0.6000000238418579,
-      "y": 0.6000000238418579,
-      "z": 0.6000000238418579
+      "x": 0.10000000149011612,
+      "y": 0.10000000149011612,
+      "z": 0.10000000149011612
     },
     "type": 32,
     "weaponDeg": {
@@ -157,8 +157,8 @@
       "z": 1.0
     },
     "deg": {
-      "x": -0.2999703288078308,
-      "y": 2.329620361328125,
+      "x": 11.249966621398926,
+      "y": 311.0636901855469,
       "z": 0.0
     },
     "fov": 70.0,
@@ -178,7 +178,7 @@
     "smooth": 8.0,
     "targetLookAt": {
       "x": 0.0,
-      "y": 1.0,
+      "y": 1.0000001192092896,
       "z": -2.5000007152557373
     },
     "type": 32
@@ -219,7 +219,7 @@
       "z": 0.41960784792900085
     },
     "deg": {
-      "x": -0.016893792897462845,
+      "x": -0.02030770853161812,
       "y": -0.03200000151991844,
       "z": 0.0
     },
@@ -630,32 +630,6 @@
     "type": 18
   },
   {
-    "Name": "class CurvesEffect",
-    "color": {
-      "w": 1.0,
-      "x": 1.0,
-      "y": 1.0,
-      "z": 1.0
-    },
-    "deg": {
-      "x": 0.0,
-      "y": 0.0,
-      "z": 0.0
-    },
-    "path": "Asset/Models/Sky/Sky.gltf",
-    "pos": {
-      "x": 0.0,
-      "y": 0.0,
-      "z": 0.0
-    },
-    "scale": {
-      "x": 1.0,
-      "y": 1.0,
-      "z": 1.0
-    },
-    "type": 7
-  },
-  {
     "Name": "class FieldEffect",
     "color": {
       "w": 1.0,
@@ -745,54 +719,13 @@
     }
   },
   {
-    "AlphaFade": 0.0,
-    "ColorGradation": 5.0,
-    "Distance": 0.0,
-    "FadeTime": 10.0,
-    "InColor": {
-      "x": 1.0,
-      "y": 1.0,
-      "z": 1.0
-    },
-    "IsStartEffectTime": 1.0,
-    "Name": "class AttackEffect_second",
-    "OutColor": {
-      "x": 0.0734332948923111,
-      "y": 0.35258784890174866,
-      "z": 0.936274528503418
-    },
-    "color": {
-      "w": 0.0,
-      "x": 1.0,
-      "y": 1.0,
-      "z": 1.0
-    },
-    "deg": {
-      "x": 0.0,
-      "y": 0.0,
-      "z": 0.0
-    },
-    "path": "Asset\\Effect\\Attack.gltf",
-    "pos": {
-      "x": 0.0,
-      "y": 0.8999999761581421,
-      "z": 0.0
-    },
-    "scale": {
-      "x": 6.0,
-      "y": 2.0,
-      "z": 2.0
-    },
-    "type": 11
-  },
-  {
     "GravitySpeed": 0.0,
     "Name": "class Enemy",
     "color": {
       "w": 1.0,
-      "x": 1.0,
-      "y": 0.5539215803146362,
-      "z": 0.5539215803146362
+      "x": 0.7352941036224365,
+      "y": 0.7352941036224365,
+      "z": 0.7352941036224365
     },
     "deg": {
       "x": 0.0,
@@ -812,9 +745,9 @@
     "moveSpeed": 0.05000000074505806,
     "path": "Asset\\Models\\Enemy\\Aetherius\\Aetherius.gltf",
     "pos": {
-      "x": 1.8102606534957886,
+      "x": 10.067169189453125,
       "y": 9.699999809265137,
-      "z": -58.57929992675781
+      "z": -71.2922592163086
     },
     "rotationspeed": 10.0,
     "scale": {
@@ -853,7 +786,7 @@
     "type": 9
   },
   {
-    "EffectSpeed": 15.0,
+    "EffectSpeed": 6.0,
     "Name": "class AttacEffect1",
     "color": {
       "w": 1.0,
@@ -870,7 +803,7 @@
     "path": "Asset\\Data\\Effect\\EVFX_Slash\\VFX\\effects\\EVFX02_13_ArcBlade.efkefc",
     "pos": {
       "x": 0.0,
-      "y": 0.0,
+      "y": 0.10000000149011612,
       "z": 0.0
     },
     "scale": {
@@ -1002,11 +935,11 @@
       "z": 1.0
     },
     "deg": {
-      "x": -30.0,
-      "y": 180.0,
-      "z": -200.0
+      "x": 0.0,
+      "y": -180.0,
+      "z": 0.0
     },
-    "distance": 0.0,
+    "distance": 0.5,
     "path": "Asset\\Data\\Effect\\SampleEffect\\SwordFlash.efkefc",
     "pos": {
       "x": 0.0,
@@ -1014,9 +947,9 @@
       "z": 0.0
     },
     "scale": {
-      "x": 0.20000000298023224,
-      "y": 0.20000000298023224,
-      "z": 0.20000000298023224
+      "x": 0.30000001192092896,
+      "y": 0.30000001192092896,
+      "z": 0.30000001192092896
     },
     "type": 16
   },
@@ -1042,9 +975,9 @@
       "z": 0.0
     },
     "scale": {
-      "x": 0.25,
-      "y": 0.25,
-      "z": 0.25
+      "x": 0.4000000059604645,
+      "y": 0.4000000059604645,
+      "z": 0.4000000059604645
     },
     "type": 13
   },
@@ -1062,7 +995,7 @@
       "y": 0.0,
       "z": 0.0
     },
-    "distance": 2.0,
+    "distance": 3.5,
     "path": "Asset\\Data\\Effect\\Shine\\VFX\\EVFXForge15_10_ShineforgeSlash.efkefc",
     "pos": {
       "x": 0.0,
@@ -1350,8 +1283,8 @@
       "DrawBright": false,
       "DrawGradation": false,
       "DrawGrayScale": false,
-      "DrawLit": false,
-      "DrawToon": true,
+      "DrawLit": true,
+      "DrawToon": false,
       "DrawUnLit": false,
       "GenerateDepthMapFromLight": false
     },
@@ -1618,9 +1551,9 @@
     "Name": "class Enemy",
     "color": {
       "w": 1.0,
-      "x": 1.0,
-      "y": 1.0,
-      "z": 1.0
+      "x": 0.7058823108673096,
+      "y": 0.7058823108673096,
+      "z": 0.7058823108673096
     },
     "deg": {
       "x": 0.0,
@@ -1640,9 +1573,9 @@
     "moveSpeed": 0.05000000074505806,
     "path": "Asset\\Models\\Enemy\\Aetherius\\Aetherius.gltf",
     "pos": {
-      "x": 18.331314086914063,
+      "x": 18.43287467956543,
       "y": 10.0,
-      "z": -59.378143310546875
+      "z": -41.169437408447266
     },
     "rotationspeed": 10.0,
     "scale": {
@@ -1666,17 +1599,17 @@
       "y": 0.0,
       "z": 0.0
     },
-    "distance": 10.0,
-    "path": "Asset\\Data\\Effect\\RotationAttack\\EVFXForge09_08_FloodforgeWard.efkefc",
+    "distance": 7.0,
+    "path": "Asset\\Data\\Effect\\Spellblade\\SlashAll.efkefc",
     "pos": {
       "x": 0.0,
-      "y": 1.0,
+      "y": 1.5,
       "z": 0.0
     },
     "scale": {
-      "x": 10.0,
-      "y": 10.0,
-      "z": 10.0
+      "x": 1.5,
+      "y": 1.5,
+      "z": 1.5
     },
     "type": 32
   },
@@ -1717,16 +1650,16 @@
       "z": 1.0
     },
     "deg": {
-      "x": 16.949825286865234,
-      "y": -60.60727310180664,
+      "x": 20.699880599975586,
+      "y": 237.59310913085938,
       "z": 0.0
     },
     "moveSpeed": 20.0,
     "path": "Asset/Models/Sky/Sky.gltf",
     "pos": {
-      "x": 2.234278917312622,
-      "y": 12.245221138000488,
-      "z": -56.719764709472656
+      "x": 51.903656005859375,
+      "y": 25.24349594116211,
+      "z": -81.29097747802734
     },
     "scale": {
       "x": 1.0,
@@ -1752,7 +1685,7 @@
       "DrawBright": false,
       "DrawGradation": false,
       "DrawGrayScale": false,
-      "DrawLit": false,
+      "DrawLit": true,
       "DrawToon": false,
       "DrawUnLit": false,
       "GenerateDepthMapFromLight": false

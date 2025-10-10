@@ -13,7 +13,6 @@ public:
 
 private:
 
-	void DrawToon() override;
 	void DrawGrayScale() override;
 
 };

@@ -16,6 +16,8 @@
 // ゲームオブジェクトのインクルード
 #include"../GameObject/Camera/TPSCamera/TPSCamera.h"
 #include"../GameObject/Camera/FPSCamera/FPSCamera.h"
+#include"../GameObject/Camera/TitleCamera/TitleCamera.h"
+
 #include"../GameObject/SkySphere/SkySphere.h"
 #include"../GameObject/HUD/NormalUI/NormalUI.h"
 #include"../GameObject/HUD/AlpfaMoving/AlpfaMoving.h"
@@ -78,6 +80,7 @@ void SceneManager::Register() const
 	RegisterObject::GetInstance().Register<TPSCamera>();
 	RegisterObject::GetInstance().Register<FPSCamera>();
 	RegisterObject::GetInstance().Register<PlayerCamera>();
+	RegisterObject::GetInstance().Register<TitleCamera>();
 
 	// スカイスフィア
 	RegisterObject::GetInstance().Register<SkySphere>();

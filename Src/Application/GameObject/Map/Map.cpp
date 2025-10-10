@@ -8,19 +8,10 @@ Map::Map()
 	m_typeID = TypeID;
 }
 
-void Map::DrawToon()
-{
-	//KdShaderManager::Instance().m_StandardShader.SetUVTiling({ 10,10 });
-	//KdShaderManager::Instance().ChangeRasterizerState(KdRasterizerState::CullNone);
-	KdShaderManager::Instance().m_StandardShader.DrawModel(*m_model, m_mWorld, m_color);
-	//KdShaderManager::Instance().UndoRasterizerState();
-}
-
 void Map::DrawGrayScale()
 {
 	if (!SceneManager::Instance().GetDrawGrayScale()) return;
-	//KdShaderManager::Instance().ChangeRasterizerState(KdRasterizerState::CullNone);
 	
 	KdShaderManager::Instance().m_StandardShader.DrawModel(*m_model, m_mWorld, m_color);
-	//KdShaderManager::Instance().UndoRasterizerState();
+
 }

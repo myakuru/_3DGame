@@ -91,4 +91,10 @@ private:
 	float m_expandDelayTime = 0.10f;
 	float m_expandDelayTimer = 0.0f;
 
+	// FOVのラープ用
+	float m_fovLerpSpeed = 0.0f;
+
+	Math::Vector2 m_fovShake = Math::Vector2::Zero;
+	Math::Vector2 m_fovShakeTarget = { 60.0f,0.0f };
+
 };

@@ -1,0 +1,40 @@
+{
+  "m_anviLightColor": {
+    "w": 1.0,
+    "x": 0.6764705777168274,
+    "y": 0.6764705777168274,
+    "z": 0.6764705777168274
+  },
+  "m_brightThreshold": 0.8999999761581421,
+  "m_dirLightHeight": 30.0,
+  "m_directionalLightColor": {
+    "x": 0.7156862616539001,
+    "y": 0.7156862616539001,
+    "z": 0.7156862616539001
+  },
+  "m_directionalLightDir": {
+    "x": 1.0,
+    "y": 1.0,
+    "z": 1.0
+  },
+  "m_fogColor": {
+    "x": 0.30000001192092896,
+    "y": 0.30000001192092896,
+    "z": 0.30000001192092896
+  },
+  "m_fogDensity": 0.004999999888241291,
+  "m_fogEnable": true,
+  "m_fogUseRange": true,
+  "m_highFogColor": {
+    "x": 0.699999988079071,
+    "y": 0.699999988079071,
+    "z": 0.699999988079071
+  },
+  "m_highFogDistance": 0.0,
+  "m_highFogHeight": 0.0,
+  "m_lightingArea": {
+    "x": 25.0,
+    "y": 25.0
+  },
+  "m_lowFogHeight": 0.0
+}

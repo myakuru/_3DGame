@@ -12,6 +12,8 @@ void PlayerState_AvoidAttack::StateStart()
 	m_time = 0.0f;
 
 	// 当たり判定リセット
+	m_LButtonkeyInput = false;
+
 	m_player->ResetAttackCollision();
 
 	SceneManager::Instance().GetObjectWeakPtr(m_effect);
@@ -19,8 +21,23 @@ void PlayerState_AvoidAttack::StateStart()
 
 void PlayerState_AvoidAttack::StateUpdate()
 {
+	// アニメーション時間のデバッグ表示
+	{
+		m_animeTime = m_player->GetAnimator()->GetPlayProgress();
 
-	m_player->UpdateAttackCollision(2.0f, 1.1f, 1, 0.3f, { 0.3f, 0.0f }, 0.3f);
+		m_maxAnimeTime = m_player->GetAnimator()->GetMaxAnimationTime();
+
+		if (m_animeTime > m_maxAnimeTime)
+		{
+			KdDebugGUI::Instance().AddLog(U8("Attack4アニメ時間: %f"), m_animeTime);
+			KdDebugGUI::Instance().AddLog("\n");
+		}
+	}
+
+	if (m_animeTime >= 0.0f && m_animeTime <= 0.1f)
+	{
+		m_player->UpdateAttackCollision(5.0f, 5.0f, 1, m_maxAnimeTime, { 0.3f, 0.0f }, 0.3f);
+	}
 
 	if (m_player->GetAnimator()->IsAnimationEnd())
 	{

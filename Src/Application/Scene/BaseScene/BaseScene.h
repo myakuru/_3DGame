@@ -16,12 +16,12 @@ public :
 	void DrawSprite();
 	void DrawDebug();
 
-	virtual void JsonInput([[maybe_unused]] const nlohmann::json& _json) {/*基底クラスではなにもしない*/ }
-	virtual void JsonSave([[maybe_unused]] nlohmann::json& _json) const {/*基底クラスではなにもしない*/ }
-	virtual void LoadSceneSettingsFromJson([[maybe_unused]] const std::string& filePath) {/*基底クラスではなにもしない*/ }
-	virtual void SaveSceneSettingsToJson([[maybe_unused]] const std::string& filePath) const {/*基底クラスではなにもしない*/ }
+	virtual void JsonInput([[maybe_unused]] const nlohmann::json& _json);
+	virtual void JsonSave([[maybe_unused]] nlohmann::json& _json) const;
+	virtual void LoadSceneSettingsFromJson([[maybe_unused]] const std::string& filePath);
+	virtual void SaveSceneSettingsToJson([[maybe_unused]] const std::string& filePath) const;
 
-	virtual void DrawImGui() {/*基底クラスではなにもしない*/}
+	virtual void DrawImGui();
 
 	// オブジェクトリストを取得
 	std::list<std::shared_ptr<KdGameObject>>& GetObjList()
@@ -74,25 +74,6 @@ public :
 	}
 
 protected :
-
-	// デバッグGUI表示時のみRT切り替え、終了時に自動Undo
-	template<typename Func>
-	void WithDebugRenderTarget(Func drawFunc)
-	{
-		bool changedRT = false;
-		if (KdDebugGUI::Instance().ShowImGUiFlg())
-		{
-			m_renderTargetChanger.ChangeRenderTarget(m_renderTargetPack);
-			changedRT = true;
-		}
-
-		drawFunc();
-
-		if (changedRT)
-		{
-			m_renderTargetChanger.UndoRenderTarget();
-		}
-	}
 
 	// 継承先シーンで必要ならオーバーライドする
 	virtual void Event();

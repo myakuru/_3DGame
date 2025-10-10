@@ -68,15 +68,15 @@ void PlayerState_Attack3::StateUpdate()
 		}
 	}
 
-	if (m_animeTime >= 0.1f && m_animeTime <= 0.2f)
+	if (m_animeTime >= 0.0f && m_animeTime <= 0.25f)
 	{
 		KdShaderManager::Instance().m_postProcessShader.SetEnableStrongBlur(true);
 	}
-	else if(m_animeTime >= 0.5f && m_animeTime <= 0.6f)
+	else if(m_animeTime >= 0.3f && m_animeTime <= 0.45f)
 	{
 		KdShaderManager::Instance().m_postProcessShader.SetEnableStrongBlur(true);
 	}
-	else if(m_animeTime >= 0.8f && m_animeTime <= 0.9f)
+	else if(m_animeTime >= 0.55f && m_animeTime <= 0.7f)
 	{
 		KdShaderManager::Instance().m_postProcessShader.SetEnableStrongBlur(true);
 	}
@@ -92,8 +92,7 @@ void PlayerState_Attack3::StateUpdate()
 	m_time += deltaTime;
 
 	// 0.5秒間当たり判定有効
-	
-	m_player->UpdateAttackCollision(10.0f, 1.1f, 5, 0.5f, { 0.3f, 0.0f }, 0.3f);
+	m_player->UpdateAttackCollision(7.0f, 6.0f, 5, m_maxAnimeTime, { 0.5f, 0.0f }, 0.3f);
 
 	// 回避入力受付
 	{

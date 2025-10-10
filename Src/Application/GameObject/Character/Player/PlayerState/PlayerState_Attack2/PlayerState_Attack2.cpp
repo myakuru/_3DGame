@@ -11,6 +11,7 @@
 
 #include"../../../../../Scene/SceneManager.h"
 #include"../../../../Effect/EffekseerEffect/Rotation/Rotation.h"
+#include"../../../../Effect/EffekseerEffect/AttacEffect1/AttacEffect1.h"
 
 void PlayerState_Attack2::StateStart()
 {
@@ -60,7 +61,7 @@ void PlayerState_Attack2::StateUpdate()
 
 	m_time += deltaTime;
 
-	m_player->UpdateAttackCollision(10.0f, 1.1f, 1, 0.3f, { 0.0f, 0.3f }, 0.3f);
+	m_player->UpdateAttackCollision(5.0f, 5.0f, 1, m_maxAnimeTime, { 0.0f, 0.5f }, 0.4f);
 	
 
 	Math::Vector3 moveDir = m_player->GetMovement();
@@ -111,7 +112,7 @@ void PlayerState_Attack2::StateUpdate()
 
 	if (m_attackParam.m_dashTimer < 0.2f)
 	{
-		float dashSpeed = 0.5f;
+		float dashSpeed = 1.0f;
 		m_player->SetIsMoving(m_attackDirection * dashSpeed);
 		m_attackParam.m_dashTimer += deltaTime;
 	}
@@ -128,8 +129,8 @@ void PlayerState_Attack2::StateUpdate()
 		// コンボ受付
 		if (m_LButtonkeyInput)
 		{
-			// 40%以降で受付
-			if (m_animeTime < 0.4f) return;
+			// 60%以降で受付
+			if (m_animeTime < 0.6f) return;
 			auto next = std::make_shared<PlayerState_Attack3>();
 			m_player->ChangeState(next);
 			return;

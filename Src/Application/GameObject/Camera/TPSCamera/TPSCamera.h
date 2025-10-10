@@ -8,7 +8,7 @@ public:
 	static const uint32_t TypeID;
 
 	TPSCamera()							{ m_typeID = TypeID; }
-	~TPSCamera()			override	{}
+	~TPSCamera()			override = default;
 
 	uint32_t GetTypeID() const override { return m_typeID; }
 

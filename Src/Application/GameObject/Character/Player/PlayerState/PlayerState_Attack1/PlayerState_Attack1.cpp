@@ -6,8 +6,9 @@
 #include"../../../../Weapon/Katana/Katana.h"
 #include"../PlayerState_Sheathing-of-Katana/PlayerState_Sheathing-of-Katana.h"
 #include"../../../../../Scene/SceneManager.h"
-#include"../../../../Effect/EffekseerEffect/AttacEffect1/AttacEffect1.h"
 #include"../../../../Camera/PlayerCamera/PlayerCamera.h"
+
+#include"../../../../Effect/EffekseerEffect/Rotation/Rotation.h"
 
 #include"../PlayerState_BackWordAvoid/PlayerState_BackWordAvoid.h"
 #include"../PlayerState_FowardAvoid/PlayerState_FowardAvoid.h"
@@ -67,8 +68,7 @@ void PlayerState_Attack1::StateUpdate()
 	m_time += deltaTime;
 
 	// 0.5秒間当たり判定有効
-	
-	m_player->UpdateAttackCollision(10.0f, 1.1f, 1, 0.3f, { 0.3f, 0.0f }, 0.3f);
+	m_player->UpdateAttackCollision(3.0f, 1.0f, 1, m_maxAnimeTime, { 0.3f, 0.3f }, 0.2f);
 	
 	
 	// 回避入力受付
@@ -114,15 +114,15 @@ void PlayerState_Attack1::StateUpdate()
 		// 移動を止める
 		m_player->SetIsMoving(Math::Vector3::Zero);
 
+		// エフェクトの再生
+		if (auto effet = m_effect.lock(); effet)
+		{
+			effet->SetPlayEffect(true);
+		}
+
 		if (auto playreCamera = m_player->GetPlayerCamera().lock(); playreCamera)
 		{
 			playreCamera->StartShake({ m_player->GetCameraShakePower()}, m_player->GetCameraShakeTime());
-		}
-
-		if (!m_effectOnce)
-		{
-			m_effectOnce = true;
-			UpdateEffect();
 		}
 
 		// コンボ受付
@@ -170,15 +170,5 @@ void PlayerState_Attack1::StateEnd()
 	if (auto katana = m_player->GetKatana().lock(); katana)
 	{
 		katana->SetNowAttackState(false);
-	}
-}
-
-void PlayerState_Attack1::UpdateEffect()
-{
-	// エフェクトがあったらフラグをtrueにする
-	if (auto effect = m_effect.lock(); effect)
-	{
-		effect->SetPlayEffect(true);
-		effect->StopEffect();
 	}
 }
