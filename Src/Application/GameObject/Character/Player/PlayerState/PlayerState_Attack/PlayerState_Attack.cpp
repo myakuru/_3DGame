@@ -36,7 +36,7 @@ void PlayerState_Attack::StateStart()
 	m_time = 0.0f;					// 当たり判定用
 
 	SceneManager::Instance().GetObjectWeakPtr(m_slashEffect);
-	m_player->SetAnimeSpeed(100.0f);
+	m_player->SetAnimeSpeed(70.0f);
 }
 
 void PlayerState_Attack::StateUpdate()
@@ -64,7 +64,7 @@ void PlayerState_Attack::StateUpdate()
 	m_time += deltaTime;
 
 	// 当たり判定有効時間: 最初の0.5秒のみ
-	m_player->UpdateAttackCollision(3.0f, 3.0f, 1, m_maxAnimeTime, { 0.5f, 0.0f }, 0.3f);
+	m_player->UpdateAttackCollision(3.0f, 3.0f, 1, m_maxAnimeTime, { 0.2f, 0.0f }, 0.3f);
 
 
 	// 攻撃中の移動方向で回転を更新
@@ -116,7 +116,7 @@ void PlayerState_Attack::StateUpdate()
 		if (m_LButtonkeyInput)
 		{
 			// 70%以降で受付
-			if (m_animeTime < 0.8f) return;
+			if (m_animeTime < 0.7f) return;
 			auto next = std::make_shared<PlayerState_Attack1>();
 			m_player->ChangeState(next);
 			return;

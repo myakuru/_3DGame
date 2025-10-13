@@ -41,7 +41,7 @@ void PlayerState_Attack1::StateStart()
 	// エフェクトの取得
 	SceneManager::Instance().GetObjectWeakPtr(m_effect);
 
-	m_player->SetAnimeSpeed(100.0f);
+	m_player->SetAnimeSpeed(70.0f);
 }
 
 void PlayerState_Attack1::StateUpdate()
@@ -68,7 +68,7 @@ void PlayerState_Attack1::StateUpdate()
 	m_time += deltaTime;
 
 	// 0.5秒間当たり判定有効
-	m_player->UpdateAttackCollision(3.0f, 1.0f, 1, m_maxAnimeTime, { 0.3f, 0.3f }, 0.2f);
+	m_player->UpdateAttackCollision(3.0f, 1.0f, 1, m_maxAnimeTime, { 0.2f, 0.2f }, 0.2f);
 	
 	
 	// 回避入力受付
@@ -129,7 +129,7 @@ void PlayerState_Attack1::StateUpdate()
 		if (m_LButtonkeyInput)
 		{
 			// 80%以降で受付
-			if (m_animeTime < 0.8f) return;
+			if (m_animeTime < 0.7f) return;
 			auto next = std::make_shared<PlayerState_Attack2>();
 			m_player->ChangeState(next);
 			return;

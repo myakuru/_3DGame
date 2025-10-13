@@ -34,7 +34,12 @@ void PlayerState_Attack4::StateStart()
 	m_time = 0.0f;
 	m_LButtonkeyInput = false;
 
-	m_player->SetAnimeSpeed(80.0f);
+	m_player->SetAnimeSpeed(70.0f);
+
+	if (m_player->GetPlayerStatus().chargeCount < 3)
+	{
+		m_player->GetPlayerStatus().chargeCount++;
+	}
 }
 
 void PlayerState_Attack4::StateUpdate()
@@ -63,7 +68,7 @@ void PlayerState_Attack4::StateUpdate()
 	m_time += deltaTime;
 
 	// 0.5秒間当たり判定有効
-	m_player->UpdateAttackCollision(7.0f, 1.0f, 7, m_maxAnimeTime, { 0.4f, 0.4f }, 0.3f);
+	m_player->UpdateAttackCollision(7.0f, 1.0f, 7, m_maxAnimeTime, { 0.2f, 0.2f }, 0.3f);
 
 	// 回避入力受付
 	{

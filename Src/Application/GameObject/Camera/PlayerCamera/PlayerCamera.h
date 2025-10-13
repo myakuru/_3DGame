@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include"../CameraBase.h"
 class Player;
+class PlayerCameraState;
 class PlayerCamera :public CameraBase
 {
 public:
@@ -47,9 +48,13 @@ public:
 	// カメラの回転のスムージング係数を設定
 	void SetRotationSmooth(float smooth) { m_rotationSmooth = smooth; }
 
+	void StateInit();
+	void ChangeState(std::shared_ptr<PlayerCameraState> _state);
+
 private:
 
 	void UpdateCameraRayCast(const Math::Vector3& _anchor);
+
 
 	Math::Vector3 m_targetLookAt = Math::Vector3::Zero;
 	Math::Vector3 m_introCamPos = Math::Vector3::Zero;	// Introカメラの位置

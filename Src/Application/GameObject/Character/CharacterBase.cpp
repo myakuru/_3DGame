@@ -149,6 +149,13 @@ void CharaBase::PostUpdate()
 	{
 		m_gravity = 0.0f;	// 重力をリセット
 		m_position = groundPos;
+		m_gravitySpeed = 0.0f; // 落下速度をリセット
+	}
+	else
+	{
+		// 当たっていなかったら
+		// 落下速度を加速させる
+		m_gravitySpeed -= 0.005f;
 	}
 
 	//=====================================================

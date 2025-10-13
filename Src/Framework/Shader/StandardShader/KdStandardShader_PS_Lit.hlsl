@@ -16,6 +16,47 @@ Texture2D g_environmentTex : register(t12); // 反射景マップ
 SamplerState g_ss : register(s0);				// 通常のテクスチャ描画用
 SamplerComparisonState g_ssCmp : register(s1);	// 補間用比較機能付き
 
+// ================================
+// GGX ベースのPBRユーティリティ
+// ================================
+static const float PI = 3.1415926535;
+
+float DistributionGGX(float3 N, float3 H, float a)
+{
+	// a = roughness^2（アルファ）
+	float a2 = a * a;
+	float NdotH = saturate(dot(N, H));
+	float NdotH2 = NdotH * NdotH;
+
+	float denom = (NdotH2 * (a2 - 1.0) + 1.0);
+	denom = PI * denom * denom;
+	return a2 / max(denom, 1e-4);
+}
+
+float GeometrySchlickGGX(float NdotV, float k)
+{
+	return NdotV / max(NdotV * (1.0 - k) + k, 1e-4);
+}
+
+float GeometrySmith(float3 N, float3 V, float3 L, float roughness)
+{
+	// k は直接光向けの近似
+	float r = roughness + 1.0;
+	float k = (r * r) / 8.0; // Schlick-GGX
+
+	float NdotV = saturate(dot(N, V));
+	float NdotL = saturate(dot(N, L));
+	float ggx1 = GeometrySchlickGGX(NdotV, k);
+	float ggx2 = GeometrySchlickGGX(NdotL, k);
+	return ggx1 * ggx2;
+}
+
+float3 FresnelSchlick(float cosTheta, float3 F0)
+{
+	return F0 + (1.0 - F0) * pow(1.0 - cosTheta, 5.0);
+}
+
+// 既存：BlinnPhongは使用しないが残しておいても可
 float BlinnPhong(float3 lightDir, float3 vCam, float3 normal, float specPower)
 {
 	float3 H = normalize(-lightDir + vCam);
@@ -41,7 +82,8 @@ float4 main(VSOutput In) : SV_Target0
 	//------------------------------------------
 	// 材質色
 	//------------------------------------------
-	float4 baseColor = g_baseTex.Sample(g_ss, In.UV) * g_BaseColor * In.Color;
+	float4 baseSample = g_baseTex.Sample(g_ss, In.UV);
+	float4 baseColor = baseSample * g_BaseColor * In.Color;
 	
 	// Alphaテスト
 	if( baseColor.a < 0.05f )
@@ -76,26 +118,21 @@ float4 main(VSOutput In) : SV_Target0
 	// 法線正規化
 	wN = normalize(wN);
 
+	// マテリアル（Metal-Rough）
 	float4 mr = g_metalRoughTex.Sample(g_ss, In.UV);
-	// 金属性
-	float metallic = mr.b * g_Metallic;
-	// 粗さ
-	float roughness = mr.g * g_Roughness;
-	// ラフネスを逆転させ「滑らか」さにする
-	float smoothness = 1.0 - roughness; 
-	float specPower = pow(2, 11 * smoothness); // 1～2048
-	
+	float metallic  = saturate(mr.b * g_Metallic);
+	float roughness = saturate(mr.g * g_Roughness);
+	roughness = max(roughness, 0.04);   // 破綻防止の下限
+	float alpha = roughness * roughness;
+
+	float3 albedo = saturate(baseColor.rgb);
+	float3 F0 = lerp(float3(0.04, 0.04, 0.04), albedo, metallic);
+
 	//------------------------------------------
 	// ライティング
 	//------------------------------------------
-	// 最終的な色
 	float3 outColor = 0;
 	
-		// 材質の拡散色　非金属ほど材質の色になり、金属ほど拡散色は無くなる
-	const float3 baseDiffuse = lerp( baseColor.rgb, float3( 0, 0, 0 ), metallic );
-		// 材質の反射色　非金属ほど光の色をそのまま反射し、金属ほど材質の色が乗る
-	const float3 baseSpecular = lerp( 0.04, baseColor.rgb, metallic );
-
 	//-------------------------------
 	// シャドウマッピング(影判定)
 	//-------------------------------
@@ -134,49 +171,49 @@ float4 main(VSOutput In) : SV_Target0
 	}
 		
 	//-------------------------
-	// 平行光
+	// 平行光（GGX）
 	//-------------------------
-	// Diffuse(拡散光)
 	{
-		// 光の方向と法線の方向との角度さが光の強さになる
-		float lightDiffuse = dot( -g_DL_Dir, wN );
-		lightDiffuse = saturate( lightDiffuse ); // マイナス値は0にする　0(暗)～1(明)になる
+		float3 N = wN;
+		float3 V = vCam;
+		float3 L = normalize(-g_DL_Dir); // ライト→ピクセル方向の逆（ピクセルからライト方向）
+		float3 H = normalize(V + L);
 
-		// 正規化Lambert
-		lightDiffuse /= 3.1415926535;
+		float NdotL = saturate(dot(N, L));
+		float NdotV = saturate(dot(N, V));
 
-		// 光の色 * 材質の拡散色 * 透明率
-		outColor += (g_DL_Color * lightDiffuse) * baseDiffuse * baseColor.a * shadow;
-	}
+		if (NdotL > 0 && NdotV > 0)
+		{
+			float  D  = DistributionGGX(N, H, alpha);
+			float  G  = GeometrySmith(N, V, L, roughness);
+			float3 F  = FresnelSchlick(saturate(dot(H, V)), F0);
 
-	// Specular(反射色)
-	{
-		// 反射した光の強さを求める
-		// Blinn-Phong NDF
-		float spec = BlinnPhong( g_DL_Dir, vCam, wN, specPower );
+			float3 kS = F;
+			float3 kD = (1.0 - kS) * (1.0 - metallic);
 
-		// 光の色 * 反射光の強さ * 材質の反射色 * 透明率 * 適当な調整値
-		outColor += (g_DL_Color * spec) * baseSpecular * baseColor.a * 0.5 * shadow;
+			float3 diffuse  = kD * albedo / PI;
+			float3 specular = (D * G * F) / max(4.0 * NdotV * NdotL, 1e-4);
+
+			float3 direct = (diffuse + specular) * g_DL_Color * NdotL;
+			outColor += direct * shadow * baseColor.a;
+		}
 	}
 
 	// 全体の明度：環境光に1が設定されている場合は影響なし
-	// 環境光の不透明度を下げる事により、明度ライトの周り以外は描画されなくなる
 	float totalBrightness = g_AmbientLight.a;
 
 	//-------------------------
-	// 点光
+	// 点光（GGX）
 	//-------------------------
 	for( int i = 0; i < g_PointLightNum.x; i++ )
 	{
 		// ピクセルから点光への方向
-		float3 dir = g_PointLights[ i ].Pos - In.wPos;
+		float3 L = g_PointLights[ i ].Pos - In.wPos;
 		
 		// 距離を算出
-		float dist = length( dir );
-		
-		// 正規化
-		dir /= dist;
-		
+		float dist = length( L );
+		L /= max(dist, 1e-4);
+
 		// 点光の判定以内
 		if( dist < g_PointLights[ i ].Radius )
 		{
@@ -188,37 +225,33 @@ float4 main(VSOutput In) : SV_Target0
 			
 			// 逆２乗の法則
 			atte *= atte;
-			
-			// Diffuse(拡散光)
+
+			float3 N = wN;
+			float3 V = vCam;
+			float3 H = normalize(V + L);
+			float  NdotL = saturate(dot(N, L));
+			float  NdotV = saturate(dot(N, V));
+
+			if (NdotL > 0 && NdotV > 0)
 			{
-				// 光の方向と法線の方向との角度さが光の強さになる
-				float lightDiffuse = dot( dir, wN );
-				lightDiffuse = saturate( lightDiffuse ); // マイナス値は0にする　0(暗)～1(明)になる
+				float  D  = DistributionGGX(N, H, alpha);
+				float  G  = GeometrySmith(N, V, L, roughness);
+				float3 F  = FresnelSchlick(saturate(dot(H, V)), F0);
 
-				lightDiffuse *= atte; // 減衰
+				float3 kS = F;
+				float3 kD = (1.0 - kS) * (1.0 - metallic);
 
-				// 正規化Lambert
-				lightDiffuse /= 3.1415926535;
+				float3 diffuse  = kD * albedo / PI;
+				float3 specular = (D * G * F) / max(4.0 * NdotV * NdotL, 1e-4);
 
-				// 光の色 * 材質の拡散色 * 透明率
-				outColor += (g_PointLights[i].Color * lightDiffuse) * baseDiffuse * baseColor.a;
-			}
-
-			// Specular(反射色)
-			{
-				// 反射した光の強さを求める
-				// Blinn-Phong NDF
-				float spec = BlinnPhong( -dir, vCam, wN, specPower );
-
-				spec *= atte; // 減衰
-				
-				// 光の色 * 反射光の強さ * 材質の反射色 * 透明率 * 適当な調整値
-				outColor += (g_PointLights[i].Color * spec) * baseSpecular * baseColor.a * 0.5;
+				float3 direct = (diffuse + specular) * g_PointLights[i].Color * NdotL;
+				outColor += direct * atte * baseColor.a;
 			}
 		}
 	}
 
-	outColor += g_AmbientLight.rgb * baseColor.rgb * baseColor.a;
+	// 金属は拡散環境光が弱いので (1 - metallic) を適用して“白っぽさ”を軽減
+	outColor += g_AmbientLight.rgb * baseColor.rgb * baseColor.a * (1.0 - metallic);
 	
 	// 自己発光色の適応
 	if (g_OnlyEmissie)
@@ -272,8 +305,9 @@ float4 main(VSOutput In) : SV_Target0
 		}
 	}
 	
-	totalBrightness = saturate( totalBrightness );
-	outColor *= totalBrightness;
+	totalBrightness = saturate(totalBrightness);
+	// 過度な減衰を避ける（50%だけ反映）
+	outColor *= lerp(1.0, totalBrightness, 0.5);
 	
 	//------------------------------------------
 	// 出力

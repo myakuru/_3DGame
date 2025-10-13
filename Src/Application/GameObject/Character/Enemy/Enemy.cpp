@@ -7,6 +7,8 @@
 #include"../../Weapon/EnemySword/EnemySword.h"
 #include"../../Weapon/EnemyShield/EnemyShield.h"
 #include"../../Collition/Collition.h"
+#include"../../../main.h"
+#include"../../../../Framework/Json/Json.h"
 
 const uint32_t Enemy::TypeID = KdGameObject::GenerateTypeID();
 
@@ -27,6 +29,7 @@ void Enemy::Init()
 	StateInit();
 
 	m_isAtkPlayer = false;
+	m_dissever = 0.0f;
 }
 
 void Enemy::Update()
@@ -74,12 +77,12 @@ void Enemy::Update()
 	{
 		if (m_dissever < 1.0f)
 		{
-			m_dissever += 5.0f * deltaTime;
+			m_dissever += 2.0f * deltaTime;
 		}
 		else
 		{
-			m_isExpired = true;	// 破棄フラグを立てる
-			SceneManager::Instance().m_gameClear = true;
+			m_dissever = 1.0f;
+			m_isExpired = true;
 		}
 	}
 
@@ -108,8 +111,8 @@ void Enemy::Update()
 void Enemy::DrawLit()
 {
 	//ディゾルブ処理
-	KdShaderManager::Instance().m_StandardShader.SetDissolve(m_dissever);
-	SelectDraw3dModel::DrawLit();
+	KdShaderManager::Instance().m_StandardShader.SetDissolve(m_dissever,&m_dissolvePower, &m_dissolveColor);
+	KdShaderManager::Instance().m_StandardShader.DrawModel(*m_modelWork, m_mWorld, m_color);
 }
 
 void Enemy::UpdateAttack()
@@ -233,6 +236,10 @@ void Enemy::ImGuiInspector()
 
 	ImGui::Text(U8("現在の状態"));
 	ImGui::DragFloat(U8("移動速度"), &m_moveSpeed, 0.1f);
+
+	// ディゾルブ関係
+	ImGui::ColorEdit3(U8("ディゾルブカラー"), &m_dissolveColor.x);
+	ImGui::DragFloat(U8("ディゾルブ進行度"), &m_dissolvePower, 0.01f, 0.0f, 1.0f);
 }
 
 void Enemy::JsonInput(const nlohmann::json& _json)
@@ -242,6 +249,8 @@ void Enemy::JsonInput(const nlohmann::json& _json)
 	if (_json.contains("fixedFps")) m_fixedFrameRate = _json["fixedFps"].get<float>();
 	if (_json.contains("moveSpeed")) m_moveSpeed = _json["moveSpeed"].get<float>();
 	if (_json.contains("rotationspeed")) m_rotateSpeed = _json["rotationspeed"].get<float>();
+	if (_json.contains("dissolveColor")) m_dissolveColor = JSON_MANAGER.JsonToVector(_json["dissolveColor"]);
+	if (_json.contains("dissolvePower")) m_dissolvePower = _json["dissolvePower"].get<float>();
 }
 
 void Enemy::JsonSave(nlohmann::json& _json) const
@@ -251,6 +260,8 @@ void Enemy::JsonSave(nlohmann::json& _json) const
 	_json["fixedFps"] = m_fixedFrameRate;
 	_json["moveSpeed"] = m_moveSpeed;
 	_json["rotationspeed"] = m_rotateSpeed;
+	_json["dissolveColor"] = JSON_MANAGER.VectorToJson(m_dissolveColor);
+	_json["dissolvePower"] = m_dissolvePower;
 }
 
 void Enemy::UpdateQuaternion(Math::Vector3& _moveVector)

@@ -16,6 +16,7 @@
 #include"../../../../Camera/PlayerCamera/PlayerCamera.h"
 #include"../../../Enemy/Enemy.h"
 #include"../PlayerState_SpecialAttack/PlayerState_SpecialAttack.h"
+#include"../PlayerState_FullCharge/PlayerState_FullCharge.h"
 
 void PlayerState_Idle::StateStart()
 {
@@ -26,6 +27,7 @@ void PlayerState_Idle::StateStart()
 	{
 		camera->SetTargetLookAt({ 0.0f,1.0f,-2.5f });
 	}
+	m_isKeyPressing = false;
 }
 
 void PlayerState_Idle::StateUpdate()
@@ -45,41 +47,11 @@ void PlayerState_Idle::StateUpdate()
 		return;
 	}
 
-	// 左ボタンの押下時間取得
-	float lButtonDuration = KeyboardManager::GetInstance().GetKeyPressDuration(VK_LBUTTON);
-
-	// 押し始めたらフラグON
-	if (KeyboardManager::GetInstance().IsKeyJustPressed(VK_LBUTTON))
-	{
-		m_lButtonPressing = true;
-	}
-
-	// 押し続けている間に0.3秒超えたらチャージ攻撃
-	if (m_lButtonPressing && lButtonDuration >= 0.2f)
-	{
-		m_lButtonPressing = false;
-		auto chargeAttackState = std::make_shared<PlayerState_ChargeAttack>();
-		m_player->ChangeState(chargeAttackState);
-		return;
-	}
-
 	if (KeyboardManager::GetInstance().IsKeyJustPressed('Q'))
 	{
 		auto specialAttackState = std::make_shared<PlayerState_SpecialAttack>();
 		m_player->ChangeState(specialAttackState);
 		return;
-	}
-
-	// 離した瞬間に0.3秒未満なら通常攻撃
-	if (m_lButtonPressing && KeyboardManager::GetInstance().IsKeyJustReleased(VK_LBUTTON))
-	{
-		m_lButtonPressing = false;
-		if (lButtonDuration < 0.3f)
-		{
-			auto attackState = std::make_shared<PlayerState_Attack>();
-			m_player->ChangeState(attackState);
-			return;
-		}
 	}
 
 	// 前方回避
@@ -98,6 +70,50 @@ void PlayerState_Idle::StateUpdate()
 		return;
 	}
 
+	{
+		// =========================
+		// 左ボタン押下 長押し / 短押し判定
+		// =========================
+
+		const float kShortPressMin = 0.1f; // 短押し有効開始
+		const float kLongPressThreshold = 0.5f; // 長押し閾値(これ以上で長押しアクション)
+
+		float lDuration = KeyboardManager::GetInstance().GetKeyPressDuration(VK_LBUTTON);
+
+		// 押された瞬間
+		if (KeyboardManager::GetInstance().IsKeyJustPressed(VK_LBUTTON))
+		{
+			m_isKeyPressing = true; // 判定開始
+		}
+
+		// Chargeカウントがあり、長押し状態へ移行
+		if (m_player->GetPlayerStatus().chargeCount > 0 && m_isKeyPressing && lDuration >= kLongPressThreshold)
+		{
+			m_isKeyPressing = false;
+
+			m_player->GetPlayerStatus().chargeCount--;
+
+			auto avoidFast = std::make_shared<PlayerState_FullCharge>();
+			m_player->ChangeState(avoidFast);
+			return;
+		}
+
+		// 短押し判定
+		if (m_isKeyPressing && KeyboardManager::GetInstance().IsKeyJustReleased(VK_LBUTTON))
+		{
+			if (lDuration >= kShortPressMin && lDuration < kLongPressThreshold)
+			{
+				auto backAvoid = std::make_shared<PlayerState_Attack>();
+				m_player->ChangeState(backAvoid);
+				m_isKeyPressing = false;
+				return;
+			}
+
+			// 0.1秒未満なら何もしない
+			m_isKeyPressing = false;
+		}
+	}
+
 	// 移動量リセット
 	m_player->SetIsMoving(Math::Vector3::Zero);
 
@@ -105,4 +121,6 @@ void PlayerState_Idle::StateUpdate()
 
 void PlayerState_Idle::StateEnd()
 {
+	PlayerStateBase::StateEnd();
 }
+

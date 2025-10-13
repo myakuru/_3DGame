@@ -66,6 +66,10 @@
 #include"../GameObject/Field/Field.h"
 #include"../GameObject/Effect/EffekseerEffect/SpecialAttack1/SpecialAttack1.h"
 #include"../GameObject/Effect/EffekseerEffect/SpeedAttackEffect/SpeedAttackEffect.h"
+#include"../GameObject/HUD/EnemyHp/EnemyHp.h"
+#include"../GameObject/HUD/PlayerChargeUI/NotCharge/NotChargeUI.h"
+#include"../GameObject/HUD/PlayerChargeUI/NotCharge1/NotCharge1.h"
+#include"../GameObject/HUD/PlayerChargeUI/NotCharge2/NotCharge2UI.h"
 
 void SceneManager::Init()
 {
@@ -99,6 +103,10 @@ void SceneManager::Register() const
 	RegisterObject::GetInstance().Register<BlackBanner>();
 	RegisterObject::GetInstance().Register<ResultScore>();
 	RegisterObject::GetInstance().Register<Winner>();
+	RegisterObject::GetInstance().Register<EnemyHp>();
+	RegisterObject::GetInstance().Register<NotChargeUI>();
+	RegisterObject::GetInstance().Register<NotCharge1UI>();
+	RegisterObject::GetInstance().Register<NotCharge2UI>();
 
 	// Map系
 	RegisterObject::GetInstance().Register<Map>();

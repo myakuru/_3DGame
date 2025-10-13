@@ -1,8 +1,9 @@
 ﻿#include"PlayerState_ChargeAttack.h"
 #include"../../../../../main.h"
 
+#include"../PlayerState_ChargeAttack1/PlayerState_ChargeAttack1.h"
 #include"../PlayerState_ChargeAttack2/PlayerState_ChaegeAttack2.h"
-#include"../PlayerState_FullCharge/PlayerState_FullCharge.h"
+#include"../PlayerState_ChargeAttackMax/PlayerState_ChargeAttackMax.h"
 #include"../../../../Weapon/Katana/Katana.h"
 #include"../../../../../Scene/SceneManager.h"
 #include"../../../../Camera/PlayerCamera/PlayerCamera.h"
@@ -40,24 +41,13 @@ void PlayerState_ChargeAttack::StateStart()
 	{
 		effect->SetPlayEffect(true);
 	}
+
+	// アニメーション速度を変更
+	m_player->SetAnimeSpeed(80.0f);
 }
 
 void PlayerState_ChargeAttack::StateUpdate()
 {
-
-	// アニメーション速度を変更
-	m_player->SetAnimeSpeed(80.0f);
-
-	if (m_player->GetAnimator()->IsAnimationEnd())
-	{
-		//auto state = std::make_shared<PlayerState_ChaegeAttack2>();
-		//m_player->ChangeState(state);
-
-		auto state = std::make_shared<PlayerState_FullCharge>();
-		m_player->ChangeState(state);
-		return;
-	}
-
 	float deltaTime = Application::Instance().GetDeltaTime();
 
 	m_time += deltaTime;
@@ -91,6 +81,49 @@ void PlayerState_ChargeAttack::StateUpdate()
 		
 	// 移動を止める
 	m_player->SetIsMoving(Math::Vector3::Zero);
+
+	if (!m_player->GetAnimator()->IsAnimationEnd()) return;
+
+	{
+		// =========================
+		// 左ボタン押下 長押し / 短押し判定
+		// =========================
+		const float kShortPressThreshold = 0.5f; // 短押し閾値
+		const float kLongPressThreshold = 1.0f; // 長押し閾値
+
+		const float duration = KeyboardManager::GetInstance().GetKeyPressDuration(VK_LBUTTON);
+
+		// ステート突入前から既に押されていたケースも拾う
+		if (!m_isKeyPressing && duration > 0.0f)
+		{
+			m_isKeyPressing = true;
+		}
+
+		// Chargeカウントが2つ以上溜まっている。
+		if (m_player->GetPlayerStatus().chargeCount > 1 && duration >= kLongPressThreshold)
+		{
+			m_isKeyPressing = false;
+			// 先に消費してからステート遷移
+			m_player->GetPlayerStatus().chargeCount--;
+			auto next = std::make_shared<PlayerState_ChargeAttack1>();
+			m_player->ChangeState(next);
+			return;
+		}
+
+		// Chargeカウントが１つ溜まった状態で攻撃した
+		if (duration >= kShortPressThreshold || duration <= 0.0f)
+		{
+			m_isKeyPressing = false; // 判定終了
+
+			if (m_player->GetPlayerStatus().chargeCount >= 0)
+			{
+				auto next = std::make_shared<PlayerState_ChaegeAttack2>();
+				m_player->ChangeState(next);
+				return;
+			}
+
+		}
+	}
 
 }
 

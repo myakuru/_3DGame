@@ -18,7 +18,7 @@ void PlayerState_ChargeAttackMax::StateStart()
 	m_player->SetAnimeSpeed(100.0f);
 
 	// 残像の設定
-	m_player->AddAfterImage(true, 5, 2, Math::Color(0.0f, 1.0f, 1.0f, 0.2f));
+	m_player->AddAfterImage(true, 5, 1, Math::Color(0.0f, 1.0f, 1.0f, 1.0f));
 }
 
 void PlayerState_ChargeAttackMax::StateUpdate()

@@ -34,7 +34,7 @@ void PlayerState_Attack2::StateStart()
 
 	SceneManager::Instance().GetObjectWeakPtr(m_slashEffect);
 
-	m_player->SetAnimeSpeed(80.0f);
+	m_player->SetAnimeSpeed(70.0f);
 
 }
 
@@ -61,7 +61,7 @@ void PlayerState_Attack2::StateUpdate()
 
 	m_time += deltaTime;
 
-	m_player->UpdateAttackCollision(5.0f, 5.0f, 1, m_maxAnimeTime, { 0.0f, 0.5f }, 0.4f);
+	m_player->UpdateAttackCollision(5.0f, 5.0f, 1, m_maxAnimeTime, { 0.0f, 0.3f }, 0.4f);
 	
 
 	Math::Vector3 moveDir = m_player->GetMovement();
@@ -130,7 +130,7 @@ void PlayerState_Attack2::StateUpdate()
 		if (m_LButtonkeyInput)
 		{
 			// 60%以降で受付
-			if (m_animeTime < 0.6f) return;
+			if (m_animeTime < 0.5f) return;
 			auto next = std::make_shared<PlayerState_Attack3>();
 			m_player->ChangeState(next);
 			return;

@@ -14,6 +14,7 @@ public:
 
 private:
 
+	void DrawLit() override;
 	void DrawGrayScale() override;
 
 	int m_RasterizerState = 0;

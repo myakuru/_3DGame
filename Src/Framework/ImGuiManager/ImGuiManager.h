@@ -34,6 +34,8 @@ public:
 
 	Math::Vector2 GetWindowSize() const { return m_windowSize; }
 
+	bool GetShowEffect() const { return m_showEffect; }
+
 private:
 
 	std::weak_ptr<TPSCamera> m_tpsCamera;
@@ -62,6 +64,8 @@ private:
 	Math::Vector2 m_windowSize = Math::Vector2(1920, 1080);
 
 	bool m_gameSceneInMouse = false;
+
+	bool m_showEffect = true;
 
 	std::string m_modelPath = "Asset/";
 

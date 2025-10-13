@@ -2,6 +2,7 @@
 
 #include"../../../../../main.h"
 #include"../PlayerState_ChargeAttackMax/PlayerState_ChargeAttackMax.h"
+#include"../PlayerState_ChargeAttack/PlayerState_ChargeAttack.h"
 #include"../../../../Camera/PlayerCamera/PlayerCamera.h"
 
 void PlayerState_FullCharge::StateStart()
@@ -21,12 +22,12 @@ void PlayerState_FullCharge::StateStart()
 void PlayerState_FullCharge::StateUpdate()
 {
 	// アニメーション速度を変更
-	m_player->SetAnimeSpeed(80.0f);
+	m_player->SetAnimeSpeed(60.0f);
 	
 
 	if (m_player->GetAnimator()->IsAnimationEnd())
 	{
-		auto state = std::make_shared<PlayerState_ChargeAttackMax>();
+		auto state = std::make_shared<PlayerState_ChargeAttack>();
 		m_player->ChangeState(state);
 		return;
 	}

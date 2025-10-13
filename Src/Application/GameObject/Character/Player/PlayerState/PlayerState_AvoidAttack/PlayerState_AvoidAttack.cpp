@@ -17,6 +17,8 @@ void PlayerState_AvoidAttack::StateStart()
 	m_player->ResetAttackCollision();
 
 	SceneManager::Instance().GetObjectWeakPtr(m_effect);
+
+	m_player->AddAfterImage(true, 5, 1.0f, Math::Color(0.0f, 1.0f, 1.0f, 1.0f));
 }
 
 void PlayerState_AvoidAttack::StateUpdate()
@@ -86,4 +88,6 @@ void PlayerState_AvoidAttack::StateEnd()
 		effect->SetPlayEffect(true);
 		effect->StopEffect();
 	}
+
+	m_player->AddAfterImage();
 }

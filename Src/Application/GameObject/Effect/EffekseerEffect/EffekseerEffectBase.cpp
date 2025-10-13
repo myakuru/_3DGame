@@ -2,6 +2,7 @@
 #include"../../Character/Player/Player.h"
 #include"../../../Scene/SceneManager.h"
 #include"../../../main.h"
+#include"../../../../Framework/ImGuiManager/ImGuiManager.h"
 
 void EffekseerEffectBase::Init()
 {
@@ -91,6 +92,7 @@ void EffekseerEffectBase::DrawEffect()
 
 void EffekseerEffectBase::DrawToon()
 {
+	if (!IMGUI_MANAGER.GetShowEffect()) return;
 	KdEffekseerManager::GetInstance().Draw();
 }
 

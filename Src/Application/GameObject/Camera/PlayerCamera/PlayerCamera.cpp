@@ -5,6 +5,7 @@
 #include"../../Character/Player/Player.h"
 #include"../../../../Framework/Json/Json.h"
 #include"../../Utility/Time.h"
+#include"PlayerCameraState\PlayerCameraState.h"
 
 
 const uint32_t PlayerCamera::TypeID = KdGameObject::GenerateTypeID();
@@ -31,6 +32,8 @@ void PlayerCamera::Init()
 	m_fovShakeTarget = m_fovShake;
 
 	m_spCamera->SetProjectionMatrix(m_fovShakeTarget.x);
+
+	StateInit();
 }
 
 void PlayerCamera::PostUpdate()
@@ -57,6 +60,8 @@ void PlayerCamera::PostUpdate()
 
 	// 回転更新
 	UpdateRotateByMouse();
+
+	m_stateManager.Update();
 
 	m_targetRotation = GetRotationQuaternion();
 	m_rotation = Math::Quaternion::Slerp(m_prevRotation, m_targetRotation, m_rotationSmooth * deltaTime);
@@ -138,16 +143,8 @@ void PlayerCamera::UpdateWinnerCamera()
 	{
 	case ToDeg60:
 	{
-		// -60度の位置へLerp
 		m_degree.y = 60.0f;
-		m_mRotation = Math::Matrix::CreateRotationY(DirectX::XMConvertToRadians(m_degree.y));
-		Math::Vector3 targetPos = playerPos + camOffset;
-		m_cameraPos = Math::Vector3::Lerp(m_cameraPos, targetPos, 2.0f * deltaTime); // 0.1fで滑らかに
-		if ((m_cameraPos - targetPos).Length() < 0.01f)
-		{
-			step = ToDeg180;
-			timer = 0.0f;
-		}
+		m_followRate = { 0.0f, 1.0f, -2.5f };
 		break;
 	}
 	case ToDeg180:
@@ -165,7 +162,6 @@ void PlayerCamera::UpdateWinnerCamera()
 		break;
 	case End:
 		// カメラの向いている方向に向かって移動
-	{
 		KdShaderManager::Instance().m_postProcessShader.SetEnableGray(true);
 		Math::Vector3 targetOffset = Math::Vector3::Up;
 		camOffset = Math::Vector3::Lerp(camOffset, targetOffset, 5.0f * deltaTime);
@@ -179,12 +175,6 @@ void PlayerCamera::UpdateWinnerCamera()
 		}
 		break;
 	}
-	}
-
-	// カメラのワールド行列を更新
-	m_mWorld = Math::Matrix::CreateTranslation(m_cameraPos - playerPos) * m_mRotation;
-	m_mWorld.Translation(playerPos + m_mWorld.Translation());
-	m_spCamera->SetCameraMatrix(m_mWorld);
 }
 
 void PlayerCamera::UpdateIntroCamera()
@@ -399,6 +389,17 @@ void PlayerCamera::UpdateCameraRayCast(const Math::Vector3& _anchor)
 
 	// 既存 m_cameraPos へ差分反映（他処理との整合性維持）
 	m_cameraPos += (newCamPos - oldPos);
+}
+
+void PlayerCamera::ChangeState(std::shared_ptr<PlayerCameraState> _state)
+{
+	_state->SetPlayerCamera(this);
+	m_stateManager.ChangeState(_state);
+}
+
+void PlayerCamera::StateInit()
+{
+	//m_stateManager.ChangeState(std::make_shared<PlayerCameraState>());
 }
 
 //void PlayerCamera::UpdateCameraRayCast()

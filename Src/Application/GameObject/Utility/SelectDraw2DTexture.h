@@ -16,10 +16,10 @@ public:
 		const float sy = vp.height / kRefH;
 
 		// 等方（Fit）にしたい場合は以下を使う（必要なら切替）
-		 const float s  = std::min(sx, sy);
-		 Math::Matrix uiScale = Math::Matrix::CreateScale(s, s, 1.0f);
+		//const float s  = std::min(sx, sy);
+		// Math::Matrix uiScale = Math::Matrix::CreateScale(s, s, 1.0f);
 
-		//Math::Matrix uiScale = Math::Matrix::CreateScale(sx, sy, 1.0f);
+		Math::Matrix uiScale = Math::Matrix::CreateScale(sx, sy, 1.0f);
 
 		// UIスケールをワールド行列に後掛け（平行移動も含め全体をスケール）
 		Math::Matrix m = m_mWorld * uiScale;

@@ -12,6 +12,8 @@ private:
 	void StateUpdate() override;
 	void StateEnd() override;
 
+	void ChangeChargeAttack();
+
 	bool m_lButtonPressing = false;
 
 };

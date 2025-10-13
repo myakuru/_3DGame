@@ -92,6 +92,9 @@ protected:
 
 	DirectX::BoundingSphere sphere;
 
+	Math::Vector3 m_dissolveColor = Math::Vector3::Zero; // 溶解エフェクトの色
+	float m_dissolvePower = 1.0f; // 溶解エフェクトの進行度合い
+
 
 	// レイ関係
 	Math::Vector3 m_prevPosition{};          // 前フレームのワールド位置

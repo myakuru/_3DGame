@@ -38,7 +38,7 @@
     "DashTime": 0.0,
     "DashTime1": 0.0,
     "DashTime2": 0.0,
-    "GravitySpeed": -0.05000000074505806,
+    "GravitySpeed": 0.0,
     "Name": "class Player",
     "cameraShake": {
       "x": 0.0,
@@ -47,9 +47,9 @@
     "cameraShakeTime": 0.0,
     "color": {
       "w": 1.0,
-      "x": 0.8352941274642944,
-      "y": 0.8352941274642944,
-      "z": 0.8352941274642944
+      "x": 0.6666666269302368,
+      "y": 0.6666666269302368,
+      "z": 0.6666666269302368
     },
     "deg": {
       "x": 0.0,
@@ -69,9 +69,9 @@
     "moveSpeed": 0.14000000059604645,
     "path": "Asset\\Models\\Player\\Perula\\Player\\Perula.gltf",
     "pos": {
-      "x": 30.94853401184082,
+      "x": 29.866559982299805,
       "y": 9.899999618530273,
-      "z": -74.34098815917969
+      "z": -66.2033462524414
     },
     "rotateSpeed": 30.0,
     "scale": {
@@ -85,9 +85,9 @@
     "Name": "class Katana",
     "color": {
       "w": 1.0,
-      "x": 1.0,
-      "y": 1.0,
-      "z": 1.0
+      "x": 0.3284313678741455,
+      "y": 0.32199153304100037,
+      "z": 0.32199153304100037
     },
     "deg": {
       "x": 0.0,
@@ -157,8 +157,8 @@
       "z": 1.0
     },
     "deg": {
-      "x": 11.249966621398926,
-      "y": 311.0636901855469,
+      "x": 15.750001907348633,
+      "y": 8.812020301818848,
       "z": 0.0
     },
     "fov": 70.0,
@@ -178,8 +178,8 @@
     "smooth": 8.0,
     "targetLookAt": {
       "x": 0.0,
-      "y": 1.0000001192092896,
-      "z": -2.5000007152557373
+      "y": 1.0,
+      "z": -2.500000238418579
     },
     "type": 32
   },
@@ -219,7 +219,7 @@
       "z": 0.41960784792900085
     },
     "deg": {
-      "x": -0.02030770853161812,
+      "x": -0.09399999678134918,
       "y": -0.03200000151991844,
       "z": 0.0
     },
@@ -241,9 +241,9 @@
     "Name": "class Scoring",
     "color": {
       "w": 1.0,
-      "x": 1.0,
-      "y": 0.4300000071525574,
-      "z": 0.03999999910593033
+      "x": 0.1899999976158142,
+      "y": 0.6200000047683716,
+      "z": 1.0
     },
     "deg": {
       "x": 0.0,
@@ -723,21 +723,27 @@
     "Name": "class Enemy",
     "color": {
       "w": 1.0,
-      "x": 0.7352941036224365,
-      "y": 0.7352941036224365,
-      "z": 0.7352941036224365
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
     },
     "deg": {
       "x": 0.0,
       "y": 0.0,
       "z": 0.0
     },
+    "dissolveColor": {
+      "x": 0.9313725233078003,
+      "y": 0.05935215204954147,
+      "z": 0.05935215204954147
+    },
+    "dissolvePower": 1.0,
     "drawFlags": {
       "DrawBright": false,
       "DrawGradation": false,
       "DrawGrayScale": false,
-      "DrawLit": false,
-      "DrawToon": true,
+      "DrawLit": true,
+      "DrawToon": false,
       "DrawUnLit": false,
       "GenerateDepthMapFromLight": false
     },
@@ -745,9 +751,9 @@
     "moveSpeed": 0.05000000074505806,
     "path": "Asset\\Models\\Enemy\\Aetherius\\Aetherius.gltf",
     "pos": {
-      "x": 10.067169189453125,
+      "x": 13.7617769241333,
       "y": 9.699999809265137,
-      "z": -71.2922592163086
+      "z": -33.20000076293945
     },
     "rotationspeed": 10.0,
     "scale": {
@@ -1331,7 +1337,7 @@
     },
     "scale": {
       "x": 5.0,
-      "y": 1.0,
+      "y": 0.10000000149011612,
       "z": 1.0
     },
     "type": 34
@@ -1547,46 +1553,7 @@
     "type": 34
   },
   {
-    "GravitySpeed": 0.0,
-    "Name": "class Enemy",
-    "color": {
-      "w": 1.0,
-      "x": 0.7058823108673096,
-      "y": 0.7058823108673096,
-      "z": 0.7058823108673096
-    },
-    "deg": {
-      "x": 0.0,
-      "y": 0.0,
-      "z": 0.0
-    },
-    "drawFlags": {
-      "DrawBright": false,
-      "DrawGradation": false,
-      "DrawGrayScale": false,
-      "DrawLit": false,
-      "DrawToon": true,
-      "DrawUnLit": false,
-      "GenerateDepthMapFromLight": false
-    },
-    "fixedFps": 60.0,
-    "moveSpeed": 0.05000000074505806,
-    "path": "Asset\\Models\\Enemy\\Aetherius\\Aetherius.gltf",
-    "pos": {
-      "x": 18.43287467956543,
-      "y": 10.0,
-      "z": -41.169437408447266
-    },
-    "rotationspeed": 10.0,
-    "scale": {
-      "x": 1.0,
-      "y": 1.0,
-      "z": 1.0
-    },
-    "type": 32
-  },
-  {
-    "EffectSpeed": 15.0,
+    "EffectSpeed": 10.0,
     "Name": "class SpecialAttack1",
     "color": {
       "w": 1.0,
@@ -1600,16 +1567,16 @@
       "z": 0.0
     },
     "distance": 7.0,
-    "path": "Asset\\Data\\Effect\\Spellblade\\SlashAll.efkefc",
+    "path": "Asset\\Data\\Effect\\Spellblade\\Last.efkefc",
     "pos": {
       "x": 0.0,
-      "y": 1.5,
+      "y": 3.0,
       "z": 0.0
     },
     "scale": {
-      "x": 1.5,
-      "y": 1.5,
-      "z": 1.5
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
     },
     "type": 32
   },
@@ -1642,6 +1609,159 @@
     "type": 32
   },
   {
+    "GravitySpeed": 0.0,
+    "Name": "class Enemy",
+    "color": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "deg": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "dissolveColor": {
+      "x": 1.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "dissolvePower": 1.0,
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
+      "DrawLit": true,
+      "DrawToon": false,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "fixedFps": 60.0,
+    "moveSpeed": 0.05000000074505806,
+    "path": "Asset\\Models\\Enemy\\Aetherius\\Aetherius.gltf",
+    "pos": {
+      "x": 29.702878952026367,
+      "y": 9.699999809265137,
+      "z": -49.88454818725586
+    },
+    "rotationspeed": 10.0,
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "type": 38
+  },
+  {
+    "Name": "class EnemyHp",
+    "color": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "deg": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "drawFlags": true,
+    "path": "Asset/Models/Sky/Sky.gltf",
+    "pos": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "scale": {
+      "x": 0.5,
+      "y": 5.0,
+      "z": 1.0
+    },
+    "type": 32
+  },
+  {
+    "Name": "class NotChargeUI",
+    "color": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "deg": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "drawFlags": true,
+    "path": "Asset\\Textures\\GameUI\\NotCharge.png",
+    "pos": {
+      "x": -780.0,
+      "y": 370.0,
+      "z": 0.0
+    },
+    "scale": {
+      "x": 0.029999999329447746,
+      "y": 0.029999999329447746,
+      "z": 1.0
+    },
+    "type": 32
+  },
+  {
+    "Name": "class NotCharge1UI",
+    "color": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "deg": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "drawFlags": true,
+    "path": "Asset\\Textures\\GameUI\\NotCharge.png",
+    "pos": {
+      "x": -740.0,
+      "y": 370.0,
+      "z": 0.0
+    },
+    "scale": {
+      "x": 0.029999999329447746,
+      "y": 0.029999999329447746,
+      "z": 1.0
+    },
+    "type": 32
+  },
+  {
+    "Name": "class NotCharge2UI",
+    "color": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "deg": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "drawFlags": false,
+    "path": "Asset/Models/Sky/Sky.gltf",
+    "pos": {
+      "x": -700.0,
+      "y": 370.0,
+      "z": 0.0
+    },
+    "scale": {
+      "x": 0.029999999329447746,
+      "y": 0.029999999329447746,
+      "z": 1.0
+    },
+    "type": 32
+  },
+  {
     "Name": "class FPSCamera",
     "color": {
       "w": 1.0,
@@ -1650,16 +1770,16 @@
       "z": 1.0
     },
     "deg": {
-      "x": 20.699880599975586,
-      "y": 237.59310913085938,
+      "x": 4.799829006195068,
+      "y": 298.1943664550781,
       "z": 0.0
     },
     "moveSpeed": 20.0,
     "path": "Asset/Models/Sky/Sky.gltf",
     "pos": {
-      "x": 51.903656005859375,
-      "y": 25.24349594116211,
-      "z": -81.29097747802734
+      "x": 32.76683044433594,
+      "y": 16.720870971679688,
+      "z": -73.39640808105469
     },
     "scale": {
       "x": 1.0,

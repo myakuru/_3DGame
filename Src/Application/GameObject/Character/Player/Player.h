@@ -10,6 +10,7 @@ struct PlayerStatus
 	int hp = 1000;		// ヒットポイント
 	int attack = 3000;	// 攻撃力
 	int hpMax = 1000;	// 最大ヒットポイント
+	int chargeCount = 0; // チャージ攻撃の回数
 };
 class Player :public CharaBase
 {

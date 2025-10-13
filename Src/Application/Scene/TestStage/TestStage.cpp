@@ -2,12 +2,17 @@
 #include"../SceneManager.h"
 #include"../../GameObject/Utility/Time.h"
 #include"../../GameObject/Character/Player/Player.h"
+#include"../../GameObject/Character/Enemy/Enemy.h"
 
 #include"../../../Framework/Json/Json.h"
 #include"../../main.h"
 
 void TestScene::Event()
 {
+
+	// 敵を探して、いなかったらゲームクリアさせる
+	SearchEnemy();
+
 	if (SceneManager::Instance().m_gameClear)
 	{
 		KdShaderManager::Instance().WorkAmbientController().SetheightFog({1,1,1}, 2.0f, 0.0f, 0.0f);
@@ -85,4 +90,27 @@ void TestScene::Init()
 	SceneManager::Instance().m_gameClear = false;	// ゲームクリアフラグを初期化
 	SceneManager::Instance().SetResultFlag(false);	// 結果フラグを初期化
 
+}
+
+void TestScene::SearchEnemy()
+{
+	// 敵を探す
+	bool enemyExists = false;
+	
+	SceneManager::Instance().GetObjectWeakPtrList(m_enemies);
+
+	for(const auto& weakEnemy : m_enemies)
+	{
+		if (const auto spEnemy = weakEnemy.lock())
+		{
+			enemyExists = true; // 敵が存在する
+			break;
+		}
+	}
+
+	// 敵がいなかったらゲームクリア
+	if (!enemyExists)
+	{
+		SceneManager::Instance().m_gameClear = true;
+	}
 }

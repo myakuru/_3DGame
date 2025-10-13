@@ -2,6 +2,7 @@
 #include"../../../main.h"
 #include"../../../Scene/SceneManager.h"
 #include"../../../../Framework/Json/Json.h"
+#include"../../../../Framework/ImGuiManager/ImGuiManager.h"
 
 // TypeIDの定義と初期化
 const uint32_t Katana::TypeID = KdGameObject::GenerateTypeID();
@@ -50,6 +51,8 @@ void Katana::Update()
 
 void Katana::UpdateTrailPolygon()
 {
+	if (!IMGUI_MANAGER.GetShowEffect()) return;
+
 	Math::Vector3 tip1 = m_swordData.m_weaponMatrix.Translation() + m_swordData.m_weaponMatrix.Backward() * m_trailKatanaPoint;
 	Math::Matrix inv = Math::Matrix::CreateRotationY(DirectX::XMConvertToRadians(-90));
 	Math::Matrix trailTrans = Math::Matrix::CreateTranslation(tip1);
@@ -95,6 +98,7 @@ void Katana::UpdateTrailPolygon()
 
 void Katana::DrawBright()
 {
+	if (!IMGUI_MANAGER.GetShowEffect()) return;
 	KdShaderManager::Instance().m_StandardShader.DrawPolygon(*m_trailPolygon, Math::Matrix::Identity, m_trailColor);
 }
 

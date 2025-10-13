@@ -68,37 +68,15 @@ void ImGuiManager::MainMenuBar()
 
 		InGuiSceneSelect();
 
-		// Windowのサイズを変更
-		if (ImGui::Begin("WindowSize"))
+		ImGui::SameLine(300);
+
+		// エフェクシアの表示切替
+		ImGui::Button(U8("Effectの表示"));
+		if (ImGui::IsItemClicked())
 		{
-			ImGui::Text(U8("ゲーム画面のウィンドウサイズを変更"));
-
-			ImGui::Separator();
-			ImGui::Text(U8("プリセット"));
-			if (ImGui::Button("1280 x 720")) { m_windowSize = Math::Vector2(1280.0f, 720.0f); }
-			ImGui::SameLine();
-			if (ImGui::Button("1920 x 1080")) { m_windowSize = Math::Vector2(1920.0f, 1080.0f); }
-			ImGui::SameLine();
-			if (ImGui::Button("2560 x 1440")) { m_windowSize = Math::Vector2(2560.0f, 1440.0f); }
-
-			ImGui::Separator();
-			// 手動入力
-			float w = m_windowSize.x;
-			float h = m_windowSize.y;
-			if (ImGui::InputFloat("Width", &w, 1.0f, 10.0f, "%.0f")) { if (w < 1.0f) w = 1.0f; }
-			if (ImGui::InputFloat("Height", &h, 1.0f, 10.0f, "%.0f")) { if (h < 1.0f) h = 1.0f; }
-			m_windowSize.x = w;
-			m_windowSize.y = h;
-
-			ImGui::Text("Current: %.0f x %.0f", m_windowSize.x, m_windowSize.y);
-
-			ImGui::Separator();
-			if (ImGui::Button(U8("適用")))
-			{
-				Application::Instance().ResizeWindow((int)m_windowSize.x, (int)m_windowSize.y);
-			}
+			m_showEffect = !m_showEffect;
 		}
-		ImGui::End();
+		ImGui::Text(m_showEffect ? "ON" : "OFF");
 
 		ImGui::SameLine(1280 / 2);
 
@@ -433,12 +411,13 @@ void ImGuiManager::ImGuiSelecetCamera()
 	
 	if (!SceneManager::Instance().m_sceneCamera)
 	{
-		if (ImGui::Button(U8("スタート", ImVec2(150, 20)))) SceneManager::Instance().m_sceneCamera = true;
+		if (ImGui::Button(U8("ゲーム終了", ImVec2(150, 20)))) SceneManager::Instance().m_sceneCamera = true;
 	}
 	else
 	{
-		if (ImGui::Button(U8("ストップ", ImVec2(150, 20)))) SceneManager::Instance().m_sceneCamera = false;
+		if (ImGui::Button(U8("ゲーム開始", ImVec2(150, 20)))) SceneManager::Instance().m_sceneCamera = false;
 	}
+
 }
 
 std::shared_ptr<KdCamera> ImGuiManager::GetActiveCamera()

@@ -69,9 +69,6 @@ void PlayerState_ChaegeAttack2::StateUpdate()
 	// 刀は鞘の中にある状態
 	UpdateUnsheathed();
 
-	// アニメーションの再生時間を取得
-	//float time = m_player->GetAnimator()->GetTime();
-
 	// 攻撃中の移動方向で回転を更新
 	if (m_player->GetMovement() != Math::Vector3::Zero)
 	{

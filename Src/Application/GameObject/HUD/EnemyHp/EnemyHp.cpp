@@ -4,72 +4,115 @@
 #include"../../../GameObject/Character/Enemy/Enemy.h"
 #include"../../Camera/PlayerCamera/PlayerCamera.h"
 
+const uint32_t EnemyHp::TypeID = KdGameObject::GenerateTypeID();
+
 void EnemyHp::Init()
 {
-	m_displayTime = 10000;
-	m_scale = Math::Vector3(0.5f, 5.0f, 1.0f);
 	m_texture = KdAssets::Instance().m_textures.GetData("Asset/Textures/EnemyUI/BlackBar.png");
-	m_timer = 0.0f; // 2秒で消える
+	m_hpBarTexture = KdAssets::Instance().m_textures.GetData("Asset/Textures/EnemyUI/HpBar.png");
 }
 
 void EnemyHp::Update()
 {
-	SceneManager::Instance().GetObjectWeakPtr(m_enemy);
+	// デフォルトは非表示
+	m_bDrawTexture = false;
+	m_screenPosList.clear();
+	m_displayRectangleList.clear();
+
 	SceneManager::Instance().GetObjectWeakPtr(m_camera);
 
-	auto camera = m_camera.lock()->GetCamera();
-	auto enemy = m_enemy.lock();
+	if (auto camera = m_camera.lock(); camera)
+	{
+		// このフレームで参照可能な敵を列挙
+		SceneManager::Instance().GetObjectWeakPtrList(m_enemies);
 
-	if (!enemy) return;
-	if (!camera) return;
+		// ビューポート取得（中心原点の±半分で画面内判定）
+		Math::Viewport vp;
+		KdDirect3D::Instance().CopyViewportInfo(vp);
+		const float halfW = vp.width * 0.5f;
+		const float halfH = vp.height * 0.5f;
 
-	// 敵のワールド座標を取得
-	Math::Vector3 enemyPos = enemy->GetPos();
+		if (auto cam = camera->GetCamera())
+		{
+			for (const auto& enemy : m_enemies)
+			{
+				if (auto enemyPtr = enemy.lock())
+				{
+					Math::Vector3 screenPos;
+					cam->ConvertWorldToScreenDetail(enemyPtr->GetPos() + m_offsetPos, screenPos);
 
-	// Initで生成したm_offsetを使う
-	Math::Vector3 worldPos = enemyPos + m_offset;
+					// Hpバーの表示割合を計算
+					float hpRate = 0.0f;
+					const auto& enemyStatus = enemyPtr->GetStatus();
+					if (enemyStatus.maxHp > 0)
+					{
+						hpRate = static_cast<float>(enemyStatus.hp) / static_cast<float>(enemyStatus.maxHp);
+					}
 
-	// ワールド座標→スクリーン座標へ変換
-	camera->ConvertWorldToScreenDetail(worldPos, m_screenPos);
+					// Hpバーの表示割合に応じてレクトを作成
+					Math::Rectangle hpRect = m_hpBarRect;
+					hpRect.width = static_cast<long>(1500.0f * hpRate);
+
+
+					// 1) カメラ前方（w > 0）
+					if (screenPos.z <= 0.0f) { continue; }
+
+					// 2) 画面内（中心原点の±半分）
+					if (screenPos.x < -halfW || screenPos.x > halfW) { continue; }
+					if (screenPos.y < -halfH || screenPos.y > halfH) { continue; }
+
+					// 可視：描画リストに追加
+					m_screenPosList.push_back(screenPos);
+
+					m_displayRectangleList.push_back(hpRect);
+
+					if (m_screenPosList.size() >= m_maxDrawCount) { break; }
+				}
+			}
+		}
+
+		m_bDrawTexture = !m_screenPosList.empty();
+	}
 }
 
 void EnemyHp::DrawSprite()
 {
-	// 現在のビューポートサイズ取得
-	Math::Viewport vp;
-	KdDirect3D::Instance().CopyViewportInfo(vp);
+	// 非表示なら描画しない
+	if (!m_bDrawTexture || m_screenPosList.empty()) { return; }
 
-	// スケーリング
-	const float sx = vp.width / kRefW;
-	const float sy = vp.height / kRefH;
+	const Math::Vector2 pivot(0.5f, 0.5f);
 
-	Math::Matrix uiScale = Math::Matrix::CreateScale(sx, sy, 1.0f);
-
-	KdShaderManager::Instance().m_spriteShader.SetMatrix(m_mWorld * uiScale);
-
-	std::string numStr = std::to_string(m_displayTime);
-
-	// screenPosを使用
-	int baseX = static_cast<int>(m_screenPos.x);
-	int baseY = static_cast<int>(m_screenPos.y);
-
-	const int digitWidth = 320;
-	const int totalWidth = static_cast<int>(numStr.size()) * digitWidth;
-	int startX = baseX - totalWidth / 2;
-
-	for (size_t i = 0; i < numStr.size(); ++i)
+	for (const auto& pos : m_screenPosList)
 	{
-		int n = numStr[i] - '0';
-		int texIndex = n;
-		Math::Rectangle srcRect = { 50 * texIndex, 0, 50, 50 };
 		KdShaderManager::Instance().m_spriteShader.DrawTex(
 			m_texture,
-			startX + digitWidth * static_cast<int>(i),
-			baseY,
-			&srcRect,
-			&m_color
+			static_cast<int>(pos.x),
+			static_cast<int>(pos.y),
+			m_srcRect.width / 8,
+			m_srcRect.height / 8,
+			&m_srcRect,
+			&m_color,
+			{ 0.0f, 0.5f }
 		);
 	}
 
-	KdShaderManager::Instance().m_spriteShader.SetMatrix(Math::Matrix::Identity);
+	// HPバー（各敵ごとに対応するレクトで描画）
+	const size_t drawCount = std::min(m_screenPosList.size(), m_displayRectangleList.size());
+	for (size_t i = 0; i < drawCount; ++i)
+	{
+		const auto& pos = m_screenPosList[i];
+		auto& rect = m_displayRectangleList[i];
+
+		KdShaderManager::Instance().m_spriteShader.DrawTex(
+			m_hpBarTexture,
+			static_cast<int>(pos.x),
+			static_cast<int>(pos.y),
+			(rect.width) / 8,
+			(rect.height) / 8,
+			&rect,
+			&m_color,
+			{ 0.0f, 0.5f }
+		);
+	}
+
 }

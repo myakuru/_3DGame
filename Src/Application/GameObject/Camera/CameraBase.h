@@ -1,4 +1,5 @@
 ﻿#pragma once
+#include"../../../MyFramework/State/StateManager/StateManager.h"
 class Player;
 class CameraBase : public KdGameObject
 {
@@ -105,4 +106,6 @@ protected:
 
 	// カメラ回転用マウス座標の差分
 	POINT										m_FixMousePos{};
+
+	StateManager m_stateManager;
 };

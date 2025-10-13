@@ -11,7 +11,7 @@ void PlayerState_FowardAvoidFast::StateStart()
 	m_player->SetAvoidFlg(true);
 	m_player->SetAvoidStartTime(Application::Instance().GetDeltaTime()); // 現在の時間を記録
 
-	m_player->AddAfterImage(true, 5, 2.0f, Math::Color(0.0f, 1.0f, 1.0f, 0.2f));
+	m_player->AddAfterImage(true, 5, 2.0f, Math::Color(0.0f, 1.0f, 1.0f, 0.3f));
 
 	m_player->SetAnimeSpeed(120.0f);
 

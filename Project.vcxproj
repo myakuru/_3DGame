@@ -276,6 +276,9 @@
     <ClInclude Include="Src\Application\GameObject\Camera\CameraBase.h" />
     <ClInclude Include="Src\Application\GameObject\Camera\FPSCamera\FPSCamera.h" />
     <ClInclude Include="Src\Application\GameObject\Camera\PlayerCamera\PlayerCamera.h" />
+    <ClInclude Include="Src\Application\GameObject\Camera\PlayerCamera\PlayerCameraState\PlayerCameraState.h" />
+    <ClInclude Include="Src\Application\GameObject\Camera\PlayerCamera\PlayerCameraState\PlayerCameraState_LookPlayer\PlayerCameraState_LookPlayer.h" />
+    <ClInclude Include="Src\Application\GameObject\Camera\PlayerCamera\PlayerCameraState\PlayerCameraState_WinnerCamera\PlayerCameraState_WinnerCamera.h" />
     <ClInclude Include="Src\Application\GameObject\Camera\TitleCamera\TitleCamera.h" />
     <ClInclude Include="Src\Application\GameObject\Camera\TPSCamera\TPSCamera.h" />
     <ClInclude Include="Src\Application\GameObject\Character\CharacterBase.h" />
@@ -300,6 +303,7 @@
     <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_Attack\PlayerState_Attack.h" />
     <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_AvoidAttack\PlayerState_AvoidAttack.h" />
     <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_BackWordAvoid\PlayerState_BackWordAvoid.h" />
+    <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_ChargeAttack1\PlayerState_ChargeAttack1.h" />
     <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_ChargeAttack2\PlayerState_ChaegeAttack2.h" />
     <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_ChargeAttackMax1\PlayerState_ChargeAttackMax1.h" />
     <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_ChargeAttackMax2\PlayerState_ChargeAttackMax2.h" />
@@ -357,6 +361,10 @@
     <ClInclude Include="Src\Application\GameObject\HUD\NormalUI\NormalUI.h" />
     <ClInclude Include="Src\Application\GameObject\HUD\NowHp\NowHp.h" />
     <ClInclude Include="Src\Application\GameObject\HUD\Number\NumBer.h" />
+    <ClInclude Include="Src\Application\GameObject\HUD\PlayerChargeUI\Chrge\ChrgeUI.h" />
+    <ClInclude Include="Src\Application\GameObject\HUD\PlayerChargeUI\NotCharge1\NotCharge1.h" />
+    <ClInclude Include="Src\Application\GameObject\HUD\PlayerChargeUI\NotCharge2\NotCharge2UI.h" />
+    <ClInclude Include="Src\Application\GameObject\HUD\PlayerChargeUI\NotCharge\NotChargeUI.h" />
     <ClInclude Include="Src\Application\GameObject\HUD\ScaleMoving\ScaleMoving.h" />
     <ClInclude Include="Src\Application\GameObject\HUD\Scoring\Scoring.h" />
     <ClInclude Include="Src\Application\GameObject\HUD\SpecialMove\SpecialMove.h" />
@@ -439,6 +447,9 @@
     <ClCompile Include="Src\Application\GameObject\Camera\CameraBase.cpp" />
     <ClCompile Include="Src\Application\GameObject\Camera\FPSCamera\FPSCamera.cpp" />
     <ClCompile Include="Src\Application\GameObject\Camera\PlayerCamera\PlayerCamera.cpp" />
+    <ClCompile Include="Src\Application\GameObject\Camera\PlayerCamera\PlayerCameraState\PlayerCameraState.cpp" />
+    <ClCompile Include="Src\Application\GameObject\Camera\PlayerCamera\PlayerCameraState\PlayerCameraState_LookPlayer\PlayerCameraState_LookPlayer.cpp" />
+    <ClCompile Include="Src\Application\GameObject\Camera\PlayerCamera\PlayerCameraState\PlayerCameraState_WinnerCamera\PlayerCameraState_WinnerCamera.cpp" />
     <ClCompile Include="Src\Application\GameObject\Camera\TitleCamera\TitleCamera.cpp" />
     <ClCompile Include="Src\Application\GameObject\Camera\TPSCamera\TPSCamera.cpp" />
     <ClCompile Include="Src\Application\GameObject\Character\CharacterBase.cpp" />
@@ -462,6 +473,7 @@
     <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_Attack\PlayerState_Attack.cpp" />
     <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_AvoidAttack\PlayerState_AvoidAttack.cpp" />
     <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_BackWordAvoid\PlayerState_BackWordAvoid.cpp" />
+    <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_ChargeAttack1\PlayerState_ChargeAttack1.cpp" />
     <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_ChargeAttack2\PlayerState_ChaegeAttack2.cpp" />
     <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_ChargeAttackMax1\PlayerState_ChargeAttackMax1.cpp" />
     <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_ChargeAttackMax2\PlayerState_ChargeAttackMax2.cpp" />
@@ -519,6 +531,10 @@
     <ClCompile Include="Src\Application\GameObject\HUD\NormalUI\NormalUI.cpp" />
     <ClCompile Include="Src\Application\GameObject\HUD\NowHp\NowHp.cpp" />
     <ClCompile Include="Src\Application\GameObject\HUD\Number\NumBer.cpp" />
+    <ClCompile Include="Src\Application\GameObject\HUD\PlayerChargeUI\Chrge\ChrgeUI.cpp" />
+    <ClCompile Include="Src\Application\GameObject\HUD\PlayerChargeUI\NotCharge1\NotCharge1.cpp" />
+    <ClCompile Include="Src\Application\GameObject\HUD\PlayerChargeUI\NotCharge2\NotCharge2UI.cpp" />
+    <ClCompile Include="Src\Application\GameObject\HUD\PlayerChargeUI\NotCharge\NotChargeUI.cpp" />
     <ClCompile Include="Src\Application\GameObject\HUD\ScaleMoving\ScaleMoving.cpp" />
     <ClCompile Include="Src\Application\GameObject\HUD\Scoring\Scoring.cpp" />
     <ClCompile Include="Src\Application\GameObject\HUD\SpecialMove\SpecialMove.cpp" />

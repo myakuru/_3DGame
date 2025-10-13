@@ -72,9 +72,12 @@ public:
 
 	struct EnemyStatus
 	{
-		int hp = 2000000;				// 体力
+		int hp = 100000;				// 体力
 		int attack = 10;			// 攻撃力
+		int maxHp = 100000;			// 最大体力
 	};
+
+	const EnemyStatus& GetStatus() { return m_status; }
 
 
 	// 回避成功フラグの取得
