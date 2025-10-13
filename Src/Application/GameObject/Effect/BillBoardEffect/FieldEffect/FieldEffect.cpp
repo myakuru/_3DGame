@@ -23,11 +23,12 @@ void FieldEffect::Init()
 		poly.scale = Math::Vector3(5.0f, 5.0f, 5.0f);
 		m_polys.push_back(poly);
 	}
+
+	SceneManager::Instance().GetObjectWeakPtr(m_camera);
 }
 
 void FieldEffect::Update()
 {
-	SceneManager::Instance().GetObjectWeakPtr(m_camera);
 
 	auto spCamera = m_camera.lock();
 

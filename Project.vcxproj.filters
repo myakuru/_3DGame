@@ -427,6 +427,9 @@
     <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_ChargeAttack1">
       <UniqueIdentifier>{931652be-60b3-4187-a5cf-d9389ab54aa6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\GameObject\Effect\BillBoardEffect\MapGard">
+      <UniqueIdentifier>{c193f2f4-8991-47cb-9655-cc875a1151a3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -957,6 +960,9 @@
     <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_ChargeAttack1\PlayerState_ChargeAttack1.h">
       <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_ChargeAttack1</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Effect\BillBoardEffect\MapGard\MapGard.h">
+      <Filter>Src\Application\GameObject\Effect\BillBoardEffect\MapGard</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -1432,6 +1438,9 @@
     </ClCompile>
     <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_ChargeAttack1\PlayerState_ChargeAttack1.cpp">
       <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_ChargeAttack1</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Effect\BillBoardEffect\MapGard\MapGard.cpp">
+      <Filter>Src\Application\GameObject\Effect\BillBoardEffect\MapGard</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

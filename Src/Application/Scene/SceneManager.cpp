@@ -70,6 +70,7 @@
 #include"../GameObject/HUD/PlayerChargeUI/NotCharge/NotChargeUI.h"
 #include"../GameObject/HUD/PlayerChargeUI/NotCharge1/NotCharge1.h"
 #include"../GameObject/HUD/PlayerChargeUI/NotCharge2/NotCharge2UI.h"
+#include"../GameObject/Effect/BillBoardEffect/MapGard/MapGard.h"
 
 void SceneManager::Init()
 {
@@ -143,12 +144,15 @@ void SceneManager::Register() const
 	RegisterObject::GetInstance().Register<SpecialAttack1>();
 	RegisterObject::GetInstance().Register<SpeedAttackEffect>();
 
+	// Fieldのエフェクト系
+	RegisterObject::GetInstance().Register<FieldEffect>();
+	RegisterObject::GetInstance().Register<MapGard>();
+
 
 	// 使われてないけど一応登録しとく系
 	RegisterObject::GetInstance().Register<ForwardEffect>();
 	RegisterObject::GetInstance().Register<CurvesEffect>();
 	RegisterObject::GetInstance().Register<AttackEffect>();
-	RegisterObject::GetInstance().Register<FieldEffect>();
 	RegisterObject::GetInstance().Register<AttackEffect_second>();
 	RegisterObject::GetInstance().Register<TrailEffect>();
 	RegisterObject::GetInstance().Register<Attack4Effect>();

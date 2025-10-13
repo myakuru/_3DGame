@@ -10,6 +10,8 @@
 
 #include"../../../../Effect/EffekseerEffect/Rotation/Rotation.h"
 
+#include"../PlayerState_FullCharge/PlayerState_FullCharge.h"
+
 #include"../PlayerState_BackWordAvoid/PlayerState_BackWordAvoid.h"
 #include"../PlayerState_FowardAvoid/PlayerState_FowardAvoid.h"
 
@@ -126,13 +128,52 @@ void PlayerState_Attack1::StateUpdate()
 		}
 
 		// コンボ受付
-		if (m_LButtonkeyInput)
+		if (m_LButtonkeyInput || KeyboardManager::GetInstance().IsKeyPressed(VK_LBUTTON))
 		{
-			// 80%以降で受付
+			// 70%以降で受付
 			if (m_animeTime < 0.7f) return;
-			auto next = std::make_shared<PlayerState_Attack2>();
-			m_player->ChangeState(next);
-			return;
+
+			const float kLongPressThreshold = 0.5f; // 長押し閾値
+			const bool isPressed = KeyboardManager::GetInstance().IsKeyPressed(VK_LBUTTON);
+			const bool isJustPressed = KeyboardManager::GetInstance().IsKeyJustPressed(VK_LBUTTON);
+			const float lDuration = isPressed ? KeyboardManager::GetInstance().GetKeyPressDuration(VK_LBUTTON) : 0.0f;
+
+			// 現在のチャージ残数
+			int& chargeCount = m_player->GetPlayerStatus().chargeCount;
+
+			// 1) 先行入力を最優先で消費してAttack1へ
+			if (m_LButtonkeyInput)
+			{
+				m_LButtonkeyInput = false;
+				auto state = std::make_shared<PlayerState_Attack2>();
+				m_player->ChangeState(state);
+				return;
+			}
+
+			// 2) チャージが0以下で長押し中の場合
+			if (chargeCount <= 0 && isPressed)
+			{
+				auto state = std::make_shared<PlayerState_SheathKatana>();
+				m_player->ChangeState(state);
+				return;
+			}
+
+			// 3) チャージが残っている場合のみ、長押しでFullChargeへ
+			if (chargeCount > 0 && isPressed && lDuration >= kLongPressThreshold)
+			{
+				chargeCount = std::max(0, chargeCount - 1); // 念のため下限ガード
+				auto state = std::make_shared<PlayerState_FullCharge>();
+				m_player->ChangeState(state);
+				return;
+			}
+
+			// 4) 受付内の新規押下でもAttack1へ
+			if (isJustPressed)
+			{
+				auto state = std::make_shared<PlayerState_Attack2>();
+				m_player->ChangeState(state);
+				return;
+			}
 		}
 		else if (m_player->GetAnimator()->IsAnimationEnd())
 		{
