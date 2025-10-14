@@ -22,9 +22,9 @@ void EnemyState_Idle::StateUpdate()
 	Math::Vector3 enemyPos = m_enemy->GetPos();
 
 	// 距離計算
-	float distance = (playerPos - enemyPos).Length();
+	m_distance = (playerPos - enemyPos).Length();
 
-	if (distance < 6.0f)
+	if (m_distance < 6.0f)
 	{
 		// Runステートに移行
 		auto spRunState = std::make_shared<EnemyState_Run>();

@@ -37,8 +37,9 @@ void Player::Init()
 	m_pCollider->RegisterCollisionShape("PlayerSphere", sphere, KdCollider::TypeDamage);
 	m_pCollider->RegisterCollisionShape("PlayerSphere", sphere, KdCollider::TypeGround);
 
-	m_onceEffect = false;
-	m_isAtkPlayer = false;
+	m_onceEffect = false;	// エフェクトの一回だけフラグ
+	m_isAtkPlayer = false;	// プレイヤーが攻撃しているかどうか
+	m_invincible = false;	// 無敵フラグ
 
 	// 残像描画用 Work を元データで生成
 	if (auto* src = GetModelWork())
@@ -187,6 +188,8 @@ void Player::Update()
 	// ヒット処理。
 	if (m_isHit)
 	{
+		if (m_invincible) return; // 無敵状態ならヒットしない
+
 		// ダメージステートに変更
 		auto spDamageState = std::make_shared<PlayerState_Hit>();
 		ChangeState(spDamageState);

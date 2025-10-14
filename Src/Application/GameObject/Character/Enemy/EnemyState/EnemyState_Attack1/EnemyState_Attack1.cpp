@@ -1,5 +1,8 @@
 ﻿#include "EnemyState_Attack1.h"
 #include"../EnemyState_Attack2/EnemyState_Attack2.h"
+#include"../EnemyState_Run/EnemyState_Run.h"
+
+#include"../../../Player/Player.h"
 
 #include"../../../../../main.h"
 
@@ -11,6 +14,9 @@ void EnemyState_Attack1::StateStart()
 	m_enemy->GetAnimator()->SetAnimation(anime, 0.25f, false);
 
 	m_time = 0.0f;
+
+	// 当たり判定リセット
+	m_enemy->ResetAttackCollision();
 
 }
 
@@ -30,11 +36,30 @@ void EnemyState_Attack1::StateUpdate()
 
 	m_time += deltaTime;
 
-	// 0.5秒間当たり判定有効
-	if (m_time >= 0.0f && m_time <= 1.0f)
+	m_animeTime = m_enemy->GetAnimator()->GetPlayProgress();
+
+	// アニメーション時間の35％から100％の間、攻撃判定有効
+	if (m_animeTime >= 0.35f && m_animeTime <= 1.0f)
 	{
-		m_enemy->UpdateAttack();
-		m_enemy->SetOnceEffect(false);
+		m_enemy->UpdateAttackCollision(2.0f, 1.0f, 1, 0.3f);
+	}
+
+	// 距離が６以上離れたら追いかける
+	{
+		if (auto player = m_enemy->GetPlayerWeakPtr().lock(); player)
+		{
+			m_playerPos = player->GetPos();
+			m_enemyPos = m_enemy->GetPos();
+		}
+
+		m_distance = (m_playerPos - m_enemyPos).Length();
+
+		if (m_distance >= 6.0f)
+		{
+			auto state = std::make_shared<EnemyState_Run>();
+			m_enemy->ChangeState(state);
+			return;
+		}
 	}
 
 	if (m_enemy->GetAnimator()->IsAnimationEnd())
@@ -46,7 +71,7 @@ void EnemyState_Attack1::StateUpdate()
 
 	if (m_time < 0.2f)
 	{
-		const float dashSpeed = 2.0f;
+		const float dashSpeed = 0.7f;
 		m_enemy->SetIsMoving(m_attackDirection * dashSpeed);
 	}
 	else

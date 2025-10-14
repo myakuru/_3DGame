@@ -20,16 +20,16 @@ void EnemyState_Run::StateUpdate()
 	}
 
 	// 距離計算
-	float distance = (m_playerPos - m_enemyPos).Length();
+	m_distance = (m_playerPos - m_enemyPos).Length();
 
-	if (distance >= 6.0f)
+	if (m_distance >= 6.0f)
 	{
 		// Idleステートに移行
 		auto spIdleState = std::make_shared<EnemyState_Idle>();
 		m_enemy->ChangeState(spIdleState);
 		return;
 	}
-	else if (distance >= 3.0f)
+	else if (m_distance >= 3.0f)
 	{
 		// 追いかける
 		Math::Vector3 dir = m_playerPos - m_enemyPos;

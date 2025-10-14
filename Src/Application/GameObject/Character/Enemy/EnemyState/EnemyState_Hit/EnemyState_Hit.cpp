@@ -1,5 +1,7 @@
 ﻿#include "EnemyState_Hit.h"
 #include"../EnemyState_Idle/EnemyState_Idle.h"
+#include"../../../Player/Player.h"
+#include"../EnemyState_Attack/EnemyState_Attack.h"
 
 void EnemyState_Hit::StateStart()
 {
@@ -7,11 +9,30 @@ void EnemyState_Hit::StateStart()
 
 	auto anime = m_enemy->GetAnimeModel()->GetAnimation("Hit");
 	m_enemy->GetAnimator()->SetAnimation(anime, 0.25f, false);
+
+	m_enemy->SetAnimeSpeed(60.0f);
+
+	// 累積ヒット回数は Enemy 本体で管理
+	m_enemy->IncrementHitCount();
+
+	// 5回以上で無敵
+	if (m_enemy->GetHitCount() >= 5)
+	{
+		m_enemy->SetInvincible(true);
+	}
+
 }
 
 void EnemyState_Hit::StateUpdate()
 {
-	m_enemy->SetAnimeSpeed(60.0f);
+	if (m_enemy->GetInvincible())
+	{
+		// 無敵状態ならAttackへ
+		auto spIdleState = std::make_shared<EnemyState_Attack>();
+		m_enemy->ChangeState(spIdleState);
+		return;
+	}
+
 
 	if (m_enemy->GetAnimator()->IsAnimationEnd())
 	{
@@ -23,7 +44,7 @@ void EnemyState_Hit::StateUpdate()
 
 	if (m_time < 0.2f)
 	{
-		const float dashSpeed = -1.0f;
+		const float dashSpeed = -0.5f;
 		m_enemy->SetIsMoving(m_attackDirection * dashSpeed);
 	}
 	else

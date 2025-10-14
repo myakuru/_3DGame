@@ -28,4 +28,13 @@ protected:
 
 	bool m_hasHitPlayer = false;
 
+	// ヒット回数カウント
+	int m_hitCount = 0;
+
+	// プレイヤーとの距離
+	float m_distance = 0.0f;
+
+	// アニメーション再生時間
+	float m_animeTime = 0.0f;
+
 };

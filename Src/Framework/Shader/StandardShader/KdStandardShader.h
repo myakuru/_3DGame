@@ -21,6 +21,9 @@ public:
 		// フォグ有効
 		int				FogEnable = 1;
 
+		// ディザリング有効
+		int             ditherEnable = 1;
+
 		// エミッシブのみの描画
 		int				OnlyEmissie = 0;
 
@@ -33,13 +36,13 @@ public:
 
 		Math::Vector3	DissolveEmissive = { 0.0f, 1.0f, 1.0f };
 
-		// パディング（DirectX定数バッファは16バイト単位推奨）
-		int _padding[3] = { 0, 0, 0 };
-
 		// グラデーション用フラグとカラー
 		int enableGradient = 0;           // グラデーション有効フラグ（0:無効, 1:有効）
 
 		Math::Color gradientColor = { 1.0f, 1.0f, 1.0f, 1.0f }; // グラデーションカラー
+
+		// パディング
+		float _padding[2] = { 0.0f, 0.0f };
 
 	};
 
@@ -147,6 +150,13 @@ public:
 		if (!m_dissolveTex) { return; }
 
 		SetDissolveTexture(*m_dissolveTex);
+	}
+
+	// アルファディザリング有効/無効
+	void SetDitherEnable(bool dither)
+	{
+		m_cb0_Obj.Work().ditherEnable = dither;
+		m_dirtyCBObj = true;
 	}
 
 	//================================================

@@ -161,6 +161,7 @@ private:
 	Math::Color m_afterImageColor = {0,1,1,0.1f}; // 基本色（半透明白）
 
 	bool m_isHit = false;						// ヒット判定用
+	bool m_invincible = false;					// 無敵判定用
 
 	std::deque<AfterImageFrame> m_afterImages;
 

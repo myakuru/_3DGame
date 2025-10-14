@@ -26,4 +26,5 @@ void EnemyStateBase::StateStart()
 
 	m_time = 0.0f;
 	m_hasHitPlayer = false;
+	m_animeTime = 0.0f;
 }

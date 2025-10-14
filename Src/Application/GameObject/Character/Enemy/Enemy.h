@@ -42,6 +42,10 @@ public:
 
 	void UpdateAttack();
 
+	// 攻撃の当たり判定(攻撃半径、攻撃距離、攻撃回数、攻撃間隔)
+	void UpdateAttackCollision(float _radius = 1.f, float _distance = 1.1f,
+		int _attackCount = 5, float _attackTimer = 0.3f);
+
 	// ダメージを受ける
 	void Damage(int _damage);
 
@@ -72,9 +76,9 @@ public:
 
 	struct EnemyStatus
 	{
-		int hp = 100000;				// 体力
+		int hp = 1000000000;				// 体力
 		int attack = 10;			// 攻撃力
-		int maxHp = 100000;			// 最大体力
+		int maxHp = 1000000000;			// 最大体力
 	};
 
 	const EnemyStatus& GetStatus() { return m_status; }
@@ -84,10 +88,24 @@ public:
 	bool GetJustAvoidSuccess() const { return m_justAvoidSuccess; }
 	void SetJustAvoidSuccess(bool flag) { m_justAvoidSuccess = flag; }
 
-	// OneceEffectの取得
-	bool GetOnceEffect() const { return m_onceEffect; }
+	// 当たり判定リセット
+	void ResetAttackCollision()
+	{
+		m_chargeAttackCount = 0;
+		m_chargeAttackTimer = 0.0f;
+		m_isChargeAttackActive = false;
+		m_hitOnce = false;
+	}
 
-	void SetOnceEffect(bool flag) { m_onceEffect = flag; }
+	// 無敵状態管理フラグ
+	void SetInvincible(bool _flag) { m_invincible = _flag; }
+
+	bool GetInvincible() const { return m_invincible; }
+
+	// 敵への累積ヒット回数（全ステート共通）
+	int  GetHitCount() const { return m_totalHitCount; }
+	void IncrementHitCount() { ++m_totalHitCount; }
+	void ResetHitCount() { m_totalHitCount = 0; }
 
 private:
 
@@ -109,9 +127,16 @@ private:
 
 	std::shared_ptr<HitDamage> m_spHitDamage;
 
+	std::list<std::weak_ptr<Player>> m_player;
+
 	// ジャスト回避成功フラグ
 	bool m_justAvoidSuccess = false;
 
-	bool m_onceEffect = false;
+	bool m_hitOnce = false;
+	int m_chargeAttackCount = 0;								// 何回ダメージを与えたか
+	float m_chargeAttackTimer = 0.0f;							// 経過時間
+	bool m_isChargeAttackActive = false;						// 連続攻撃中か
 
+	bool m_invincible = false;					// 無敵判定用
+	int m_totalHitCount = 0;					// 累積ヒット回数（無敵判定用）
 };

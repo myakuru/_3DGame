@@ -3,6 +3,8 @@ cbuffer cbObject : register(b0)
 {
 	float2	g_UVOffset;
 	float2	g_UVTiling;
+
+	int g_ditherEnable; // ディザリング有効
 	
 	int g_FogEnable;	// フォグ有効
 	int g_OnlyEmissie;	// エミッシブの描画だけにするかどうか

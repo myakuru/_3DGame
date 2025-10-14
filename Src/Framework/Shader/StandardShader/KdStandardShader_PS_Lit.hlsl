@@ -67,6 +67,18 @@ float BlinnPhong(float3 lightDir, float3 vCam, float3 normal, float specPower)
 	return spec * ((specPower + 2) / (2 * 3.1415926535));
 }
 
+static const int bayermatrix2[8][8] =
+{
+	{ 0, 0, 0, 1, 1, 0, 0, 0 },
+	{ 0, 0, 1, 2, 2, 1, 0, 0 },
+	{ 0, 1, 2, 3, 3, 2, 1, 0 },
+	{ 1, 2, 3, 4, 4, 3, 2, 1 },
+	{ 1, 2, 3, 4, 4, 3, 2, 1 },
+	{ 0, 1, 2, 3, 3, 2, 1, 0 },
+	{ 0, 0, 1, 2, 2, 1, 0, 0 },
+	{ 0, 0, 0, 1, 1, 0, 0, 0 }
+};
+
 //================================
 // ピクセルシェーダ
 //================================
@@ -95,6 +107,32 @@ float4 main(VSOutput In) : SV_Target0
 	float3 vCam = g_CamPos - In.wPos;
 	float camDist = length(vCam); // カメラ - ピクセル距離
 	vCam = normalize(vCam);
+
+	//アルファでうぃざ
+	if (g_ditherEnable)
+	{
+		//fmodはあまり出す
+		//　　　　　　　　　変数　/　この数値　のあまり出す
+		int x = (int) fmod(In.Pos.x, 4.0f);
+		int y = (int) fmod(In.Pos.y, 4.0f);
+
+		//べいやーから０から１の閾値算出
+		float dither = bayermatrix2[y][x] / 16.0f;
+
+		float ditherDist = 5.0f;
+
+		//大きいほう返す　　//0と計算結果の大きいほう返す
+		float range = max(0, camDist - ditherDist);
+
+		float rate = 1 - min(1, range);
+
+		if (dither - (1 * rate) < 0.0f)
+		{
+			//ピクセル破棄
+			discard;
+		}
+
+	}
 
 	// 法線マップから法線ベクトル取得
 	float3 wN = g_normalTex.Sample(g_ss, In.UV).rgb;

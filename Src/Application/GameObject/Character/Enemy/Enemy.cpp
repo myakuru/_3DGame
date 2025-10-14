@@ -30,6 +30,8 @@ void Enemy::Init()
 
 	m_isAtkPlayer = false;
 	m_dissever = 0.0f;
+
+	m_invincible = false;
 }
 
 void Enemy::Update()
@@ -56,23 +58,6 @@ void Enemy::Update()
 		m_attackFrame = 0.0f;
 	}
 
-	// ヒット処理。
-	if (m_isHit)
-	{
-		// ダメージステートに変更
-		auto spDamageState = std::make_shared<EnemyState_Hit>();
-		ChangeState(spDamageState);
-
-		// HitDamage生成・初期化
-		m_spHitDamage = std::make_shared<HitDamage>();
-		m_spHitDamage->Init();
-		m_spHitDamage->SetDamage(m_getDamage);
-		m_spHitDamage->SetTrackEnemy(std::static_pointer_cast<Enemy>(shared_from_this()));
-		SceneManager::Instance().AddObject(m_spHitDamage);
-		m_isHit = false;
-		return;
-	}
-
 	if (m_Expired)
 	{
 		if (m_dissever < 1.0f)
@@ -87,6 +72,24 @@ void Enemy::Update()
 	}
 
 	CharaBase::Update();
+
+	// ヒット処理。
+	if (m_isHit && !m_invincible)
+	{
+
+		// ダメージステートに変更
+		auto spDamageState = std::make_shared<EnemyState_Hit>();
+		ChangeState(spDamageState);
+
+		// HitDamage生成・初期化
+		m_spHitDamage = std::make_shared<HitDamage>();
+		m_spHitDamage->Init();
+		m_spHitDamage->SetDamage(m_getDamage);
+		m_spHitDamage->SetTrackEnemy(std::static_pointer_cast<Enemy>(shared_from_this()));
+		SceneManager::Instance().AddObject(m_spHitDamage);
+		m_isHit = false;
+		return;
+	}
 
 	// 敵の剣の行列を更新
 	if (auto sword = m_enemySword.lock(); sword)
@@ -146,7 +149,7 @@ void Enemy::UpdateAttack()
 		if (player->GetAvoidFlg())
 		{
 			int avoidFrame = Application::Instance().GetDeltaTime() - player->GetAvoidStartTime();
-			if (avoidFrame >= 0 && avoidFrame <= 30) // 3フレーム以内ならジャスト回避
+			if (avoidFrame >= 0 && avoidFrame <= 30) // ジャスト回避
 			{
 				m_justAvoidSuccess = true;
 				Application::Instance().SetFpsScale(0.5f); // スローモーションにする
@@ -155,12 +158,92 @@ void Enemy::UpdateAttack()
 			}
 		}
 
-		if (!m_onceEffect)
+		if (!m_hitOnce)
 		{
 			player->TakeDamage(m_status.attack);
 			player->SetHitCheck(true);          // プレイヤー側 Hit ステート遷移用
 			m_isAtkPlayer = true;               // 敵攻撃1ステート中は再実行させない
-			m_onceEffect = true;
+			m_hitOnce = true;
+		}
+	}
+}
+
+void Enemy::UpdateAttackCollision(float _radius, float _distance, int _attackCount, float _attackTimer)
+{
+	Math::Vector3 forward = Math::Vector3::TransformNormal(Math::Vector3::Forward, Math::Matrix::CreateFromQuaternion(m_rotation));
+	forward.Normalize();
+
+	float deltaTime = Application::Instance().GetDeltaTime();
+
+	KdCollider::SphereInfo attackSphere;
+	attackSphere.m_sphere.Center = m_position + Math::Vector3(0.0f, 0.5f, 0.0f) + forward * _distance;
+	attackSphere.m_sphere.Radius = _radius;
+	attackSphere.m_type = KdCollider::TypeDamage;
+
+	m_pDebugWire->AddDebugSphere(attackSphere.m_sphere.Center, attackSphere.m_sphere.Radius);
+
+	SceneManager::Instance().GetObjectWeakPtrList(m_player);
+
+	// 初回セットアップ: 初期タイマを0に
+	if (!m_hitOnce)
+	{
+		m_isChargeAttackActive = true;
+		m_chargeAttackCount = 0;
+		m_chargeAttackTimer = 0.0f;
+		m_hitOnce = true;
+	}
+
+	if (!m_isChargeAttackActive) return;
+
+	// ジャスト回避成功してたら処理しない
+	for (const auto& players : m_player)
+	{
+		if (auto playerPtr = players.lock())
+		{
+			std::list<KdCollider::CollisionResult> results;
+			if (playerPtr->Intersects(attackSphere, &results) && !results.empty())
+			{
+				// プレイヤーが回避中か判定
+				if (playerPtr->GetAvoidFlg())
+				{
+					const float kJustAvoidWindowSec = 0.5f; // 30f/60fps
+					const float avoidElapsed = playerPtr->GetAvoidStartTime();
+					if (avoidElapsed >= 0.0f && avoidElapsed <= kJustAvoidWindowSec)
+					{
+						m_justAvoidSuccess = true;
+						Application::Instance().SetFpsScale(0.5f); // スローモーション
+						SceneManager::Instance().SetDrawGrayScale(true);
+						return; // ダメージ処理は行わない
+					}
+				}
+			}
+		}
+	}
+
+	m_chargeAttackTimer += deltaTime;
+
+	if (m_chargeAttackCount < _attackCount && m_chargeAttackTimer >= _attackTimer)
+	{
+
+		for (const auto& players : m_player)
+		{
+			if (auto playerPtr = players.lock())
+			{
+				std::list<KdCollider::CollisionResult> results;
+				if (playerPtr->Intersects(attackSphere, &results) && !results.empty())
+				{
+					playerPtr->TakeDamage(m_status.attack);
+					playerPtr->SetHitCheck(true);
+				}
+			}
+		}
+
+		m_chargeAttackCount++;
+		m_chargeAttackTimer = 0.0f;
+
+		if (m_chargeAttackCount >= _attackCount)
+		{
+			m_isChargeAttackActive = false;
 		}
 	}
 }
@@ -282,7 +365,7 @@ void Enemy::UpdateQuaternion(Math::Vector3& _moveVector)
 void Enemy::StateInit()
 {
 	m_isAtkPlayer = false;
-	m_onceEffect = false;
+	m_hitOnce = false;
 
 	// 初期状態を設定
 	auto state = std::make_shared<EnemyState_Idle>();
