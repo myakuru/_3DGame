@@ -46,7 +46,7 @@ void PlayerState_Attack3::StateStart()
 	}
 
 	// 残像の設定
-	m_player->AddAfterImage(true, 3, 1, Math::Color(0.0f, 1.0f, 1.0f, 1.0f), 0.7f);
+	m_player->AddAfterImage(true, 3, 1, Math::Color(0.0f, 1.0f, 1.0f, 1.0f), 0.0f);
 
 	m_player->SetAnimeSpeed(70.0f);
 }
@@ -133,9 +133,9 @@ void PlayerState_Attack3::StateUpdate()
 		m_player->UpdateQuaternionDirect(moveDir);
 	}
 
-	if (m_attackParam.m_dashTimer < 0.2f)
+	if (m_attackParam.m_dashTimer < 1.0f)
 	{
-		float dashSpeed = 0.7f;
+		float dashSpeed = 0.2f;
 		m_player->SetIsMoving(m_attackDirection * dashSpeed);
 		m_attackParam.m_dashTimer += deltaTime;
 	}

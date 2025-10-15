@@ -99,7 +99,7 @@ void PlayerCamera::PostUpdate()
 	Math::Vector3 anchor = playerPos + Math::Vector3(0, 1.0f, 0); // 必要なら 1.2f などチューニング
 
 	// 障害物補正
-	UpdateCameraRayCast(anchor);
+	//UpdateCameraRayCast(anchor);
 
 	// 最終的にカメラ行列適用
 	m_spCamera->SetCameraMatrix(m_mWorld);
@@ -343,24 +343,11 @@ void PlayerCamera::UpdateCameraRayCast(const Math::Vector3& _anchor)
 	// ヒット距離ノイズ抑制（小さな揺れを吸収）
 	if (hit)
 	{
-		// 前回との差がごく小さいなら前回値を維持
-		const float jitterEps = 0.015f;
-		if (std::abs(nearestRawHitDist - m_prevHitDist) < jitterEps)
-		{
-			nearestRawHitDist = m_prevHitDist;
-		}
-		else
-		{
-			// 平滑化(指数移動平均)
-			float w = m_hitDistSmoothing; // 0.0～1.0
-			nearestRawHitDist = m_prevHitDist * (1.0f - w) + nearestRawHitDist * w;
-		}
+
+		// 平滑化(指数移動平均)
+		float w = m_hitDistSmoothing; // 0.0～1.0
+		nearestRawHitDist = m_prevHitDist * (1.0f - w) + nearestRawHitDist * w;
 		m_prevHitDist = nearestRawHitDist;
-	}
-	else
-	{
-		// クリア時は前回をベース距離へ徐々に戻す（過去のヒット距離が残って揺れないように）
-		m_prevHitDist = baseDist;
 	}
 
 	// 目標距離決定
@@ -369,9 +356,6 @@ void PlayerCamera::UpdateCameraRayCast(const Math::Vector3& _anchor)
 	{
 		targetDist = std::min(baseDist, nearestRawHitDist - m_obstacleMargin);
 	}
-
-	// 下限＆上限
-	targetDist = std::clamp(targetDist, m_minCamDistance, baseDist);
 
 	// 近づく / 離れる で違う速度
 	float dt = Application::Instance().GetDeltaTime();

@@ -14,11 +14,15 @@ void EnemyState_Attack::StateStart()
 	m_enemy->GetAnimator()->SetAnimation(anime, 0.25f, false);
 
 	// エフェクトの再生
-	SceneManager::Instance().GetObjectWeakPtr(m_shineEffectBlue);
+	SceneManager::Instance().GetObjectWeakPtrList(m_shineEffectBlues);
 
-	if (auto effect = m_shineEffectBlue.lock(); effect)
+	for (const auto& effects : m_shineEffectBlues)
 	{
-		effect->SetPlayEffect(true);
+		if (auto effect = effects.lock(); effect)
+		{
+			effect->SetPlayEffect(true);
+			break;
+		}
 	}
 
 	// 当たり判定リセット
@@ -82,8 +86,12 @@ void EnemyState_Attack::StateUpdate()
 
 void EnemyState_Attack::StateEnd()
 {
-	if (auto effect = m_shineEffectBlue.lock(); effect)
+	for (const auto& effects : m_shineEffectBlues)
 	{
-		effect->SetPlayEffect(false);
+		if (auto effect = effects.lock(); effect)
+		{
+			effect->SetPlayEffect(false);
+			break;
+		}
 	}
 }

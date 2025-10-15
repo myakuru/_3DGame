@@ -10,7 +10,6 @@ public:
 	~EnemySword() override = default;
 
 private:
-
+	
 	void Update() override;
-
 };

@@ -43,7 +43,7 @@ void PlayerState_FowardAvoidFast::StateUpdate()
 	// 刀は鞘の中にある状態
 	UpdateUnsheathed();
 
-	float dashSpeed = 3.0f;
+	float dashSpeed = 2.0f;
 
 	m_player->SetIsMoving(forward * dashSpeed);
 }

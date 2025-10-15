@@ -17,10 +17,51 @@ void PlayerState_BackWordAvoid::StateStart()
 
 	m_player->SetAnimeSpeed(120.0f);
 
+	// 回避時の処理
+	m_player->SetAvoidStartTime(0.0f);
+
+	m_afterImagePlayed = false;
+
+	for (const auto& enemies : m_player->GetEnemies())
+	{
+		if (auto enemyPtr = enemies.lock(); enemyPtr)
+		{
+			// ジャスト回避成功時の残像エフェクト
+			if (enemyPtr->GetJustAvoidSuccess())
+			{
+				m_player->AddAfterImage(true, 5, 1.0f, Math::Color(0.0f, 1.0f, 1.0f, 0.5f), 0.7f);
+			}
+		}
+	}
+
 }
 
 void PlayerState_BackWordAvoid::StateUpdate()
 {
+
+	float deltaTime = Application::Instance().GetDeltaTime();
+	m_time += deltaTime; // これが回避開始からの経過時間になる
+
+	// 経過時間を Player クラスに伝える
+	m_player->SetAvoidStartTime(m_time);
+
+	// 途中で敵のジャスト回避成功フラグが立ったら残像発生
+	if (!m_afterImagePlayed)
+	{
+		for (const auto& enemies : m_player->GetEnemies())
+		{
+			if (auto enemyPtr = enemies.lock(); enemyPtr)
+			{
+				// ジャスト回避成功時の残像エフェクト
+				if (enemyPtr->GetJustAvoidSuccess())
+				{
+					m_player->AddAfterImage(true, 5, 1.0f, Math::Color(0.0f, 1.0f, 1.0f, 0.2f), 0.7f);
+					m_afterImagePlayed = true;
+				}
+			}
+		}
+	}
+
 
 	Math::Vector3 forward = Math::Vector3::TransformNormal(Math::Vector3::Forward, Math::Matrix::CreateFromQuaternion(m_player->GetRotationQuaternion()));
 	forward.Normalize();
@@ -55,4 +96,8 @@ void PlayerState_BackWordAvoid::StateEnd()
 
 	m_player->SetAvoidFlg(false);
 	m_player->SetAvoidStartTime(0.0f); // 現在の時間を記録
+
+
+	m_player->AddAfterImage();
+		
 }

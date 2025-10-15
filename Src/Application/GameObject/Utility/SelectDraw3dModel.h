@@ -98,6 +98,15 @@ public:
 		m_bDrawGrayScale = false;
 	}
 
+	// drawFllgを外部でセットする
+	void SetDrawFlag(const std::string& name, bool flg)
+	{
+		if (m_drawFlg.find(name) != m_drawFlg.end())
+		{
+			*m_drawFlg[name] = flg;
+		}
+	}
+
 private:
 
 	bool m_bGenerateDepthMapFromLight = false;	// ライトからの深度マップを生成するかどうか

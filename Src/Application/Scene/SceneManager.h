@@ -74,6 +74,21 @@ public :
 		}
 	}
 
+	// 複数の型をまとめて取得（いずれかの型に一致するオブジェクトを全て返す）
+	template<class... Ts>
+	void GetObjectWeakPtrListAnyOf(std::list<std::weak_ptr<KdGameObject>>& outPtrList)
+	{
+		outPtrList.clear();
+		for (auto& obj : GetObjList())
+		{
+			const uint32_t id = obj->GetTypeID();
+			if (((id == Ts::TypeID) || ...)) // C++17 fold expression
+			{
+				outPtrList.emplace_back(obj);
+			}
+		}
+	}
+
 	// 複数オブジェクトが存在する場合の取得
 	template<class T>
 	void GetObjectWeakPtrList(std::list<std::weak_ptr<T>>& outPtrList)
@@ -192,6 +207,16 @@ public :
 		return m_CutInScene;
 	}
 
+	// ボス登場シーンかどうか
+	void SetBossAppear(bool _appear)
+	{
+		m_bossAppear = _appear;
+	}
+
+	bool IsBossAppear() const
+	{
+		return m_bossAppear;
+	}
 
 private :
 
@@ -226,6 +251,8 @@ private :
 	bool m_effectActive = true; // 最初のUpdateかどうか
 
 	bool m_CutInScene = false; // カットインシーンかどうか
+
+	bool m_bossAppear = false; // ボス登場シーンかどうか
 
 
 public:

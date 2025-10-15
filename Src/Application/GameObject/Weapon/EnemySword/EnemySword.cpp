@@ -1,11 +1,11 @@
 ﻿#include "EnemySword.h"
+#include"../../../main.h"
+#include"../../../../Framework/ImGuiManager/ImGuiManager.h"
 
 const uint32_t EnemySword::TypeID = KdGameObject::GenerateTypeID();
 
 void EnemySword::Update()
 {
-	WeaponBase::Update();
-
 	// オフセットなしで合成
 	m_swordData.m_weaponMatrix = ComposeWeaponMatrix(
 		m_enemyRightSwordData,         // TRS(角度・スケール)

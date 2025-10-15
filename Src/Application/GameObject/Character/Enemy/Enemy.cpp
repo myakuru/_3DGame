@@ -36,8 +36,8 @@ void Enemy::Init()
 
 void Enemy::Update()
 {
-	SceneManager::Instance().GetObjectWeakPtr(m_enemySword);
-	SceneManager::Instance().GetObjectWeakPtr(m_enemyShield);
+	SceneManager::Instance().GetObjectWeakPtrList(m_enemySwords);
+	SceneManager::Instance().GetObjectWeakPtrList(m_enemyShields);
 
 	// 球の中心座標と半径を設定
 	sphere.Center = m_position + Math::Vector3(0.0f, 0.7f, 0.0f); // 敵の位置＋オフセット
@@ -56,6 +56,7 @@ void Enemy::Update()
 		Application::Instance().SetFpsScale(1.f); // スローモーションにする
 		SceneManager::Instance().SetDrawGrayScale(false);
 		m_attackFrame = 0.0f;
+		m_justAvoidSuccess = false;
 	}
 
 	if (m_Expired)
@@ -92,21 +93,27 @@ void Enemy::Update()
 	}
 
 	// 敵の剣の行列を更新
-	if (auto sword = m_enemySword.lock(); sword)
+	for(auto weapons : m_enemySwords)
 	{
-		if (auto rightHandNode = m_modelWork->FindWorkNode("weapon_r"); rightHandNode)
+		if (auto sword = weapons.lock(); sword)
 		{
-			sword->SetEnemyRightHandMatrix(rightHandNode->m_worldTransform);
-			sword->SetEnemyMatrix(m_mWorld);
+			if (auto rightHandNode = m_modelWork->FindWorkNode("weapon_r"); rightHandNode)
+			{
+				sword->SetEnemyRightHandMatrix(rightHandNode->m_worldTransform);
+				sword->SetEnemyMatrix(m_mWorld);
+			}
 		}
 	}
 
-	if (auto shield = m_enemyShield.lock(); shield)
+	for(auto shields : m_enemyShields)
 	{
-		if (auto leftHandNode = m_modelWork->FindWorkNode("weapon_l"); leftHandNode)
+		if (auto shield = shields.lock(); shield)
 		{
-			shield->SetEnemyLeftHandMatrix(leftHandNode->m_worldTransform);
-			shield->SetEnemyMatrix(m_mWorld);
+			if (auto leftHandNode = m_modelWork->FindWorkNode("weapon_l"); leftHandNode)
+			{
+				shield->SetEnemyLeftHandMatrix(leftHandNode->m_worldTransform);
+				shield->SetEnemyMatrix(m_mWorld);
+			}
 		}
 	}
 }
@@ -116,56 +123,6 @@ void Enemy::DrawLit()
 	//ディゾルブ処理
 	KdShaderManager::Instance().m_StandardShader.SetDissolve(m_dissever,&m_dissolvePower, &m_dissolveColor);
 	KdShaderManager::Instance().m_StandardShader.DrawModel(*m_modelWork, m_mWorld, m_color);
-}
-
-void Enemy::UpdateAttack()
-{
-	m_isAtkPlayer = false; // ヒットチェックを行わない
-
-	// クォータニオンから前方向ベクトルを取得
-	Math::Vector3 forward = Math::Vector3::TransformNormal(Math::Vector3::Forward, Math::Matrix::CreateFromQuaternion(m_rotation));
-	forward.Normalize();
-
-	// 球の当たり判定情報作成
-	KdCollider::SphereInfo attackSphere;
-	// 球の中心座標を設定
-	attackSphere.m_sphere.Center = m_position + Math::Vector3(0.0f, 0.5f, 0.0f) + forward * 1.1f;
-	// 球の半径を設定
-	attackSphere.m_sphere.Radius = m_attackRadius;
-	// アタリ判定をしたいタイプを設定
-	attackSphere.m_type = KdCollider::TypeDamage;
-
-	m_pDebugWire->AddDebugSphere(attackSphere.m_sphere.Center, attackSphere.m_sphere.Radius); // デバッグ用の球を追加
-
-	auto player = m_wpPlayer.lock();
-
-	if (!player) return;
-
-	// 当たり判定
-	std::list<KdCollider::CollisionResult> results;
-	if (player->Intersects(attackSphere, &results))
-	{
-		// プレイヤーが回避中か判定
-		if (player->GetAvoidFlg())
-		{
-			int avoidFrame = Application::Instance().GetDeltaTime() - player->GetAvoidStartTime();
-			if (avoidFrame >= 0 && avoidFrame <= 30) // ジャスト回避
-			{
-				m_justAvoidSuccess = true;
-				Application::Instance().SetFpsScale(0.5f); // スローモーションにする
-				SceneManager::Instance().SetDrawGrayScale(true);
-				return; // ダメージ処理をスキップ
-			}
-		}
-
-		if (!m_hitOnce)
-		{
-			player->TakeDamage(m_status.attack);
-			player->SetHitCheck(true);          // プレイヤー側 Hit ステート遷移用
-			m_isAtkPlayer = true;               // 敵攻撃1ステート中は再実行させない
-			m_hitOnce = true;
-		}
-	}
 }
 
 void Enemy::UpdateAttackCollision(float _radius, float _distance, int _attackCount, float _attackTimer)
@@ -195,7 +152,7 @@ void Enemy::UpdateAttackCollision(float _radius, float _distance, int _attackCou
 
 	if (!m_isChargeAttackActive) return;
 
-	// ジャスト回避成功してたら処理しない
+	// ジャスト回避成功
 	for (const auto& players : m_player)
 	{
 		if (auto playerPtr = players.lock())
@@ -219,6 +176,9 @@ void Enemy::UpdateAttackCollision(float _radius, float _distance, int _attackCou
 			}
 		}
 	}
+
+	// ジャスト回避中はダメージを与えない
+	if (m_justAvoidSuccess) return;
 
 	m_chargeAttackTimer += deltaTime;
 

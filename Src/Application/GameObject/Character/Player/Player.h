@@ -24,6 +24,7 @@ public:
 	void Init() override;
 	void PreUpdate() override;
 	void PostUpdate() override;
+	void DrawLit() override;
 	void DrawUnLit() override;
 	void Update() override;
 	// 攻撃の当たり判定(攻撃半径、攻撃距離、攻撃回数、攻撃間隔、カメラシェイクの強さ、カメラシェイクの時間)
@@ -58,6 +59,7 @@ public:
 	const std::weak_ptr<WeaponKatanaScabbard>& GetScabbard() const { return m_scabbard; }
 	const std::weak_ptr<Enemy>& GetEnemy() const { return m_enemy; }
 	const std::list<std::weak_ptr<Enemy>>& GetEnemies() const { return m_enemies; }
+	const std::list<std::weak_ptr<KdGameObject>>& GetEnemyLike() const { return m_enemyLike; }
 
 	void SetAtkPlayer(bool flg) { m_isAtkPlayer = flg; }
 
@@ -143,6 +145,7 @@ private:
 	std::weak_ptr<WeaponKatanaScabbard>	m_scabbard;				// カタナの参照
 	std::weak_ptr<Enemy>	m_enemy;							// 敵の参照
 	std::list<std::weak_ptr<Enemy>> m_enemies;					// 敵のリスト
+	std::list<std::weak_ptr<KdGameObject>> m_enemyLike;
 
 
 	// 残像関連

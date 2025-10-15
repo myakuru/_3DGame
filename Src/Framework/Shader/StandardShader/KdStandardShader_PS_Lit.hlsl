@@ -119,7 +119,7 @@ float4 main(VSOutput In) : SV_Target0
 		//べいやーから０から１の閾値算出
 		float dither = bayermatrix2[y][x] / 16.0f;
 
-		float ditherDist = 5.0f;
+		float ditherDist = 0.01f;
 
 		//大きいほう返す　　//0と計算結果の大きいほう返す
 		float range = max(0, camDist - ditherDist);

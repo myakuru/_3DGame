@@ -30,18 +30,6 @@ public:
 		return m_wpPlayer;
 	}
 
-	const std::weak_ptr<EnemySword>& GetEnemySword() const
-	{
-		return m_enemySword;
-	}
-
-	const std::weak_ptr<EnemyShield>& GetEnemyShield() const
-	{
-		return m_enemyShield;
-	}
-
-	void UpdateAttack();
-
 	// 攻撃の当たり判定(攻撃半径、攻撃距離、攻撃回数、攻撃間隔)
 	void UpdateAttackCollision(float _radius = 1.f, float _distance = 1.1f,
 		int _attackCount = 5, float _attackTimer = 0.3f);
@@ -122,8 +110,8 @@ private:
 
 	EnemyStatus m_status;				// 敵のステータス
 
-	std::weak_ptr<EnemySword> m_enemySword; // 敵の剣
-	std::weak_ptr<EnemyShield> m_enemyShield; // 敵の盾
+	std::list<std::weak_ptr<EnemySword>> m_enemySwords; // 敵の剣
+	std::list<std::weak_ptr<EnemyShield>> m_enemyShields; // 敵の盾
 
 	std::shared_ptr<HitDamage> m_spHitDamage;
 

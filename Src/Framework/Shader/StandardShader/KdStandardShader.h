@@ -18,11 +18,11 @@ public:
 		Math::Vector2	UVOffset = { 0.0f, 0.0f };
 		Math::Vector2	UVTiling = { 1.0f, 1.0f };
 
-		// フォグ有効
-		int				FogEnable = 1;
-
 		// ディザリング有効
 		int             ditherEnable = 1;
+
+		// フォグ有効
+		int				FogEnable = 1;
 
 		// エミッシブのみの描画
 		int				OnlyEmissie = 0;

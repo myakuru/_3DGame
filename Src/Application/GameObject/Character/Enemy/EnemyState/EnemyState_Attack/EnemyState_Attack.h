@@ -12,6 +12,6 @@ private:
 	void StateUpdate() override;
 	void StateEnd() override;
 
-	std::weak_ptr<EnemyShineBlue> m_shineEffectBlue;
+	std::list<std::weak_ptr<EnemyShineBlue>> m_shineEffectBlues;
 
 };

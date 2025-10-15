@@ -71,6 +71,8 @@
 #include"../GameObject/HUD/PlayerChargeUI/NotCharge1/NotCharge1.h"
 #include"../GameObject/HUD/PlayerChargeUI/NotCharge2/NotCharge2UI.h"
 #include"../GameObject/Effect/BillBoardEffect/MapGard/MapGard.h"
+#include"../GameObject/Character/BossEnemy/BossEnemy.h"
+#include"../GameObject/Field/UpDownField/UpDownField.h"
 
 void SceneManager::Init()
 {
@@ -112,10 +114,12 @@ void SceneManager::Register() const
 	// Map系
 	RegisterObject::GetInstance().Register<Map>();
 	RegisterObject::GetInstance().Register<Field>();
+	RegisterObject::GetInstance().Register<UpDownField>();
 
 	// キャラクター系
 	RegisterObject::GetInstance().Register<Player>();
 	RegisterObject::GetInstance().Register<Enemy>();
+	RegisterObject::GetInstance().Register<BossEnemy>();
 
 	// 武器系
 	RegisterObject::GetInstance().Register<Katana>();

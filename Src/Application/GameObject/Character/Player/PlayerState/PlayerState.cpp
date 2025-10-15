@@ -4,47 +4,52 @@
 #include"../PlayerState/PlayerState_SpecialAttack/PlayerState_SpecialAttack.h"
 #include"../PlayerState/PlayerState_FowardAvoidFast/PlayerState_FowardAvoidFast.h"
 #include"../PlayerState/PlayerState_BackWordAvoid/PlayerState_BackWordAvoid.h"
+#include"../../BossEnemy/BossEnemy.h"
+#include"../../../../Scene/SceneManager.h"
 
 
 void PlayerStateBase::StateStart()
 {
-	// 敵が複数いる場合は最も近い敵の方向ベクトルを計算
-	std::shared_ptr<Enemy> nearestEnemy;
+	// プレイヤー位置をキャッシュ（m_mWorld更新タイミングが気になるなら専用アクセサを用意）
+	const Math::Vector3 playerPos = m_player->GetPos();
 
-	// 最小距離の初期値を大きな値に設定
-	float minDistSq = std::numeric_limits<float>::max();
+	std::shared_ptr<KdGameObject> nearestEnemy;
+	Math::Vector3                  nearestEnemyPos = Math::Vector3::Zero;
+	float                          minDistSq = std::numeric_limits<float>::max();
 
-	// 敵リストをループして最も近い敵を見つける
-	for (const auto& weakEnemy : m_player->GetEnemies())
+	for (const auto& weakEnemy : m_player->GetEnemyLike())
 	{
-		// 一時的にシェアポインタを取得
 		if (auto enemy = weakEnemy.lock())
 		{
-			// 敵の位置を取得して距離を計算
-			Math::Vector3 enemyPos = enemy->GetPos();
+			if (enemy->IsExpired()) continue;
 
-			// プレイヤーとの距離の二乗を計算（平方根を取らないことで計算コストを削減）
-			float distSq = (enemyPos - m_player->GetPos()).LengthSquared();
+			// ボス敵だった場合
+			if (enemy->GetTypeID() == BossEnemy::TypeID)
+			{
+				if (!SceneManager::Instance().IsBossAppear()) continue;
+			}
 
-			// 最小距離を更新
+			const Math::Vector3 enemyPos = enemy->GetPos();
+			const float distSq = (enemyPos - playerPos).LengthSquared();
+
 			if (distSq < minDistSq)
 			{
-				// 最も近い敵を更新
 				minDistSq = distSq;
-				nearestEnemy = enemy;
+				nearestEnemyPos = enemyPos;
+				nearestEnemy = std::move(enemy);
 			}
 		}
 	}
 
 	if (nearestEnemy)
 	{
-		Math::Vector3 enemyPos = nearestEnemy->GetPos();
-		m_attackDirection = enemyPos - m_player->GetPos();
+		m_attackDirection = nearestEnemyPos - playerPos;
 		m_attackDirection.y = 0.0f;
+
 		if (m_attackDirection != Math::Vector3::Zero)
 		{
 			m_attackDirection.Normalize();
-			m_player->UpdateQuaternionDirect(m_attackDirection); // カメラ回転を掛けない
+			m_player->UpdateQuaternionDirect(m_attackDirection); // カメラ回転なし
 		}
 	}
 	else
@@ -57,7 +62,7 @@ void PlayerStateBase::StateStart()
 		}
 	}
 
-	// デフォルトは刀を左手に持たないようにする。
+	// デフォルトは刀を左手に持たない
 	if (auto katana = m_player->GetKatana().lock(); katana)
 	{
 		katana->SetNowAttackState(false);

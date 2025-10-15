@@ -17,4 +17,6 @@ private:
 	bool m_isCharging = false; // チャージ中かどうか
 	bool m_isCharged = false; // チャージが完了したかどうか
 
+	bool m_afterImagePlayed = false; // 残像エフェクトが再生されたかどうか
+
 };

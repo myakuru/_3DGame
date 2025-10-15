@@ -10,6 +10,7 @@
 #include"PlayerState/PlayerState_Hit/PlayerState_Hit.h"
 
 #include"../Enemy/Enemy.h"
+#include"../BossEnemy/BossEnemy.h"
 #include"../../Collition/Collition.h"
 
 const uint32_t Player::TypeID = KdGameObject::GenerateTypeID();
@@ -99,15 +100,18 @@ void Player::PostUpdate()
 	// 球に当たったオブジェクト情報を格納するリスト
 	std::list<KdCollider::CollisionResult> retSpherelist;
 
-	SceneManager::Instance().GetObjectWeakPtrList(m_enemies);
+	// 敵の取得（雑魚＋ボス）
+	SceneManager::Instance().GetObjectWeakPtrListAnyOf<Enemy, BossEnemy>(m_enemyLike);
 
-	for (const auto& enemy : m_enemies)
+	// 球と敵の当たり判定をチェック
+	for(const auto& enemyWeakPtr : m_enemyLike)
 	{
-		if (auto enemyPtr = enemy.lock())
+		if (auto obj = enemyWeakPtr.lock())
 		{
-			enemyPtr->Intersects(enemyHit, &retSpherelist);
+			obj->Intersects(enemyHit, &retSpherelist);
 		}
 	}
+
 
 	//  球にあたったリストから一番近いオブジェクトを探す
 	// オーバーした長さが1番長いものを探す。
@@ -141,6 +145,12 @@ void Player::PostUpdate()
 	}
 }
 
+void Player::DrawLit()
+{
+	KdShaderManager::Instance().m_StandardShader.SetDitherEnable(false);
+	KdShaderManager::Instance().m_StandardShader.DrawModel(*m_modelWork, m_mWorld, m_color);
+}
+
 void Player::DrawUnLit()
 {
 	if (m_afterImageEnable)
@@ -155,6 +165,7 @@ void Player::Update()
 
 	SceneManager::Instance().GetObjectWeakPtr(m_playerCamera);
 	SceneManager::Instance().GetObjectWeakPtr(m_enemy);
+	SceneManager::Instance().GetObjectWeakPtrList(m_enemies);
 	SceneManager::Instance().GetObjectWeakPtr(m_katana);
 	SceneManager::Instance().GetObjectWeakPtr(m_scabbard);
 
@@ -190,6 +201,26 @@ void Player::Update()
 	{
 		if (m_invincible) return; // 無敵状態ならヒットしない
 
+		// 雑魚・ボスをまとめてチェック
+		SceneManager::Instance().GetObjectWeakPtrListAnyOf<Enemy, BossEnemy>(m_enemyLike);
+
+		for (const auto& wk : m_enemyLike)
+		{
+			if (auto obj = wk.lock())
+			{
+				if (obj->GetTypeID() == Enemy::TypeID)
+				{
+					auto e = std::static_pointer_cast<Enemy>(obj);
+					if (e->GetJustAvoidSuccess()) return;
+				}
+				else if (obj->GetTypeID() == BossEnemy::TypeID)
+				{
+					auto b = std::static_pointer_cast<BossEnemy>(obj);
+					if (b->GetJustAvoidSuccess()) return;
+				}
+			}
+		}
+
 		// ダメージステートに変更
 		auto spDamageState = std::make_shared<PlayerState_Hit>();
 		ChangeState(spDamageState);
@@ -214,7 +245,8 @@ void Player::UpdateAttackCollision(float _radius, float _distance, int _attackCo
 
 	m_pDebugWire->AddDebugSphere(attackSphere.m_sphere.Center, attackSphere.m_sphere.Radius);
 
-	SceneManager::Instance().GetObjectWeakPtrList(m_enemies);
+	// 敵の取得（雑魚＋ボス）
+	SceneManager::Instance().GetObjectWeakPtrListAnyOf<Enemy, BossEnemy>(m_enemyLike);
 
 	// 初回セットアップ: 初期タイマを0に
 	if (!m_onceEffect)
@@ -233,15 +265,26 @@ void Player::UpdateAttackCollision(float _radius, float _distance, int _attackCo
 	{
 		bool hitAny = false;
 
-		for (const auto& enemyies : m_enemies)
+		for (const auto& wk : m_enemyLike)
 		{
-			if (auto enemyPtr = enemyies.lock())
+			if (auto obj = wk.lock())
 			{
 				std::list<KdCollider::CollisionResult> results;
-				if (enemyPtr->Intersects(attackSphere, &results) && !results.empty())
+				if (obj->Intersects(attackSphere, &results) && !results.empty())
 				{
-					enemyPtr->Damage(m_status.attack);
-					enemyPtr->SetEnemyHit(true);
+					// 型に応じてダメージ処理
+					if (obj->GetTypeID() == Enemy::TypeID)
+					{
+						auto e = std::static_pointer_cast<Enemy>(obj);
+						e->Damage(m_status.attack);
+						e->SetEnemyHit(true);
+					}
+					else if (obj->GetTypeID() == BossEnemy::TypeID)
+					{
+						auto b = std::static_pointer_cast<BossEnemy>(obj);
+						b->Damage(m_status.attack);
+						b->SetEnemyHit(true);
+					}
 					hitAny = true;
 				}
 			}

@@ -15,10 +15,11 @@ void EnemyState_Hit::StateStart()
 	// 累積ヒット回数は Enemy 本体で管理
 	m_enemy->IncrementHitCount();
 
-	// 5回以上で無敵
-	if (m_enemy->GetHitCount() >= 5)
+	// 10回以上で無敵
+	if (m_enemy->GetHitCount() >= 10)
 	{
 		m_enemy->SetInvincible(true);
+		m_enemy->ResetHitCount();
 	}
 
 }

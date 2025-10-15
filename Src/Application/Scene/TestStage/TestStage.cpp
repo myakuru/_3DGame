@@ -3,6 +3,7 @@
 #include"../../GameObject/Utility/Time.h"
 #include"../../GameObject/Character/Player/Player.h"
 #include"../../GameObject/Character/Enemy/Enemy.h"
+#include"../../GameObject/Character/BossEnemy/BossEnemy.h"
 
 #include"../../../Framework/Json/Json.h"
 #include"../../main.h"
@@ -90,14 +91,18 @@ void TestScene::Init()
 	SceneManager::Instance().m_gameClear = false;	// ゲームクリアフラグを初期化
 	SceneManager::Instance().SetResultFlag(false);	// 結果フラグを初期化
 
+	m_bossAppear = false; // ボス出現フラグを初期化
+
 }
 
 void TestScene::SearchEnemy()
 {
 	// 敵を探す
 	bool enemyExists = false;
+	bool bossenemyExists = false;
 	
 	SceneManager::Instance().GetObjectWeakPtrList(m_enemies);
+	SceneManager::Instance().GetObjectWeakPtrList(m_bossEnemies);
 
 	for(const auto& weakEnemy : m_enemies)
 	{
@@ -108,9 +113,49 @@ void TestScene::SearchEnemy()
 		}
 	}
 
+	for (const auto& weakBoss : m_bossEnemies)
+	{
+		if (const auto spBoss = weakBoss.lock())
+		{
+			bossenemyExists = true; // 敵が存在する
+			break;
+		}
+	}
+
 	// 敵がいなかったらゲームクリア
 	if (!enemyExists)
 	{
+		SceneManager::Instance().SetBossAppear(true);
+	}
+
+	// ボスが出現するかどうか
+	if (SceneManager::Instance().IsBossAppear() && !m_bossAppear)
+	{
+		m_bossAppear = true;
+
+		// ボスを出現させる処理をここに追加
+		auto bossEnemy = std::make_shared<BossEnemy>();
+		bossEnemy->Init();
+		SceneManager::Instance().AddObject(bossEnemy);
+	}
+
+	if (!bossenemyExists && !enemyExists)
+	{
 		SceneManager::Instance().m_gameClear = true;
 	}
+
+}
+
+void TestScene::DrawImGui()
+{
+	BaseScene::DrawImGui();
+	ImGui::Begin("BossEnemySpawn");
+	{
+		ImGui::Text("BossEnemySpawn");
+		if (ImGui::Button("SpawnBossEnemy"))
+		{
+			SceneManager::Instance().SetBossAppear(true);
+		}
+	}
+	ImGui::End();
 }

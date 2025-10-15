@@ -28,12 +28,15 @@ void PlayerState_ForwardAvoid::StateStart()
 	// 回避時の処理
 	m_player->SetAvoidStartTime(0.0f);
 
-	if (auto enemy = m_player->GetEnemy().lock(); enemy)
+	for (const auto& enemies : m_player->GetEnemies())
 	{
-		// ジャスト回避成功時の残像エフェクト
-		if (enemy->GetJustAvoidSuccess() == true)
+		if (auto enemyPtr = enemies.lock(); enemyPtr)
 		{
-			m_player->AddAfterImage(true, 5, 1.0f, Math::Color(0.0f, 1.0f, 1.0f, 0.2f), 0.7f);
+			// ジャスト回避成功時の残像エフェクト
+			if (enemyPtr->GetJustAvoidSuccess())
+			{
+				m_player->AddAfterImage(true, 5, 1.0f, Math::Color(0.0f, 1.0f, 1.0f, 0.5f), 0.7f);
+			}
 		}
 	}
 }
@@ -49,12 +52,16 @@ void PlayerState_ForwardAvoid::StateUpdate()
 	// 途中で敵のジャスト回避成功フラグが立ったら残像発生
 	if (!m_afterImagePlayed) 
 	{
-		if (auto enemy = m_player->GetEnemy().lock(); enemy)
+		for(const auto& enemies: m_player->GetEnemies())
 		{
-			if (enemy->GetJustAvoidSuccess()) 
+			if (auto enemyPtr = enemies.lock(); enemyPtr)
 			{
-				m_player->AddAfterImage(true, 5, 1.0f, Math::Color(0.0f, 1.0f, 1.0f, 0.2f), 0.7f);
-				m_afterImagePlayed = true;
+				// ジャスト回避成功時の残像エフェクト
+				if (enemyPtr->GetJustAvoidSuccess())
+				{
+					m_player->AddAfterImage(true, 5, 1.0f, Math::Color(0.0f, 1.0f, 1.0f, 0.2f), 0.7f);
+					m_afterImagePlayed = true;
+				}
 			}
 		}
 	}
@@ -108,9 +115,7 @@ void PlayerState_ForwardAvoid::StateEnd()
 		camera->SetTargetLookAt({ 0.f,1.0f,-3.5f });
 	}
 
-	if (auto enemy = m_player->GetEnemy().lock(); enemy)
-	{
-		enemy->SetJustAvoidSuccess(false);
-		m_player->AddAfterImage();
-	}
+
+	m_player->AddAfterImage();
+		
 }

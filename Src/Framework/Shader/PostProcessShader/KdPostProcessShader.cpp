@@ -90,28 +90,30 @@ bool KdPostProcessShader::Init()
 
 	m_cb0_BrightInfo.Create();
 
-	// 1440pでレンダーターゲット生成
-	const int renderWidth = 1920;
-	const int renderHeight = 1080;
+	// 2160pでレンダーターゲット生成
+	const int renderWidth = 3840 / 2;
+	const int renderHeight = 2160 / 2;
+
+	const int halfW = renderWidth / 2;
+	const int halfH = renderHeight / 2;
+	const int quarterW = renderWidth / 4;
+	const int quarterH = renderHeight / 4;
 
 	m_postEffectRTPack.CreateRenderTarget(renderWidth, renderHeight, true);
-	m_blurRTPack.CreateRenderTarget(renderWidth, renderHeight);
-	m_strongBlurRTPack.CreateRenderTarget(renderWidth / 2, renderHeight / 2);
-	m_depthOfFieldRTPack.CreateRenderTarget(renderWidth, renderHeight);
-	m_brightEffectRTPack.CreateRenderTarget(renderWidth, renderHeight);
-
 	m_noiseRTPack.CreateRenderTarget(renderWidth, renderHeight);
 
-	int lightBloomWidth = renderWidth;
-	int lightBloomHeight = renderHeight;
+	m_blurRTPack.CreateRenderTarget(halfW, halfH);
+	m_depthOfFieldRTPack.CreateRenderTarget(halfW, halfH);
+	m_brightEffectRTPack.CreateRenderTarget(halfW, halfH);
 
-	// 光源ぼかし画像
-	for (int i = 0; i < kLightBloomNum; ++i)
-	{
+	m_strongBlurRTPack.CreateRenderTarget(quarterW, quarterH);
+
+	int lightBloomWidth = halfW;
+	int lightBloomHeight = halfH;
+	for (int i = 0; i < kLightBloomNum; ++i) {
 		m_lightBloomRTPack[i].CreateRenderTarget(lightBloomWidth, lightBloomHeight);
-
-		lightBloomWidth /= 2;
-		lightBloomHeight /= 2;
+		lightBloomWidth = std::max(1, lightBloomWidth / 2);
+		lightBloomHeight = std::max(1, lightBloomHeight / 2);
 	}
 
 	// 画面全体に書き込む用の頂点情報
@@ -195,8 +197,8 @@ void KdPostProcessShader::PostEffectProcess()
 	m_postEffectRTChanger.UndoRenderTarget();
 
 	LightBloomProcess();
-	BlurProcess();
-	DepthOfFieldProcess();
+	//BlurProcess();
+	//DepthOfFieldProcess();
 	NoiseProcess();
 
 	Math::Viewport vp;
@@ -361,14 +363,16 @@ void KdPostProcessShader::GenerateBlurTexture(std::shared_ptr<KdTexture>& spSrcT
 
 	// 横にぼかす
 	std::vector<Math::Vector3> horizontalBlurInfo;
-	CreateBlurOffsetList(horizontalBlurInfo, spDstTex, blurRadius, { 1.0f, 0 });
+    // 入力ソースのテクセルサイズ基準でオフセットを計算
+    CreateBlurOffsetList(horizontalBlurInfo, spSrcTex, blurRadius, { 1.0f, 0 });
 	SetBlurInfo(horizontalBlurInfo);
 
 	DrawTexture(&spSrcTex, 1, tmpBlurRTPack.m_RTTexture, &tmpBlurRTPack.m_viewPort);
 
 	// 横にぼかした画像を更に縦にぼかす
 	std::vector<Math::Vector3> verticalBlurInfo;
-	CreateBlurOffsetList(verticalBlurInfo, spDstTex, blurRadius, { 0, 1.0f });
+    // 縦ブラーは横ブラー結果(一時RT)のテクセルサイズ基準でオフセットを計算
+    CreateBlurOffsetList(verticalBlurInfo, tmpBlurRTPack.m_RTTexture, blurRadius, { 0, 1.0f });
 	SetBlurInfo(verticalBlurInfo);
 
 	DrawTexture(&tmpBlurRTPack.m_RTTexture, 1, spDstTex, &VP);

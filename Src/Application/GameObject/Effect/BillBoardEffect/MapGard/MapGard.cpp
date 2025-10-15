@@ -15,20 +15,24 @@ void MapGard::Init()
 	SceneManager::Instance().GetObjectWeakPtr(m_player);
 
 	m_scale = { 0.15f,0.8f,1.0f };
+
+	m_position.y = 10.7f;
+
 }
 
 void MapGard::Update()
 {
+	// プレイヤーとの距離（実距離で比較するように修正）
 	if (auto player = m_player.lock(); player)
 	{
-		m_playerDistance = (player->GetPos() - m_position).LengthSquared();
+		m_playerDistance = (player->GetPos() - m_position).Length();
 	}
 
-	if (m_playerDistance < 16.0f)
+	if (m_playerDistance < 5.0f)
 	{
 		m_color = { 0.8f,0.8f,0.8f,1.0f };
 	}
-	else if(m_playerDistance < 20.0f)
+	else if (m_playerDistance < 8.0f)
 	{
 		m_color = { 0.8f,0.8f,0.8f,0.8f };
 	}
@@ -37,24 +41,29 @@ void MapGard::Update()
 		m_color = { 0.8f,0.8f,0.8f,0.5f };
 	}
 
-	// 常に微細に揺れる
-	m_offset.x = KdRandom::GetFloat(-0.1f, 0.1f);
-	m_offset.y = KdRandom::GetFloat(-0.1f, 0.1f);
-	m_offset.z = KdRandom::GetFloat(-0.1f, 0.1f);
+	// 常に微細に揺れる（位置へ加算しない）
+	Math::Vector3 jitter = {
+		KdRandom::GetFloat(-0.1f, 0.1f),
+		KdRandom::GetFloat(-0.1f, 0.1f),
+		KdRandom::GetFloat(-0.1f, 0.1f)
+	};
+	m_offset = jitter; // 必要なら保持。使用しないなら代入を省略可。
 
 	// カメラが存在するなら
 	if (auto spCamera = m_camera.lock(); spCamera)
 	{
-		// ビルボード行列
+		Math::Vector3 camPos = spCamera->GetCamera()->GetCameraMatrix().Translation();
+
+		// ベース位置 + 微細オフセット
+		Math::Vector3 worldPos = m_position + (m_offset * 0.01f);
+
+		// ビルボード行列（位置は worldPos を使用）
 		Math::Matrix rot = Math::Matrix::CreateBillboard
 		(
-			m_position,													// オブジェクトの位置
-			spCamera->GetCamera()->GetCameraMatrix().Translation(),		// カメラの位置
-			Math::Vector3::UnitY										// カメラの上方向
+			worldPos,                   // オブジェクトの位置（描画用）
+			camPos,                     // カメラの位置
+			Math::Vector3::UnitY        // カメラの上方向
 		);
-
-		// 微細に揺らすオフセットを加算
-		m_position += m_offset * 0.01f;
 
 		// 最終的なワールド行列
 		m_mWorld = Math::Matrix::CreateScale(m_scale) * rot;
