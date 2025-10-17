@@ -12,8 +12,9 @@ private:
 
 	void Init() override;
 	void Update() override;
+	void DrawSprite() override;
 
-	Math::Rectangle m_srcRect;	// スコアの表示位置
+	Math::Rectangle m_srcRect = { 0,0,150,50 };	// スコアの表示位置
 
 	int m_displayTime = 0;
 

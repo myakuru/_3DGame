@@ -14,4 +14,9 @@ private:
 	void Init() override;
 	void Update() override;
 	void DrawSprite() override;
+
+
+
+	bool m_intro = false;
+
 };

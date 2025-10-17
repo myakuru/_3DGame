@@ -177,6 +177,14 @@ void BaseScene::Draw()
 	}
 	KdShaderManager::Instance().m_postProcessShader.EndBright();
 
+	// グレースケール
+	KdShaderManager::Instance().m_StandardShader.BeginGrayscale();
+	{
+		for (auto& obj : m_objList) obj->DrawGrayScale();
+		for (auto& obj : m_drawObjectList) obj->DrawGrayScale();
+	}
+	KdShaderManager::Instance().m_StandardShader.EndGrayscale();
+
 	// Toonシェーダー
 	KdShaderManager::Instance().m_StandardShader.BeginToon();
 	{
@@ -192,14 +200,6 @@ void BaseScene::Draw()
 		for (auto& obj : m_drawObjectList) obj->DrawGradation();
 	}
 	KdShaderManager::Instance().m_StandardShader.EndGradient();
-
-	// グレースケール
-	KdShaderManager::Instance().m_StandardShader.BeginGrayscale();
-	{
-		for (auto& obj : m_objList) obj->DrawGrayScale();
-		for (auto& obj : m_drawObjectList) obj->DrawGrayScale();
-	}
-	KdShaderManager::Instance().m_StandardShader.EndGrayscale();
 
 	// エフェクト
 	KdShaderManager::Instance().m_StandardShader.BeginEffect();

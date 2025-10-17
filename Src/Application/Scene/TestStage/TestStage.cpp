@@ -14,9 +14,20 @@ void TestScene::Event()
 	// 敵を探して、いなかったらゲームクリアさせる
 	SearchEnemy();
 
+	// イントロBGMが再生終了したらループBGMへ切り替え
+	if (!m_gameSound->IsPlaying())
+	{
+		m_gameSound = KdAudioManager::Instance().Play
+		(
+			"Asset/Sound/FieldBGM/ToDo_game_bgm_loop.wav",
+			true
+		);
+		if (m_gameSound) { m_gameSound->SetVolume(1.0f); }
+	}
+
 	if (SceneManager::Instance().m_gameClear)
 	{
-		KdShaderManager::Instance().WorkAmbientController().SetheightFog({1,1,1}, 2.0f, 0.0f, 0.0f);
+		KdShaderManager::Instance().WorkAmbientController().SetheightFog({ 1,1,1 }, 2.0f, 0.0f, 0.0f);
 		m_brightThreshold = 1.0f;
 		m_fogEnable = true;
 		m_fogUseRange = true;
@@ -79,7 +90,7 @@ void TestScene::Init()
 
 	m_countDownTimer = 120.0f; // カウントダウンタイマーを120秒に設定
 
-	SceneManager::Instance().SetIntroCamera(false); // カメラのイントロを開始
+	SceneManager::Instance().SetIntroCamera(true); // カメラのイントロを開始
 
 	KdShaderManager::Instance().m_postProcessShader.SetBrightThreshold(m_brightThreshold);
 	KdShaderManager::Instance().WorkAmbientController().SetAmbientLight(m_anviLightColor);
@@ -93,6 +104,17 @@ void TestScene::Init()
 
 	m_bossAppear = false; // ボス出現フラグを初期化
 
+	// イントロBGM（非ループ）
+	m_gameSound = KdAudioManager::Instance().Play
+	(
+		"Asset/Sound/FieldBGM/ToDo_game_bgm.wav",
+		false
+	);
+
+	if (m_gameSound)
+	{
+		m_gameSound->SetVolume(1.0f);
+	}
 }
 
 void TestScene::SearchEnemy()

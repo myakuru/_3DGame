@@ -47,4 +47,5 @@ void GameScene::Init()
 
 	SceneManager::Instance().m_gameClear = false; // ゲームクリアフラグを初期化
 	SceneManager::Instance().SetResultFlag(false); // 結果フラグを初期化
+
 }

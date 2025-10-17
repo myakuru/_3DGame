@@ -16,7 +16,7 @@ public:
 	void Init() override;
 	void PostUpdate() override;
 	void UpdateWinnerCamera();
-	void UpdateIntroCamera();
+	void NewUpdateIntroCamera();
 	void ImGuiInspector()	override;
 	void JsonSave(nlohmann::json& _json) const override;
 	void JsonInput(const nlohmann::json& _json) override;
@@ -36,6 +36,7 @@ public:
 	// カメラのターゲット位置を設定デフォルトは(0.0f,1.0f,-3.5f)
 	void SetTargetLookAt(const Math::Vector3& target) { m_followRate = target; }
 
+
 	// カメラのターゲットの回転を設定
 	void SetTargetRotation(const Math::Vector3& rot)
 	{
@@ -50,6 +51,7 @@ public:
 
 	void StateInit();
 	void ChangeState(std::shared_ptr<PlayerCameraState> _state);
+
 
 private:
 
@@ -101,5 +103,12 @@ private:
 
 	Math::Vector2 m_fovShake = Math::Vector2::Zero;
 	Math::Vector2 m_fovShakeTarget = { 60.0f,0.0f };
+
+	float m_time = 0.0f;
+	Math::Vector3 m_endFollow = { 0.0f, 1.0f, -1.7f };
+	Math::Vector3 m_startFollow = { 0.0f, 3.0f, -10.0f };
+
+	bool  m_inited = false;
+	float m_startYaw = 0.0f;
 
 };

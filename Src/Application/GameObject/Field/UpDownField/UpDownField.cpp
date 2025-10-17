@@ -6,6 +6,7 @@ const uint32_t UpDownField::TypeID = KdGameObject::GenerateTypeID();
 
 void UpDownField::DrawLit()
 {
+	KdShaderManager::Instance().m_StandardShader.SetDitherEnable(false);
 	KdShaderManager::Instance().m_StandardShader.DrawModel(*m_model, m_mWorld, m_color);
 }
 

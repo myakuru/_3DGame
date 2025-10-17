@@ -82,4 +82,5 @@ void EnemyState_Attack1::StateUpdate()
 
 void EnemyState_Attack1::StateEnd()
 {
+	m_enemy->SetInvincible(false);
 }

@@ -27,10 +27,13 @@ public:
 	void DrawLit() override;
 	void DrawUnLit() override;
 	void Update() override;
-	// 攻撃の当たり判定(攻撃半径、攻撃距離、攻撃回数、攻撃間隔、カメラシェイクの強さ、カメラシェイクの時間)
-	void UpdateAttackCollision(float _radius = 10.f,float _distance = 1.1f,
-		int _attackCount = 5,float _attackTimer = 0.3f,
-		Math::Vector2 _cameraShakePow = { 0.3f,0.3f },float _cameraTime = 0.3f);
+
+	// 攻撃の当たり判定(攻撃半径、攻撃距離、攻撃回数、攻撃間隔、カメラシェイクの強さ、カメラシェイクの時間、当たり判定が有効な開始秒・終了秒)
+	// 開始 > 終了なら入れ替え
+	void UpdateAttackCollision(float _radius = 10.f, float _distance = 1.1f,
+		int _attackCount = 5, float _attackTimer = 0.3f,
+		Math::Vector2 _cameraShakePow = { 0.3f, 0.3f }, float _cameraTime = 0.3f,
+		float _activeBeginSec = 0.0f, float _activeEndSec = 3.0f);
 
 	// 当たり判定リセット
 	void ResetAttackCollision()
@@ -39,6 +42,11 @@ public:
 		m_chargeAttackTimer = 0.0f;
 		m_isChargeAttackActive = false;
 		m_onceEffect = false;
+
+		// 時間ウィンドウもリセット
+		m_attackActiveTime = 0.0f;
+		m_attackActiveBegin = 0.0f;
+		m_attackActiveEnd = 3.0f;
 	}
 
 	void ImGuiInspector() override;
@@ -94,7 +102,7 @@ public:
 	void DrawAfterImages();
 
 	// 残像の状態設定(残像を使用するか？、残像の最台数、残像を何秒間表示するか、カラー)
-	void AddAfterImage(bool _flg = false, int _max = 0, float _nterval = 0, const Math::Color& _color = {0,0,0,0},float dissever = 0.0f)
+	void AddAfterImage(bool _flg = false, int _max = 0, float _nterval = 0, const Math::Color& _color = { 0,0,0,0 }, float dissever = 0.0f)
 	{
 		m_afterImageEnable = _flg;
 		m_afterImageMax = _max;
@@ -119,6 +127,16 @@ public:
 	{
 		return m_isHit;
 	}
+
+	// ジャスト回避成功フラグの取得
+	bool GetJustAvoidSuccess() const { return m_justAvoid; }
+
+	void SetJustAvoidSuccess(bool _flg) { m_justAvoid = _flg; }
+
+	// 無敵状態の取得
+	bool GetInvincible() const { return m_invincible; }
+
+	void SetInvincible(bool _flg) { m_invincible = _flg; }
 
 private:
 
@@ -161,15 +179,20 @@ private:
 	int  m_afterImageMax = 1;
 	float  m_afterImageInterval = 0.1f; // 何フレームごとに保存するか
 	float  m_afterImageCounter = 0.0f;	// カウンタ
-	Math::Color m_afterImageColor = {0,1,1,0.1f}; // 基本色（半透明白）
+	Math::Color m_afterImageColor = { 0,1,1,0.1f }; // 基本色（半透明白）
 
 	bool m_isHit = false;						// ヒット判定用
 	bool m_invincible = false;					// 無敵判定用
+	bool m_justAvoid = false;					// ジャスト回避判定用
+	float m_unScaledeltaTime = 0.0f;			// デフォルトのdeltaTimeを保存する変数
 
 	std::deque<AfterImageFrame> m_afterImages;
 
 	// 描画用テンポラリ Work（元モデルと同じ Data を参照）
 	std::unique_ptr<KdModelWork> m_afterImageWork;
 
-
+	// 攻撃の有効時間ウィンドウ
+	float m_attackActiveTime = 0.0f;	// 攻撃開始からの経過時間
+	float m_attackActiveBegin = 0.0f;	// 当たり判定が有効になる開始秒
+	float m_attackActiveEnd = 3.0f;		// 当たり判定が無効化される終了秒
 };

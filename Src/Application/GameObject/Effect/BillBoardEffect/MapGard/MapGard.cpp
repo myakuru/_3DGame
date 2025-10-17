@@ -65,6 +65,7 @@ void MapGard::Update()
 			Math::Vector3::UnitY        // カメラの上方向
 		);
 
+
 		// 最終的なワールド行列
 		m_mWorld = Math::Matrix::CreateScale(m_scale) * rot;
 	}
@@ -72,5 +73,7 @@ void MapGard::Update()
 
 void MapGard::DrawToon()
 {
+	KdShaderManager::Instance().ChangeDepthStencilState(KdDepthStencilState::ZWriteDisable);
 	SelectDraw3dPolygon::DrawToon();
+	KdShaderManager::Instance().UndoDepthStencilState();
 }

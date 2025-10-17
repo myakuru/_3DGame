@@ -8,13 +8,14 @@ void BlackBanner::Init()
 {
 	SelectDraw2DTexture::Init();
 	m_scale.y = 1.3f;
+
 }
 
 void BlackBanner::Update()
 {
 	float deltaTime = Application::Instance().GetDeltaTime();
 
-	if (SceneManager::Instance().GetResultFlag())
+	if (SceneManager::Instance().GetResultFlag() || SceneManager::Instance().IsIntroCamera())
 	{
 
 		if (m_scale.y > 1.0f)
@@ -44,7 +45,7 @@ void BlackBanner::Update()
 
 void BlackBanner::DrawSprite()
 {
-	if (SceneManager::Instance().GetResultFlag())
+	if (m_scale.y <= 1.3f)
 	{
 		SelectDraw2DTexture::DrawSprite();
 	}

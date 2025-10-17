@@ -19,13 +19,11 @@ void PlayerCamera::Init()
 
 	m_pDebugWire = std::make_unique<KdDebugWireFrame>();
 
-	m_cameraPos = Math::Vector3(-4.0f, 1.2f, 4.0f);
-
 	// 起動時にカーソルを動かさない。現在位置を保持
 	GetCursorPos(&m_FixMousePos);
 
 	// 初期のカメラのターゲット座標を設定
-	m_followRate = m_targetLookAt;
+	m_followRate = { 0.0f, 1.0f, -0.5f };
 
 	m_fovShake = { m_fov,0.0f };
 
@@ -34,29 +32,27 @@ void PlayerCamera::Init()
 	m_spCamera->SetProjectionMatrix(m_fovShakeTarget.x);
 
 	StateInit();
+
+	SceneManager::Instance().GetObjectWeakPtr(m_Player);
+
+	if (auto player = m_Player.lock(); player)
+	{
+		m_cameraPos = player->GetPos();
+	}
+
+	m_degree = { 0.0f,140.0f,0.0f };
+
+	m_startYaw = 0.0f;
 }
 
 void PlayerCamera::PostUpdate()
 {
 	if (SceneManager::Instance().m_sceneCamera) return;
 
-	float deltaTime = Application::Instance().GetDeltaTime();
+	float deltaTime = Application::Instance().GetUnscaledDeltaTime();
 
-	SceneManager::Instance().GetObjectWeakPtr(m_Player);
 	m_spTarget = m_Player.lock();
 	if (!m_spTarget) return;
-
-	if (SceneManager::Instance().m_gameClear)
-	{
-		UpdateWinnerCamera();
-		return;
-	}
-
-	if (SceneManager::Instance().IsIntroCamera())
-	{
-		UpdateIntroCamera();
-		return;
-	}
 
 	// 回転更新
 	UpdateRotateByMouse();
@@ -87,7 +83,6 @@ void PlayerCamera::PostUpdate()
 	// プレイヤー基準位置
 	Math::Vector3 playerPos = m_spTarget->GetPos() + shakeOffset;
 
-	// 追従平滑化（現在はプレイヤー位置をそのまま使う構造なので m_cameraPos をプレイヤーへ寄せる）
 	m_cameraPos = Math::Vector3::Lerp(m_cameraPos, playerPos, m_dhistanceSmooth * deltaTime);
 
 	// 一旦希望のカメラ行列を組み立て（まだ確定ではない）
@@ -100,6 +95,15 @@ void PlayerCamera::PostUpdate()
 
 	// 障害物補正
 	//UpdateCameraRayCast(anchor);
+	if (SceneManager::Instance().IsIntroCamera())
+	{
+		NewUpdateIntroCamera();
+	}
+
+	if (SceneManager::Instance().m_gameClear && !SceneManager::Instance().IsIntroCamera())
+	{
+		UpdateWinnerCamera();
+	}
 
 	// 最終的にカメラ行列適用
 	m_spCamera->SetCameraMatrix(m_mWorld);
@@ -109,14 +113,13 @@ void PlayerCamera::PostUpdate()
 
 void PlayerCamera::UpdateWinnerCamera()
 {
-	Application::Instance().SetFpsScale(0.0);
+	Application::Instance().SetFpsScale(0.0f); // 一時停止（意図が「停止」ならこのまま。※「リセット」なら 1.0f）
 
 	float time = Time::Instance().GetElapsedTime();
 	int sec = static_cast<int>(time);
 
 	if (sec == 0 || sec % 2 == 1)
 	{
-		// ランダムでノイズON/OFF
 		bool enableNoise = KdRandom::GetInt(0, 5) == 1;
 		KdShaderManager::Instance().m_postProcessShader.SetEnableNoise(enableNoise);
 		if (enableNoise)
@@ -127,111 +130,169 @@ void PlayerCamera::UpdateWinnerCamera()
 	}
 	else
 	{
-		KdShaderManager::Instance().m_postProcessShader.SetEnableNoise(false); // ノイズOFF
+		KdShaderManager::Instance().m_postProcessShader.SetEnableNoise(false);
 	}
 
-	enum Step { ToDeg60, ToDeg180, ToDeg0, End };
-	static Step step = ToDeg60;
-	static float timer = 0.0f;
-	static Math::Vector3 camOffset = { 0, 1.0f, -3.0f };
+	// Unscaled はフレーム末に更新されるので、ここでの値は「前フレーム分」
 	float deltaTime = Application::Instance().GetUnscaledDeltaTime();
-	timer += deltaTime;
+	m_time += deltaTime;
 
-	Math::Vector3 playerPos = m_Player.lock()->GetPos();
+	// 区間 [0,1)
+	if (m_time >= 0.0f)
+	{
+		m_degree = { -20.0f,263.0f,1.0f };
+		const Math::Vector3 startFollow = { 0.0f, 0.7f, -1.0f };
+		const Math::Vector3 endFollow = { 0.0f, 0.7f, -0.9f };
+		float t = std::clamp(m_time, 0.0f, 1.0f);
+		m_followRate = Math::Vector3::SmoothStep(startFollow, endFollow, t);
 
-	switch (step)
-	{
-	case ToDeg60:
-	{
-		m_degree.y = 60.0f;
-		m_followRate = { 0.0f, 1.0f, -2.5f };
-		break;
-	}
-	case ToDeg180:
-		m_degree.y = 180.0f;
-		m_mRotation = Math::Matrix::CreateRotationY(DirectX::XMConvertToRadians(m_degree.y));
-		SceneManager::Instance().SetDrawGrayScale(true);
-		KdShaderManager::Instance().m_postProcessShader.SetEnableGray(true);
-		if (timer > 1.5f) { step = ToDeg0; timer = 0.0f; }
-		break;
-	case ToDeg0:
-		m_degree.y = 0.0f;
-		KdShaderManager::Instance().m_postProcessShader.SetEnableGray(false);
-		m_mRotation = Math::Matrix::CreateRotationY(DirectX::XMConvertToRadians(m_degree.y));
-		if (timer > 1.5f) { step = End; timer = 0.0f; }
-		break;
-	case End:
-		// カメラの向いている方向に向かって移動
-		KdShaderManager::Instance().m_postProcessShader.SetEnableGray(true);
-		Math::Vector3 targetOffset = Math::Vector3::Up;
-		camOffset = Math::Vector3::Lerp(camOffset, targetOffset, 5.0f * deltaTime);
-		m_cameraPos = playerPos + camOffset;
-		if ((camOffset - targetOffset).Length() < 0.1f)
+		if (m_time >= 0.9f && m_time <= 0.99f)
 		{
-			camOffset = targetOffset;
-			Application::Instance().SetFpsScale(1.0);
+			KdShaderManager::Instance().m_postProcessShader.SetEnableGray(true);
+		}
+		else
+		{
+			KdShaderManager::Instance().m_postProcessShader.SetEnableGray(false);
+		}
+	}
+
+	// 区間 [1,2)
+	if (m_time >= 1.0f)
+	{
+		m_degree = { 1.5f,227.0f,0.0f };
+		const Math::Vector3 startFollow = { 3.4f, 1.0f, -4.4f };
+		const Math::Vector3 endFollow = { 3.4f, 1.0f, -4.3f };
+		float t = std::clamp((m_time - 1.0f), 0.0f, 1.0f);
+		m_targetLookAt = Math::Vector3::SmoothStep(startFollow, endFollow, t);
+
+		if (m_time >= 1.9f && m_time <= 1.99f)
+		{
+			KdShaderManager::Instance().m_postProcessShader.SetEnableGray(true);
+		}
+		else
+		{
+			KdShaderManager::Instance().m_postProcessShader.SetEnableGray(false);
+		}
+	}
+
+	// 区間 [2,3)
+	if (m_time >= 2.0f)
+	{
+		m_degree = { 10.0f,320.0f,0.0f };
+		const Math::Vector3 startFollow = { 0.6f, 1.0f, -1.6f };
+		const Math::Vector3 endFollow = { 0.6f, 1.0f, -1.5f };
+		float t = std::clamp((m_time - 2.0f), 0.0f, 1.0f);
+		m_targetLookAt = Math::Vector3::SmoothStep(startFollow, endFollow, t);
+
+		if (m_time >= 2.9f && m_time <= 2.99f)
+		{
+			KdShaderManager::Instance().m_postProcessShader.SetEnableGray(true);
+		}
+		else
+		{
+			KdShaderManager::Instance().m_postProcessShader.SetEnableGray(false);
+		}
+	}
+
+	// 区間 [3,∞)
+	if (m_time >= 3.0f)
+	{
+		m_degree = { 0.0f,90.0f,0.0f };
+		const Math::Vector3 startFollow = { 0.0f, 0.7f, -4.0f };
+		const Math::Vector3 endFollow = { 0.0f, 0.7f,  0.0f };
+		float t = std::clamp((m_time - 3.0f), 0.0f, 1.0f);
+		m_targetLookAt = Math::Vector3::SmoothStep(startFollow, endFollow, t);
+
+		KdShaderManager::Instance().m_postProcessShader.SetEnableGray(true);
+
+		if (m_targetLookAt.z >= 0.0f)
+		{
 			SceneManager::Instance().m_gameClear = false;
+			m_time = 0.0f;
+
+			Application::Instance().SetFpsScale(1.0f); // 解除
 			SceneManager::Instance().SetNextScene(SceneManager::SceneType::Result);
 		}
-		break;
 	}
 }
 
-void PlayerCamera::UpdateIntroCamera()
+void PlayerCamera::NewUpdateIntroCamera()
 {
 	float deltaTime = Application::Instance().GetDeltaTime();
-	m_introTimer += deltaTime;
 
-	// 回転速度
-	constexpr float ROTATE_SPEED = 40.0f; // 1秒で40度回転
+	// 回転
+	m_degree.y += 60.0f * deltaTime;
 
-	// 目標相対位置
-	const Math::Vector3 startPos(0.0f, 1.0f, -1.2f);
-	const Math::Vector3 endPos(0.0f, 1.3f, -3.0f);
+	// フォロー距離の補間：-0.5f -> -1.7f を 320度 到達までに完了
+	const Math::Vector3 startFollow = { 0.0f, 1.0f, -0.5f };
+	const Math::Vector3 endFollow = { 0.0f, 1.0f, -1.5f };
 
-	// 初回のみ初期化
-	if (m_introTimer == deltaTime) {
-		m_degree = { 0.0f, -20.0f, 0.0f };
-		m_introCamPos = startPos;
-	}
-
-	// 目標角度まで加算
-	m_degree.y -= ROTATE_SPEED * deltaTime;
-
-	// 目標位置に十分近づいたら終了
-	if (m_degree.y >= -261.0f && m_degree.y <= -240.0f)
+	// 開始角を記録（初回のみ）
+	if (!m_inited)
 	{
-		// カメラ位置を補間
-		constexpr float LERP_SPEED = 3.0f; // 1秒で1.0進む
-		m_introCamPos = Math::Vector3::Lerp(m_introCamPos, endPos, LERP_SPEED * deltaTime);
+		m_degree.y = 145.0f; // 安全策でリセット
+		m_startYaw = m_degree.y;
+		m_inited = true;
+		m_followRate = startFollow; // 初期値を明示
 	}
-	else if (m_degree.y <= -261.0f)
+
+	
+	// 補間区間の“全長” •	開始角 m_startYaw から目標角 320.0f までの差分を total = 320.0f - m_startYaw
+	float denom = std::max(1e-4f, 320.0f - m_startYaw);
+	// 現在の進捗度合い t = (m_degree.y - m_startYaw) / total を 0.0f ～ 1.0f にクランプ
+	float total = std::clamp((m_degree.y - m_startYaw) / denom, 0.0f, 1.0f);
+
+	m_followRate = Math::Vector3::SmoothStep(startFollow, endFollow, total);
+
+	// 到達以降の処理
+	if (m_degree.y >= 320.0f)
 	{
-		m_introCamPos = endPos;
-		m_degree.y = -261.0f;
-		SceneManager::Instance().SetIntroCamera(false); // カメラのイントロを終了
-		m_introTimer = 0.0f;
+		m_degree.y = 320.0f;
+		m_followRate = endFollow; // 到達時に確定
+
+		m_time += deltaTime;
+
+		if (m_time >= 1.0f)
+		{
+
+			// 余韻で更に引く
+			m_followRate = { 0.0f, 1.0f, -2.5f };
+
+			if (m_followRate.z <= -2.5f)
+			{
+				// リセット（次回イントロ開始のため）
+				m_inited = false;
+				m_time = 0.0f;
+				SceneManager::Instance().SetIntroCamera(false);
+			}
+		}
 	}
-
-	m_mRotation = Math::Matrix::CreateRotationY(DirectX::XMConvertToRadians(m_degree.y));
-
-	// カメラのワールド行列を更新
-	m_mWorld = Math::Matrix::CreateTranslation(m_introCamPos); // プレイヤーからの相対位置
-	m_mWorld *= m_mRotation; // 回転
-	m_mWorld.Translation(m_mWorld.Translation() + m_Player.lock()->GetPos());
-
-	m_spCamera->SetCameraMatrix(m_mWorld);
 }
 
 void PlayerCamera::ImGuiInspector()
 {
 	CameraBase::ImGuiInspector();
 
+	ImGui::Text(U8("カメラの位置"));
+	ImGui::DragFloat3("CameraPos", &m_cameraPos.x, 0.1f);
+
 	ImGui::Text(U8("プレイヤーとカメラの距離"));
 	ImGui::DragFloat3("offsetPos", &m_followRate.x, 0.1f);
 	ImGui::DragFloat("Camera Smooth", &m_dhistanceSmooth, 0.01f);
 	ImGui::DragFloat("Rotation Smooth", &m_rotationSmooth, 0.01f);
 	ImGui::DragFloat("FOV", &m_fov, 1.0f, 1.0f, 179.0f);
+
+	// イントロカメラリセットボタン
+	if (ImGui::Button(U8("カメラのイントロシーンを再生")))
+	{
+		SceneManager::Instance().SetIntroCamera(true);
+	}
+
+	// ゲームクリアカメラリセットボタン
+	if (ImGui::Button(U8("カメラのゲームクリアシーンを再生")))
+	{
+		SceneManager::Instance().m_gameClear = true;
+	}
 
 
 	m_spCamera->SetProjectionMatrix(m_fov);
@@ -241,6 +302,7 @@ void PlayerCamera::JsonSave(nlohmann::json& _json) const
 {
 	CameraBase::JsonSave(_json);
 	_json["targetLookAt"] = JSON_MANAGER.VectorToJson(m_targetLookAt);
+	_json["m_cameraPos"] = JSON_MANAGER.VectorToJson(m_cameraPos);
 	_json["smooth"] = m_dhistanceSmooth;
 	_json["rotationSmooth"] = m_rotationSmooth;
 	_json["fov"] = m_fov;
@@ -250,6 +312,7 @@ void PlayerCamera::JsonInput(const nlohmann::json& _json)
 {
 	CameraBase::JsonInput(_json);
 	if(_json.contains("targetLookAt")) m_targetLookAt = JSON_MANAGER.JsonToVector(_json["targetLookAt"]);
+	if (_json.contains("m_cameraPos")) m_cameraPos = JSON_MANAGER.JsonToVector(_json["m_cameraPos"]);
 	if (_json.contains("smooth")) m_dhistanceSmooth = _json["smooth"].get<float>();
 	if (_json.contains("rotationSmooth")) m_rotationSmooth = _json["rotationSmooth"].get<float>();
 	if (_json.contains("fov")) m_fov = _json["fov"].get<float>();

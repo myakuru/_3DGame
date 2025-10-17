@@ -26,12 +26,9 @@ void Player::Init()
 
 	StateInit();
 
-	//m_position = Math::Vector3(-4.0f, 1.2f, 4.0f);
+	m_position = Math::Vector3(31.0f, 10.0f, -75.0f);
 
 	//m_position.y = 1.0f;
-
-	// 初期向きを-90度（Y軸）に設定
-	m_rotation = Math::Quaternion::CreateFromAxisAngle(Math::Vector3::Up, DirectX::XMConvertToRadians(-90.0f));
 
 	m_pCollider = std::make_unique<KdCollider>();
 
@@ -48,9 +45,16 @@ void Player::Init()
 		m_afterImageWork = std::make_unique<KdModelWork>(src->GetData());
 	}
 
+	// クォータニオン表示
+	m_rotation = Math::Quaternion::CreateFromYawPitchRoll(
+		DirectX::XMConvertToRadians(m_degree.y),
+		DirectX::XMConvertToRadians(m_degree.x),
+		DirectX::XMConvertToRadians(m_degree.z));
+
 	m_dissever = 0.0f;
 
 	m_isHit = false;
+
 }
 
 void Player::PreUpdate()
@@ -169,57 +173,36 @@ void Player::Update()
 	SceneManager::Instance().GetObjectWeakPtr(m_katana);
 	SceneManager::Instance().GetObjectWeakPtr(m_scabbard);
 
-	float deltaTime = Application::Instance().GetDeltaTime();
+	// 雑魚・ボスをまとめてチェック
+	SceneManager::Instance().GetObjectWeakPtrListAnyOf<Enemy, BossEnemy>(m_enemyLike);
 
-	m_animator->AdvanceTime(m_modelWork->WorkNodes(), m_fixedFrameRate * deltaTime);
-	m_modelWork->CalcNodeMatrices();
+	for (const auto& wk : m_enemyLike)
+	{
+		if (auto obj = wk.lock())
+		{
+			if (obj->GetTypeID() == Enemy::TypeID)
+			{
+				auto e = std::static_pointer_cast<Enemy>(obj);
+				if (e->GetJustAvoidSuccess()) m_isHit = false;
+			}
+			else if (obj->GetTypeID() == BossEnemy::TypeID)
+			{
+				auto b = std::static_pointer_cast<BossEnemy>(obj);
+				if (b->GetJustAvoidSuccess()) m_isHit = false;
+			}
+		}
+	}
 
-	m_isMoving = m_movement.LengthSquared() > 0;
-
-	// 移動前位置を保存
-	m_prevPosition = m_position;
-
-	// 重力更新
-	m_gravity += m_gravitySpeed * deltaTime;
-
-	// 水平移動
-	ApplyHorizontalMove(m_movement, deltaTime);
-
-	// 垂直
-	m_position.y += m_gravity;
-
-	m_stateManager.Update();
-
-	Math::Matrix scale = Math::Matrix::CreateScale(m_scale);
-	Math::Matrix quaternion = Math::Matrix::CreateFromQuaternion(m_rotation);
-	Math::Matrix translation = Math::Matrix::CreateTranslation(m_position);
-	m_mWorld = scale * quaternion * translation;
-
+	if (m_invincible)
+	{
+		m_isHit = false;
+	}
 
 	// ヒット処理。
 	if (m_isHit)
 	{
+
 		if (m_invincible) return; // 無敵状態ならヒットしない
-
-		// 雑魚・ボスをまとめてチェック
-		SceneManager::Instance().GetObjectWeakPtrListAnyOf<Enemy, BossEnemy>(m_enemyLike);
-
-		for (const auto& wk : m_enemyLike)
-		{
-			if (auto obj = wk.lock())
-			{
-				if (obj->GetTypeID() == Enemy::TypeID)
-				{
-					auto e = std::static_pointer_cast<Enemy>(obj);
-					if (e->GetJustAvoidSuccess()) return;
-				}
-				else if (obj->GetTypeID() == BossEnemy::TypeID)
-				{
-					auto b = std::static_pointer_cast<BossEnemy>(obj);
-					if (b->GetJustAvoidSuccess()) return;
-				}
-			}
-		}
 
 		// ダメージステートに変更
 		auto spDamageState = std::make_shared<PlayerState_Hit>();
@@ -229,9 +212,48 @@ void Player::Update()
 		return;
 	}
 
+	m_stateManager.Update();
+
+	if (m_justAvoid)
+	{
+
+		float deltaTime = Application::Instance().GetUnscaledDeltaTime();
+		m_animator->AdvanceTime(m_modelWork->WorkNodes(), m_fixedFrameRate * deltaTime);
+		m_modelWork->CalcNodeMatrices();
+		m_isMoving = m_movement.LengthSquared() > 0;
+		// 移動前位置を保存
+		m_prevPosition = m_position;
+		// 重力更新
+		m_gravity += m_gravitySpeed * deltaTime;
+		// 水平移動
+		ApplyHorizontalMove(m_movement, deltaTime);
+	}
+	else
+	{
+		float deltaTime = Application::Instance().GetDeltaTime();
+		m_animator->AdvanceTime(m_modelWork->WorkNodes(), m_fixedFrameRate * deltaTime);
+		m_modelWork->CalcNodeMatrices();
+		m_isMoving = m_movement.LengthSquared() > 0;
+		// 移動前位置を保存
+		m_prevPosition = m_position;
+		// 重力更新
+		m_gravity += m_gravitySpeed * deltaTime;
+		// 水平移動
+		ApplyHorizontalMove(m_movement, deltaTime);
+	}
+
+
+	// 垂直
+	m_position.y += m_gravity;
+
+	Math::Matrix scale = Math::Matrix::CreateScale(m_scale);
+	Math::Matrix quaternion = Math::Matrix::CreateFromQuaternion(m_rotation);
+	Math::Matrix translation = Math::Matrix::CreateTranslation(m_position);
+	m_mWorld = scale * quaternion * translation;
+
 }
 
-void Player::UpdateAttackCollision(float _radius, float _distance, int _attackCount, float _attackTimer, Math::Vector2 _cameraShakePow, float _cameraTime)
+void Player::UpdateAttackCollision(float _radius, float _distance, int _attackCount, float _attackTimer, Math::Vector2 _cameraShakePow, float _cameraTime, float _activeBeginSec, float _activeEndSec)
 {
 	Math::Vector3 forward = Math::Vector3::TransformNormal(Math::Vector3::Forward, Math::Matrix::CreateFromQuaternion(m_rotation));
 	forward.Normalize();
@@ -248,17 +270,41 @@ void Player::UpdateAttackCollision(float _radius, float _distance, int _attackCo
 	// 敵の取得（雑魚＋ボス）
 	SceneManager::Instance().GetObjectWeakPtrListAnyOf<Enemy, BossEnemy>(m_enemyLike);
 
-	// 初回セットアップ: 初期タイマを0に
+	// 初回セットアップ
 	if (!m_onceEffect)
 	{
 		m_isChargeAttackActive = true;
 		m_chargeAttackCount = 0;
 		m_chargeAttackTimer = 0.0f;
+
+		// クランプしない。開始 > 終了なら入れ替えのみ行う
+		float begin = _activeBeginSec;
+		float end = _activeEndSec;
+		if (begin > end) { float t = begin; begin = end; end = t; }
+
+		m_attackActiveTime = 0.0f;
+		m_attackActiveBegin = begin;
+		m_attackActiveEnd = end;
+
 		m_onceEffect = true;
 	}
 
 	if (!m_isChargeAttackActive) return;
 
+	// 攻撃ウィンドウ時間を進める
+	m_attackActiveTime += deltaTime;
+
+	// 開始前はまだ当てない
+	if (m_attackActiveTime < m_attackActiveBegin) return;
+
+	// 終了超過で攻撃終了
+	if (m_attackActiveTime > m_attackActiveEnd)
+	{
+		m_isChargeAttackActive = false;
+		return;
+	}
+
+	// 多段ヒットのインターバル管理
 	m_chargeAttackTimer += deltaTime;
 
 	if (m_chargeAttackCount < _attackCount && m_chargeAttackTimer >= _attackTimer)
@@ -272,7 +318,6 @@ void Player::UpdateAttackCollision(float _radius, float _distance, int _attackCo
 				std::list<KdCollider::CollisionResult> results;
 				if (obj->Intersects(attackSphere, &results) && !results.empty())
 				{
-					// 型に応じてダメージ処理
 					if (obj->GetTypeID() == Enemy::TypeID)
 					{
 						auto e = std::static_pointer_cast<Enemy>(obj);
@@ -329,6 +374,14 @@ void Player::ImGuiInspector()
 	ImGui::Text(U8("プレイヤーの回転速度"));
 	ImGui::DragFloat(U8("回転速度"), &m_rotateSpeed, 0.1f);
 
+	ImGui::DragFloat3(U8("回転(Yaw Pitch Roll)"), &m_degree.x, 1.0f);
+
+	// クォータニオン表示
+	m_rotation = Math::Quaternion::CreateFromYawPitchRoll(
+		DirectX::XMConvertToRadians(m_degree.y),
+		DirectX::XMConvertToRadians(m_degree.x),
+		DirectX::XMConvertToRadians(m_degree.z));
+
 	ImGui::Separator();
 	m_playerConfig.InGuiInspector();
 }
@@ -344,6 +397,8 @@ void Player::JsonInput(const nlohmann::json& _json)
 	if (_json.contains("cameraShakeTime")) m_cameraShakeTime = _json["cameraShakeTime"].get<float>();
 	if (_json.contains("rotateSpeed")) m_rotateSpeed = _json["rotateSpeed"].get<float>();
 
+	if (_json.contains("degree")) m_degree = JSON_MANAGER.JsonToVector(_json["degree"]);
+
 	m_playerConfig.JsonInput(_json);
 }
 
@@ -356,6 +411,7 @@ void Player::JsonSave(nlohmann::json& _json) const
 	_json["cameraShake"] = JSON_MANAGER.Vector2ToJson(m_cameraShakePower);
 	_json["cameraShakeTime"] = m_cameraShakeTime;
 	_json["rotateSpeed"] = m_rotateSpeed;
+	_json["degree"] = JSON_MANAGER.VectorToJson(m_degree);
 
 	m_playerConfig.JsonSave(_json);
 }

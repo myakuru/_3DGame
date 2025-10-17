@@ -12,6 +12,8 @@ Timer::Timer()
 
 void Timer::Init()
 {
+	SelectDraw2DTexture::Init();
+
 	m_srcRect = { 0, 0, 128, 256 }; // 1
 	//m_srcRect = { 128, 0, 128, 256 }; // 2
 	m_texture = KdAssets::Instance().m_textures.GetData("Asset/Textures/Time/Digit01.png");
@@ -77,6 +79,8 @@ void Timer::ResultTimerUpdate()
 
 void Timer::DrawSprite()
 {
+	if (SceneManager::Instance().IsIntroCamera()) return;
+
 	if (m_notDraw) return; // 描画しないフラグが立っている場合は何もしない
 
 	// 現在のビューポートサイズ取得

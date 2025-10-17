@@ -70,8 +70,7 @@ void PlayerState_Attack1::StateUpdate()
 	m_time += deltaTime;
 
 	// 0.5秒間当たり判定有効
-	m_player->UpdateAttackCollision(3.0f, 1.0f, 1, m_maxAnimeTime, { 0.2f, 0.2f }, 0.2f);
-	
+	m_player->UpdateAttackCollision(3.0f, 1.0f, 1, 0.1f, { 0.2f, 0.2f }, 0.2f);
 	
 	// 回避入力受付
 	{

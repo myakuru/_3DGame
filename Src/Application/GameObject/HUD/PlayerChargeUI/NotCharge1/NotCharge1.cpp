@@ -40,6 +40,8 @@ void NotCharge1UI::Update()
 
 void NotCharge1UI::DrawSprite()
 {
+	if (SceneManager::Instance().IsIntroCamera()) return;
+
 	if (m_showUI)
 	{
 		// 現在のビューポートサイズ取得

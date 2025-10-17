@@ -1,4 +1,5 @@
 ﻿#include "SpecialMove.h"
+#include "../../../Scene/SceneManager.h"
 const uint32_t SpecialMove::TypeID = KdGameObject::GenerateTypeID();
 
 void SpecialMove::Init()
@@ -13,6 +14,8 @@ void SpecialMove::Update()
 
 void SpecialMove::DrawSprite()
 {
+	if (SceneManager::Instance().IsIntroCamera()) return;
+
 	// 現在のビューポートサイズ取得
 	Math::Viewport vp;
 	KdDirect3D::Instance().CopyViewportInfo(vp);

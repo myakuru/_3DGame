@@ -170,4 +170,7 @@ protected:
 	// カラー
 	Math::Color m_color = {1,1,1,1};
 
+	// ゲームの音量を管理する変数
+	float m_gameVolume = 1.0f;
+
 };

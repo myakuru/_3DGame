@@ -8,8 +8,6 @@ void Scoring::Init()
 {
 	SelectDraw2DTexture::Init();
 	m_texture = KdAssets::Instance().m_textures.GetData("Asset/Textures/GameUI/Score.png");
-
-	m_srcRect = { 0,0,50,50 };
 }
 
 void Scoring::Update()
@@ -41,4 +39,34 @@ void Scoring::Update()
 	{
 		SceneManager::Instance().SetScore(3); //X
 	}
+}
+
+void Scoring::DrawSprite()
+{
+	if (SceneManager::Instance().IsIntroCamera()) return;
+
+	// 現在のビューポートサイズ取得
+	Math::Viewport vp;
+	KdDirect3D::Instance().CopyViewportInfo(vp);
+	// 伸張（Stretch）：XとYを個別にスケーリング（画面サイズにピッタリ）
+	const float sx = vp.width / kRefW;
+	const float sy = vp.height / kRefH;
+	// 等方（Fit）にしたい場合は以下を使う（必要なら切替）
+	//const float s  = std::min(sx, sy);
+	// Math::Matrix uiScale = Math::Matrix::CreateScale(s, s, 1.0f);
+	Math::Matrix uiScale = Math::Matrix::CreateScale(sx, sy, 1.0f);
+	// UIスケールをワールド行列に後掛け（平行移動も含め全体をスケール）
+	Math::Matrix m = m_mWorld * uiScale;
+	KdShaderManager::Instance().m_spriteShader.SetMatrix(m);
+	if (m_bDrawTexture)
+	{
+		KdShaderManager::Instance().m_spriteShader.DrawTex(
+			m_texture,
+			static_cast<int>(m_position.x), // 1920x1080基準の座標そのまま
+			static_cast<int>(m_position.y),
+			&m_srcRect,
+			&m_color
+		);
+	}
+	KdShaderManager::Instance().m_spriteShader.SetMatrix(Math::Matrix::Identity);
 }

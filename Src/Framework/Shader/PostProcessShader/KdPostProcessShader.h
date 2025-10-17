@@ -120,7 +120,7 @@ private:
 
 
 	KdRenderTargetPack	m_brightEffectRTPack;
-	static const int	kLightBloomNum = 4;
+	static const int	kLightBloomNum = 2;
 	KdRenderTargetPack	m_lightBloomRTPack[kLightBloomNum];
 
 	KdRenderTargetChanger m_postEffectRTChanger;

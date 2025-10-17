@@ -73,6 +73,8 @@
 #include"../GameObject/Effect/BillBoardEffect/MapGard/MapGard.h"
 #include"../GameObject/Character/BossEnemy/BossEnemy.h"
 #include"../GameObject/Field/UpDownField/UpDownField.h"
+#include"../GameObject/Effect/EffekseerEffect/JustAvoidAttackEffect/JustAvoidAttackEffect.h"
+#include"../GameObject/Effect/EffekseerEffect/JustAvoidAttackEffect1/JustAvoidAttackEffect1.h"
 
 void SceneManager::Init()
 {
@@ -147,6 +149,8 @@ void SceneManager::Register() const
 	RegisterObject::GetInstance().Register<EnemyShineBlue>();
 	RegisterObject::GetInstance().Register<SpecialAttack1>();
 	RegisterObject::GetInstance().Register<SpeedAttackEffect>();
+	RegisterObject::GetInstance().Register<JustAvoidAttackEffect>();
+	RegisterObject::GetInstance().Register<JustAvoidAttackEffect1>();
 
 	// Fieldのエフェクト系
 	RegisterObject::GetInstance().Register<FieldEffect>();

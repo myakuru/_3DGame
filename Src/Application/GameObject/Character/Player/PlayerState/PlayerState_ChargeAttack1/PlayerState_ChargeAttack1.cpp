@@ -93,7 +93,7 @@ void PlayerState_ChargeAttack1::StateUpdate()
 		}
 
 		// しきい値到達した瞬間に即 Max へ遷移
-		if (m_player->GetPlayerStatus().chargeCount > 1 && duration >= kLongPressThreshold)
+		if (m_player->GetPlayerStatus().chargeCount > 0 && duration >= kLongPressThreshold)
 		{
 			m_isKeyPressing = false;
 			{

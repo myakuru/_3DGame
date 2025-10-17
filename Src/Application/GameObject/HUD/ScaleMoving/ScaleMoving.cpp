@@ -1,30 +1,28 @@
 ﻿#include "ScaleMoving.h"
 #include"../../Utility/Time.h"
+#include"../../../Scene/SceneManager.h"
 const uint32_t ScaleMoving::TypeID = KdGameObject::GenerateTypeID();
 
 
 void ScaleMoving::Update()
 {
 	float timeLeft = Time::Instance().GetCountdownTimeLeft();
-	float maxTime = 120; // タイマーの最大値を取得
+	const float maxTime = 120.0f; // タイマーの最大値
 
-	// 角度の定数（Vector3型で定義）
-	const Math::Vector3 degreeMax(0.0f, m_degree.y, m_degree.z);      // タイマー最大
-	const Math::Vector3 degreeHalf(-0.050f, m_degree.y, m_degree.z);  // タイマー半分
-	const Math::Vector3 degreeZero(-0.094f, m_degree.y, m_degree.z);  // タイマーゼロ
+	// 0.0f ~ 1.0f にクランプ
+	m_time = std::clamp(timeLeft / maxTime, 0.0f, 1.0f);
 
-	// 残り時間の割合
-	float t = 1.0f - (timeLeft / maxTime);
+	// 可視幅（ピクセル）
+	const float visibleWidthF = std::clamp(m_fullWidth * m_time, 0.0f, m_fullWidth);
+	const int   visibleWidth = static_cast<int>(std::round(visibleWidthF));
 
-	if (t < 0.5f) {
-		// 最大～半分まで線形補間
-		m_degree = Math::Vector3::Lerp(degreeMax, degreeHalf, t / 0.5f);
-	}
-	else {
-		// 半分～ゼロまで線形補間
-		m_degree = Math::Vector3::Lerp(degreeHalf, degreeZero, (t - 0.5f) / 0.5f);
-	}
+	// 右端を基準にソース矩形を左からカットする
+	// m_fullWidth はテクスチャ(バー)の最大幅と一致している前提
+	m_rect.x = static_cast<int>(m_fullWidth) - visibleWidth; // 左へスライド
+	m_rect.width = visibleWidth;
+	// m_rect.y, m_rect.height は固定（丸みを保つために高さは不変）
 
+	// 行列更新
 	m_mWorld = Math::Matrix::CreateScale(m_scale);
 	m_mWorld *= Math::Matrix::CreateFromYawPitchRoll(
 		DirectX::XMConvertToRadians(m_degree.y),
@@ -32,5 +30,34 @@ void ScaleMoving::Update()
 		DirectX::XMConvertToRadians(m_degree.z)
 	);
 	m_mWorld.Translation(m_position);
+}
 
+void ScaleMoving::DrawSprite()
+{
+	if (SceneManager::Instance().IsIntroCamera()) return;
+
+	// 現在のビューポートサイズ取得
+	Math::Viewport vp;
+	KdDirect3D::Instance().CopyViewportInfo(vp);
+
+	// スケーリング
+	const float sx = vp.width / kRefW;
+	const float sy = vp.height / kRefH;
+
+	Math::Matrix uiScale = Math::Matrix::CreateScale(sx, sy, 1.0f);
+
+	KdShaderManager::Instance().m_spriteShader.SetMatrix(m_mWorld * uiScale);
+
+	KdShaderManager::Instance().m_spriteShader.DrawTex(
+		m_texture,
+		static_cast<int>(m_position.x), // 右端のスクリーン座標
+		static_cast<int>(m_position.y),
+		m_rect.width,
+		m_rect.height,
+		&m_rect,
+		&m_color,
+		{ 1.0f, 0.5f } // 右端基準で縮む＆移動
+	);
+
+	KdShaderManager::Instance().m_spriteShader.SetMatrix(Math::Matrix::Identity);
 }

@@ -27,6 +27,7 @@ void NormalUI::Init()
 
 void NormalUI::DrawSprite()
 {
+	if (SceneManager::Instance().IsIntroCamera()) return;
 	SelectDraw2DTexture::DrawSprite();
 }
 

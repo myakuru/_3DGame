@@ -62,10 +62,9 @@ void PlayerState_Attack::StateUpdate()
 	}
 
 	float deltaTime = Application::Instance().GetDeltaTime();
-	m_time += deltaTime;
 
 	// 当たり判定有効時間: 最初の0.5秒のみ
-	m_player->UpdateAttackCollision(3.0f, 3.0f, 1, m_maxAnimeTime, { 0.2f, 0.0f }, 0.3f);
+	m_player->UpdateAttackCollision(3.0f, 1.0f, 1, 0.1f, { 0.2f, 0.0f }, 0.3f, 0.0f, 0.4f);
 
 
 	// 攻撃中の移動方向で回転を更新
@@ -98,11 +97,11 @@ void PlayerState_Attack::StateUpdate()
 	}
 
 	// 先行ダッシュ処理
-	if (m_attackParam.m_dashTimer < 0.2f)
+	if (m_time < 0.2f)
 	{
 		const float dashSpeed = 0.7f;
 		m_player->SetIsMoving(m_attackDirection * dashSpeed);
-		m_attackParam.m_dashTimer += deltaTime;
+		m_time += deltaTime;
 	}
 	else
 	{

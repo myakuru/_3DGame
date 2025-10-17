@@ -8,6 +8,8 @@ void InvestigationComplete::Init()
 {
 	SelectDraw2DTexture::Init();
 	m_isComplete = false;
+
+	m_scale = { 1.0f, 1.0f, 1.0f };
 }
 
 void InvestigationComplete::DrawSprite()

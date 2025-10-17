@@ -1,5 +1,6 @@
 ﻿#include "AlpfaMoving.h"
 #include"../../../main.h"
+#include"../../../Scene/SceneManager.h"
 const uint32_t AlpfaMoving::TypeID = KdGameObject::GenerateTypeID();
 
 void AlpfaMoving::Init()
@@ -30,5 +31,6 @@ void AlpfaMoving::Update()
 
 void AlpfaMoving::DrawSprite()
 {
+	if (SceneManager::Instance().IsIntroCamera()) return;
 	SelectDraw2DTexture::DrawSprite();
 }

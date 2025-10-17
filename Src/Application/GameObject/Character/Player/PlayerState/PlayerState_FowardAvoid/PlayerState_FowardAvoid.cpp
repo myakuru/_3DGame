@@ -5,6 +5,7 @@
 #include"../../../../Weapon/Katana/Katana.h"
 #include"../../../../Weapon/WeaponKatanaScabbard/WeaponKatanaScabbard.h"
 #include"../PlayerState_AvoidAttack/PlayerState_AvoidAttack.h"
+#include"../PlayerState_JustAvoidAttack/PlayerState_JustAvoidAttack.h"
 #include"../../../../Camera/PlayerCamera/PlayerCamera.h"
 #include"../../../Enemy/Enemy.h"
 
@@ -28,17 +29,8 @@ void PlayerState_ForwardAvoid::StateStart()
 	// 回避時の処理
 	m_player->SetAvoidStartTime(0.0f);
 
-	for (const auto& enemies : m_player->GetEnemies())
-	{
-		if (auto enemyPtr = enemies.lock(); enemyPtr)
-		{
-			// ジャスト回避成功時の残像エフェクト
-			if (enemyPtr->GetJustAvoidSuccess())
-			{
-				m_player->AddAfterImage(true, 5, 1.0f, Math::Color(0.0f, 1.0f, 1.0f, 0.5f), 0.7f);
-			}
-		}
-	}
+	m_afterImagePlayed = false;
+	m_justAvoided = false;
 }
 
 void PlayerState_ForwardAvoid::StateUpdate()
@@ -59,8 +51,14 @@ void PlayerState_ForwardAvoid::StateUpdate()
 				// ジャスト回避成功時の残像エフェクト
 				if (enemyPtr->GetJustAvoidSuccess())
 				{
-					m_player->AddAfterImage(true, 5, 1.0f, Math::Color(0.0f, 1.0f, 1.0f, 0.2f), 0.7f);
+					m_player->AddAfterImage(true, 5, 1.0f, Math::Color(0.0f, 1.0f, 1.0f, 0.5f), 0.7f);
+				
+					m_justAvoided = true;
+
 					m_afterImagePlayed = true;
+
+					m_player->SetJustAvoidSuccess(true);
+
 				}
 			}
 		}
@@ -70,12 +68,24 @@ void PlayerState_ForwardAvoid::StateUpdate()
 	Math::Vector3 forward = Math::Vector3::TransformNormal(Math::Vector3::Forward, Math::Matrix::CreateFromQuaternion(m_player->GetRotationQuaternion()));
 	forward.Normalize();
 
-	// 回避中に攻撃ボタンが押されたら回避攻撃へ移行
-	if (KeyboardManager::GetInstance().IsKeyJustPressed(VK_LBUTTON))
+	if (m_justAvoided)
 	{
-		auto state = std::make_shared<PlayerState_AvoidAttack>();
-		m_player->ChangeState(state);
-		return;
+		if (KeyboardManager::GetInstance().IsKeyJustPressed(VK_LBUTTON))
+		{
+			auto state = std::make_shared<PlayerState_JustAvoidAttack>();
+			m_player->ChangeState(state);
+			return;
+		}
+	}
+	else
+	{
+		// 回避中に攻撃ボタンが押されたら回避攻撃へ移行
+		if (KeyboardManager::GetInstance().IsKeyJustPressed(VK_LBUTTON))
+		{
+			auto state = std::make_shared<PlayerState_AvoidAttack>();
+			m_player->ChangeState(state);
+			return;
+		}
 	}
 
 	// アニメーションが終了したらIdleへ移行
@@ -115,6 +125,7 @@ void PlayerState_ForwardAvoid::StateEnd()
 		camera->SetTargetLookAt({ 0.f,1.0f,-3.5f });
 	}
 
+	m_justAvoided = false;
 
 	m_player->AddAfterImage();
 		

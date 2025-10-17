@@ -91,13 +91,13 @@ bool KdPostProcessShader::Init()
 	m_cb0_BrightInfo.Create();
 
 	// 2160pでレンダーターゲット生成
-	const int renderWidth = 3840 / 2;
-	const int renderHeight = 2160 / 2;
+	const int renderWidth = 3840;
+	const int renderHeight = 2160;
 
 	const int halfW = renderWidth / 2;
 	const int halfH = renderHeight / 2;
-	const int quarterW = renderWidth / 4;
-	const int quarterH = renderHeight / 4;
+	const int quarterW = renderWidth / 2;
+	const int quarterH = renderHeight / 2;
 
 	m_postEffectRTPack.CreateRenderTarget(renderWidth, renderHeight, true);
 	m_noiseRTPack.CreateRenderTarget(renderWidth, renderHeight);
@@ -112,8 +112,8 @@ bool KdPostProcessShader::Init()
 	int lightBloomHeight = halfH;
 	for (int i = 0; i < kLightBloomNum; ++i) {
 		m_lightBloomRTPack[i].CreateRenderTarget(lightBloomWidth, lightBloomHeight);
-		lightBloomWidth = std::max(1, lightBloomWidth / 2);
-		lightBloomHeight = std::max(1, lightBloomHeight / 2);
+		//lightBloomWidth = std::max(1, lightBloomWidth / 2);
+		//lightBloomHeight = std::max(1, lightBloomHeight / 2);
 	}
 
 	// 画面全体に書き込む用の頂点情報
@@ -197,8 +197,8 @@ void KdPostProcessShader::PostEffectProcess()
 	m_postEffectRTChanger.UndoRenderTarget();
 
 	LightBloomProcess();
-	//BlurProcess();
-	//DepthOfFieldProcess();
+	BlurProcess();
+	DepthOfFieldProcess();
 	NoiseProcess();
 
 	Math::Viewport vp;

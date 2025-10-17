@@ -30,9 +30,11 @@ public:
 		return m_wpPlayer;
 	}
 
-	// 攻撃の当たり判定(攻撃半径、攻撃距離、攻撃回数、攻撃間隔)
+	// 攻撃の当たり判定(攻撃半径、攻撃距離、攻撃回数、攻撃間隔、当たり判定の開始秒、終了秒)
+	// 開始 > 終了なら入れ替え（クランプはしない）
 	void UpdateAttackCollision(float _radius = 1.f, float _distance = 1.1f,
-		int _attackCount = 5, float _attackTimer = 0.3f);
+		int _attackCount = 5, float _attackTimer = 0.3f,
+		float _activeBeginSec = 0.0f, float _activeEndSec = 3.0f);
 
 	// ダメージを受ける
 	void Damage(int _damage);
@@ -65,7 +67,7 @@ public:
 	struct EnemyStatus
 	{
 		int hp = 1000000000;				// 体力
-		int attack = 10;			// 攻撃力
+		int attack = 100;			// 攻撃力
 		int maxHp = 1000000000;			// 最大体力
 	};
 
@@ -83,6 +85,11 @@ public:
 		m_chargeAttackTimer = 0.0f;
 		m_isChargeAttackActive = false;
 		m_hitOnce = false;
+
+		// 時間ウィンドウも初期化
+		m_attackActiveTime = 0.0f;
+		m_attackActiveBegin = 0.0f;
+		m_attackActiveEnd = 3.0f;
 	}
 
 	// 無敵状態管理フラグ
@@ -127,4 +134,9 @@ private:
 
 	bool m_invincible = false;					// 無敵判定用
 	int m_totalHitCount = 0;					// 累積ヒット回数（無敵判定用）
+
+	// 攻撃の有効時間ウィンドウ（クランプなし）
+	float m_attackActiveTime = 0.0f;	// 攻撃開始からの経過時間
+	float m_attackActiveBegin = 0.0f;	// 当たり判定が有効になる開始秒
+	float m_attackActiveEnd = 3.0f;		// 当たり判定が無効化される終了秒
 };

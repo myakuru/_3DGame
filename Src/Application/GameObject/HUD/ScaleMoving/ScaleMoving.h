@@ -8,9 +8,10 @@ public:
 	ScaleMoving() { m_typeID = TypeID; }
 	~ScaleMoving() override = default;
 
-	void Update() override;
-
 private:
+
+	void Update() override;
+	void DrawSprite() override;
 
 	float m_time = 0;		// -1.0f ~ 1.0fをとる値
 	float m_alpha = 0;
@@ -18,4 +19,12 @@ private:
 	float m_min = 0.0f;
 	float m_max = 0.0f;
 
+	// バー用のテクスチャ最大幅（ピクセル）
+	float m_fullWidth = 500.0f;
+
+	// 右端の移動範囲（1920x1080基準のスクリーン座標）
+	float m_rightXStart = 300.0f;   // 残り時間=最大のときの右端X
+	float m_rightXEnd = 1620.0f;  // 残り時間=0のときの右端X
+
+	Math::Rectangle m_rect = { 0,0,500,100 };
 };

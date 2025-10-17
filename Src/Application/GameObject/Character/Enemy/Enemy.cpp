@@ -51,7 +51,7 @@ void Enemy::Update()
 
 	m_attackFrame += deltaTime;
 
-	if (m_attackFrame >= 3.5f)
+	if (m_attackFrame >= 2.5f)
 	{
 		Application::Instance().SetFpsScale(1.f); // スローモーションにする
 		SceneManager::Instance().SetDrawGrayScale(false);
@@ -75,12 +75,8 @@ void Enemy::Update()
 	CharaBase::Update();
 
 	// ヒット処理。
-	if (m_isHit && !m_invincible)
+	if (m_isHit)
 	{
-
-		// ダメージステートに変更
-		auto spDamageState = std::make_shared<EnemyState_Hit>();
-		ChangeState(spDamageState);
 
 		// HitDamage生成・初期化
 		m_spHitDamage = std::make_shared<HitDamage>();
@@ -88,7 +84,15 @@ void Enemy::Update()
 		m_spHitDamage->SetDamage(m_getDamage);
 		m_spHitDamage->SetTrackEnemy(std::static_pointer_cast<Enemy>(shared_from_this()));
 		SceneManager::Instance().AddObject(m_spHitDamage);
+
 		m_isHit = false;
+
+
+		if (m_invincible) return;
+
+		// ダメージステートに変更
+		auto spDamageState = std::make_shared<EnemyState_Hit>();
+		ChangeState(spDamageState);
 		return;
 	}
 
@@ -125,7 +129,7 @@ void Enemy::DrawLit()
 	KdShaderManager::Instance().m_StandardShader.DrawModel(*m_modelWork, m_mWorld, m_color);
 }
 
-void Enemy::UpdateAttackCollision(float _radius, float _distance, int _attackCount, float _attackTimer)
+void Enemy::UpdateAttackCollision(float _radius, float _distance, int _attackCount, float _attackTimer, float _activeBeginSec, float _activeEndSec)
 {
 	Math::Vector3 forward = Math::Vector3::TransformNormal(Math::Vector3::Forward, Math::Matrix::CreateFromQuaternion(m_rotation));
 	forward.Normalize();
@@ -141,18 +145,40 @@ void Enemy::UpdateAttackCollision(float _radius, float _distance, int _attackCou
 
 	SceneManager::Instance().GetObjectWeakPtrList(m_player);
 
-	// 初回セットアップ: 初期タイマを0に
+	// 初回セットアップ
 	if (!m_hitOnce)
 	{
 		m_isChargeAttackActive = true;
 		m_chargeAttackCount = 0;
 		m_chargeAttackTimer = 0.0f;
 		m_hitOnce = true;
+
+		// クランプしない。開始 > 終了なら入れ替えのみ
+		float begin = _activeBeginSec;
+		float end = _activeEndSec;
+		if (begin > end) { float t = begin; begin = end; end = t; }
+
+		m_attackActiveTime = 0.0f;
+		m_attackActiveBegin = begin;
+		m_attackActiveEnd = end;
 	}
 
 	if (!m_isChargeAttackActive) return;
 
-	// ジャスト回避成功
+	// 攻撃ウィンドウを進める
+	m_attackActiveTime += deltaTime;
+
+	// 開始前は何もしない
+	if (m_attackActiveTime < m_attackActiveBegin) return;
+
+	// 終了超過で攻撃終了
+	if (m_attackActiveTime > m_attackActiveEnd)
+	{
+		m_isChargeAttackActive = false;
+		return;
+	}
+
+	// ジャスト回避成功チェック（有効時間内のみ）
 	for (const auto& players : m_player)
 	{
 		if (auto playerPtr = players.lock())
@@ -168,7 +194,7 @@ void Enemy::UpdateAttackCollision(float _radius, float _distance, int _attackCou
 					if (avoidElapsed >= 0.0f && avoidElapsed <= kJustAvoidWindowSec)
 					{
 						m_justAvoidSuccess = true;
-						Application::Instance().SetFpsScale(0.5f); // スローモーション
+						Application::Instance().SetFpsScale(0.3f); // スローモーション
 						SceneManager::Instance().SetDrawGrayScale(true);
 						return; // ダメージ処理は行わない
 					}
@@ -177,14 +203,11 @@ void Enemy::UpdateAttackCollision(float _radius, float _distance, int _attackCou
 		}
 	}
 
-	// ジャスト回避中はダメージを与えない
-	if (m_justAvoidSuccess) return;
-
+	// 多段ヒットのインターバル管理
 	m_chargeAttackTimer += deltaTime;
 
 	if (m_chargeAttackCount < _attackCount && m_chargeAttackTimer >= _attackTimer)
 	{
-
 		for (const auto& players : m_player)
 		{
 			if (auto playerPtr = players.lock())

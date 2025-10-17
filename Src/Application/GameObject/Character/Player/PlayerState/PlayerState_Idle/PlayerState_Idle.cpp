@@ -70,6 +70,12 @@ void PlayerState_Idle::StateUpdate()
 		return;
 	}
 
+	// 押された瞬間
+	if (KeyboardManager::GetInstance().IsKeyJustPressed(VK_LBUTTON))
+	{
+		m_isKeyPressing = true; // 判定開始
+	}
+
 	{
 		// =========================
 		// 左ボタン押下 長押し / 短押し判定
@@ -80,10 +86,13 @@ void PlayerState_Idle::StateUpdate()
 
 		float lDuration = KeyboardManager::GetInstance().GetKeyPressDuration(VK_LBUTTON);
 
-		// 押された瞬間
-		if (KeyboardManager::GetInstance().IsKeyJustPressed(VK_LBUTTON))
+		// 1) 先行入力を最優先で消費してAttackへ
+		if (m_isKeyPressing)
 		{
-			m_isKeyPressing = true; // 判定開始
+			m_isKeyPressing = false;
+			auto state = std::make_shared<PlayerState_Attack>();
+			m_player->ChangeState(state);
+			return;
 		}
 
 		// Chargeカウントがあり、長押し状態へ移行
@@ -99,7 +108,7 @@ void PlayerState_Idle::StateUpdate()
 		}
 
 		// 短押し判定
-		if (m_isKeyPressing && KeyboardManager::GetInstance().IsKeyJustReleased(VK_LBUTTON))
+		if (m_isKeyPressing)
 		{
 			if (lDuration >= kShortPressMin && lDuration < kLongPressThreshold)
 			{

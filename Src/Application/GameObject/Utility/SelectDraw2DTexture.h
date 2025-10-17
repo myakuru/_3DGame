@@ -7,6 +7,7 @@ public:
 
 	void DrawSprite() override
 	{
+
 		// 現在のビューポートサイズ取得
 		Math::Viewport vp;
 		KdDirect3D::Instance().CopyViewportInfo(vp);

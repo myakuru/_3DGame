@@ -58,5 +58,4 @@ void EnemState_Attack3::StateUpdate()
 void EnemState_Attack3::StateEnd()
 {
 	m_enemy->SetInvincible(false);
-	m_enemy->ResetHitCount();
 }

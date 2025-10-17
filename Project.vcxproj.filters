@@ -415,9 +415,6 @@
     <Filter Include="Src\Application\GameObject\HUD\PlayerChargeUI\NotCharge">
       <UniqueIdentifier>{9b68d6d0-c652-49d8-a1da-1bd37757c170}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Src\Application\GameObject\HUD\PlayerChargeUI\Chrge">
-      <UniqueIdentifier>{0c8b7243-321e-4341-b49c-2887b060099d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Src\Application\GameObject\HUD\PlayerChargeUI\NotCharge1">
       <UniqueIdentifier>{be1b3a25-3095-4f25-bb5f-85193cd4f8f4}</UniqueIdentifier>
     </Filter>
@@ -474,6 +471,21 @@
     </Filter>
     <Filter Include="Src\Application\GameObject\Character\BossEnemy\BossEnemyState\BossEnemyState_WaterAttack_end">
       <UniqueIdentifier>{29a7cb1a-38fa-440d-a01b-bc5ae7accd01}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_JustAvoidAttack">
+      <UniqueIdentifier>{59054334-7fc8-4be8-b1b3-63dbdf00a95a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_JustAvoidAttack_end">
+      <UniqueIdentifier>{59d7c162-c61d-46b8-a84c-40306da30baf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Effect\EffekseerEffect\JustAvoidAttackEffect">
+      <UniqueIdentifier>{d945845a-86f5-4dc8-b614-88b2de401a64}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Effect\EffekseerEffect\JustAvoidAttackEffect1">
+      <UniqueIdentifier>{4fdf60fc-eaa2-4168-8d69-c9332f4242c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Camera\PlayerCamera\PlayerCameraState\PlayerCameraState_IntroCamera">
+      <UniqueIdentifier>{55946ce5-bd31-4fbd-abce-e4c1b3a9d3e2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -990,9 +1002,6 @@
     <ClInclude Include="Src\Application\GameObject\Camera\PlayerCamera\PlayerCameraState\PlayerCameraState_LookPlayer\PlayerCameraState_LookPlayer.h">
       <Filter>Src\Application\GameObject\Camera\PlayerCamera\PlayerCameraState\PlayerCameraState_LookPlayer</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Application\GameObject\HUD\PlayerChargeUI\Chrge\ChrgeUI.h">
-      <Filter>Src\Application\GameObject\HUD\PlayerChargeUI\Chrge</Filter>
-    </ClInclude>
     <ClInclude Include="Src\Application\GameObject\HUD\PlayerChargeUI\NotCharge\NotChargeUI.h">
       <Filter>Src\Application\GameObject\HUD\PlayerChargeUI\NotCharge</Filter>
     </ClInclude>
@@ -1052,6 +1061,21 @@
     </ClInclude>
     <ClInclude Include="Src\Application\GameObject\Character\BossEnemy\BossEnemyState\BossEnemyState_WaterAttack_end\BossEnemyState_WaterAttack_end.h">
       <Filter>Src\Application\GameObject\Character\BossEnemy\BossEnemyState\BossEnemyState_WaterAttack_end</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_JustAvoidAttack\PlayerState_JustAvoidAttack.h">
+      <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_JustAvoidAttack</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_JustAvoidAttack_end\PlayerState_JustAvoidAttack_end.h">
+      <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_JustAvoidAttack_end</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Effect\EffekseerEffect\JustAvoidAttackEffect\JustAvoidAttackEffect.h">
+      <Filter>Src\Application\GameObject\Effect\EffekseerEffect\JustAvoidAttackEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Effect\EffekseerEffect\JustAvoidAttackEffect1\JustAvoidAttackEffect1.h">
+      <Filter>Src\Application\GameObject\Effect\EffekseerEffect\JustAvoidAttackEffect1</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Camera\PlayerCamera\PlayerCameraState\PlayerCameraState_IntroCamera\PlayerCameraState_IntroCamera.h">
+      <Filter>Src\Application\GameObject\Camera\PlayerCamera\PlayerCameraState\PlayerCameraState_IntroCamera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1514,9 +1538,6 @@
     <ClCompile Include="Src\Application\GameObject\Camera\PlayerCamera\PlayerCameraState\PlayerCameraState_LookPlayer\PlayerCameraState_LookPlayer.cpp">
       <Filter>Src\Application\GameObject\Camera\PlayerCamera\PlayerCameraState\PlayerCameraState_LookPlayer</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Application\GameObject\HUD\PlayerChargeUI\Chrge\ChrgeUI.cpp">
-      <Filter>Src\Application\GameObject\HUD\PlayerChargeUI\Chrge</Filter>
-    </ClCompile>
     <ClCompile Include="Src\Application\GameObject\HUD\PlayerChargeUI\NotCharge\NotChargeUI.cpp">
       <Filter>Src\Application\GameObject\HUD\PlayerChargeUI\NotCharge</Filter>
     </ClCompile>
@@ -1576,6 +1597,21 @@
     </ClCompile>
     <ClCompile Include="Src\Application\GameObject\Character\BossEnemy\BossEnemyState\BossEnemyState_WaterAttack_end\BossEnemyState_WaterAttack_end.cpp">
       <Filter>Src\Application\GameObject\Character\BossEnemy\BossEnemyState\BossEnemyState_WaterAttack_end</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_JustAvoidAttack\PlayerState_JustAvoidAttack.cpp">
+      <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_JustAvoidAttack</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_JustAvoidAttack_end\PlayerState_JustAvoidAttack_end.cpp">
+      <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_JustAvoidAttack_end</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Effect\EffekseerEffect\JustAvoidAttackEffect\JustAvoidAttackEffect.cpp">
+      <Filter>Src\Application\GameObject\Effect\EffekseerEffect\JustAvoidAttackEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Effect\EffekseerEffect\JustAvoidAttackEffect1\JustAvoidAttackEffect1.cpp">
+      <Filter>Src\Application\GameObject\Effect\EffekseerEffect\JustAvoidAttackEffect1</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Camera\PlayerCamera\PlayerCameraState\PlayerCameraState_IntroCamera\PlayerCameraState_IntroCamera.cpp">
+      <Filter>Src\Application\GameObject\Camera\PlayerCamera\PlayerCameraState\PlayerCameraState_IntroCamera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

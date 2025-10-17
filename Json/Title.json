@@ -29,7 +29,7 @@
   {
     "Name": "class AlpfaMoving",
     "color": {
-      "w": 0.31310105323791504,
+      "w": 0.48937833309173584,
       "x": 1.0,
       "y": 1.0,
       "z": 1.0
@@ -109,42 +109,7 @@
     "pos": {
       "x": 0.0,
       "y": 0.0,
-      "z": -0.26927220821380615
-    },
-    "scale": {
-      "x": 1.0,
-      "y": 1.0,
-      "z": 1.0
-    },
-    "type": 32
-  },
-  {
-    "Name": "class Field",
-    "color": {
-      "w": 1.0,
-      "x": 1.0,
-      "y": 1.0,
-      "z": 1.0
-    },
-    "deg": {
-      "x": 0.0,
-      "y": 0.0,
-      "z": 0.0
-    },
-    "drawFlags": {
-      "DrawBright": false,
-      "DrawGradation": false,
-      "DrawGrayScale": false,
-      "DrawLit": false,
-      "DrawToon": false,
-      "DrawUnLit": false,
-      "GenerateDepthMapFromLight": false
-    },
-    "path": "Asset/Models/Sky/Sky.gltf",
-    "pos": {
-      "x": 0.0,
-      "y": 0.0,
-      "z": 0.0
+      "z": -0.15542049705982208
     },
     "scale": {
       "x": 1.0,
@@ -157,7 +122,7 @@
     "DashTime": 0.0,
     "DashTime1": 0.0,
     "DashTime2": 0.0,
-    "GravitySpeed": 0.0,
+    "GravitySpeed": -573.9593505859375,
     "Name": "class Player",
     "cameraShake": {
       "x": 0.0,
@@ -189,7 +154,7 @@
     "path": "Asset/Models/Sky/Sky.gltf",
     "pos": {
       "x": 0.0,
-      "y": 0.0,
+      "y": -1429470464.0,
       "z": 0.0
     },
     "rotateSpeed": 0.0,
@@ -222,7 +187,7 @@
       "DrawUnLit": false,
       "GenerateDepthMapFromLight": false
     },
-    "path": "Asset/Models/Sky/Sky.gltf",
+    "path": "Asset\\Models\\Sky\\coudy.gltf",
     "pos": {
       "x": 0.0,
       "y": 0.0,
@@ -249,6 +214,12 @@
       "y": 0.0,
       "z": 0.0
     },
+    "dissolveColor": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "dissolvePower": 1.0,
     "drawFlags": {
       "DrawBright": false,
       "DrawGradation": false,
@@ -275,6 +246,44 @@
     "type": 32
   },
   {
+    "Name": "class UpDownField",
+    "color": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "deg": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
+      "DrawLit": false,
+      "DrawToon": false,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "max": -0.30000001192092896,
+    "min": 0.0,
+    "path": "Asset\\Map2\\Map.gltf",
+    "pos": {
+      "x": 17.100000381469727,
+      "y": -0.15000000596046448,
+      "z": 1.2000000476837158
+    },
+    "scale": {
+      "x": 0.0010000000474974513,
+      "y": 0.0010000000474974513,
+      "z": 0.0010000000474974513
+    },
+    "speed": 0.0,
+    "type": 32
+  },
+  {
     "Name": "class FPSCamera",
     "color": {
       "w": 1.0,
@@ -283,8 +292,8 @@
       "z": 1.0
     },
     "deg": {
-      "x": -3.000072956085205,
-      "y": 356.39398193359375,
+      "x": 0.7499103546142578,
+      "y": 359.39404296875,
       "z": 0.0
     },
     "moveSpeed": 10.0,
@@ -300,41 +309,6 @@
       "z": 1.0
     },
     "type": 0
-  },
-  {
-    "Name": "class Map",
-    "color": {
-      "w": 1.0,
-      "x": 1.0,
-      "y": 1.0,
-      "z": 1.0
-    },
-    "deg": {
-      "x": -4.0,
-      "y": 0.0,
-      "z": 0.0
-    },
-    "drawFlags": {
-      "DrawBright": false,
-      "DrawGradation": false,
-      "DrawGrayScale": false,
-      "DrawLit": true,
-      "DrawToon": false,
-      "DrawUnLit": false,
-      "GenerateDepthMapFromLight": false
-    },
-    "path": "Asset\\TitleMap\\TitleMap.gltf",
-    "pos": {
-      "x": -0.30000001192092896,
-      "y": 0.5,
-      "z": 2.0
-    },
-    "scale": {
-      "x": 1.0,
-      "y": 1.0,
-      "z": 1.0
-    },
-    "type": 32
   },
   {
     "Name": "class Map",
@@ -398,6 +372,41 @@
       "x": 0.0,
       "y": 0.0,
       "z": 0.0
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "type": 32
+  },
+  {
+    "Name": "class Map",
+    "color": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "deg": {
+      "x": -2.2360000610351563,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
+      "DrawLit": true,
+      "DrawToon": true,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "path": "Asset\\TitleMap\\TitleMap.gltf",
+    "pos": {
+      "x": -0.4000000059604645,
+      "y": 0.4000000059604645,
+      "z": 1.7000000476837158
     },
     "scale": {
       "x": 1.0,
