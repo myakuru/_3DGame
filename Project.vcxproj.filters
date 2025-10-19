@@ -511,6 +511,9 @@
     <Filter Include="Src\Application\GameObject\HUD\SkillBar">
       <UniqueIdentifier>{44dfd8a7-2bd6-4535-b0fc-2ad4710b0b65}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\GameObject\HUD\ChallengeResults">
+      <UniqueIdentifier>{07996a5f-2047-4c6d-b8ed-29e7ba8e7153}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -1128,6 +1131,9 @@
     <ClInclude Include="Src\Application\GameObject\HUD\SkillBar\SkillBar.h">
       <Filter>Src\Application\GameObject\HUD\SkillBar</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\HUD\ChallengeResults\ChallengeResults.h">
+      <Filter>Src\Application\GameObject\HUD\ChallengeResults</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -1690,6 +1696,9 @@
     </ClCompile>
     <ClCompile Include="Src\Application\GameObject\HUD\SkillBar\SkillBar.cpp">
       <Filter>Src\Application\GameObject\HUD\SkillBar</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\HUD\ChallengeResults\ChallengeResults.cpp">
+      <Filter>Src\Application\GameObject\HUD\ChallengeResults</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

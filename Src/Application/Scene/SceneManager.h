@@ -134,7 +134,7 @@ public :
 	}
 
 	// シーンカメラかどうか
-	bool m_sceneCamera = true;
+	bool m_sceneCamera = false;
 
 	bool m_gameClear = false; // ゲームクリアフラグ
 
@@ -242,7 +242,7 @@ private :
 	std::shared_ptr<BaseScene> m_currentScene = nullptr;
 
 	// 現在のシーンの種類を保持している変数
-	SceneType m_currentSceneType = SceneType::Test;
+	SceneType m_currentSceneType = SceneType::Title;
 	
 	// 次のシーンの種類を保持している変数
 	SceneType m_nextSceneType = m_currentSceneType;

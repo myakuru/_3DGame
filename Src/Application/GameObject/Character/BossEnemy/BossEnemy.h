@@ -70,9 +70,9 @@ public:
 
 	struct BossEnemyStatus
 	{
-		int hp = 1000000;				// 体力
+		int hp = 150000;			// 体力
 		int attack = 10;			// 攻撃力
-		int maxHp = 1000000;			// 最大体力
+		int maxHp = 150000;			// 最大体力
 	};
 
 	const BossEnemyStatus& GetStatus() { return m_status; }

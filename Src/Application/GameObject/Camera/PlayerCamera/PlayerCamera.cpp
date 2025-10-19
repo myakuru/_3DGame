@@ -115,6 +115,8 @@ void PlayerCamera::UpdateWinnerCamera()
 {
 	Application::Instance().SetFpsScale(0.0f); // 一時停止（意図が「停止」ならこのまま。※「リセット」なら 1.0f）
 
+	KdShaderManager::Instance().m_postProcessShader.SetEnableStrongBlur(false);
+
 	float time = Time::Instance().GetElapsedTime();
 	int sec = static_cast<int>(time);
 

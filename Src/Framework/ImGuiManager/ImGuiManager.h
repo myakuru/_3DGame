@@ -63,7 +63,7 @@ private:
 
 	Math::Vector2 m_windowSize = Math::Vector2(1920, 1080);
 
-	bool m_gameSceneInMouse = false;
+	bool m_gameSceneInMouse = true;
 
 	bool m_showEffect = true;
 

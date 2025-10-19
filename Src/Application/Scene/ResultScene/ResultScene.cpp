@@ -41,6 +41,16 @@ void ResultScene::Init()
 
 	Time::Instance().StartTimer();
 
+	KdShaderManager::Instance().m_postProcessShader.SetBrightThreshold(m_brightThreshold);
+	KdShaderManager::Instance().WorkAmbientController().SetFogEnable(m_fogEnable, m_fogUseRange);
+	KdShaderManager::Instance().WorkAmbientController().SetDistanceFog({ m_fogColor }, m_fogDensity);
+	KdShaderManager::Instance().WorkAmbientController().SetheightFog({ m_highFogColor }, m_highFogHeight, m_lowFogHeight, m_highFogDistance);
+
+	KdShaderManager::Instance().WorkAmbientController().SetDirLight(m_directionalLightDir, m_directionalLightColor);
+	KdShaderManager::Instance().WorkAmbientController().SetDirLightShadowArea(m_lightingArea, m_dirLightHeight);
+
+	KdShaderManager::Instance().WorkAmbientController().SetAmbientLight(m_anviLightColor);
+
 	// PostProcess用パラメータ
 	m_brightThreshold = 0.9f;
 	m_fogEnable = true;

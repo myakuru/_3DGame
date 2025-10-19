@@ -42,6 +42,14 @@ void TestScene::Event()
 		m_fogColor = { 0.93f, 0.86f, 0.0f };
 		m_fogDensity = 0.001f;
 	}
+	else
+	{
+		KdShaderManager::Instance().m_postProcessShader.SetBrightThreshold(m_brightThreshold);
+		KdShaderManager::Instance().WorkAmbientController().SetAmbientLight(m_anviLightColor);
+		KdShaderManager::Instance().WorkAmbientController().SetFogEnable(m_fogEnable, m_fogUseRange);
+		KdShaderManager::Instance().WorkAmbientController().SetDistanceFog({ m_fogColor }, m_fogDensity);
+		KdShaderManager::Instance().WorkAmbientController().SetheightFog({ m_highFogColor }, m_highFogHeight, m_lowFogHeight, m_highFogDistance);
+	}
 
 	if (SceneManager::Instance().IsCutInScene())
 	{
@@ -94,6 +102,7 @@ void TestScene::Init()
 {
 	//KdShaderManager::Instance().m_postProcessShader.SetEnableGray(false);
 
+
 	m_isCountDown = false;	// カウントダウンフラグを初期化
 
 	m_countDownTimer = 120.0f; // カウントダウンタイマーを120秒に設定
@@ -101,10 +110,14 @@ void TestScene::Init()
 	SceneManager::Instance().SetIntroCamera(true); // カメラのイントロを開始
 
 	KdShaderManager::Instance().m_postProcessShader.SetBrightThreshold(m_brightThreshold);
-	KdShaderManager::Instance().WorkAmbientController().SetAmbientLight(m_anviLightColor);
 	KdShaderManager::Instance().WorkAmbientController().SetFogEnable(m_fogEnable, m_fogUseRange);
 	KdShaderManager::Instance().WorkAmbientController().SetDistanceFog({ m_fogColor }, m_fogDensity);
 	KdShaderManager::Instance().WorkAmbientController().SetheightFog({ m_highFogColor }, m_highFogHeight, m_lowFogHeight, m_highFogDistance);
+
+	KdShaderManager::Instance().WorkAmbientController().SetDirLight(m_directionalLightDir, m_directionalLightColor);
+	KdShaderManager::Instance().WorkAmbientController().SetDirLightShadowArea(m_lightingArea, m_dirLightHeight);
+
+	KdShaderManager::Instance().WorkAmbientController().SetAmbientLight(m_anviLightColor);
 
 	SceneManager::Instance().SetDrawGrayScale(false);
 	SceneManager::Instance().m_gameClear = false;	// ゲームクリアフラグを初期化
@@ -128,53 +141,56 @@ void TestScene::Init()
 
 void TestScene::SearchEnemy()
 {
-	// 敵を探す
+	// 現在の存在状況を集計
 	bool enemyExists = false;
-	bool bossenemyExists = false;
-	
+	bool bossExists = false;
+
 	SceneManager::Instance().GetObjectWeakPtrList(m_enemies);
 	SceneManager::Instance().GetObjectWeakPtrList(m_bossEnemies);
 
-	for(const auto& weakEnemy : m_enemies)
+	for (const auto& we : m_enemies)
 	{
-		if (const auto spEnemy = weakEnemy.lock())
+		if (we.lock())
 		{
-			enemyExists = true; // 敵が存在する
+			enemyExists = true;
+			break;
+		}
+	}
+	for (const auto& wb : m_bossEnemies)
+	{
+		if (const auto spBoss = wb.lock())
+		{
+			// もしBossEnemy側でHP0でも未破棄の可能性があるなら、ここでhp<=0を見て除外してもOK
+			// if (spBoss->hp <= 0) continue;
+			bossExists = true;
 			break;
 		}
 	}
 
-	for (const auto& weakBoss : m_bossEnemies)
-	{
-		if (const auto spBoss = weakBoss.lock())
-		{
-			bossenemyExists = true; // 敵が存在する
-			break;
-		}
-	}
-
-	// 敵がいなかったらゲームクリア
-	if (!enemyExists)
+	// 雑魚全滅 → ボス出現要求
+	if (!enemyExists && !SceneManager::Instance().IsBossAppear())
 	{
 		SceneManager::Instance().SetBossAppear(true);
 	}
 
-	// ボスが出現するかどうか
+	// 出現要求が立っていて、まだスポーンしていなければスポーン
 	if (SceneManager::Instance().IsBossAppear() && !m_bossAppear)
 	{
 		m_bossAppear = true;
 
-		// ボスを出現させる処理をここに追加
 		auto bossEnemy = std::make_shared<BossEnemy>();
 		bossEnemy->Init();
 		SceneManager::Instance().AddObject(bossEnemy);
+
+		// このフレームではbossExistsはまだfalseのため、即クリアへ入らないよう終了
+		return;
 	}
 
-	if (!bossenemyExists && !enemyExists)
+	// ボスフェーズ中で、シーン上にボスが存在しなければクリア
+	if (m_bossAppear && !bossExists)
 	{
 		SceneManager::Instance().m_gameClear = true;
 	}
-
 }
 
 void TestScene::DrawImGui()

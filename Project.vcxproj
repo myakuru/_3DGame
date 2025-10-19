@@ -383,6 +383,7 @@
     <ClInclude Include="Src\Application\GameObject\HitDamage\HitDamage.h" />
     <ClInclude Include="Src\Application\GameObject\HUD\AlpfaMoving\AlpfaMoving.h" />
     <ClInclude Include="Src\Application\GameObject\HUD\BlackBanner\BlackBanner.h" />
+    <ClInclude Include="Src\Application\GameObject\HUD\ChallengeResults\ChallengeResults.h" />
     <ClInclude Include="Src\Application\GameObject\HUD\EnemyHp\EnemyHp.h" />
     <ClInclude Include="Src\Application\GameObject\HUD\HpBar\HpBar.h" />
     <ClInclude Include="Src\Application\GameObject\HUD\HUDManager.h" />
@@ -582,6 +583,7 @@
     <ClCompile Include="Src\Application\GameObject\HitDamage\HitDamage.cpp" />
     <ClCompile Include="Src\Application\GameObject\HUD\AlpfaMoving\AlpfaMoving.cpp" />
     <ClCompile Include="Src\Application\GameObject\HUD\BlackBanner\BlackBanner.cpp" />
+    <ClCompile Include="Src\Application\GameObject\HUD\ChallengeResults\ChallengeResults.cpp" />
     <ClCompile Include="Src\Application\GameObject\HUD\EnemyHp\EnemyHp.cpp" />
     <ClCompile Include="Src\Application\GameObject\HUD\HpBar\HpBar.cpp" />
     <ClCompile Include="Src\Application\GameObject\HUD\HUDManager.cpp" />

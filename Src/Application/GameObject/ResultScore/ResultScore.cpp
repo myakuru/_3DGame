@@ -16,11 +16,12 @@ void ResultScore::Init()
 
 	KdShaderManager::Instance().m_StandardShader.SetGradientColor(m_gradientColor);
 
+	m_distance = 20.0f;
 }
 
 void ResultScore::Update()
 {
-	float deltatime = Application::Instance().GetDeltaTime();
+	float deltatime = Application::Instance().GetUnscaledDeltaTime();
 
 	m_time = Time::Instance().GetElapsedTime();
 
@@ -36,19 +37,20 @@ void ResultScore::Update()
 	// カメラのワールド座標を取得
 	Math::Vector3 cameraPos = _spCamera->GetMatrix().Translation();
 
-	// カメラのY軸回転のみ取得
-	cameraRot = _spCamera->GetRotationMatrix();
-	Math::Vector3 forward = cameraRot.Backward();
-
+	// カメラの前方向ベクトルを取得
+	Math::Vector3 forward = Math::Vector3::TransformNormal(
+		Math::Vector3::Forward,
+		Math::Matrix::CreateFromQuaternion(_spCamera->GetRotationQuaternion())
+	);
 	forward.Normalize();
 
-	if (m_distance < 15.0f)
+	if (m_distance > 0)
 	{
-		m_distance += 8.f * deltatime;
+		m_distance -= deltatime * 15.0f; // 徐々に近づく
 	}
 	else
 	{
-		m_distance = 15.0f;
+		m_distance = 0.0f;
 	}
 
 	m_mWorld = Math::Matrix::CreateScale(m_scale);
@@ -59,7 +61,12 @@ void ResultScore::Update()
 		DirectX::XMConvertToRadians(m_degree.z)
 	);
 
-	m_mWorld.Translation(m_position + cameraPos + forward * m_distance);
+	// m_position をカメラローカルのオフセットとして使用する場合はカメラ回転を適用
+	Math::Matrix camRotM = Math::Matrix::CreateFromQuaternion(_spCamera->GetRotationQuaternion());
+	Math::Vector3 localOffset = Math::Vector3::TransformNormal(m_position, camRotM);
+
+	// カメラ位置 + カメラ前方向 * 距離 + ローカルオフセット
+	m_mWorld.Translation(cameraPos + forward * m_distance + localOffset);
 }
 
 void ResultScore::DrawGradation()
@@ -101,6 +108,8 @@ void ResultScore::ImGuiInspector()
 	SelectDraw3dModel::ImGuiInspector();
 	ImGui::ColorEdit3(U8("グラデーションのカラー"), &m_gradientColor.x);
 	KdShaderManager::Instance().m_StandardShader.SetGradientColor(m_gradientColor);
+
+	ImGui::DragFloat(U8("カメラからの距離"), &m_distance);
 }
 
 void ResultScore::JsonSave(nlohmann::json& _json) const

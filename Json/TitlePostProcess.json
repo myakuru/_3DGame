@@ -5,7 +5,7 @@
     "y": 0.0,
     "z": 0.0
   },
-  "m_brightThreshold": 0.8999999761581421,
+  "m_brightThreshold": 1.100000023841858,
   "m_dirLightHeight": 30.0,
   "m_directionalLightColor": {
     "x": 0.0,
@@ -19,8 +19,8 @@
   },
   "m_fogColor": {
     "x": 0.0,
-    "y": 0.061851222068071365,
-    "z": 0.06372547149658203
+    "y": 0.14749149978160858,
+    "z": 0.15196079015731812
   },
   "m_fogDensity": 0.029999999329447746,
   "m_fogEnable": true,

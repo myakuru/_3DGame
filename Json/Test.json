@@ -76,9 +76,9 @@
     "moveSpeed": 0.14000000059604645,
     "path": "Asset\\Models\\Player\\Perula\\Player\\Perula.gltf",
     "pos": {
-      "x": 28.198163986206055,
-      "y": 9.850000381469727,
-      "z": -68.64091491699219
+      "x": 12.651131629943848,
+      "y": 9.850008964538574,
+      "z": -60.20237731933594
     },
     "rotateSpeed": 30.0,
     "scale": {
@@ -164,15 +164,15 @@
       "z": 1.0
     },
     "deg": {
-      "x": 15.749995231628418,
-      "y": 285.6499938964844,
+      "x": 18.749996185302734,
+      "y": 298.3987731933594,
       "z": 0.0
     },
     "fov": 70.0,
     "m_cameraPos": {
-      "x": 28.19816017150879,
-      "y": 9.850000381469727,
-      "z": -68.64089965820313
+      "x": 12.651126861572266,
+      "y": 9.850008964538574,
+      "z": -60.20235824584961
     },
     "moveSpeed": 50.0,
     "path": "Asset/Models/Sky/Sky.gltf",
@@ -191,7 +191,7 @@
     "targetLookAt": {
       "x": 0.0,
       "y": 1.0,
-      "z": -5.500000953674316
+      "z": -2.500000238418579
     },
     "type": 32
   },
@@ -253,9 +253,9 @@
     "Name": "class Scoring",
     "color": {
       "w": 1.0,
-      "x": 1.0,
-      "y": 0.4300000071525574,
-      "z": 0.03999999910593033
+      "x": 0.1899999976158142,
+      "y": 0.6200000047683716,
+      "z": 1.0
     },
     "deg": {
       "x": 0.0,
@@ -297,8 +297,8 @@
       "z": 0.0
     },
     "scale": {
-      "x": 0.014999999664723873,
-      "y": 0.15000000596046448,
+      "x": 0.3499999940395355,
+      "y": 3.5,
       "z": 1.0
     },
     "type": 32
@@ -1588,7 +1588,7 @@
       "y": 0.0,
       "z": 0.0
     },
-    "drawFlags": false,
+    "drawFlags": true,
     "path": "Asset/Models/Sky/Sky.gltf",
     "pos": {
       "x": 0.0,
@@ -2706,7 +2706,7 @@
   {
     "Name": "class MapGard",
     "color": {
-      "w": 0.800000011920929,
+      "w": 0.5,
       "x": 0.800000011920929,
       "y": 0.800000011920929,
       "z": 0.800000011920929
@@ -3078,7 +3078,7 @@
     "path": "Asset\\Map2\\Map.gltf",
     "pos": {
       "x": -287.70001220703125,
-      "y": -120.29833984375,
+      "y": -133.59588623046875,
       "z": 315.3999938964844
     },
     "scale": {
@@ -3229,51 +3229,6 @@
     "type": 32
   },
   {
-    "GravitySpeed": 0.0,
-    "Name": "class BossEnemy",
-    "color": {
-      "w": 1.0,
-      "x": 1.0,
-      "y": 1.0,
-      "z": 1.0
-    },
-    "deg": {
-      "x": 0.0,
-      "y": 0.0,
-      "z": 0.0
-    },
-    "dissolveColor": {
-      "x": 0.0,
-      "y": 0.0,
-      "z": 0.0
-    },
-    "dissolvePower": 1.0,
-    "drawFlags": {
-      "DrawBright": false,
-      "DrawGradation": false,
-      "DrawGrayScale": false,
-      "DrawLit": true,
-      "DrawToon": false,
-      "DrawUnLit": false,
-      "GenerateDepthMapFromLight": false
-    },
-    "fixedFps": 60.0,
-    "moveSpeed": 0.10000000149011612,
-    "path": "Asset/Models/Sky/Sky.gltf",
-    "pos": {
-      "x": 20.6761531829834,
-      "y": 9.800000190734863,
-      "z": -63.05221939086914
-    },
-    "rotationspeed": 10.0,
-    "scale": {
-      "x": 1.0,
-      "y": 1.0,
-      "z": 1.0
-    },
-    "type": 32
-  },
-  {
     "EffectSpeed": 3.0,
     "Name": "class BossWaterAttackEffect",
     "color": {
@@ -3416,9 +3371,9 @@
     "Name": "class SkillBar",
     "color": {
       "w": 1.0,
-      "x": 0.5882352590560913,
-      "y": 0.5882352590560913,
-      "z": 0.5882352590560913
+      "x": 0.5,
+      "y": 0.5,
+      "z": 0.5
     },
     "deg": {
       "x": 0.0,
@@ -3465,6 +3420,51 @@
       "z": 1.0
     },
     "type": 32
+  },
+  {
+    "GravitySpeed": 0.0,
+    "Name": "class Enemy",
+    "color": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "deg": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "dissolveColor": {
+      "x": 1.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "dissolvePower": 1.0,
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
+      "DrawLit": true,
+      "DrawToon": false,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "fixedFps": 60.0,
+    "moveSpeed": 0.004999999888241291,
+    "path": "Asset\\Models\\Enemy\\Aetherius\\Aetherius.gltf",
+    "pos": {
+      "x": 3.586310625076294,
+      "y": 9.800000190734863,
+      "z": -57.159175872802734
+    },
+    "rotationspeed": 10.0,
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "type": 39
   },
   {
     "Name": "class FPSCamera",

@@ -82,6 +82,7 @@
 #include"../GameObject/Effect/EffekseerEffect/ChargeAttackEffect/ChargeAttackEffect.h"
 #include"../GameObject/Effect/EffekseerEffect/ChargeAttackEffect_end/ChargeAttackEffect_end.h"
 #include"../GameObject/HUD/SkillBar/SkillBar.h"
+#include"../GameObject/HUD/ChallengeResults/ChallengeResults.h"
 
 void SceneManager::Init()
 {
@@ -120,6 +121,7 @@ void SceneManager::Register() const
 	RegisterObject::GetInstance().Register<NotCharge1UI>();
 	RegisterObject::GetInstance().Register<NotCharge2UI>();
 	RegisterObject::GetInstance().Register<SkillBar>();
+	RegisterObject::GetInstance().Register<ChallengeResults>();
 
 	// Map系
 	RegisterObject::GetInstance().Register<Map>();

@@ -21,6 +21,8 @@ void Timer::Init()
 	m_notDraw = false; // 描画しないフラグを初期化
 	m_displayTime = 0; // 初期表示時間を0に設定
 	m_lastTime = 0.0f; // 最後の時間を初期化
+
+	m_scale = { 0.35f, 3.5f, 1.0f };
 }
 
 void Timer::Update()
