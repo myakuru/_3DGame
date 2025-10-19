@@ -395,6 +395,7 @@
     <ClInclude Include="Src\Application\GameObject\HUD\PlayerChargeUI\NotCharge\NotChargeUI.h" />
     <ClInclude Include="Src\Application\GameObject\HUD\ScaleMoving\ScaleMoving.h" />
     <ClInclude Include="Src\Application\GameObject\HUD\Scoring\Scoring.h" />
+    <ClInclude Include="Src\Application\GameObject\HUD\SkillBar\SkillBar.h" />
     <ClInclude Include="Src\Application\GameObject\HUD\SpecialMove\SpecialMove.h" />
     <ClInclude Include="Src\Application\GameObject\HUD\Timer\Timer.h" />
     <ClInclude Include="Src\Application\GameObject\Map\Map.h" />
@@ -593,6 +594,7 @@
     <ClCompile Include="Src\Application\GameObject\HUD\PlayerChargeUI\NotCharge\NotChargeUI.cpp" />
     <ClCompile Include="Src\Application\GameObject\HUD\ScaleMoving\ScaleMoving.cpp" />
     <ClCompile Include="Src\Application\GameObject\HUD\Scoring\Scoring.cpp" />
+    <ClCompile Include="Src\Application\GameObject\HUD\SkillBar\SkillBar.cpp" />
     <ClCompile Include="Src\Application\GameObject\HUD\SpecialMove\SpecialMove.cpp" />
     <ClCompile Include="Src\Application\GameObject\HUD\Timer\Timer.cpp" />
     <ClCompile Include="Src\Application\GameObject\Map\Map.cpp" />

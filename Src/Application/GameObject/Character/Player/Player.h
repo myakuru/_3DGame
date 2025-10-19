@@ -7,10 +7,12 @@ class WeaponKatanaScabbard;
 class PlayerStateBase;
 struct PlayerStatus
 {
-	int hp = 1000;		// ヒットポイント
-	int attack = 3000;	// 攻撃力
-	int hpMax = 1000;	// 最大ヒットポイント
-	int chargeCount = 0; // チャージ攻撃の回数
+	int hp = 1000;				// ヒットポイント
+	int attack = 3000;			// 攻撃力
+	int hpMax = 1000;			// 最大ヒットポイント
+	int chargeCount = 0;		// チャージ攻撃の回数
+	int skillPoint = 0;			// スキルポイント
+	int skillPointMax = 100;	// スキルポイントの最大値
 };
 class Player :public CharaBase
 {

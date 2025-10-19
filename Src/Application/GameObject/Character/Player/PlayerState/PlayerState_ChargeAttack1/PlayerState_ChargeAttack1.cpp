@@ -39,6 +39,8 @@ void PlayerState_ChargeAttack1::StateStart()
 	{
 		effect->SetPlayEffect(true);
 	}
+
+	KdAudioManager::Instance().Play("Asset/Sound/Player/Charge.WAV", false)->SetVolume(1.0f);
 }
 
 void PlayerState_ChargeAttack1::StateUpdate()

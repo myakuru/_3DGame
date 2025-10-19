@@ -171,6 +171,9 @@ void Player::Update()
 	SceneManager::Instance().GetObjectWeakPtr(m_katana);
 	SceneManager::Instance().GetObjectWeakPtr(m_scabbard);
 
+	// プレイヤーのSkillポイントの表示
+	KdDebugGUI::Instance().AddLog("PlayerSkillPoint: %d\n", m_status.skillPoint);
+
 	// 雑魚・ボスをまとめてチェック
 	SceneManager::Instance().GetObjectWeakPtrListAnyOf<Enemy, BossEnemy>(m_enemyLike);
 

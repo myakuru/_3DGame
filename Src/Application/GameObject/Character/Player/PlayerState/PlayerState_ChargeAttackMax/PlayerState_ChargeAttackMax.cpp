@@ -17,6 +17,8 @@ void PlayerState_ChargeAttackMax::StateStart()
 	// アニメーション速度を変更
 	m_player->SetAnimeSpeed(100.0f);
 
+	KdAudioManager::Instance().Play("Asset/Sound/Player/ChargeAttack.WAV", false)->SetVolume(1.0f);
+
 	// 残像の設定
 	m_player->AddAfterImage(true, 5, 0.1f, Math::Color(0.0f, 1.0f, 1.0f, 1.0f));
 }
@@ -33,6 +35,9 @@ void PlayerState_ChargeAttackMax::StateUpdate()
 	PlayerStateBase::StateUpdate();
 
 	UpdateKatanaPos();
+
+	// 攻撃の当たり判定更新
+	m_player->UpdateAttackCollision(7.0f, 6.0f, 2.0f, m_maxAnimeTime, { 0.0f, 0.0f }, 0.1f);
 
 	// 攻撃中の移動方向で回転を更新
 	if (m_player->GetMovement() != Math::Vector3::Zero)

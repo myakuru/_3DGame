@@ -62,6 +62,11 @@ void PlayerState_Attack3::StateStart()
 	m_player->SetAnimeSpeed(70.0f);
 
 	KdAudioManager::Instance().Play("Asset/Sound/Player/Attack3.WAV", false)->SetVolume(0.5f);
+
+	if (m_player->GetPlayerStatus().skillPoint <= m_player->GetPlayerStatus().skillPointMax)
+	{
+		m_player->GetPlayerStatus().skillPoint += 4;
+	}
 }
 
 void PlayerState_Attack3::StateUpdate()
@@ -136,7 +141,11 @@ void PlayerState_Attack3::StateUpdate()
 		// Eキー先行入力の予約
 		if (KeyboardManager::GetInstance().IsKeyJustPressed('E'))
 		{
-			m_EButtonkeyInput = true;
+			if (m_player->GetPlayerStatus().skillPoint >= 30)
+			{
+				m_EButtonkeyInput = true;
+				m_player->GetPlayerStatus().skillPoint -= 30;
+			}
 		}
 	}
 

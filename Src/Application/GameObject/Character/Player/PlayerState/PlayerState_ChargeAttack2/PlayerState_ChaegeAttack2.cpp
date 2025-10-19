@@ -21,7 +21,8 @@ void PlayerState_ChaegeAttack2::StateStart()
 	SceneManager::Instance().GetObjectWeakPtr(m_smokeEffect);
 	SceneManager::Instance().GetObjectWeakPtr(m_shineEffect);
 
-	m_player->m_onceEffect = false;
+	// 当たり判定リセット
+	m_player->ResetAttackCollision();
 }
 
 void PlayerState_ChaegeAttack2::StateUpdate()
@@ -38,19 +39,6 @@ void PlayerState_ChaegeAttack2::StateUpdate()
 		smokeEffect->SetPlayEffect(true);
 		// キラキラエフェクトの再生
 		shineEffect->SetPlayEffect(true);
-	}
-
-	float deltaTime = Application::Instance().GetDeltaTime();
-
-	m_chargeAttackTimer += deltaTime;
-
-	// 0.3秒後に画面の揺れとぼかし処理を実行
-	if (m_chargeAttackTimer >= 0.1f && m_chargeAttackTimer <= 0.2f)
-	{
-		if (auto camera = m_player->GetPlayerCamera().lock(); camera)
-		{
-			camera->StartShake({ 0.0f,0.5f }, 0.01f);
-		}
 	}
 
 	// アニメーション速度を変更

@@ -20,6 +20,9 @@ void PlayerState_FullCharge::StateStart()
 	m_player->SetInvincible(true);
 
 	m_time = 0.0f;
+
+	KdAudioManager::Instance().Play("Asset/Sound/Player/Charge.WAV", false)->SetVolume(1.0f);
+
 }
 
 void PlayerState_FullCharge::StateUpdate()

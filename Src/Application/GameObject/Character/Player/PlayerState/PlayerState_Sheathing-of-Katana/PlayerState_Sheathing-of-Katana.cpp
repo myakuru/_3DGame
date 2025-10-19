@@ -5,6 +5,7 @@
 #include "../PlayerState_FowardAvoid/PlayerState_FowardAvoid.h"
 #include"../../../../Weapon/Katana/Katana.h"
 #include"../../../../Weapon/WeaponKatanaScabbard/WeaponKatanaScabbard.h"
+#include"../PlayerState_Skill/PlayerState_Skill.h"
 
 void PlayerState_SheathKatana::StateStart()
 {
@@ -35,6 +36,18 @@ void PlayerState_SheathKatana::StateUpdate()
 		auto attackState = std::make_shared<PlayerState_ForwardAvoid>();
 		m_player->ChangeState(attackState);
 		return;
+	}
+
+	// Eキー先行入力の予約
+	if (KeyboardManager::GetInstance().IsKeyJustPressed('E'))
+	{
+		if (m_player->GetPlayerStatus().skillPoint >= 30)
+		{
+			m_player->GetPlayerStatus().skillPoint -= 30;
+			auto state = std::make_shared<PlayerState_Skill>();
+			m_player->ChangeState(state);
+			return;
+		}
 	}
 
 	if (m_player->GetAnimator()->IsAnimationEnd())

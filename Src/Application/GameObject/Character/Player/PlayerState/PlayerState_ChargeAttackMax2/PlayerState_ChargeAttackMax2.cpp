@@ -20,6 +20,8 @@ void PlayerState_ChargeAttackMax2::StateStart()
 
 	// 残像の設定
 	m_player->AddAfterImage(true, 5, 0.1f, Math::Color(0.0f, 1.0f, 1.0f, 1.0f));
+
+	KdAudioManager::Instance().Play("Asset/Sound/Player/ChargeAttack.WAV", false)->SetVolume(1.0f);
 }
 
 void PlayerState_ChargeAttackMax2::StateUpdate()
@@ -31,6 +33,9 @@ void PlayerState_ChargeAttackMax2::StateUpdate()
 		return;
 	}
 	PlayerStateBase::StateUpdate();
+
+	// 攻撃の当たり判定更新
+	m_player->UpdateAttackCollision(7.0f, 6.0f, 2.0f, m_maxAnimeTime, { 0.0f, 0.0f }, 0.1f);
 
 	UpdateKatanaPos();
 

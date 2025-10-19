@@ -44,6 +44,9 @@ void PlayerState_ChargeAttack::StateStart()
 
 	// アニメーション速度を変更
 	m_player->SetAnimeSpeed(80.0f);
+
+	KdAudioManager::Instance().Play("Asset/Sound/Player/Charge.WAV", false)->SetVolume(1.0f);
+
 }
 
 void PlayerState_ChargeAttack::StateUpdate()

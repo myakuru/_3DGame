@@ -1,20 +1,11 @@
-﻿#include "HpBar.h"
-#include"../../Utility/Time.h"
+﻿#include "SkillBar.h"
 #include"../../../Scene/SceneManager.h"
 #include"../../Character/Player/Player.h"
+#include"../../../main.h"
 
-const uint32_t HpBar::TypeID = KdGameObject::GenerateTypeID();
+const uint32_t SkillBar::TypeID = KdGameObject::GenerateTypeID();
 
-void HpBar::Init()
-{
-	SelectDraw2DTexture::Init();
-
-	// 初期は満タン表示
-	m_hpRate = 1.0f;
-	m_rect.width = static_cast<float>(1500.0f * m_hpRate);
-}
-
-void HpBar::DrawSprite()
+void SkillBar::DrawSprite()
 {
 	if (SceneManager::Instance().IsIntroCamera()) return;
 
@@ -44,39 +35,59 @@ void HpBar::DrawSprite()
 	KdShaderManager::Instance().m_spriteShader.SetMatrix(Math::Matrix::Identity);
 }
 
-void HpBar::Update()
+void SkillBar::Update()
 {
 	SceneManager::Instance().GetObjectWeakPtr(m_player);
+
+	float deltaTime = Application::Instance().GetUnscaledDeltaTime();
+	m_timer += deltaTime;
+
 
 	if (auto player = m_player.lock())
 	{
 		// 目標のHP割合を算出（0～1にクランプ）
+		float hpRate = 0.0f;
 		const PlayerStatus& status = player->GetPlayerStatus();
-		float denom = status.hpMax > 0 ? static_cast<float>(status.hpMax) : 1.0f;
-		float targetHpRate = static_cast<float>(status.hp) / denom;
-		if (targetHpRate < 0.0f) targetHpRate = 0.0f;
-		if (targetHpRate > 1.0f) targetHpRate = 1.0f;
-
-		// 経過時間から補間係数を計算（秒ベース）
-		const float now = Time::Instance().GetElapsedTime();
-		static float prev = now;
-		float dt = now - prev;
-		if (dt < 0.0f) dt = 0.0f;
-		prev = now;
-
-		// 追従速度
-		const float followSpeed = 6.0f;
-		// 補間係数
-		float t = followSpeed * dt;
-		if (t > 1.0f) t = 1.0f;
-		if (t < 0.0f) t = 0.0f;
-
-		// 現在表示値を目標へ徐々に近づける
-		m_hpRate += (targetHpRate - m_hpRate) * t;
+		hpRate = status.skillPointMax > 0 ? static_cast<float>(status.skillPoint) / static_cast<float>(status.skillPointMax) : 1.0f;
 
 		// 表示幅を更新
-		m_rect.width = static_cast<float>(1500.0f * m_hpRate);
+		m_rect.width = static_cast<long>(500.0f * hpRate);
+
+		if (status.skillPoint >= 30)
+		{
+			if (m_timer >= 0.1f)
+			{
+				// 赤 or 紫をランダムに選択
+				const bool useRed = KdRandom::GetFloat(0.0f, 1.0f) < 0.5f;
+
+				float r, g, b;
+				if (useRed)
+				{
+					// 赤系: R高 / G低 / B低
+					r = KdRandom::GetFloat(0.9f, 1.0f);
+					g = KdRandom::GetFloat(0.0f, 0.2f);
+					b = KdRandom::GetFloat(0.0f, 0.2f);
+				}
+				else
+				{
+					// 紫系: R高 / G低 / B高
+					r = KdRandom::GetFloat(0.8f, 1.0f);
+					g = KdRandom::GetFloat(0.0f, 0.2f);
+					b = KdRandom::GetFloat(0.8f, 1.0f);
+				}
+
+				m_color = { r, g, b, 1.0f };
+				m_timer = 0.0f;
+			}
+		}
+		else
+		{
+			// 通常色に戻す
+			m_color = { 0.5f, 0.5f, 0.5f, 1.0f };
+		}
+
 	}
+
 
 	// 行列更新
 	m_mWorld = Math::Matrix::CreateScale(m_scale);
@@ -87,9 +98,4 @@ void HpBar::Update()
 		m_degree.z
 	);
 	m_mWorld.Translation(m_position);
-}
-
-void HpBar::ImGuiInspector()
-{
-	SelectDraw2DTexture::ImGuiInspector();
 }

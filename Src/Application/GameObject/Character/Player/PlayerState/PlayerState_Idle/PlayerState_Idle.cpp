@@ -73,11 +73,16 @@ void PlayerState_Idle::StateUpdate()
 	}
 
 	// Eスキル
+	// Eキー先行入力の予約
 	if (KeyboardManager::GetInstance().IsKeyJustPressed('E'))
 	{
-		auto skillState = std::make_shared<PlayerState_Skill>();
-		m_player->ChangeState(skillState);
-		return;
+		if (m_player->GetPlayerStatus().skillPoint >= 30)
+		{
+			m_player->GetPlayerStatus().skillPoint -= 30;
+			auto state = std::make_shared<PlayerState_Skill>();
+			m_player->ChangeState(state);
+			return;
+		}
 	}
 
 	// 押された瞬間

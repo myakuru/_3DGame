@@ -14,6 +14,8 @@ void PlayerState_ChargeAttackMax1::StateStart()
 
 	SceneManager::Instance().GetObjectWeakPtr(m_effect);
 
+	KdAudioManager::Instance().Play("Asset/Sound/Player/Attack4.WAV", false)->SetVolume(1.0f);
+
 	if(auto effect = m_effect.lock())
 	{
 		// エフェクトの初期化
@@ -30,6 +32,9 @@ void PlayerState_ChargeAttackMax1::StateUpdate()
 		m_player->ChangeState(state);
 		return;
 	}
+
+	// 攻撃の当たり判定更新
+	m_player->UpdateAttackCollision(7.0f, 6.0f, 5.0f, m_maxAnimeTime, { 0.3f, 0.3f }, 0.1f);
 
 	// 刀は鞘の中にある状態
 	UpdateUnsheathed();

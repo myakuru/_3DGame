@@ -81,6 +81,7 @@
 #include"../GameObject/Effect/EffekseerEffect/BossWaterFallAttack/BossWaterFallAttack.h"
 #include"../GameObject/Effect/EffekseerEffect/ChargeAttackEffect/ChargeAttackEffect.h"
 #include"../GameObject/Effect/EffekseerEffect/ChargeAttackEffect_end/ChargeAttackEffect_end.h"
+#include"../GameObject/HUD/SkillBar/SkillBar.h"
 
 void SceneManager::Init()
 {
@@ -118,6 +119,7 @@ void SceneManager::Register() const
 	RegisterObject::GetInstance().Register<NotChargeUI>();
 	RegisterObject::GetInstance().Register<NotCharge1UI>();
 	RegisterObject::GetInstance().Register<NotCharge2UI>();
+	RegisterObject::GetInstance().Register<SkillBar>();
 
 	// Map系
 	RegisterObject::GetInstance().Register<Map>();

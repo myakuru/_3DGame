@@ -46,6 +46,11 @@ void PlayerState_Attack4::StateStart()
 		m_player->GetPlayerStatus().chargeCount++;
 	}
 
+	if (m_player->GetPlayerStatus().skillPoint <= m_player->GetPlayerStatus().skillPointMax)
+	{
+		m_player->GetPlayerStatus().skillPoint += 5;
+	}
+
 	KdAudioManager::Instance().Play("Asset/Sound/Player/Attack4.WAV", false)->SetVolume(0.5f);
 }
 
@@ -102,7 +107,11 @@ void PlayerState_Attack4::StateUpdate()
 	// Eキー先行入力の予約
 	if (KeyboardManager::GetInstance().IsKeyJustPressed('E'))
 	{
-		m_EButtonkeyInput = true;
+		if (m_player->GetPlayerStatus().skillPoint >= 30)
+		{
+			m_EButtonkeyInput = true;
+			m_player->GetPlayerStatus().skillPoint -= 30;
+		}
 	}
 
 	// 攻撃中の移動方向で回転を更新

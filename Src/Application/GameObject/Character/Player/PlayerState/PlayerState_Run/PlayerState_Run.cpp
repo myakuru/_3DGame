@@ -50,11 +50,16 @@ void PlayerState_Run::StateUpdate()
 		m_isKeyPressing = true; // 判定開始
 	}
 
+	// Eキー先行入力の予約
 	if (KeyboardManager::GetInstance().IsKeyJustPressed('E'))
 	{
-		auto state = std::make_shared<PlayerState_Skill>();
-		m_player->ChangeState(state);
-		return;
+		if (m_player->GetPlayerStatus().skillPoint >= 30)
+		{
+			m_player->GetPlayerStatus().skillPoint -= 30;
+			auto state = std::make_shared<PlayerState_Skill>();
+			m_player->ChangeState(state);
+			return;
+		}
 	}
 
 	// 長押し判定

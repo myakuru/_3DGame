@@ -19,6 +19,13 @@ void PlayerState_ChargeAttackMax3::StateStart()
 		effect->SetPlayEffect(true);
 	}
 
+	KdAudioManager::Instance().Play("Asset/Sound/Player/Attack4.WAV", false)->SetVolume(1.0f);
+
+	/*if (m_player->GetPlayerStatus().skillPoint <= m_player->GetPlayerStatus().skillPointMax)
+	{
+		m_player->GetPlayerStatus().skillPoint += 5;
+	}*/
+
 }
 
 void PlayerState_ChargeAttackMax3::StateUpdate()
@@ -29,6 +36,9 @@ void PlayerState_ChargeAttackMax3::StateUpdate()
 		m_player->ChangeState(state);
 		return;
 	}
+
+	// 攻撃の当たり判定更新
+	m_player->UpdateAttackCollision(7.0f, 6.0f, 5.0f, m_maxAnimeTime, { 0.3f, 0.3f }, 0.1f);
 
 	// 刀は鞘の中にある状態
 	UpdateUnsheathed();

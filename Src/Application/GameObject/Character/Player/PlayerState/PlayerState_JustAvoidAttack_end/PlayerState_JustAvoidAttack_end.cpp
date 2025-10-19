@@ -52,6 +52,11 @@ void PlayerState_JustAvoidAttack_end::StateStart()
 		m_player->GetPlayerStatus().chargeCount++;
 	}
 
+	if (m_player->GetPlayerStatus().skillPoint <= m_player->GetPlayerStatus().skillPointMax)
+	{
+		m_player->GetPlayerStatus().skillPoint += 5;
+	}
+
 }
 
 void PlayerState_JustAvoidAttack_end::StateUpdate()

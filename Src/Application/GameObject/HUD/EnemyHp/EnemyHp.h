@@ -54,7 +54,7 @@ private:
 	float m_dropLerp = 0.20f;  // 小さめ=ゆっくり減る
 	float m_healLerp = 0.50f;  // 大きめ=やや早く戻る
 
-	Math::Vector3 m_blackBarPos = Math::Vector3::Zero;
+	Math::Vector3 m_blackBarPos = Math::Vector3(0, 0, 0);
 
 
 };
