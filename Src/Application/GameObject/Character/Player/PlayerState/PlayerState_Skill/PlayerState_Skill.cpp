@@ -16,6 +16,8 @@ void PlayerState_Skill::StateStart()
 
 	SceneManager::Instance().GetObjectWeakPtr(m_effect);
 
+	KdAudioManager::Instance().Play("Asset/Sound/Player/Eskill.WAV", false)->SetVolume(1.0f);
+
 	// 敵との当たり判定を無効化
 	m_player->SetAtkPlayer(true);
 

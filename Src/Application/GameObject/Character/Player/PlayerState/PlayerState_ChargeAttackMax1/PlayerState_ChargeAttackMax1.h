@@ -1,4 +1,5 @@
 ﻿#pragma once
+class ChargeAttackEffect;
 #include"../PlayerState.h"
 class PlayerState_ChargeAttackMax1 :public PlayerStateBase
 {
@@ -11,5 +12,7 @@ private:
 	void StateStart() override;
 	void StateUpdate() override;
 	void StateEnd() override;
+
+	std::weak_ptr<ChargeAttackEffect> m_effect;
 
 };

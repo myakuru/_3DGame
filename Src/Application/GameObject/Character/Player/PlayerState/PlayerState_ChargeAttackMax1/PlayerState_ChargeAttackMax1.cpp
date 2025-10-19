@@ -1,6 +1,8 @@
 ﻿#include "PlayerState_ChargeAttackMax1.h"
 #include"../PlayerState_Idle/PlayerState_Idle.h"
 #include"../PlayerState_ChargeAttackMax2/PlayerState_ChargeAttackMax2.h"
+#include"../../../../../Scene/SceneManager.h"
+#include"../../../../Effect/EffekseerEffect/ChargeAttackEffect/ChargeAttackEffect.h"
 
 void PlayerState_ChargeAttackMax1::StateStart()
 {
@@ -9,6 +11,15 @@ void PlayerState_ChargeAttackMax1::StateStart()
 	PlayerStateBase::StateStart();
 	// アニメーション速度を変更
 	m_player->SetAnimeSpeed(120.0f);
+
+	SceneManager::Instance().GetObjectWeakPtr(m_effect);
+
+	if(auto effect = m_effect.lock())
+	{
+		// エフェクトの初期化
+		effect->SetPlayEffect(true);
+	}
+
 }
 
 void PlayerState_ChargeAttackMax1::StateUpdate()
@@ -40,4 +51,11 @@ void PlayerState_ChargeAttackMax1::StateUpdate()
 void PlayerState_ChargeAttackMax1::StateEnd()
 {
 	PlayerStateBase::StateEnd();
+
+	if (auto effect = m_effect.lock())
+	{
+		// エフェクトの初期化
+		effect->SetPlayEffect(false);
+		effect->StopEffect();
+	}
 }

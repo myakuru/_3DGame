@@ -33,7 +33,7 @@ void BossEnemy::Init()
 
 	StateInit();
 
-	m_position = { 15.0f,9.6f,-58.0f };
+	m_position = { 15.0f,9.8f,-58.0f };
 
 	m_isAtkPlayer = false;
 	m_dissever = 0.0f;
@@ -82,7 +82,6 @@ void BossEnemy::Update()
 	CharaBase::Update();
 
 	// ヒット処理。
-	// ヒット処理。
 	if (m_isHit)
 	{
 
@@ -94,7 +93,6 @@ void BossEnemy::Update()
 		SceneManager::Instance().AddObject(m_spHitDamage);
 
 		m_isHit = false;
-
 
 		if (m_invincible) return;
 

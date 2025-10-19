@@ -40,6 +40,8 @@ void PlayerState_Attack::StateStart()
 
 	SceneManager::Instance().GetObjectWeakPtr(m_slashEffect);
 	m_player->SetAnimeSpeed(70.0f);
+
+	KdAudioManager::Instance().Play("Asset/Sound/Player/Attack.wav", false)->SetVolume(1.0f);
 }
 
 void PlayerState_Attack::StateUpdate()
@@ -118,6 +120,7 @@ void PlayerState_Attack::StateUpdate()
 		{
 			effect->SetPlayEffect(true);
 		}
+
 		m_player->SetIsMoving(Math::Vector3::Zero);
 
 		if (m_EButtonkeyInput)
@@ -178,9 +181,15 @@ void PlayerState_Attack::StateUpdate()
 		}
 		else if (m_player->GetAnimator()->IsAnimationEnd())
 		{
-			auto sheath = std::make_shared<PlayerState_SheathKatana>();
-			m_player->ChangeState(sheath);
-			return;
+			if (auto swordEffect = m_slashEffect.lock(); swordEffect)
+			{
+				if (!swordEffect->IsEffectPlaying())
+				{
+					auto sheath = std::make_shared<PlayerState_SheathKatana>();
+					m_player->ChangeState(sheath);
+					return;
+				}
+			}
 		}
 	}
 

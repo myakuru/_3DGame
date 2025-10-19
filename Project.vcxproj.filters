@@ -502,6 +502,12 @@
     <Filter Include="Src\Application\GameObject\Effect\EffekseerEffect\BossWaterFallAttack">
       <UniqueIdentifier>{c189cb03-a157-4263-a24b-b33784a9d369}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\GameObject\Effect\EffekseerEffect\ChargeAttackEffect">
+      <UniqueIdentifier>{606b6cd2-610b-4f5b-a38e-a8736f429b24}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Effect\EffekseerEffect\ChargeAttackEffect_end">
+      <UniqueIdentifier>{540fe7d3-2586-4ee0-8bfb-10bc8352b8e9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -1110,6 +1116,12 @@
     <ClInclude Include="Src\Application\GameObject\Effect\EffekseerEffect\BossWaterFallAttack\BossWaterFallAttack.h">
       <Filter>Src\Application\GameObject\Effect\EffekseerEffect\BossWaterFallAttack</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Effect\EffekseerEffect\ChargeAttackEffect\ChargeAttackEffect.h">
+      <Filter>Src\Application\GameObject\Effect\EffekseerEffect\ChargeAttackEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Effect\EffekseerEffect\ChargeAttackEffect_end\ChargeAttackEffect_end.h">
+      <Filter>Src\Application\GameObject\Effect\EffekseerEffect\ChargeAttackEffect_end</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -1663,6 +1675,12 @@
     </ClCompile>
     <ClCompile Include="Src\Application\GameObject\Effect\EffekseerEffect\BossWaterFallAttack\BossWaterFallAttack.cpp">
       <Filter>Src\Application\GameObject\Effect\EffekseerEffect\BossWaterFallAttack</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Effect\EffekseerEffect\ChargeAttackEffect\ChargeAttackEffect.cpp">
+      <Filter>Src\Application\GameObject\Effect\EffekseerEffect\ChargeAttackEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Effect\EffekseerEffect\ChargeAttackEffect_end\ChargeAttackEffect_end.cpp">
+      <Filter>Src\Application\GameObject\Effect\EffekseerEffect\ChargeAttackEffect_end</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

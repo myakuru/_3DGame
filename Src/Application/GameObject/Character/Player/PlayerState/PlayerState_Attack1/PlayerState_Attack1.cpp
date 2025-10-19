@@ -46,6 +46,8 @@ void PlayerState_Attack1::StateStart()
 	SceneManager::Instance().GetObjectWeakPtr(m_effect);
 
 	m_player->SetAnimeSpeed(70.0f);
+
+	KdAudioManager::Instance().Play("Asset/Sound/Player/Attack1.wav", false)->SetVolume(0.5f);
 }
 
 void PlayerState_Attack1::StateUpdate()

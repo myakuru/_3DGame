@@ -60,6 +60,8 @@ void PlayerState_JustAvoidAttack::StateStart()
 	// 当たり判定リセット
 	m_player->ResetAttackCollision();
 
+	KdAudioManager::Instance().Play("Asset/Sound/Player/JustAttack.WAV", false)->SetVolume(1.0f);
+
 	SceneManager::Instance().GetObjectWeakPtr(m_bossEnemy);
 
 	if (auto camera = m_player->GetPlayerCamera().lock(); camera)

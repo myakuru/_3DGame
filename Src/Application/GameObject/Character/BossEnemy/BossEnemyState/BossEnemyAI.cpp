@@ -58,8 +58,8 @@ std::shared_ptr<BossEnemyStateBase> BossEnemyAI::DecideNext(BossEnemy* boss)
 	{
 		if (boss->GetWaterCooldown() <= 0.0f)
 		{
-			// 60%の確率で水攻撃
-			if (KdRandom::GetInt(0, 99) < 60)
+			// 40%の確率で水攻撃
+			if (KdRandom::GetInt(0, 99) < 40)
 			{
 				boss->SetWaterCooldown(20.0f);
 				boss->SetLastAction(BossEnemy::ActionType::Water);
@@ -73,7 +73,7 @@ std::shared_ptr<BossEnemyStateBase> BossEnemyAI::DecideNext(BossEnemy* boss)
 	// WaterFallのクールダウンが終わっていれば優先
 	if (boss->GetWaterFallCooldown() <= 0.0f)
 	{
-		boss->SetWaterFallCooldown(5.0f);
+		boss->SetWaterFallCooldown(7.0f);
 		boss->SetLastAction(BossEnemy::ActionType::WaterFall);
 		return std::make_shared<BossEnemyState_WaterFall>();
 	}

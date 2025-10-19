@@ -46,6 +46,12 @@ void PlayerState_JustAvoidAttack_end::StateStart()
 
 	SceneManager::Instance().GetObjectWeakPtr(m_bossEnemy);
 
+	// Chargeカウントを1増やす（最大3まで）
+	if (m_player->GetPlayerStatus().chargeCount < 3)
+	{
+		m_player->GetPlayerStatus().chargeCount++;
+	}
+
 }
 
 void PlayerState_JustAvoidAttack_end::StateUpdate()
@@ -110,5 +116,11 @@ void PlayerState_JustAvoidAttack_end::StateEnd()
 	if (auto effect = m_justAvoidAttackEffect.lock(); effect)
 	{
 		effect->SetPlayEffect(false);
+	}
+
+	// ゲームのメインサウンドのピッチを元に戻す
+	if (auto bgm = SceneManager::Instance().GetGameSound())
+	{
+		bgm->SetPitch(0.0f);
 	}
 }

@@ -45,6 +45,8 @@ void PlayerState_ForwardAvoid::StateStart()
 
 	m_afterImagePlayed = false;
 	m_justAvoided = false;
+
+	KdAudioManager::Instance().Play("Asset/Sound/Player/BackWardAvoid.WAV", false)->SetVolume(1.0f);
 }
 
 void PlayerState_ForwardAvoid::StateUpdate()
@@ -81,6 +83,14 @@ void PlayerState_ForwardAvoid::StateUpdate()
 				{
 					// ジャスト回避成功時の残像エフェクト
 					m_player->AddAfterImage(true, 5, 1.0f, Math::Color(0.0f, 1.0f, 1.0f, 0.5f), 0.7f);
+
+					KdAudioManager::Instance().Play("Asset/Sound/Player/SlowMotion.WAV", false)->SetVolume(1.0f);
+
+					// ゲームのメインサウンドのピッチを下げる
+					if (auto bgm = SceneManager::Instance().GetGameSound())
+					{
+						bgm->SetPitch(-1.0f);
+					}
 
 					m_justAvoided = true;
 					m_afterImagePlayed = true;
@@ -138,6 +148,12 @@ void PlayerState_ForwardAvoid::StateUpdate()
 		Application::Instance().SetFpsScale(1.f);
 		SceneManager::Instance().SetDrawGrayScale(false);
 		m_justAvoided = false;
+
+		// ゲームのメインサウンドのピッチを下げる
+		if (auto bgm = SceneManager::Instance().GetGameSound())
+		{
+			bgm->SetPitch(0.0f);
+		}
 
 		auto idleState = std::make_shared<PlayerState_Idle>();
 		m_player->ChangeState(idleState);

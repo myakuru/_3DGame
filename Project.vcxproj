@@ -353,6 +353,8 @@
     <ClInclude Include="Src\Application\GameObject\Effect\EffekseerEffect\BossEnemyEnterEffect\BossEnemyEnterEffect.h" />
     <ClInclude Include="Src\Application\GameObject\Effect\EffekseerEffect\BossWaterAttackEffect\BossWaterAttackEffect.h" />
     <ClInclude Include="Src\Application\GameObject\Effect\EffekseerEffect\BossWaterFallAttack\BossWaterFallAttack.h" />
+    <ClInclude Include="Src\Application\GameObject\Effect\EffekseerEffect\ChargeAttackEffect\ChargeAttackEffect.h" />
+    <ClInclude Include="Src\Application\GameObject\Effect\EffekseerEffect\ChargeAttackEffect_end\ChargeAttackEffect_end.h" />
     <ClInclude Include="Src\Application\GameObject\Effect\EffekseerEffect\CloudEffect\CloudEffect.h" />
     <ClInclude Include="Src\Application\GameObject\Effect\EffekseerEffect\EffectPlay\EffectPlay.h" />
     <ClInclude Include="Src\Application\GameObject\Effect\EffekseerEffect\EffekseerEffectBase.h" />
@@ -549,6 +551,8 @@
     <ClCompile Include="Src\Application\GameObject\Effect\EffekseerEffect\BossEnemyEnterEffect\BossEnemyEnterEffect.cpp" />
     <ClCompile Include="Src\Application\GameObject\Effect\EffekseerEffect\BossWaterAttackEffect\BossWaterAttackEffect.cpp" />
     <ClCompile Include="Src\Application\GameObject\Effect\EffekseerEffect\BossWaterFallAttack\BossWaterFallAttack.cpp" />
+    <ClCompile Include="Src\Application\GameObject\Effect\EffekseerEffect\ChargeAttackEffect\ChargeAttackEffect.cpp" />
+    <ClCompile Include="Src\Application\GameObject\Effect\EffekseerEffect\ChargeAttackEffect_end\ChargeAttackEffect_end.cpp" />
     <ClCompile Include="Src\Application\GameObject\Effect\EffekseerEffect\CloudEffect\CloudEffect.cpp" />
     <ClCompile Include="Src\Application\GameObject\Effect\EffekseerEffect\EffectPlay\EffectPlay.cpp" />
     <ClCompile Include="Src\Application\GameObject\Effect\EffekseerEffect\EffekseerEffectBase.cpp" />

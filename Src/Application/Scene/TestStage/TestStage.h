@@ -32,6 +32,4 @@ private:
 	// ボスが出現したか
 	bool m_bossAppear = false;
 
-	std::shared_ptr<KdSoundInstance> m_gameSound = nullptr;
-
 };

@@ -16,6 +16,9 @@ void PlayerState_FullCharge::StateStart()
 		camera->SetTargetLookAt({ 0.f,1.f,-1.5f });
 	}
 
+	// 無敵状態にする
+	m_player->SetInvincible(true);
+
 	m_time = 0.0f;
 }
 

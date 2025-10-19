@@ -79,6 +79,8 @@
 #include"../GameObject/Effect/EffekseerEffect/BossEnemyEnterEffect/BossEnemyEnterEffect.h"
 #include"../GameObject/Effect/EffekseerEffect/BossWaterAttackEffect/BossWaterAttackEffect.h"
 #include"../GameObject/Effect/EffekseerEffect/BossWaterFallAttack/BossWaterFallAttack.h"
+#include"../GameObject/Effect/EffekseerEffect/ChargeAttackEffect/ChargeAttackEffect.h"
+#include"../GameObject/Effect/EffekseerEffect/ChargeAttackEffect_end/ChargeAttackEffect_end.h"
 
 void SceneManager::Init()
 {
@@ -159,6 +161,8 @@ void SceneManager::Register() const
 	RegisterObject::GetInstance().Register<BossEnemyEnterEffect>();
 	RegisterObject::GetInstance().Register<BossWaterAttackEffect>();
 	RegisterObject::GetInstance().Register<BossWaterFallAttack>();
+	RegisterObject::GetInstance().Register<ChargeAttackEffect>();
+	RegisterObject::GetInstance().Register<ChargeAttackEffect_end>();
 
 	// Fieldのエフェクト系
 	RegisterObject::GetInstance().Register<FieldEffect>();
@@ -243,6 +247,9 @@ void SceneManager::AddObject(const std::shared_ptr<KdGameObject>& _obj)
 
 void SceneManager::ChangeScene(SceneType _sceneType)
 {
+
+	KdAudioManager::Instance().StopAllSound();
+
 	// 次のシーンを作成し、現在のシーンにする
 	switch (_sceneType)
 	{

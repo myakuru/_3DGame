@@ -102,5 +102,7 @@ void PlayerState_ChaegeAttack2::StateEnd()
 		shineEffect->SetPlayEffect(false);
 	}
 
+	// 無敵状態解除
+	m_player->SetInvincible(false);
 
 }

@@ -1,6 +1,8 @@
 ﻿#include "PlayerState_ChargeAttackMax3.h"
 #include"../PlayerState_Idle/PlayerState_Idle.h"
 #include"../../../../Camera/PlayerCamera/PlayerCamera.h"
+#include"../../../../../Scene/SceneManager.h"
+#include"../../../../Effect/EffekseerEffect/ChargeAttackEffect_end/ChargeAttackEffect_end.h"
 
 void PlayerState_ChargeAttackMax3::StateStart()
 {
@@ -9,6 +11,14 @@ void PlayerState_ChargeAttackMax3::StateStart()
 	PlayerStateBase::StateStart();
 	// アニメーション速度を変更
 	m_player->SetAnimeSpeed(60.0f);
+
+	SceneManager::Instance().GetObjectWeakPtr(m_effect);
+
+	if (auto effect = m_effect.lock(); effect)
+	{
+		effect->SetPlayEffect(true);
+	}
+
 }
 
 void PlayerState_ChargeAttackMax3::StateUpdate()
@@ -45,5 +55,14 @@ void PlayerState_ChargeAttackMax3::StateEnd()
 		camera->SetTargetLookAt(Math::Vector3(0.0f, 1.0f, -3.5f));
 		camera->SetDistanceSmooth(8.f);
 		camera->SetRotationSmooth(8.f);
+	}
+
+	// 無敵状態解除
+	m_player->SetInvincible(false);
+
+	if (auto effect = m_effect.lock(); effect)
+	{
+		effect->SetPlayEffect(false);
+		effect->StopEffect();
 	}
 }

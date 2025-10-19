@@ -81,7 +81,6 @@ void EffekseerEffectBase::EffectUpdate()
 	{
 		m_isEffectPlaying = false;
 	}
-	
 }
 
 void EffekseerEffectBase::DrawEffect()

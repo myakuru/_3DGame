@@ -19,7 +19,7 @@ void PlayerState_ChargeAttackMax2::StateStart()
 	m_player->SetAnimeSpeed(100.0f);
 
 	// 残像の設定
-	m_player->AddAfterImage(true, 5, 2, Math::Color(0.0f, 1.0f, 1.0f, 0.2f));
+	m_player->AddAfterImage(true, 5, 0.1f, Math::Color(0.0f, 1.0f, 1.0f, 1.0f));
 }
 
 void PlayerState_ChargeAttackMax2::StateUpdate()
@@ -45,64 +45,83 @@ void PlayerState_ChargeAttackMax2::StateUpdate()
 
 	float deltaTime = Application::Instance().GetDeltaTime();
 
-	// 先行ダッシュ処理
-	if (auto enemy = m_player->GetEnemy().lock(); enemy)
+	// 先行ダッシュ処理（複数敵＋ボス判定対応）
 	{
-		// 敵の奥に行くようにする距離
-		constexpr float overshootDist = 5.f;
+		// 最も近い有効な敵を選定
+		const Math::Vector3 playerPos = m_player->GetPos();
 
-		// 攻撃方向が指定されていない場合は敵の方向に向かう
-		Math::Vector3 fallbackDir = enemy->GetPos() - m_player->GetPos();
+		std::shared_ptr<KdGameObject> target;
+		Math::Vector3                 targetPos = Math::Vector3::Zero;
+		float                         minDistSq = std::numeric_limits<float>::max();
 
-		const Math::Vector3 dashDir = (m_attackDirection != Math::Vector3::Zero) ? m_attackDirection : fallbackDir;
-
-		const Math::Vector3 desiredPoint = enemy->GetPos() + dashDir * overshootDist;
-
-		Math::Vector3 toDesired = desiredPoint - m_player->GetPos();
-		toDesired.y = 0.0f;
-		float distance = toDesired.Length();
-
-		const float arriveEps = 1.0f;
-
-		if (distance <= arriveEps)
+		for (const auto& weakEnemy : m_player->GetEnemyLike())
 		{
-			m_player->SetIsMoving(Math::Vector3::Zero);
-
-			// キャラを敵の方を向ける
-			if (fallbackDir != Math::Vector3::Zero)
+			if (auto e = weakEnemy.lock())
 			{
-				fallbackDir.y = 0.0f;
-				fallbackDir.Normalize();
-				m_player->UpdateQuaternionDirect(fallbackDir);
-			}
+				if (e->IsExpired()) continue;
 
-			// カメラをキャラの後ろに回す（セッター使用）
-			if (auto camera = m_player->GetPlayerCamera().lock(); camera)
-			{
-				constexpr Math::Vector3 kCamOffset = { 0.0f, 1.2f, -4.0f };
-				camera->SetTargetLookAt(kCamOffset);
-				// カメラの回転を滑らかに
-				camera->SetRotationSmooth(4.0f);
-				// カメラの距離を滑らかに
-				camera->SetDistanceSmooth(3.0f);
-
-				// キャラ前方からヨー角(deg)を計算してカメラ回転に反映
-				if (fallbackDir != Math::Vector3::Zero)
+				const Math::Vector3 epos = e->GetPos();
+				const float distSq = (epos - playerPos).LengthSquared();
+				if (distSq < minDistSq)
 				{
-					fallbackDir.Normalize();
-					const float yawRad = std::atan2(fallbackDir.x, fallbackDir.z);
-					const float yawDeg = DirectX::XMConvertToDegrees(yawRad);
-					camera->SetTargetRotation({ 0.0f, yawDeg, 0.0f });
+					minDistSq = distSq;
+					targetPos = epos;
+					target = std::move(e);
 				}
 			}
 		}
-		else
+
+		if (target)
 		{
-			toDesired.Normalize();
-			float maxStep = 10.0f * deltaTime;
-			float speedThisFrame = (distance < maxStep) ? (distance / deltaTime) : 10.0f;
-			m_player->SetIsMoving(toDesired * speedThisFrame);
-			m_time += deltaTime;
+			// 敵の奥に行くようにする距離
+
+			// 攻撃方向が指定されていない場合は敵の方向に向かう
+			Math::Vector3 toEnemyDir = targetPos - playerPos;
+
+			const Math::Vector3 dashDir = (m_attackDirection != Math::Vector3::Zero) ? m_attackDirection : toEnemyDir;
+
+			const Math::Vector3 desiredPoint = targetPos + dashDir * 5.0f;
+
+			Math::Vector3 toDesired = desiredPoint - playerPos;
+			toDesired.y = 0.0f;
+			float distance = toDesired.Length();
+
+			const float arriveEps = 1.0f;
+
+			if (distance <= arriveEps)
+			{
+				m_player->SetIsMoving(Math::Vector3::Zero);
+
+				// キャラを敵の方を向ける
+				if (toEnemyDir != Math::Vector3::Zero)
+				{
+					toEnemyDir.y = 0.0f;
+					toEnemyDir.Normalize();
+					m_player->UpdateQuaternionDirect(toEnemyDir);
+				}
+
+				// カメラをキャラの後ろに回す（セッター使用）
+				if (auto camera = m_player->GetPlayerCamera().lock(); camera)
+				{
+					camera->SetTargetLookAt(m_cameraBossTargetOffset);
+
+					// キャラ前方からヨー角(deg)を計算してカメラ回転に反映
+					if (toEnemyDir != Math::Vector3::Zero)
+					{
+						const float yawRad = std::atan2(toEnemyDir.x, toEnemyDir.z);
+						const float yawDeg = DirectX::XMConvertToDegrees(yawRad);
+						camera->SetTargetRotation({ 0.0f, yawDeg, 0.0f });
+					}
+				}
+			}
+			else
+			{
+				toDesired.Normalize();
+				float maxStep = 10.0f * deltaTime;
+				float speedThisFrame = (distance < maxStep) ? (distance / deltaTime) : 10.0f;
+				m_player->SetIsMoving(toDesired * speedThisFrame);
+				m_time += deltaTime;
+			}
 		}
 	}
 }

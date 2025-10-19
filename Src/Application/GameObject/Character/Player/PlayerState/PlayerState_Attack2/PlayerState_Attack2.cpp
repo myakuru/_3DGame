@@ -39,6 +39,8 @@ void PlayerState_Attack2::StateStart()
 
 	m_player->SetAnimeSpeed(70.0f);
 
+	KdAudioManager::Instance().Play("Asset/Sound/Player/Attack2.WAV", false)->SetVolume(0.5f);
+
 }
 
 void PlayerState_Attack2::StateUpdate()

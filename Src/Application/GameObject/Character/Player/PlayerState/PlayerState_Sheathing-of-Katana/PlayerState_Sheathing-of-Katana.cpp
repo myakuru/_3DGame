@@ -15,6 +15,8 @@ void PlayerState_SheathKatana::StateStart()
 	PlayerStateBase::StateStart();
 
 	m_player->m_onceEffect = false;
+
+	if(!m_SheathKatanaSound) m_SheathKatanaSound = KdAudioManager::Instance().Play("Asset/Sound/Player/SheathKatana.wav", false);
 }
 
 void PlayerState_SheathKatana::StateUpdate()
@@ -66,4 +68,10 @@ void PlayerState_SheathKatana::StateUpdate()
 void PlayerState_SheathKatana::StateEnd()
 {
 	PlayerStateBase::StateEnd();
+
+	if(m_SheathKatanaSound)
+	{
+		m_SheathKatanaSound->Stop();
+		m_SheathKatanaSound.reset();
+	}
 }

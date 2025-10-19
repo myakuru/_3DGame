@@ -11,7 +11,6 @@ void PlayerState_RunStart::StateStart()
 
 	m_player->SetAnimeSpeed(60.0f);
 	PlayerStateBase::StateStart();
-
 }
 
 void PlayerState_RunStart::StateUpdate()

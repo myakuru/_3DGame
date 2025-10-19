@@ -218,6 +218,18 @@ public :
 		return m_bossAppear;
 	}
 
+	// ゲームサウンドの取得
+	std::shared_ptr<KdSoundInstance> GetGameSound() const
+	{
+		return m_gameSound;
+	}
+
+	// ゲームサウンドのセット
+	void SetGameSound(const std::shared_ptr<KdSoundInstance>& _sound)
+	{
+		m_gameSound = _sound;
+	}
+
 private :
 
 	// RegisterObjectからオブジェクトを登録する関数
@@ -253,6 +265,8 @@ private :
 	bool m_CutInScene = false; // カットインシーンかどうか
 
 	bool m_bossAppear = false; // ボス登場シーンかどうか
+
+	std::shared_ptr<KdSoundInstance> m_gameSound = nullptr;
 
 
 public:

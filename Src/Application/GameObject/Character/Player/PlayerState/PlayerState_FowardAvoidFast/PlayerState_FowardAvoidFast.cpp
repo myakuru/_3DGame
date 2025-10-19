@@ -28,6 +28,9 @@ void PlayerState_FowardAvoidFast::StateStart()
 
 	m_afterImagePlayed = false;
 	m_justAvoided = false;
+
+	KdAudioManager::Instance().Play("Asset/Sound/Player/Dash.WAV", false)->SetVolume(1.0f);
+
 }
 
 void PlayerState_FowardAvoidFast::StateUpdate()
@@ -62,6 +65,14 @@ void PlayerState_FowardAvoidFast::StateUpdate()
 					m_justAvoided = true;
 					m_afterImagePlayed = true;
 					m_player->SetJustAvoidSuccess(true);
+
+					KdAudioManager::Instance().Play("Asset/Sound/Player/SlowMotion.WAV", false)->SetVolume(1.0f);
+
+					// ゲームのメインサウンドのピッチを下げる
+					if (auto bgm = SceneManager::Instance().GetGameSound())
+					{
+						bgm->SetPitch(-1.0f);
+					}
 
 					// 保険：ここでも演出をON（更新順の揺れ対策）
 					{
@@ -115,6 +126,12 @@ void PlayerState_FowardAvoidFast::StateUpdate()
 		Application::Instance().SetFpsScale(1.f);
 		SceneManager::Instance().SetDrawGrayScale(false);
 		m_justAvoided = false;
+
+		// ゲームのメインサウンドのピッチを下げる
+		if (auto bgm = SceneManager::Instance().GetGameSound())
+		{
+			bgm->SetPitch(0.0f);
+		}
 
 		auto idleState = std::make_shared<PlayerState_RunEnd>();
 		m_player->ChangeState(idleState);

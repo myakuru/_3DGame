@@ -46,5 +46,7 @@ protected:
 
 	Math::Vector3 m_cameraBossTargetOffset = { 0.0f,1.0f,-5.5f };
 
+	std::shared_ptr<KdSoundInstance> m_runSound = nullptr;
+
 
 };

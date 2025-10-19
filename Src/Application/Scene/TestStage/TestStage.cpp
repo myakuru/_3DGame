@@ -15,14 +15,22 @@ void TestScene::Event()
 	SearchEnemy();
 
 	// イントロBGMが再生終了したらループBGMへ切り替え
-	if (!m_gameSound->IsPlaying())
 	{
-		m_gameSound = KdAudioManager::Instance().Play
-		(
-			"Asset/Sound/FieldBGM/ToDo_game_bgm_loop.wav",
-			true
-		);
-		if (m_gameSound) { m_gameSound->SetVolume(1.0f); }
+		auto bgm = SceneManager::Instance().GetGameSound(); // 値取得
+		const bool needSwitch = (!bgm) || !bgm->IsPlaying();
+		if (needSwitch)
+		{
+			auto loopBgm = KdAudioManager::Instance().Play(
+				"Asset/Sound/FieldBGM/ToDo_game_bgm_loop.wav",
+				true
+			);
+			SceneManager::Instance().SetGameSound(loopBgm);
+
+			if (loopBgm) 
+			{
+				loopBgm->SetVolume(1.0f);
+			}
+		}
 	}
 
 	if (SceneManager::Instance().m_gameClear)
@@ -104,16 +112,17 @@ void TestScene::Init()
 
 	m_bossAppear = false; // ボス出現フラグを初期化
 
-	// イントロBGM（非ループ）
-	m_gameSound = KdAudioManager::Instance().Play
-	(
-		"Asset/Sound/FieldBGM/ToDo_game_bgm.wav",
-		false
-	);
-
-	if (m_gameSound)
+	// イントロBGM（非ループ）: SetGameSound を使う
 	{
-		m_gameSound->SetVolume(1.0f);
+		auto intro = KdAudioManager::Instance().Play(
+			"Asset/Sound/FieldBGM/ToDo_game_bgm.wav",
+			false
+		);
+		SceneManager::Instance().SetGameSound(intro);
+
+		if (intro) {
+			intro->SetVolume(1.0f);
+		}
 	}
 }
 

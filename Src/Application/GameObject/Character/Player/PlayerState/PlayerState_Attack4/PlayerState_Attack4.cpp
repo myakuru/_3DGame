@@ -45,6 +45,8 @@ void PlayerState_Attack4::StateStart()
 	{
 		m_player->GetPlayerStatus().chargeCount++;
 	}
+
+	KdAudioManager::Instance().Play("Asset/Sound/Player/Attack4.WAV", false)->SetVolume(0.5f);
 }
 
 void PlayerState_Attack4::StateUpdate()

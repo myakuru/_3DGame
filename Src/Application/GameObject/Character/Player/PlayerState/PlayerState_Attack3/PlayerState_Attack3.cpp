@@ -60,6 +60,8 @@ void PlayerState_Attack3::StateStart()
 	m_player->AddAfterImage(true, 3, 1, Math::Color(0.0f, 1.0f, 1.0f, 1.0f), 0.0f);
 
 	m_player->SetAnimeSpeed(70.0f);
+
+	KdAudioManager::Instance().Play("Asset/Sound/Player/Attack3.WAV", false)->SetVolume(0.5f);
 }
 
 void PlayerState_Attack3::StateUpdate()

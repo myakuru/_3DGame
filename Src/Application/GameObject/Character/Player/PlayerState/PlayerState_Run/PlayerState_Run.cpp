@@ -15,6 +15,12 @@ void PlayerState_Run::StateStart()
 	m_player->GetAnimator()->SetAnimation(anime);
 	m_player->SetAnimeSpeed(70.0f);
 	PlayerStateBase::StateStart();
+
+	if (!m_runSound)
+	{
+		m_runSound = KdAudioManager::Instance().Play("Asset/Sound/Player/Run.wav", true);
+	}
+
 }
 
 void PlayerState_Run::StateUpdate()
@@ -83,4 +89,9 @@ void PlayerState_Run::StateUpdate()
 void PlayerState_Run::StateEnd()
 {
 	PlayerStateBase::StateEnd();
+	if (m_runSound)
+	{
+		m_runSound->Stop();     // 公開APIで停止
+		m_runSound.reset();
+	}
 }
