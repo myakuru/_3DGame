@@ -8,14 +8,6 @@ void EnemyShineBlue::Update()
 {
 	KdEffekseerManager::GetInstance().Update();
 
-	if (KeyboardManager::GetInstance().IsKeyJustPressed('Y'))
-	{
-		m_load = true;
-	}
-	else if (KeyboardManager::GetInstance().IsKeyJustReleased('Y'))
-	{
-		m_load = false;
-	}
 
 	SceneManager::Instance().GetObjectWeakPtr(m_enemy);
 	auto enemy = m_enemy.lock();

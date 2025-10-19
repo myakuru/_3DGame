@@ -19,7 +19,24 @@ void PlayerState_Hit::StateStart()
 
 void PlayerState_Hit::StateUpdate()
 {
-	m_player->SetAnimeSpeed(120.0f);
+	m_player->SetAnimeSpeed(100.0f);
+
+	// アニメーション時間のデバッグ表示
+	{
+		m_animeTime = m_player->GetAnimator()->GetPlayProgress();
+
+		m_maxAnimeTime = m_player->GetAnimator()->GetMaxAnimationTime();
+
+		if (m_animeTime > m_maxAnimeTime)
+		{
+			KdDebugGUI::Instance().AddLog(U8("Attack4アニメ時間: %f"), m_animeTime);
+			KdDebugGUI::Instance().AddLog("\n");
+		}
+		else
+		{
+			m_animeTime = m_maxAnimeTime;
+		}
+	}
 
 	if (m_player->GetAnimator()->IsAnimationEnd())
 	{
@@ -32,20 +49,22 @@ void PlayerState_Hit::StateUpdate()
 
 	UpdateKatanaPos();
 
-	if (KeyboardManager::GetInstance().IsKeyJustPressed(VK_LBUTTON))
+	if (m_animeTime >= 0.9f)
 	{
-		auto attack1state = std::make_shared<PlayerState_Attack>();
-		m_player->ChangeState(attack1state);
-		return;
+		if (KeyboardManager::GetInstance().IsKeyJustPressed(VK_LBUTTON))
+		{
+			auto attack1state = std::make_shared<PlayerState_Attack>();
+			m_player->ChangeState(attack1state);
+			return;
+		}
 	}
-
 
 
 	float deltaTime = Application::Instance().GetDeltaTime();
 
 	if (m_time < 0.2f)
 	{
-		float dashSpeed = -0.5f;
+		float dashSpeed = -0.6f;
 		m_player->SetIsMoving(m_attackDirection * dashSpeed);
 		m_time += deltaTime;
 	}

@@ -42,6 +42,10 @@ void BossEnemy::Init()
 
 	m_invincible = false;
 	m_stateChange = false;
+
+	m_lastAction = ActionType::None;
+	m_meleeCooldown = 0.0f;
+	m_waterCooldown = 0.0f;
 }
 
 void BossEnemy::Update()
@@ -59,16 +63,6 @@ void BossEnemy::Update()
 
 	float deltaTime = Application::Instance().GetUnscaledDeltaTime();
 
-	m_attackFrame += deltaTime;
-
-	if (m_attackFrame >= 3.5f)
-	{
-		Application::Instance().SetFpsScale(1.f); // スローモーションにする
-		SceneManager::Instance().SetDrawGrayScale(false);
-		m_attackFrame = 0.0f;
-		m_justAvoidSuccess = false;
-	}
-
 	if (m_Expired)
 	{
 		if (m_dissever < 1.0f)
@@ -82,23 +76,31 @@ void BossEnemy::Update()
 		}
 	}
 
+	// クールダウン処理
+	TickCooldowns(Application::Instance().GetDeltaTime());
 
 	CharaBase::Update();
 
 	// ヒット処理。
-	if (m_isHit && !m_invincible)
+	// ヒット処理。
+	if (m_isHit)
 	{
-
-		// ダメージステートに変更
-		auto spDamageState = std::make_shared<BossEnemyState_Hit>();
-		ChangeState(spDamageState);
 
 		// HitDamage生成・初期化
 		m_spHitDamage = std::make_shared<HitDamage>();
 		m_spHitDamage->Init();
 		m_spHitDamage->SetDamage(m_getDamage);
+		m_spHitDamage->SetTrackBossEnemy(std::static_pointer_cast<BossEnemy>(shared_from_this()));
 		SceneManager::Instance().AddObject(m_spHitDamage);
+
 		m_isHit = false;
+
+
+		if (m_invincible) return;
+
+		// ダメージステートに変更
+		auto spDamageState = std::make_shared<BossEnemyState_Hit>();
+		ChangeState(spDamageState);
 		return;
 	}
 
@@ -143,12 +145,12 @@ void BossEnemy::DrawLit()
 	CharaBase::DrawLit();
 }
 
-void BossEnemy::UpdateAttackCollision(float _radius, float _distance, int _attackCount, float _attackTimer)
+void BossEnemy::UpdateAttackCollision(float _radius, float _distance, int _attackCount, float _attackTimer, float _activeBeginSec, float _activeEndSec)
 {
 	Math::Vector3 forward = Math::Vector3::TransformNormal(Math::Vector3::Forward, Math::Matrix::CreateFromQuaternion(m_rotation));
 	forward.Normalize();
 
-	float deltaTime = Application::Instance().GetDeltaTime();
+	float deltaTime = Application::Instance().GetUnscaledDeltaTime();
 
 	KdCollider::SphereInfo attackSphere;
 	attackSphere.m_sphere.Center = m_position + Math::Vector3(0.0f, 0.5f, 0.0f) + forward * _distance;
@@ -159,18 +161,52 @@ void BossEnemy::UpdateAttackCollision(float _radius, float _distance, int _attac
 
 	SceneManager::Instance().GetObjectWeakPtrList(m_player);
 
-	// 初回セットアップ: 初期タイマを0に
+	// 初回セットアップ
 	if (!m_hitOnce)
 	{
 		m_isChargeAttackActive = true;
 		m_chargeAttackCount = 0;
 		m_chargeAttackTimer = 0.0f;
 		m_hitOnce = true;
+
+		// Just回避の一発ゲートをリセット
+		m_justAvoidSuccess = false;
+
+		// クランプしない。開始 > 終了なら入れ替えのみ
+		float begin = _activeBeginSec;
+		float end = _activeEndSec;
+		if (begin > end) { float t = begin; begin = end; end = t; }
+
+		m_attackActiveTime = 0.0f;
+		m_attackActiveBegin = begin;
+		m_attackActiveEnd = end;
 	}
 
 	if (!m_isChargeAttackActive) return;
 
-	// ジャスト回避成功
+	// 攻撃ウィンドウを進める
+	m_attackActiveTime += deltaTime;
+
+	// 開始前は何もしない
+	if (m_attackActiveTime < m_attackActiveBegin) return;
+
+	// 既にJust回避が成立していたら、この攻撃中は以後の再判定をしない
+	if (m_justAvoidSuccess)
+	{
+		// 必要ならこの攻撃自体を終了させたい場合は以下を有効化
+		m_isChargeAttackActive = false;
+		m_justAvoidSuccess = false; // 次回の攻撃に備えてリセット
+		return;
+	}
+
+	// 終了超過で攻撃終了
+	if (m_attackActiveTime > m_attackActiveEnd)
+	{
+		m_isChargeAttackActive = false;
+		return;
+	}
+
+	// ジャスト回避成功チェック（有効時間内のみ）
 	for (const auto& players : m_player)
 	{
 		if (auto playerPtr = players.lock())
@@ -186,8 +222,18 @@ void BossEnemy::UpdateAttackCollision(float _radius, float _distance, int _attac
 					if (avoidElapsed >= 0.0f && avoidElapsed <= kJustAvoidWindowSec)
 					{
 						m_justAvoidSuccess = true;
-						Application::Instance().SetFpsScale(0.5f); // スローモーション
-						SceneManager::Instance().SetDrawGrayScale(true);
+
+						// プレイヤーへも成立通知（プレイヤー側の状態遷移/効果に利用）
+						playerPtr->SetJustAvoidSuccess(true);
+
+						// プレイヤー設定からスローモーション倍率・グレースケール適用を取得
+						auto& justCfg = playerPtr->GetPlayerConfig().GetJustAvoidParam();
+						Application::Instance().SetFpsScale(justCfg.m_slowMoScale);
+						SceneManager::Instance().SetDrawGrayScale(justCfg.m_useGrayScale);
+
+						// 必要に応じてこの攻撃の当たり判定を終了
+						// m_isChargeAttackActive = false;
+
 						return; // ダメージ処理は行わない
 					}
 				}
@@ -195,14 +241,11 @@ void BossEnemy::UpdateAttackCollision(float _radius, float _distance, int _attac
 		}
 	}
 
-	// ジャスト回避中はダメージを与えない
-	if (m_justAvoidSuccess) return;
-
+	// 多段ヒットのインターバル管理
 	m_chargeAttackTimer += deltaTime;
 
 	if (m_chargeAttackCount < _attackCount && m_chargeAttackTimer >= _attackTimer)
 	{
-
 		for (const auto& players : m_player)
 		{
 			if (auto playerPtr = players.lock())

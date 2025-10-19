@@ -15,6 +15,8 @@
 #include"../PlayerState_BackWordAvoid/PlayerState_BackWordAvoid.h"
 #include"../PlayerState_FowardAvoid/PlayerState_FowardAvoid.h"
 
+#include"../PlayerState_Skill/PlayerState_Skill.h"
+
 void PlayerState_Attack1::StateStart()
 {
 	auto anime = m_player->GetAnimeModel()->GetAnimation("newAttack2");
@@ -95,6 +97,12 @@ void PlayerState_Attack1::StateUpdate()
 		m_LButtonkeyInput = true;
 	}
 
+	// Eキー先行入力の予約
+	if (KeyboardManager::GetInstance().IsKeyJustPressed('E'))
+	{
+		m_EButtonkeyInput = true;
+	}
+
 	// 攻撃中の移動方向で回転を更新
 	if (m_player->GetMovement() != Math::Vector3::Zero)
 	{
@@ -119,6 +127,14 @@ void PlayerState_Attack1::StateUpdate()
 		if (auto effet = m_effect.lock(); effet)
 		{
 			effet->SetPlayEffect(true);
+		}
+
+		if (m_EButtonkeyInput)
+		{
+			m_EButtonkeyInput = false;
+			auto runState = std::make_shared<PlayerState_Skill>();
+			m_player->ChangeState(runState);
+			return;
 		}
 
 		if (auto playreCamera = m_player->GetPlayerCamera().lock(); playreCamera)
@@ -204,6 +220,7 @@ void PlayerState_Attack1::StateEnd()
 	if(auto effect = m_effect.lock(); effect)
 	{
 		effect->SetPlayEffect(false);
+		effect->StopEffect();
 	}
 
 	// カタナの軌跡を消す

@@ -10,8 +10,10 @@
 
 #include"../PlayerState_BackWordAvoid/PlayerState_BackWordAvoid.h"
 #include"../PlayerState_FowardAvoid/PlayerState_FowardAvoid.h"
+#include"../PlayerState_Skill/PlayerState_Skill.h"
 	
 #include"../../../../Weapon/Katana/Katana.h"
+#include"../../../BossEnemy/BossEnemy.h"
 
 void PlayerState_Attack3::StateStart()
 {
@@ -39,10 +41,19 @@ void PlayerState_Attack3::StateStart()
 		effect->SetPlayEffect(true);
 	}
 
+	SceneManager::Instance().GetObjectWeakPtr(m_bossEnemy);
+
 	// カメラの位置を変更
 	if (auto camera = m_player->GetPlayerCamera().lock(); camera)
 	{
-		camera->SetTargetLookAt({ 0.f,1.0f,-4.5f });
+		if (auto bossEnemy = m_bossEnemy.lock(); bossEnemy)
+		{
+			camera->SetTargetLookAt({ 0.0,1.0f,-7.5f });
+		}
+		else
+		{
+			camera->SetTargetLookAt({ 0.0,1.0f,-4.5f });
+		}
 	}
 
 	// 残像の設定
@@ -119,6 +130,12 @@ void PlayerState_Attack3::StateUpdate()
 		{
 			m_LButtonkeyInput = true;
 		}
+
+		// Eキー先行入力の予約
+		if (KeyboardManager::GetInstance().IsKeyJustPressed('E'))
+		{
+			m_EButtonkeyInput = true;
+		}
 	}
 
 	UpdateKatanaPos();
@@ -143,6 +160,14 @@ void PlayerState_Attack3::StateUpdate()
 	{
 		// 移動を止める
 		m_player->SetIsMoving(Math::Vector3::Zero);
+
+		if (m_EButtonkeyInput)
+		{
+			m_EButtonkeyInput = false;
+			auto runState = std::make_shared<PlayerState_Skill>();
+			m_player->ChangeState(runState);
+			return;
+		}
 
 		// コンボ受付
 		if (m_LButtonkeyInput || KeyboardManager::GetInstance().IsKeyPressed(VK_LBUTTON))
@@ -210,7 +235,6 @@ void PlayerState_Attack3::StateEnd()
 	if (auto effect = m_slashEffect.lock(); effect)
 	{
 		effect->SetPlayEffect(false);
-		effect->StopEffect();
 	}
 
 	m_player->AddAfterImage();

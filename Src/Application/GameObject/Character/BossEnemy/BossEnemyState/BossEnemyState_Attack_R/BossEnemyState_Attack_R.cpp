@@ -2,6 +2,7 @@
 #include"../../../Player/Player.h"
 #include"../BossEnemyState_Run/BossEnemyState_Run.h"
 #include"../BossEnemyState_Idle/BossEnemyState_Idle.h"
+#include"../BossEnemyAI.h" 
 
 void BossEnemyState_Attack_R::StateStart()
 {
@@ -13,6 +14,10 @@ void BossEnemyState_Attack_R::StateStart()
 
 	// 当たり判定リセット
 	m_bossEnemy->ResetAttackCollision();
+
+	// 近接CDと直前行動をセット
+	m_bossEnemy->SetMeleeCooldown(1.0f);
+	m_bossEnemy->SetLastAction(BossEnemy::ActionType::AttackR);
 }
 
 void BossEnemyState_Attack_R::StateUpdate()
@@ -33,30 +38,12 @@ void BossEnemyState_Attack_R::StateUpdate()
 		m_bossEnemy->UpdateAttackCollision(5.0f, 1.0f, 1, 0.3f);
 	}
 
+	// Rが終わったら必ずIdleで1秒休む
 	if (m_bossEnemy->GetAnimator()->IsAnimationEnd())
 	{
-		// 距離が６以上離れたら追いかける
-		if (auto player = m_bossEnemy->GetPlayerWeakPtr().lock(); player)
-		{
-			m_playerPos = player->GetPos();
-			m_enemyPos = m_bossEnemy->GetPos();
-		}
-
-		m_distance = (m_playerPos - m_enemyPos).Length();
-
-		if (m_distance >= 10.0f)
-		{
-			auto state = std::make_shared<BossEnemyState_Run>();
-			m_bossEnemy->ChangeState(state);
-			return;
-		}
-		else
-		{
-			auto state = std::make_shared<BossEnemyState_Idle>();
-			m_bossEnemy->ChangeState(state);
-			return;
-		}
-
+		auto next = std::make_shared<BossEnemyState_Idle>(1.0f);
+		m_bossEnemy->ChangeState(next);
+		return;
 	}
 
 	if (m_time < 0.2f)

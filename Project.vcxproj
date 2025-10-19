@@ -283,6 +283,7 @@
     <ClInclude Include="Src\Application\GameObject\Camera\TitleCamera\TitleCamera.h" />
     <ClInclude Include="Src\Application\GameObject\Camera\TPSCamera\TPSCamera.h" />
     <ClInclude Include="Src\Application\GameObject\Character\BossEnemy\BossEnemy.h" />
+    <ClInclude Include="Src\Application\GameObject\Character\BossEnemy\BossEnemyState\BossEnemyAI.h" />
     <ClInclude Include="Src\Application\GameObject\Character\BossEnemy\BossEnemyState\BossEnemyState.h" />
     <ClInclude Include="Src\Application\GameObject\Character\BossEnemy\BossEnemyState\BossEnemyState_Attack_L\BossEnemyState_Attack_L.h" />
     <ClInclude Include="Src\Application\GameObject\Character\BossEnemy\BossEnemyState\BossEnemyState_Attack_R\BossEnemyState_Attack_R.h" />
@@ -296,6 +297,7 @@
     <ClInclude Include="Src\Application\GameObject\Character\BossEnemy\BossEnemyState\BossEnemyState_Run\BossEnemyState_Run.h" />
     <ClInclude Include="Src\Application\GameObject\Character\BossEnemy\BossEnemyState\BossEnemyState_WaterAttack\BossEnemyState_WaterAttack.h" />
     <ClInclude Include="Src\Application\GameObject\Character\BossEnemy\BossEnemyState\BossEnemyState_WaterAttack_end\BossEnemyState_WaterAttack_end.h" />
+    <ClInclude Include="Src\Application\GameObject\Character\BossEnemy\BossEnemyState\BossEnemyState_WaterFall\BossEnemyState_WaterFall.h" />
     <ClInclude Include="Src\Application\GameObject\Character\CharacterBase.h" />
     <ClInclude Include="Src\Application\GameObject\Character\Enemy\Enemy.h" />
     <ClInclude Include="Src\Application\GameObject\Character\Enemy\EnemyState\EnemyStateBase.h" />
@@ -347,6 +349,10 @@
     <ClInclude Include="Src\Application\GameObject\Effect\CurvesEffect\CurvesEffect.h" />
     <ClInclude Include="Src\Application\GameObject\Effect\EffekseerEffect\AttacEffect1\AttacEffect1.h" />
     <ClInclude Include="Src\Application\GameObject\Effect\EffekseerEffect\AvoidAttackSlashEffect\AvoidAttackSlashEffect.h" />
+    <ClInclude Include="Src\Application\GameObject\Effect\EffekseerEffect\BossAttack_1stEffect\BossAttack_1stEffect.h" />
+    <ClInclude Include="Src\Application\GameObject\Effect\EffekseerEffect\BossEnemyEnterEffect\BossEnemyEnterEffect.h" />
+    <ClInclude Include="Src\Application\GameObject\Effect\EffekseerEffect\BossWaterAttackEffect\BossWaterAttackEffect.h" />
+    <ClInclude Include="Src\Application\GameObject\Effect\EffekseerEffect\BossWaterFallAttack\BossWaterFallAttack.h" />
     <ClInclude Include="Src\Application\GameObject\Effect\EffekseerEffect\CloudEffect\CloudEffect.h" />
     <ClInclude Include="Src\Application\GameObject\Effect\EffekseerEffect\EffectPlay\EffectPlay.h" />
     <ClInclude Include="Src\Application\GameObject\Effect\EffekseerEffect\EffekseerEffectBase.h" />
@@ -474,6 +480,7 @@
     <ClCompile Include="Src\Application\GameObject\Camera\TitleCamera\TitleCamera.cpp" />
     <ClCompile Include="Src\Application\GameObject\Camera\TPSCamera\TPSCamera.cpp" />
     <ClCompile Include="Src\Application\GameObject\Character\BossEnemy\BossEnemy.cpp" />
+    <ClCompile Include="Src\Application\GameObject\Character\BossEnemy\BossEnemyState\BossEnemyAI.cpp" />
     <ClCompile Include="Src\Application\GameObject\Character\BossEnemy\BossEnemyState\BossEnemyState.cpp" />
     <ClCompile Include="Src\Application\GameObject\Character\BossEnemy\BossEnemyState\BossEnemyState_Attack_L\BossEnemyState_Attack_L.cpp" />
     <ClCompile Include="Src\Application\GameObject\Character\BossEnemy\BossEnemyState\BossEnemyState_Attack_R\BossEnemyState_Attack_R.cpp" />
@@ -487,6 +494,7 @@
     <ClCompile Include="Src\Application\GameObject\Character\BossEnemy\BossEnemyState\BossEnemyState_Run\BossEnemyState_Run.cpp" />
     <ClCompile Include="Src\Application\GameObject\Character\BossEnemy\BossEnemyState\BossEnemyState_WaterAttack\BossEnemyState_WaterAttack.cpp" />
     <ClCompile Include="Src\Application\GameObject\Character\BossEnemy\BossEnemyState\BossEnemyState_WaterAttack_end\BossEnemyState_WaterAttack_end.cpp" />
+    <ClCompile Include="Src\Application\GameObject\Character\BossEnemy\BossEnemyState\BossEnemyState_WaterFall\BossEnemyState_WaterFall.cpp" />
     <ClCompile Include="Src\Application\GameObject\Character\CharacterBase.cpp" />
     <ClCompile Include="Src\Application\GameObject\Character\Enemy\Enemy.cpp" />
     <ClCompile Include="Src\Application\GameObject\Character\Enemy\EnemyState\EnemyStateBase.cpp" />
@@ -537,6 +545,10 @@
     <ClCompile Include="Src\Application\GameObject\Effect\CurvesEffect\CurvesEffect.cpp" />
     <ClCompile Include="Src\Application\GameObject\Effect\EffekseerEffect\AttacEffect1\AttacEffect1.cpp" />
     <ClCompile Include="Src\Application\GameObject\Effect\EffekseerEffect\AvoidAttackSlashEffect\AvoidAttackSlashEffect.cpp" />
+    <ClCompile Include="Src\Application\GameObject\Effect\EffekseerEffect\BossAttack_1stEffect\BossAttack_1stEffect.cpp" />
+    <ClCompile Include="Src\Application\GameObject\Effect\EffekseerEffect\BossEnemyEnterEffect\BossEnemyEnterEffect.cpp" />
+    <ClCompile Include="Src\Application\GameObject\Effect\EffekseerEffect\BossWaterAttackEffect\BossWaterAttackEffect.cpp" />
+    <ClCompile Include="Src\Application\GameObject\Effect\EffekseerEffect\BossWaterFallAttack\BossWaterFallAttack.cpp" />
     <ClCompile Include="Src\Application\GameObject\Effect\EffekseerEffect\CloudEffect\CloudEffect.cpp" />
     <ClCompile Include="Src\Application\GameObject\Effect\EffekseerEffect\EffectPlay\EffectPlay.cpp" />
     <ClCompile Include="Src\Application\GameObject\Effect\EffekseerEffect\EffekseerEffectBase.cpp" />

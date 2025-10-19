@@ -1,6 +1,7 @@
 ﻿#include "BossEnemyState_Hit.h"
 #include"../BossEnemyState_Idle/BossEnemyState_Idle.h"
 #include"../BossEnemyState_Attack_L/BossEnemyState_Attack_L.h"
+#include"../BossEnemyAI.h" // 追加
 
 void BossEnemyState_Hit::StateStart()
 {
@@ -23,20 +24,19 @@ void BossEnemyState_Hit::StateStart()
 
 void BossEnemyState_Hit::StateUpdate()
 {
+	// 無敵中：これまでAttack_L固定だったが、AIに委譲して多様化
 	if (m_bossEnemy->GetInvincible())
 	{
-		// 無敵状態ならAttackへ
-		auto spIdleState = std::make_shared<BossEnemyState_Attack_L>();
-		m_bossEnemy->ChangeState(spIdleState);
+		auto next = BossEnemyAI::DecideNext(m_bossEnemy);
+		m_bossEnemy->ChangeState(next);
 		return;
 	}
 
-
+	// アニメーション終了：Idle固定だったが、AIに委譲
 	if (m_bossEnemy->GetAnimator()->IsAnimationEnd())
 	{
-		// Idleステートに移行
-		auto spIdleState = std::make_shared<BossEnemyState_Idle>();
-		m_bossEnemy->ChangeState(spIdleState);
+		auto next = BossEnemyAI::DecideNext(m_bossEnemy);
+		m_bossEnemy->ChangeState(next);
 		return;
 	}
 

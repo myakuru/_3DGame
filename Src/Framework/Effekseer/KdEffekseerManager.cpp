@@ -4,10 +4,10 @@
 void KdEffekseerManager::Create(int w, int h)
 {
 	// エフェクトのレンダラーの作成
-	m_efkRenderer = ::EffekseerRendererDX11::Renderer::Create(KdDirect3D::Instance().WorkDev(), KdDirect3D::Instance().WorkDevContext(), 8000);
+	m_efkRenderer = ::EffekseerRendererDX11::Renderer::Create(KdDirect3D::Instance().WorkDev(), KdDirect3D::Instance().WorkDevContext(), 1000);
 
 	// エフェクトのマネージャーの作成
-	m_efkManager = ::Effekseer::Manager::Create(8000);
+	m_efkManager = ::Effekseer::Manager::Create(1000);
 
 	// 左手座標系に変換
 	m_efkManager->SetCoordinateSystem(Effekseer::CoordinateSystem::LH);
@@ -86,17 +86,20 @@ void KdEffekseerManager::StopAllEffect()
 
 void KdEffekseerManager::StopEffect(const std::string& name)
 {
-	auto foundItr = m_effectMap.find(name);
+	if (m_efkManager == nullptr) return;
 
-	if (foundItr == m_effectMap.end()) { return; }
-
-	if (foundItr->second->IsLoop())
+	// m_effectMap にある1つのオブジェクトだけだと最新インスタンスを指していない可能性があるため、
+	// 実際に「現在再生中の個体」を全て走査して止める。
+	for (auto& sp : m_nowEffectPlayList)
 	{
-		foundItr->second->SetLoop(false);
-		return;
+		if (!sp) continue;
+		const auto& info = sp->GetPlayEfkInfo();
+		if (info.FileName == name)
+		{
+			sp->SetLoop(false);                  // ループ再生の再投入を防止
+			m_efkManager->StopEffect(sp->GetHandle()); // 即停止
+		}
 	}
-
-	m_efkManager->StopEffect(foundItr->second->GetHandle());
 }
 
 void KdEffekseerManager::StopEffect(const Effekseer::Handle& handle)
@@ -182,7 +185,7 @@ const bool KdEffekseerManager::IsPlaying(const int handle) const
 
 std::weak_ptr<KdEffekseerObject> KdEffekseerManager::Play(const PlayEfkInfo& info)
 {
-	float deltaTime = Application::Instance().GetDeltaTime();
+	float deltaTime = Application::Instance().GetUnscaledDeltaTime();
 
 	// 渡された座標をEffekseerの座標に置き換え
 	Effekseer::Vector3D efkPos = GetEfkVec3D(info.Pos);

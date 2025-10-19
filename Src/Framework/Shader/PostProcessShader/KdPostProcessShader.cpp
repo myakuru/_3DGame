@@ -173,13 +173,14 @@ void KdPostProcessShader::Draw()
 // ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// /////
 void KdPostProcessShader::BeginBright()
 {
-	if (!m_brightRTChanger.ChangeRenderTarget(m_brightEffectRTPack.m_RTTexture, m_postEffectRTPack.m_ZBuffer, &m_brightEffectRTPack.m_viewPort))
+	// 深度を使わないため DSV は nullptr にする（RTV と DSV のサイズ不一致を回避）
+	if (!m_brightRTChanger.ChangeRenderTarget(
+		m_brightEffectRTPack.m_RTTexture, nullptr, &m_brightEffectRTPack.m_viewPort))
 	{
 		m_brightRTChanger.UndoRenderTarget();
 	}
 
 	KdShaderManager::Instance().ChangeBlendState(KdBlendState::Add);
-
 	KdShaderManager::Instance().ChangeDepthStencilState(KdDepthStencilState::ZWriteDisable);
 }
 

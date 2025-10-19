@@ -2,6 +2,7 @@
 #include"../BossEnemyState_Idle/BossEnemyState_Idle.h"
 #include"../BossEnemyState_Attack_L/BossEnemyState_Attack_L.h"
 #include"../../../Player/Player.h"
+#include"../BossEnemyAI.h" 
 
 void BossEnemyState_Run::StateStart()
 {
@@ -10,6 +11,9 @@ void BossEnemyState_Run::StateStart()
 	BossEnemyStateBase::StateStart();
 	// アニメーション速度を変更
 	m_bossEnemy->SetAnimeSpeed(60.0f);
+
+	// 行動記録
+	m_bossEnemy->SetLastAction(BossEnemy::ActionType::Run);
 }
 
 void BossEnemyState_Run::StateUpdate()
@@ -23,24 +27,22 @@ void BossEnemyState_Run::StateUpdate()
 	// 距離計算
 	m_distance = (m_playerPos - m_enemyPos).Length();
 
-	if (m_distance >= 10.0f)
-	{
-		// 追いかける
-		Math::Vector3 dir = m_playerPos - m_enemyPos;
-		dir.y = 0.0f;
-		if (dir != Math::Vector3::Zero) dir.Normalize();
+	// 追いかける
+	Math::Vector3 dir = m_playerPos - m_enemyPos;
+	dir.y = 0.0f;
+	if (dir != Math::Vector3::Zero) dir.Normalize();
 
-		// LookRotationで正しい向きに
-		Math::Quaternion rot = Math::Quaternion::LookRotation(dir, Math::Vector3::Up);
-		m_bossEnemy->SetRotation(rot);
+	// LookRotationで正しい向きに
+	Math::Quaternion rot = Math::Quaternion::LookRotation(dir, Math::Vector3::Up);
+	m_bossEnemy->SetRotation(rot);
 
-		m_bossEnemy->SetIsMoving(dir);
-	}
-	else
+	m_bossEnemy->SetIsMoving(dir);
+
+	// ここをAI委譲に変更（Attack_Lへの直遷移をやめる）
+	if (m_distance < 10.0f)
 	{
-		//Attackステートに移行
-		auto attack = std::make_shared<BossEnemyState_Attack_L>();
-		m_bossEnemy->ChangeState(attack);
+		auto next = BossEnemyAI::DecideNext(m_bossEnemy);
+		m_bossEnemy->ChangeState(next);
 		return;
 	}
 }

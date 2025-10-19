@@ -21,7 +21,7 @@ void BossEnemyState_Dodge::StateUpdate()
 
 	if (m_time < 0.3f)
 	{
-		const float dashSpeed = -5.0f;
+		const float dashSpeed = -2.0f;
 		m_bossEnemy->SetIsMoving(m_attackDirection * dashSpeed);
 	}
 	else

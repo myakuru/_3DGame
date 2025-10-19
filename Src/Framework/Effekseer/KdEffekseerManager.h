@@ -193,5 +193,3 @@ private:
 
 	KdEffekseerManager::PlayEfkInfo		m_info = {};
 };
-
-#define EffekseerPath "Asset/Data/Effect/"

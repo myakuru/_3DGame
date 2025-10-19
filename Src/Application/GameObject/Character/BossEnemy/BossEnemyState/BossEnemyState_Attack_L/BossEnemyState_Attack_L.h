@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include"../BossEnemyState.h"
 class EnemyShineBlue;
+class BossAttack_1stEffect;
 class BossEnemyState_Attack_L : public BossEnemyStateBase
 {
 public:
@@ -14,6 +15,7 @@ private:
 	void StateEnd() override;
 
 	std::list<std::weak_ptr<EnemyShineBlue>> m_shineEffectBlues;
+	std::weak_ptr<BossAttack_1stEffect> m_attackEffect;
 
 	int m_randomNum = 0;
 

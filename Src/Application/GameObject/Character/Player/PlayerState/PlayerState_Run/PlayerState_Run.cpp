@@ -7,6 +7,7 @@
 #include"../../../../Weapon/Katana/Katana.h"
 #include"../../../../Weapon/WeaponKatanaScabbard/WeaponKatanaScabbard.h"
 #include"../PlayerState_FowardAvoidFast/PlayerState_FowardAvoidFast.h"
+#include"../PlayerState_Skill/PlayerState_Skill.h"
 
 void PlayerState_Run::StateStart()
 {
@@ -41,6 +42,13 @@ void PlayerState_Run::StateUpdate()
 	if (KeyboardManager::GetInstance().IsKeyJustPressed(VK_RBUTTON))
 	{
 		m_isKeyPressing = true; // 判定開始
+	}
+
+	if (KeyboardManager::GetInstance().IsKeyJustPressed('E'))
+	{
+		auto state = std::make_shared<PlayerState_Skill>();
+		m_player->ChangeState(state);
+		return;
 	}
 
 	// 長押し判定

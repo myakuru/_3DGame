@@ -3,6 +3,9 @@
 #include"../BossEnemyState_Run/BossEnemyState_Run.h"
 #include"../BossEnemyState_Attack_R/BossEnemyState_Attack_R.h"
 #include"../BossEnemyState_WaterAttack/BossEnemyState_WaterAttack.h"
+#include"../../../../../Scene/SceneManager.h"
+#include"../../../../Effect/EffekseerEffect/BossAttack_1stEffect/BossAttack_1stEffect.h"
+#include"../BossEnemyAI.h" 
 
 void BossEnemyState_Attack_L::StateStart()
 {
@@ -15,7 +18,14 @@ void BossEnemyState_Attack_L::StateStart()
 	// 当たり判定リセット
 	m_bossEnemy->ResetAttackCollision();
 
+	// 近接CDと直前行動をセット
+	m_bossEnemy->SetMeleeCooldown(1.0f);
+	m_bossEnemy->SetLastAction(BossEnemy::ActionType::AttackL);
+
 	m_randomNum = KdRandom::GetInt(-1, 1);
+
+	SceneManager::Instance().GetObjectWeakPtr(m_attackEffect);
+
 }
 
 void BossEnemyState_Attack_L::StateUpdate()
@@ -36,42 +46,21 @@ void BossEnemyState_Attack_L::StateUpdate()
 		m_bossEnemy->UpdateAttackCollision(5.0f, 1.0f, 1, 0.3f);
 	}
 
-
-	if (m_bossEnemy->GetAnimator()->IsAnimationEnd())
+	if (m_animeTime >= 0.6f)
 	{
-		// 距離が６以上離れたら追いかける
-		if (auto player = m_bossEnemy->GetPlayerWeakPtr().lock(); player)
+		if (const auto& effect = m_attackEffect.lock(); effect)
 		{
-			m_playerPos = player->GetPos();
-			m_enemyPos = m_bossEnemy->GetPos();
+			effect->SetPlayEffect(true);
 		}
-
-		m_distance = (m_playerPos - m_enemyPos).Length();
-
-		if (m_distance >= 10.0f)
-		{
-			auto state = std::make_shared<BossEnemyState_Run>();
-			m_bossEnemy->ChangeState(state);
-			return;
-		}
-		else
-		{
-			if (m_randomNum == 1)
-			{
-				auto state = std::make_shared<BossEnemyState_WaterAttack>();
-				m_bossEnemy->ChangeState(state);
-				return;
-			}
-			else
-			{
-				auto state = std::make_shared<BossEnemyState_Attack_R>();
-				m_bossEnemy->ChangeState(state);
-				return;
-			}
-		}
-
 	}
 
+	// Lが終わったら必ずRへ（距離やAI判定に依存しない）
+	if (m_bossEnemy->GetAnimator()->IsAnimationEnd())
+	{
+		auto next = std::make_shared<BossEnemyState_Attack_R>();
+		m_bossEnemy->ChangeState(next);
+		return;
+	}
 
 	if (m_time < 0.2f)
 	{
@@ -87,4 +76,11 @@ void BossEnemyState_Attack_L::StateUpdate()
 void BossEnemyState_Attack_L::StateEnd()
 {
 	m_randomNum = 0;
+
+	if (const auto& effect = m_attackEffect.lock(); effect)
+	{
+		effect->SetPlayEffect(false);
+		effect->StopEffect();
+	}
+
 }

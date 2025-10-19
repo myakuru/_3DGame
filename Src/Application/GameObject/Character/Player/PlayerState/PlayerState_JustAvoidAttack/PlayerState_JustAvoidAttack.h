@@ -15,4 +15,6 @@ private:
 
 	std::weak_ptr<JustAvoidAttackEffect1> m_justAvoidAttackEffect;
 
+	float m_overshootDist = 4.0f;
+
 };

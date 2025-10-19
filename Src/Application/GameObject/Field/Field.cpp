@@ -10,3 +10,10 @@ void Field::DrawLit()
 	//KdShaderManager::Instance().UndoRasterizerState();
 }
 
+void Field::DrawGrayScale()
+{
+	if (!SceneManager::Instance().GetDrawGrayScale()) return;
+
+	SelectDraw3dModel::DrawGrayScale();
+}
+

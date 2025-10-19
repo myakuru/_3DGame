@@ -14,6 +14,8 @@
 #include"../PlayerState_BackWordAvoid/PlayerState_BackWordAvoid.h"
 #include"../PlayerState_FowardAvoid/PlayerState_FowardAvoid.h"
 
+#include"../PlayerState_Skill/PlayerState_Skill.h"
+
 void PlayerState_Attack::StateStart()
 {
 	auto anime = m_player->GetAnimeModel()->GetAnimation("newAttack1");
@@ -96,6 +98,12 @@ void PlayerState_Attack::StateUpdate()
 		m_LButtonkeyInput = true;
 	}
 
+	// Eキー先行入力の予約
+	if (KeyboardManager::GetInstance().IsKeyJustPressed('E'))
+	{
+		m_EButtonkeyInput = true;
+	}
+
 	// 先行ダッシュ処理
 	if (m_time < 0.2f)
 	{
@@ -111,6 +119,14 @@ void PlayerState_Attack::StateUpdate()
 			effect->SetPlayEffect(true);
 		}
 		m_player->SetIsMoving(Math::Vector3::Zero);
+
+		if (m_EButtonkeyInput)
+		{
+			m_EButtonkeyInput = false;
+			auto runState = std::make_shared<PlayerState_Skill>();
+			m_player->ChangeState(runState);
+			return;
+		}
 
 		// コンボ受付
 		if (m_LButtonkeyInput || KeyboardManager::GetInstance().IsKeyPressed(VK_LBUTTON))
@@ -185,6 +201,5 @@ void PlayerState_Attack::StateEnd()
 	if (auto swordEffect = m_slashEffect.lock(); swordEffect)
 	{
 		swordEffect->SetPlayEffect(false);
-		swordEffect->StopEffect();
 	}
 }

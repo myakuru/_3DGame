@@ -80,13 +80,12 @@ void EnemyHp::DrawSprite()
 	// 非表示なら描画しない
 	if (!m_bDrawTexture || m_screenPosList.empty()) { return; }
 
-	const Math::Vector2 pivot(0.5f, 0.5f);
 
 	for (const auto& pos : m_screenPosList)
 	{
 		KdShaderManager::Instance().m_spriteShader.DrawTex(
 			m_texture,
-			static_cast<int>(pos.x),
+			static_cast<int>(pos.x - 5.0f),
 			static_cast<int>(pos.y),
 			m_srcRect.width / 8,
 			m_srcRect.height / 8,
@@ -115,4 +114,9 @@ void EnemyHp::DrawSprite()
 		);
 	}
 
+}
+
+void EnemyHp::ImGuiInspector()
+{
+	SelectDraw2DTexture::ImGuiInspector();
 }

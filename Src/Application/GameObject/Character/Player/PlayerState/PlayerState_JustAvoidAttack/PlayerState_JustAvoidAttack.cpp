@@ -17,6 +17,7 @@
 #include"../../../../Camera/PlayerCamera/PlayerCamera.h"
 
 #include"../../../../Effect/EffekseerEffect/JustAvoidAttackEffect1/JustAvoidAttackEffect1.h"
+#include"../../../BossEnemy/BossEnemy.h" // 追加
 
 void PlayerState_JustAvoidAttack::StateStart()
 {
@@ -34,7 +35,7 @@ void PlayerState_JustAvoidAttack::StateStart()
 		katana->SetNowAttackState(true);
 	}
 
-	m_LButtonkeyInput = false;		// 次段コンボ予約フラグ初期化
+	m_LButtonkeyInput = false;      // 次段コンボ予約フラグ初期化
 	m_player->SetAnimeSpeed(70.0f);
 
 	// 敵との当たり判定を無効化
@@ -44,16 +45,36 @@ void PlayerState_JustAvoidAttack::StateStart()
 
 	m_player->SetJustAvoidSuccess(true);
 
-	SceneManager::Instance().GetObjectWeakPtr(m_justAvoidAttackEffect);
-
-	if (auto effect = m_justAvoidAttackEffect.lock(); effect)
+	// Just回避演出を確実に適用（冪等化）
 	{
-		effect->SetPlayEffect(true);
+		const auto& justCfg = m_player->GetPlayerConfig().GetJustAvoidParam();
+		Application::Instance().SetFpsScale(justCfg.m_slowMoScale);
+		SceneManager::Instance().SetDrawGrayScale(justCfg.m_useGrayScale);
 	}
+
+	SceneManager::Instance().GetObjectWeakPtr(m_justAvoidAttackEffect);
 
 	// 残像の設定
 	m_player->AddAfterImage(true, 5, 1, Math::Color(0.0f, 1.0f, 1.0f, 0.5f), 0.7f);
 
+	// 当たり判定リセット
+	m_player->ResetAttackCollision();
+
+	SceneManager::Instance().GetObjectWeakPtr(m_bossEnemy);
+
+	if (auto camera = m_player->GetPlayerCamera().lock(); camera)
+	{
+		if (auto bossEnemy = m_bossEnemy.lock(); bossEnemy)
+		{
+			m_cameraBossTargetOffset = { 0.0f, 1.0f, -5.0f };
+			m_overshootDist = 6.0f;
+		}
+		else
+		{
+			m_cameraBossTargetOffset = { 0.0f, 1.0f, -3.5f } ;
+			m_overshootDist = 4.0f;
+		}
+	}
 }
 
 void PlayerState_JustAvoidAttack::StateUpdate()
@@ -66,6 +87,9 @@ void PlayerState_JustAvoidAttack::StateUpdate()
 		return;
 	}
 	PlayerStateBase::StateUpdate();
+
+	// 当たり判定有効時間: 最初の0.5秒のみ
+	m_player->UpdateAttackCollision(8.0f, 1.0f, 3, 0.1f, { 0.2f, 0.0f }, 0.3f, 0.0f, 0.4f);
 
 	UpdateKatanaPos();
 
@@ -80,60 +104,89 @@ void PlayerState_JustAvoidAttack::StateUpdate()
 
 	float deltaTime = Application::Instance().GetDeltaTime();
 
-	// 先行ダッシュ処理
-	if (auto enemy = m_player->GetEnemy().lock(); enemy)
+	// 先行ダッシュ処理（複数敵＋ボス判定対応）
 	{
-		// 敵の奥に行くようにする距離
-		constexpr float overshootDist = 2.f;
+		// 最も近い有効な敵を選定
+		const Math::Vector3 playerPos = m_player->GetPos();
 
-		// 攻撃方向が指定されていない場合は敵の方向に向かう
-		Math::Vector3 fallbackDir = enemy->GetPos() - m_player->GetPos();
+		std::shared_ptr<KdGameObject> target;
+		Math::Vector3                 targetPos = Math::Vector3::Zero;
+		float                         minDistSq = std::numeric_limits<float>::max();
 
-		const Math::Vector3 dashDir = (m_attackDirection != Math::Vector3::Zero) ? m_attackDirection : fallbackDir;
-
-		const Math::Vector3 desiredPoint = enemy->GetPos() + dashDir * overshootDist;
-
-		Math::Vector3 toDesired = desiredPoint - m_player->GetPos();
-		toDesired.y = 0.0f;
-		float distance = toDesired.Length();
-
-		const float arriveEps = 1.0f;
-
-		if (distance <= arriveEps)
+		for (const auto& weakEnemy : m_player->GetEnemyLike())
 		{
-			m_player->SetIsMoving(Math::Vector3::Zero);
-
-			// キャラを敵の方を向ける
-			if (fallbackDir != Math::Vector3::Zero)
+			if (auto e = weakEnemy.lock())
 			{
-				fallbackDir.y = 0.0f;
-				fallbackDir.Normalize();
-				m_player->UpdateQuaternionDirect(fallbackDir);
-			}
+				if (e->IsExpired()) continue;
 
-			// カメラをキャラの後ろに回す（セッター使用）
-			if (auto camera = m_player->GetPlayerCamera().lock(); camera)
-			{
-				constexpr Math::Vector3 kCamOffset = { 0.0f, 1.2f, -3.0f };
-				camera->SetTargetLookAt(kCamOffset);
-
-				// キャラ前方からヨー角(deg)を計算してカメラ回転に反映
-				if (fallbackDir != Math::Vector3::Zero)
+				const Math::Vector3 epos = e->GetPos();
+				const float distSq = (epos - playerPos).LengthSquared();
+				if (distSq < minDistSq)
 				{
-					fallbackDir.Normalize();
-					const float yawRad = std::atan2(fallbackDir.x, fallbackDir.z);
-					const float yawDeg = DirectX::XMConvertToDegrees(yawRad);
-					camera->SetTargetRotation({ 0.0f, yawDeg, 0.0f });
+					minDistSq = distSq;
+					targetPos = epos;
+					target = std::move(e);
 				}
 			}
 		}
-		else
+
+		if (target)
 		{
-			toDesired.Normalize();
-			float maxStep = 10.0f * deltaTime;
-			float speedThisFrame = (distance < maxStep) ? (distance / deltaTime) : 10.0f;
-			m_player->SetIsMoving(toDesired * speedThisFrame);
-			m_time += deltaTime;
+			// 敵の奥に行くようにする距離
+
+			// 攻撃方向が指定されていない場合は敵の方向に向かう
+			Math::Vector3 toEnemyDir = targetPos - playerPos;
+
+			const Math::Vector3 dashDir = (m_attackDirection != Math::Vector3::Zero) ? m_attackDirection : toEnemyDir;
+
+			const Math::Vector3 desiredPoint = targetPos + dashDir * m_overshootDist;
+
+			Math::Vector3 toDesired = desiredPoint - playerPos;
+			toDesired.y = 0.0f;
+			float distance = toDesired.Length();
+
+			const float arriveEps = 1.0f;
+
+			if (distance <= arriveEps)
+			{
+				m_player->SetIsMoving(Math::Vector3::Zero);
+
+				// キャラを敵の方を向ける
+				if (toEnemyDir != Math::Vector3::Zero)
+				{
+					toEnemyDir.y = 0.0f;
+					toEnemyDir.Normalize();
+					m_player->UpdateQuaternionDirect(toEnemyDir);
+				}
+
+				// カメラをキャラの後ろに回す（セッター使用）
+				if (auto camera = m_player->GetPlayerCamera().lock(); camera)
+				{
+					camera->SetTargetLookAt(m_cameraBossTargetOffset);
+
+					// キャラ前方からヨー角(deg)を計算してカメラ回転に反映
+					if (toEnemyDir != Math::Vector3::Zero)
+					{
+						const float yawRad = std::atan2(toEnemyDir.x, toEnemyDir.z);
+						const float yawDeg = DirectX::XMConvertToDegrees(yawRad);
+						camera->SetTargetRotation({ 0.0f, yawDeg, 0.0f });
+					}
+				}
+			}
+			else
+			{
+
+				if (auto effect = m_justAvoidAttackEffect.lock(); effect)
+				{
+					effect->SetPlayEffect(true);
+				}
+
+				toDesired.Normalize();
+				float maxStep = 10.0f * deltaTime;
+				float speedThisFrame = (distance < maxStep) ? (distance / deltaTime) : 10.0f;
+				m_player->SetIsMoving(toDesired * speedThisFrame);
+				m_time += deltaTime;
+			}
 		}
 	}
 }
@@ -145,7 +198,6 @@ void PlayerState_JustAvoidAttack::StateEnd()
 	if (auto effect = m_justAvoidAttackEffect.lock(); effect)
 	{
 		effect->SetPlayEffect(false);
-		effect->StopEffect();
 	}
 
 	m_player->AddAfterImage();

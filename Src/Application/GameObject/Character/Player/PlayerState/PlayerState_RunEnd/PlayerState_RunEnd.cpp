@@ -3,6 +3,7 @@
 #include "../PlayerState_BackWordAvoid/PlayerState_BackWordAvoid.h"
 #include"../PlayerState_Attack/PlayerState_Attack.h"
 #include"../PlayerState_Run/PlayerState_Run.h"
+#include"../PlayerState_Skill/PlayerState_Skill.h"
 
 #include"../../../../../main.h"
 
@@ -21,6 +22,13 @@ void PlayerState_RunEnd::StateUpdate()
 	{
 		auto attackState = std::make_shared<PlayerState_Attack>();
 		m_player->ChangeState(attackState);
+		return;
+	}
+
+	if (KeyboardManager::GetInstance().IsKeyJustPressed('E'))
+	{
+		auto state = std::make_shared<PlayerState_Skill>();
+		m_player->ChangeState(state);
 		return;
 	}
 

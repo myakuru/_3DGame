@@ -14,6 +14,8 @@
 #include"../../../../Effect/EffekseerEffect/Rotation/Rotation.h"
 #include"../../../../Effect/EffekseerEffect/AttacEffect1/AttacEffect1.h"
 
+#include"../PlayerState_Skill/PlayerState_Skill.h"
+
 void PlayerState_Attack2::StateStart()
 {
 	auto anime = m_player->GetAnimeModel()->GetAnimation("Attack1");
@@ -100,6 +102,12 @@ void PlayerState_Attack2::StateUpdate()
 			m_LButtonkeyInput = true;
 		}
 
+		// Eキー先行入力の予約
+		if (KeyboardManager::GetInstance().IsKeyJustPressed('E'))
+		{
+			m_EButtonkeyInput = true;
+		}
+
 		// アニメ終了時の遷移
 		if (m_player->GetAnimator()->IsAnimationEnd())
 		{
@@ -126,6 +134,14 @@ void PlayerState_Attack2::StateUpdate()
 
 		// 移動を止める
 		m_player->SetIsMoving(Math::Vector3::Zero);
+
+		if (m_EButtonkeyInput)
+		{
+			m_EButtonkeyInput = false;
+			auto runState = std::make_shared<PlayerState_Skill>();
+			m_player->ChangeState(runState);
+			return;
+		}
 
 		// コンボ受付
 		if (m_LButtonkeyInput || KeyboardManager::GetInstance().IsKeyPressed(VK_LBUTTON))
@@ -191,6 +207,5 @@ void PlayerState_Attack2::StateEnd()
 	if (auto effect = m_slashEffect.lock(); effect)
 	{
 		effect->SetPlayEffect(false);
-		effect->StopEffect();
 	}
 }

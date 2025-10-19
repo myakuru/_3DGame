@@ -38,7 +38,9 @@
     "DashTime": 0.0,
     "DashTime1": 0.0,
     "DashTime2": 0.0,
-    "GravitySpeed": 0.0,
+    "GravitySpeed": -0.004999999888241291,
+    "JustGrayScale": true,
+    "JustSlowMoScale": 0.30000001192092896,
     "Name": "class Player",
     "cameraShake": {
       "x": 0.0,
@@ -74,9 +76,9 @@
     "moveSpeed": 0.14000000059604645,
     "path": "Asset\\Models\\Player\\Perula\\Player\\Perula.gltf",
     "pos": {
-      "x": 31.0,
-      "y": 9.899998664855957,
-      "z": -75.0
+      "x": -1.7363646030426025,
+      "y": 9.899999618530273,
+      "z": -64.43704223632813
     },
     "rotateSpeed": 30.0,
     "scale": {
@@ -162,15 +164,15 @@
       "z": 1.0
     },
     "deg": {
-      "x": 0.0,
-      "y": 320.0,
+      "x": 0.8999999761581421,
+      "y": 95.47127532958984,
       "z": 0.0
     },
     "fov": 70.0,
     "m_cameraPos": {
-      "x": 31.0,
-      "y": 9.899940490722656,
-      "z": -75.0
+      "x": -1.7363641262054443,
+      "y": 9.89995002746582,
+      "z": -64.43701171875
     },
     "moveSpeed": 50.0,
     "path": "Asset/Models/Sky/Sky.gltf",
@@ -189,7 +191,7 @@
     "targetLookAt": {
       "x": 0.0,
       "y": 1.0,
-      "z": -2.4999990463256836
+      "z": -5.499998092651367
     },
     "type": 32
   },
@@ -251,9 +253,9 @@
     "Name": "class Scoring",
     "color": {
       "w": 1.0,
-      "x": 1.0,
-      "y": 0.4300000071525574,
-      "z": 0.03999999910593033
+      "x": 0.7099999785423279,
+      "y": 0.23999999463558197,
+      "z": 1.0
     },
     "deg": {
       "x": 0.0,
@@ -344,13 +346,13 @@
     "drawFlags": true,
     "path": "Asset\\Textures\\GameUI\\HpBar.png",
     "pos": {
-      "x": -600.0,
-      "y": 302.70001220703125,
+      "x": -517.9000244140625,
+      "y": 353.29998779296875,
       "z": 0.0
     },
     "scale": {
-      "x": 0.5,
-      "y": 0.5,
+      "x": 0.29499998688697815,
+      "y": 0.29499998688697815,
       "z": 0.0
     },
     "type": 7
@@ -628,9 +630,9 @@
     },
     "path": "Asset\\Textures\\GameUI\\WINNER.png",
     "pos": {
-      "x": 4.390951156616211,
-      "y": 2.008639335632324,
-      "z": 5.028598308563232
+      "x": 29.027690887451172,
+      "y": 11.116534233093262,
+      "z": -71.7820053100586
     },
     "scale": {
       "x": 11.0,
@@ -727,51 +729,6 @@
       "y": 0.0,
       "z": 0.0
     }
-  },
-  {
-    "GravitySpeed": 0.0,
-    "Name": "class Enemy",
-    "color": {
-      "w": 1.0,
-      "x": 1.1764706373214722,
-      "y": 1.0,
-      "z": 1.0
-    },
-    "deg": {
-      "x": 0.0,
-      "y": 0.0,
-      "z": 0.0
-    },
-    "dissolveColor": {
-      "x": 0.9313725233078003,
-      "y": 0.05935215204954147,
-      "z": 0.05935215204954147
-    },
-    "dissolvePower": 1.0,
-    "drawFlags": {
-      "DrawBright": false,
-      "DrawGradation": false,
-      "DrawGrayScale": false,
-      "DrawLit": true,
-      "DrawToon": false,
-      "DrawUnLit": false,
-      "GenerateDepthMapFromLight": false
-    },
-    "fixedFps": 60.0,
-    "moveSpeed": 0.05000000074505806,
-    "path": "Asset\\Models\\Enemy\\Aetherius\\Aetherius.gltf",
-    "pos": {
-      "x": 25.966489791870117,
-      "y": 9.699999809265137,
-      "z": -62.88164520263672
-    },
-    "rotationspeed": 10.0,
-    "scale": {
-      "x": 1.0,
-      "y": 1.0,
-      "z": 1.0
-    },
-    "type": 37
   },
   {
     "EffectSpeed": 20.0,
@@ -1054,7 +1011,7 @@
     "type": 10
   },
   {
-    "EffectSpeed": 20.0,
+    "EffectSpeed": 10.0,
     "Name": "class ESkillEffect",
     "color": {
       "w": 1.0,
@@ -1067,17 +1024,17 @@
       "y": -90.0,
       "z": 0.0
     },
-    "distance": -10.0,
+    "distance": 0.0,
     "path": "Asset\\Data\\Effect\\Storm\\EVFXForge05_10_StormforgeSlash.efkefc",
     "pos": {
       "x": 0.0,
-      "y": 1.0,
+      "y": 0.5,
       "z": 0.0
     },
     "scale": {
-      "x": 0.30000001192092896,
-      "y": 0.30000001192092896,
-      "z": 0.30000001192092896
+      "x": 0.6000000238418579,
+      "y": 0.6000000238418579,
+      "z": 0.6000000238418579
     },
     "type": 32
   },
@@ -1298,7 +1255,7 @@
     "drawFlags": {
       "DrawBright": false,
       "DrawGradation": false,
-      "DrawGrayScale": false,
+      "DrawGrayScale": true,
       "DrawLit": true,
       "DrawToon": false,
       "DrawUnLit": false,
@@ -1619,51 +1576,6 @@
     "type": 32
   },
   {
-    "GravitySpeed": 0.0,
-    "Name": "class Enemy",
-    "color": {
-      "w": 1.0,
-      "x": 1.5686274766921997,
-      "y": 1.0,
-      "z": 1.0
-    },
-    "deg": {
-      "x": 0.0,
-      "y": 0.0,
-      "z": 0.0
-    },
-    "dissolveColor": {
-      "x": 1.0,
-      "y": 0.0,
-      "z": 0.0
-    },
-    "dissolvePower": 1.0,
-    "drawFlags": {
-      "DrawBright": false,
-      "DrawGradation": false,
-      "DrawGrayScale": false,
-      "DrawLit": true,
-      "DrawToon": false,
-      "DrawUnLit": false,
-      "GenerateDepthMapFromLight": false
-    },
-    "fixedFps": 60.0,
-    "moveSpeed": 0.05000000074505806,
-    "path": "Asset\\Models\\Enemy\\Aetherius\\Aetherius.gltf",
-    "pos": {
-      "x": 30.250009536743164,
-      "y": 9.699999809265137,
-      "z": -51.70134735107422
-    },
-    "rotationspeed": 10.0,
-    "scale": {
-      "x": 1.0,
-      "y": 1.0,
-      "z": 1.0
-    },
-    "type": 38
-  },
-  {
     "Name": "class EnemyHp",
     "color": {
       "w": 1.0,
@@ -1676,7 +1588,7 @@
       "y": 0.0,
       "z": 0.0
     },
-    "drawFlags": true,
+    "drawFlags": false,
     "path": "Asset/Models/Sky/Sky.gltf",
     "pos": {
       "x": 0.0,
@@ -1774,7 +1686,7 @@
   {
     "Name": "class MapGard",
     "color": {
-      "w": 0.5,
+      "w": 1.0,
       "x": 0.800000011920929,
       "y": 0.800000011920929,
       "z": 0.800000011920929
@@ -1808,7 +1720,7 @@
   {
     "Name": "class MapGard",
     "color": {
-      "w": 0.5,
+      "w": 1.0,
       "x": 0.800000011920929,
       "y": 0.800000011920929,
       "z": 0.800000011920929
@@ -1842,7 +1754,7 @@
   {
     "Name": "class MapGard",
     "color": {
-      "w": 0.5,
+      "w": 1.0,
       "x": 0.800000011920929,
       "y": 0.800000011920929,
       "z": 0.800000011920929
@@ -1876,7 +1788,7 @@
   {
     "Name": "class MapGard",
     "color": {
-      "w": 0.5,
+      "w": 0.800000011920929,
       "x": 0.800000011920929,
       "y": 0.800000011920929,
       "z": 0.800000011920929
@@ -1910,7 +1822,7 @@
   {
     "Name": "class MapGard",
     "color": {
-      "w": 0.5,
+      "w": 0.800000011920929,
       "x": 0.800000011920929,
       "y": 0.800000011920929,
       "z": 0.800000011920929
@@ -2794,7 +2706,7 @@
   {
     "Name": "class MapGard",
     "color": {
-      "w": 0.800000011920929,
+      "w": 0.5,
       "x": 0.800000011920929,
       "y": 0.800000011920929,
       "z": 0.800000011920929
@@ -2828,7 +2740,7 @@
   {
     "Name": "class MapGard",
     "color": {
-      "w": 1.0,
+      "w": 0.5,
       "x": 0.800000011920929,
       "y": 0.800000011920929,
       "z": 0.800000011920929
@@ -2862,7 +2774,7 @@
   {
     "Name": "class MapGard",
     "color": {
-      "w": 1.0,
+      "w": 0.5,
       "x": 0.800000011920929,
       "y": 0.800000011920929,
       "z": 0.800000011920929
@@ -3166,7 +3078,7 @@
     "path": "Asset\\Map2\\Map.gltf",
     "pos": {
       "x": -287.70001220703125,
-      "y": -122.80769348144531,
+      "y": -134.05422973632813,
       "z": 315.3999938964844
     },
     "scale": {
@@ -3178,7 +3090,7 @@
     "type": 32
   },
   {
-    "EffectSpeed": 15.0,
+    "EffectSpeed": 5.0,
     "Name": "class JustAvoidAttackEffect",
     "color": {
       "w": 1.0,
@@ -3191,17 +3103,17 @@
       "y": -90.0,
       "z": 0.0
     },
-    "distance": 1.0,
+    "distance": 2.0,
     "path": "Asset\\Data\\Effect\\Spellblade\\Test.efkefc",
     "pos": {
       "x": 0.0,
-      "y": 1.0,
+      "y": 1.5,
       "z": 0.0
     },
     "scale": {
-      "x": 0.30000001192092896,
-      "y": 0.30000001192092896,
-      "z": 0.30000001192092896
+      "x": 0.5,
+      "y": 0.5,
+      "z": 0.5
     },
     "type": 32
   },
@@ -3219,7 +3131,7 @@
       "y": 0.0,
       "z": 0.0
     },
-    "distance": 2.0,
+    "distance": 3.0,
     "path": "Asset\\Data\\Effect\\Shine\\VFX\\EVFXForge15_10_ShineforgeSlash.efkefc",
     "pos": {
       "x": 0.0,
@@ -3254,11 +3166,213 @@
       "z": 0.0
     },
     "scale": {
-      "x": 1.0,
+      "x": 1.2999999523162842,
       "y": 1.2999999523162842,
-      "z": 1.0
+      "z": 0.5
     },
     "type": 39
+  },
+  {
+    "EffectSpeed": 10.0,
+    "Name": "class BossAttack_1stEffect",
+    "color": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "deg": {
+      "x": 0.0,
+      "y": -90.0,
+      "z": 0.0
+    },
+    "distance": 2.0,
+    "path": "Asset\\Data\\Effect\\Spellblade\\EVFXParagon01_07_FloodwovenBlade.efkefc",
+    "pos": {
+      "x": 0.0,
+      "y": 0.5,
+      "z": 0.0
+    },
+    "scale": {
+      "x": 0.5,
+      "y": 0.5,
+      "z": 0.5
+    },
+    "type": 32
+  },
+  {
+    "EffectSpeed": 6.0,
+    "Name": "class BossEnemyEnterEffect",
+    "color": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "deg": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "distance": 0.0,
+    "path": "Asset\\Data\\Effect\\Flood\\EVFXForge09_06_FountainSurge.efkefc",
+    "pos": {
+      "x": 0.0,
+      "y": 0.20000000298023224,
+      "z": 0.0
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "type": 32
+  },
+  {
+    "GravitySpeed": 0.0,
+    "Name": "class BossEnemy",
+    "color": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "deg": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "dissolveColor": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "dissolvePower": 1.0,
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
+      "DrawLit": true,
+      "DrawToon": false,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "fixedFps": 60.0,
+    "moveSpeed": 0.10000000149011612,
+    "path": "Asset/Models/Sky/Sky.gltf",
+    "pos": {
+      "x": 1.315901756286621,
+      "y": 9.600000381469727,
+      "z": -64.07335662841797
+    },
+    "rotationspeed": 10.0,
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "type": 32
+  },
+  {
+    "EffectSpeed": 3.0,
+    "Name": "class BossWaterAttackEffect",
+    "color": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "deg": {
+      "x": 0.0,
+      "y": -90.0,
+      "z": 0.0
+    },
+    "distance": 10.0,
+    "path": "Asset\\Data\\Effect\\Flood\\EVFXForge09_07_1TidalCurrent.efkefc",
+    "pos": {
+      "x": 0.0,
+      "y": 1.5,
+      "z": 0.0
+    },
+    "scale": {
+      "x": 0.5,
+      "y": 0.5,
+      "z": 0.5
+    },
+    "type": 32
+  },
+  {
+    "EffectSpeed": 10.0,
+    "Name": "class BossWaterFallAttack",
+    "color": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "deg": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "distance": 3.0,
+    "path": "Asset\\Data\\Effect\\Flood\\EVFXForge09_15_DrowningCataract.efkefc",
+    "pos": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "scale": {
+      "x": 0.5,
+      "y": 0.5,
+      "z": 0.5
+    },
+    "type": 32
+  },
+  {
+    "GravitySpeed": 0.0,
+    "Name": "class BossEnemy",
+    "color": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "deg": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "dissolveColor": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "dissolvePower": 1.0,
+    "drawFlags": {
+      "DrawBright": false,
+      "DrawGradation": false,
+      "DrawGrayScale": false,
+      "DrawLit": true,
+      "DrawToon": false,
+      "DrawUnLit": false,
+      "GenerateDepthMapFromLight": false
+    },
+    "fixedFps": 60.0,
+    "moveSpeed": 0.10000000149011612,
+    "path": "Asset/Models/Sky/Sky.gltf",
+    "pos": {
+      "x": 2.1613173484802246,
+      "y": 9.600000381469727,
+      "z": -64.75895690917969
+    },
+    "rotationspeed": 10.0,
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "type": 32
   },
   {
     "Name": "class FPSCamera",
@@ -3269,16 +3383,16 @@
       "z": 1.0
     },
     "deg": {
-      "x": 13.950018882751465,
-      "y": 295.6413269042969,
+      "x": 11.250014305114746,
+      "y": 330.1411437988281,
       "z": 0.0
     },
     "moveSpeed": 20.0,
     "path": "Asset/Models/Sky/Sky.gltf",
     "pos": {
-      "x": 38.443119049072266,
-      "y": 11.777148246765137,
-      "z": -78.08182525634766
+      "x": 32.522945404052734,
+      "y": 17.170995712280273,
+      "z": -87.55162048339844
     },
     "scale": {
       "x": 1.0,

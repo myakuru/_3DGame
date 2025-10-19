@@ -6,7 +6,16 @@
 #include"../PlayerState/PlayerState_BackWordAvoid/PlayerState_BackWordAvoid.h"
 #include"../../BossEnemy/BossEnemy.h"
 #include"../../../../Scene/SceneManager.h"
+#include"../../../../main.h"
 
+// 追加: フォーカス共有（シングルプレイヤー前提）
+namespace
+{
+	std::weak_ptr<KdGameObject> g_focusTarget;
+	float g_focusRemainSec = 0.0f;
+	constexpr float g_focusDurationSec = 0.1f; // フォーカス継続時間(調整用)
+	constexpr float g_focusMaxDistSq = 50.0f * 50.0f; // 距離制限(離れすぎたら解除) 任意
+}
 
 void PlayerStateBase::StateStart()
 {
@@ -17,27 +26,66 @@ void PlayerStateBase::StateStart()
 	Math::Vector3                  nearestEnemyPos = Math::Vector3::Zero;
 	float                          minDistSq = std::numeric_limits<float>::max();
 
-	for (const auto& weakEnemy : m_player->GetEnemyLike())
+	// まずは既存フォーカスを採用できるか確認
+	if (g_focusRemainSec > 0.0f)
 	{
-		if (auto enemy = weakEnemy.lock())
+		if (auto f = g_focusTarget.lock())
 		{
-			if (enemy->IsExpired()) continue;
-
-			// ボス敵だった場合
-			if (enemy->GetTypeID() == BossEnemy::TypeID)
+			if (!f->IsExpired())
 			{
-				if (!SceneManager::Instance().IsBossAppear()) continue;
+				if (!(f->GetTypeID() == BossEnemy::TypeID && !SceneManager::Instance().IsBossAppear()))
+				{
+					const Math::Vector3 fpos = f->GetPos();
+					const float distSq = (fpos - playerPos).LengthSquared();
+					if (distSq <= g_focusMaxDistSq)
+					{
+						nearestEnemy = f;
+						nearestEnemyPos = fpos;
+						minDistSq = distSq;
+					}
+				}
 			}
+		}
+		// 無効なら即解除
+		if (!nearestEnemy)
+		{
+			g_focusTarget.reset();
+			g_focusRemainSec = 0.0f;
+		}
+	}
 
-			const Math::Vector3 enemyPos = enemy->GetPos();
-			const float distSq = (enemyPos - playerPos).LengthSquared();
-
-			if (distSq < minDistSq)
+	// フォーカス未採用なら通常の最近傍探索
+	if (!nearestEnemy)
+	{
+		for (const auto& weakEnemy : m_player->GetEnemyLike())
+		{
+			if (auto enemy = weakEnemy.lock())
 			{
-				minDistSq = distSq;
-				nearestEnemyPos = enemyPos;
-				nearestEnemy = std::move(enemy);
+				if (enemy->IsExpired()) continue;
+
+				// ボス敵だった場合
+				if (enemy->GetTypeID() == BossEnemy::TypeID)
+				{
+					if (!SceneManager::Instance().IsBossAppear()) continue;
+				}
+
+				const Math::Vector3 enemyPos = enemy->GetPos();
+				const float distSq = (enemyPos - playerPos).LengthSquared();
+
+				if (distSq < minDistSq)
+				{
+					minDistSq = distSq;
+					nearestEnemyPos = enemyPos;
+					nearestEnemy = std::move(enemy);
+				}
 			}
+		}
+
+		// 新規にロック
+		if (nearestEnemy)
+		{
+			g_focusTarget = nearestEnemy;
+			g_focusRemainSec = g_focusDurationSec;
 		}
 	}
 
@@ -76,6 +124,35 @@ void PlayerStateBase::StateStart()
 
 void PlayerStateBase::StateUpdate()
 {
+	float deltaTime = Application::Instance().GetUnscaledDeltaTime();
+
+	// フォーカスタイマー更新と自動解除
+	if (g_focusRemainSec > 0.0f)
+	{
+		g_focusRemainSec -= deltaTime;
+		if (g_focusRemainSec <= 0.0f)
+		{
+			g_focusRemainSec = 0.0f;
+			g_focusTarget.reset();
+		}
+		else
+		{
+			if (auto f = g_focusTarget.lock())
+			{
+				// 失効条件
+				if (f->IsExpired()
+					|| (f->GetTypeID() == BossEnemy::TypeID && !SceneManager::Instance().IsBossAppear()))
+				{
+					g_focusRemainSec = 0.0f;
+					g_focusTarget.reset();
+				}
+			}
+			else
+			{
+				g_focusRemainSec = 0.0f;
+			}
+		}
+	}
 }
 
 void PlayerStateBase::StateEnd()

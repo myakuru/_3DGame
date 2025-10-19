@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include "../Utility/SelectDraw2DTexture.h"
 class Enemy;
+class BossEnemy;
 class PlayerCamera;
 class HitDamage :public SelectDraw2DTexture
 {
@@ -16,10 +17,12 @@ public:
 	void SetDamage(int damage) { m_displayTime = damage; }
 
 	void SetTrackEnemy(const std::weak_ptr<Enemy>& enemy) { m_enemy = enemy; }
+	void SetTrackBossEnemy(const std::weak_ptr<BossEnemy>& bossEnemy) { m_bossEnemy = bossEnemy; }
 
 private:
 
 	std::list<std::weak_ptr<Enemy>> m_enemies;
+	std::list<std::weak_ptr<BossEnemy>> m_bossEnemies; // 追加: BossEnemy リスト
 	std::weak_ptr<PlayerCamera> m_camera;
 
 	Math::Vector3 m_screenPos = Math::Vector3::Zero;
@@ -32,6 +35,7 @@ private:
 	Math::Vector3 m_enemyPos = Math::Vector3::Zero;
 
 	std::weak_ptr<Enemy> m_enemy;
+	std::weak_ptr<BossEnemy> m_bossEnemy;
 
 	Math::Rectangle m_srcRect;
 	int m_textureSizeX = 0;

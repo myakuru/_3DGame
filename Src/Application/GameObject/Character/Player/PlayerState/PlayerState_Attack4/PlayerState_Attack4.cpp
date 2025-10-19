@@ -13,6 +13,9 @@
 #include"../PlayerState_BackWordAvoid/PlayerState_BackWordAvoid.h"
 #include"../PlayerState_FowardAvoid/PlayerState_FowardAvoid.h"
 
+#include"../PlayerState_Skill/PlayerState_Skill.h"
+#include"../../../BossEnemy/BossEnemy.h"
+
 void PlayerState_Attack4::StateStart()
 {
 	auto anime = m_player->GetAnimeModel()->GetAnimation("newAttack5");
@@ -31,6 +34,7 @@ void PlayerState_Attack4::StateStart()
 
 	SceneManager::Instance().GetObjectWeakPtr(m_groundFreezes);
 	SceneManager::Instance().GetObjectWeakPtr(m_rotation);
+	SceneManager::Instance().GetObjectWeakPtr(m_bossEnemy);
 
 	m_time = 0.0f;
 	m_LButtonkeyInput = false;
@@ -93,6 +97,12 @@ void PlayerState_Attack4::StateUpdate()
 		m_LButtonkeyInput = true;
 	}
 
+	// Eキー先行入力の予約
+	if (KeyboardManager::GetInstance().IsKeyJustPressed('E'))
+	{
+		m_EButtonkeyInput = true;
+	}
+
 	// 攻撃中の移動方向で回転を更新
 	if (m_player->GetMovement() != Math::Vector3::Zero)
 	{
@@ -124,6 +134,15 @@ void PlayerState_Attack4::StateUpdate()
 		if (auto effect = m_rotation.lock(); effect)
 		{
 			effect->SetPlayEffect(true);
+		}
+
+
+		if (m_EButtonkeyInput)
+		{
+			m_EButtonkeyInput = false;
+			auto runState = std::make_shared<PlayerState_Skill>();
+			m_player->ChangeState(runState);
+			return;
 		}
 
 		// コンボ受付
@@ -189,19 +208,24 @@ void PlayerState_Attack4::StateEnd()
 	// カメラの位置を変更
 	if (auto camera = m_player->GetPlayerCamera().lock(); camera)
 	{
-		camera->SetTargetLookAt({ 0.f,1.0f,-2.5f });
+		if (auto bossEnemy = m_bossEnemy.lock(); bossEnemy)
+		{
+			camera->SetTargetLookAt(m_cameraBossTargetOffset);
+		}
+		else
+		{
+			camera->SetTargetLookAt(m_cameraTargetOffset);
+		}
 	}
 
 	if (auto effect = m_groundFreezes.lock(); effect)
 	{
 		effect->SetPlayEffect(false);
-		effect->StopEffect();
 	}
 
 	if (auto effect = m_rotation.lock(); effect)
 	{
 		effect->SetPlayEffect(false);
-		effect->StopEffect();
 	}
 
 	m_player->SetIsMoving(Math::Vector3::Zero);

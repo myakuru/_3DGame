@@ -2,6 +2,7 @@
 #include"../../Scene/SceneManager.h"
 #include"../../main.h"
 #include"../../GameObject/Character/Enemy/Enemy.h"
+#include"../../GameObject/Character/BossEnemy/BossEnemy.h" 
 #include"../Camera/PlayerCamera/PlayerCamera.h"
 
 void HitDamage::Init()
@@ -49,27 +50,68 @@ void HitDamage::Update()
 			updated = true;
 		}
 	}
+	else if (auto trackedBoss = m_bossEnemy.lock())
+	{
+		// 対象が消滅していたら自分も消す
+		if (trackedBoss->IsExpired())
+		{
+			m_isExpired = true;
+			return;
+		}
+
+		if (auto cam = camera->GetCamera())
+		{
+			m_enemyPos = trackedBoss->GetPos();
+			cam->ConvertWorldToScreenDetail(m_enemyPos + m_offset, m_screenPos);
+			updated = true;
+		}
+	}
 	else
 	{
-		// まだ未固定なら、このフレームでヒット中の敵を一体だけ見つけて固定
+		// まだ未固定なら、このフレームでヒット中のボスまたは敵を一体だけ見つけて固定
+		SceneManager::Instance().GetObjectWeakPtrList(m_bossEnemies);
 		SceneManager::Instance().GetObjectWeakPtrList(m_enemies);
 
-		for (const auto& e : m_enemies)
+		// まずボスを優先して探索
+		for (const auto& b : m_bossEnemies)
 		{
-			if (auto ep = e.lock())
+			if (auto bp = b.lock())
 			{
-				if (!ep->EnemyHit()) { continue; } // ヒット中のみ対象
+				if (!bp->EnemyHit()) { continue; } // ヒット中のみ対象
 
-				// 以降この敵だけを追従
-				m_enemy = ep;
+				// 以降このボスだけを追従
+				m_bossEnemy = bp;
 
 				if (auto cam = camera->GetCamera())
 				{
-					m_enemyPos = ep->GetPos();
+					m_enemyPos = bp->GetPos();
 					cam->ConvertWorldToScreenDetail(m_enemyPos + m_offset, m_screenPos);
 					updated = true;
 				}
 				break; // 最初に見つけた一体で打ち切り
+			}
+		}
+
+		// 見つからなければ通常の敵を探索
+		if (!updated)
+		{
+			for (const auto& e : m_enemies)
+			{
+				if (auto ep = e.lock())
+				{
+					if (!ep->EnemyHit()) { continue; } // ヒット中のみ対象
+
+					// 以降この敵だけを追従
+					m_enemy = ep;
+
+					if (auto cam = camera->GetCamera())
+					{
+						m_enemyPos = ep->GetPos();
+						cam->ConvertWorldToScreenDetail(m_enemyPos + m_offset, m_screenPos);
+						updated = true;
+					}
+					break; // 最初に見つけた一体で打ち切り
+				}
 			}
 		}
 	}

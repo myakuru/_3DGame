@@ -49,16 +49,6 @@ void Enemy::Update()
 
 	float deltaTime = Application::Instance().GetUnscaledDeltaTime();
 
-	m_attackFrame += deltaTime;
-
-	if (m_attackFrame >= 2.5f)
-	{
-		Application::Instance().SetFpsScale(1.f); // スローモーションにする
-		SceneManager::Instance().SetDrawGrayScale(false);
-		m_attackFrame = 0.0f;
-		m_justAvoidSuccess = false;
-	}
-
 	if (m_Expired)
 	{
 		if (m_dissever < 1.0f)
@@ -134,7 +124,7 @@ void Enemy::UpdateAttackCollision(float _radius, float _distance, int _attackCou
 	Math::Vector3 forward = Math::Vector3::TransformNormal(Math::Vector3::Forward, Math::Matrix::CreateFromQuaternion(m_rotation));
 	forward.Normalize();
 
-	float deltaTime = Application::Instance().GetDeltaTime();
+	float deltaTime = Application::Instance().GetUnscaledDeltaTime();
 
 	KdCollider::SphereInfo attackSphere;
 	attackSphere.m_sphere.Center = m_position + Math::Vector3(0.0f, 0.5f, 0.0f) + forward * _distance;
@@ -153,6 +143,9 @@ void Enemy::UpdateAttackCollision(float _radius, float _distance, int _attackCou
 		m_chargeAttackTimer = 0.0f;
 		m_hitOnce = true;
 
+		// Just回避の一発ゲートをリセット
+		m_justAvoidSuccess = false;
+
 		// クランプしない。開始 > 終了なら入れ替えのみ
 		float begin = _activeBeginSec;
 		float end = _activeEndSec;
@@ -170,6 +163,15 @@ void Enemy::UpdateAttackCollision(float _radius, float _distance, int _attackCou
 
 	// 開始前は何もしない
 	if (m_attackActiveTime < m_attackActiveBegin) return;
+
+	// 既にJust回避が成立していたら、この攻撃中は以後の再判定をしない
+	if (m_justAvoidSuccess)
+	{
+		// 必要ならこの攻撃自体を終了させたい場合は以下を有効化
+		m_isChargeAttackActive = false;
+		m_justAvoidSuccess = false; // 次回の攻撃に備えてリセット
+		return;
+	}
 
 	// 終了超過で攻撃終了
 	if (m_attackActiveTime > m_attackActiveEnd)
@@ -194,8 +196,18 @@ void Enemy::UpdateAttackCollision(float _radius, float _distance, int _attackCou
 					if (avoidElapsed >= 0.0f && avoidElapsed <= kJustAvoidWindowSec)
 					{
 						m_justAvoidSuccess = true;
-						Application::Instance().SetFpsScale(0.3f); // スローモーション
-						SceneManager::Instance().SetDrawGrayScale(true);
+
+						// プレイヤーへも成立通知（プレイヤー側の状態遷移/効果に利用）
+						playerPtr->SetJustAvoidSuccess(true);
+
+						// プレイヤー設定からスローモーション倍率・グレースケール適用を取得
+						auto& justCfg = playerPtr->GetPlayerConfig().GetJustAvoidParam();
+						Application::Instance().SetFpsScale(justCfg.m_slowMoScale);
+						SceneManager::Instance().SetDrawGrayScale(justCfg.m_useGrayScale);
+
+						// 必要に応じてこの攻撃の当たり判定を終了
+						// m_isChargeAttackActive = false;
+
 						return; // ダメージ処理は行わない
 					}
 				}

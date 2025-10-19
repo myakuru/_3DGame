@@ -1,5 +1,7 @@
 ﻿#include "BossEnemyState_Enter.h"
 #include"../BossEnemyState_Idle/BossEnemyState_Idle.h"
+#include"../../../../../Scene/SceneManager.h"
+#include"../../../../Effect/EffekseerEffect/BossEnemyEnterEffect/BossEnemyEnterEffect.h"
 
 void BossEnemyState_Enter::StateStart()
 {
@@ -8,6 +10,15 @@ void BossEnemyState_Enter::StateStart()
 	BossEnemyStateBase::StateStart();
 	// アニメーション速度を変更
 	m_bossEnemy->SetAnimeSpeed(60.0f);
+
+	SceneManager::Instance().GetObjectWeakPtr(m_enterEffect);
+
+	if (auto effect = m_enterEffect.lock(); effect)
+	{
+		effect->SetPlayEffect(true);
+	}
+
+
 }
 
 void BossEnemyState_Enter::StateUpdate()
@@ -24,4 +35,9 @@ void BossEnemyState_Enter::StateUpdate()
 
 void BossEnemyState_Enter::StateEnd()
 {
+	if (auto effect = m_enterEffect.lock(); effect)
+	{
+		effect->SetPlayEffect(false);
+		effect->StopEffect();
+	}
 }

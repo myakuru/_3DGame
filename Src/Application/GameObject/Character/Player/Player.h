@@ -142,6 +142,7 @@ private:
 
 	void ApplyHorizontalMove(const Math::Vector3& inputMove, float deltaTime);
 	void ApplyPushWithCollision(const Math::Vector3& rawPush);
+	void ApplyVerticalMove(float deltaY);
 
 
 	Math::Vector3 m_moveDirection = Math::Vector3::Zero;		// 移動方向

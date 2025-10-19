@@ -17,15 +17,25 @@
 #include"../../../Enemy/Enemy.h"
 #include"../PlayerState_SpecialAttack/PlayerState_SpecialAttack.h"
 #include"../PlayerState_FullCharge/PlayerState_FullCharge.h"
+#include"../../../BossEnemy/BossEnemy.h"
 
 void PlayerState_Idle::StateStart()
 {
 	auto anime = m_player->GetAnimeModel()->GetAnimation("Idle");
 	m_player->GetAnimator()->SetAnimation(anime);
 
+	SceneManager::Instance().GetObjectWeakPtr(m_bossEnemy);
+
 	if (auto camera = m_player->GetPlayerCamera().lock(); camera)
 	{
-		camera->SetTargetLookAt({ 0.0f,1.0f,-2.5f });
+		if(auto bossEnemy = m_bossEnemy.lock(); bossEnemy)
+		{
+			camera->SetTargetLookAt(m_cameraBossTargetOffset);
+		}
+		else
+		{
+			camera->SetTargetLookAt(m_cameraTargetOffset);
+		}
 	}
 	m_isKeyPressing = false;
 }

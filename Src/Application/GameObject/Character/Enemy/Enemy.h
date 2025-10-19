@@ -66,9 +66,9 @@ public:
 
 	struct EnemyStatus
 	{
-		int hp = 1000000000;				// 体力
+		int hp = 1000000;				// 体力
 		int attack = 100;			// 攻撃力
-		int maxHp = 1000000000;			// 最大体力
+		int maxHp = 1000000;			// 最大体力
 	};
 
 	const EnemyStatus& GetStatus() { return m_status; }

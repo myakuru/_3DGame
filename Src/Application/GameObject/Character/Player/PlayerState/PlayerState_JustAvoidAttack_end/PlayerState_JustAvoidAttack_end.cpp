@@ -16,6 +16,7 @@
 #include"../../../../Camera/PlayerCamera/PlayerCamera.h"
 
 #include"../../../../Effect/EffekseerEffect/JustAvoidAttackEffect/JustAvoidAttackEffect.h"
+#include"../../../BossEnemy/BossEnemy.h"
 
 void PlayerState_JustAvoidAttack_end::StateStart()
 {
@@ -37,6 +38,14 @@ void PlayerState_JustAvoidAttack_end::StateStart()
 		effect->SetPlayEffect(true);
 	}
 
+	// 当たり判定リセット
+	m_player->ResetAttackCollision();
+
+	// 当たり判定リセット
+	m_player->ResetAttackCollision();
+
+	SceneManager::Instance().GetObjectWeakPtr(m_bossEnemy);
+
 }
 
 void PlayerState_JustAvoidAttack_end::StateUpdate()
@@ -48,6 +57,9 @@ void PlayerState_JustAvoidAttack_end::StateUpdate()
 		m_player->ChangeState(state);
 		return;
 	}
+
+	// 当たり判定有効時間: 最初の0.5秒のみ
+	m_player->UpdateAttackCollision(8.0f, 1.0f, 5, 0.1f, { 0.2f, 0.0f }, 0.3f, 0.0f, 0.4f);
 
 	UpdateKatanaPos();
 
@@ -75,13 +87,28 @@ void PlayerState_JustAvoidAttack_end::StateEnd()
 	// 無敵解除
 	m_player->SetInvincible(false);
 
-	// スローモーションにならないようにする。
+	// スローモーション解除（ここを終点にする）
+	Application::Instance().SetFpsScale(1.f);
+	SceneManager::Instance().SetDrawGrayScale(false);
+
+	// ジャスト回避フラグを戻す
 	m_player->SetJustAvoidSuccess(false);
 
+
+	if (auto camera = m_player->GetPlayerCamera().lock(); camera)
+	{
+		if (auto bossEnemy = m_bossEnemy.lock(); bossEnemy)
+		{
+			camera->SetTargetLookAt(m_cameraBossTargetOffset);
+		}
+		else
+		{
+			camera->SetTargetLookAt(m_cameraTargetOffset);
+		}
+	}
 
 	if (auto effect = m_justAvoidAttackEffect.lock(); effect)
 	{
 		effect->SetPlayEffect(false);
-		effect->StopEffect();
 	}
 }

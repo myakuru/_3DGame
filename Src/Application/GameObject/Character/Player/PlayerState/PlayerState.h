@@ -3,7 +3,7 @@
 #include"../PlayerConfig.h"
 #include"../Player.h"
 #include"../../Enemy/Enemy.h"
-
+class BossEnemy;
 class PlayerStateBase : public StateBase
 {
 public:
@@ -35,7 +35,16 @@ protected:
 
 	bool m_LButtonkeyInput = false;
 
+	bool m_EButtonkeyInput = false;
+
 	float m_animeTime = 0.0f;
 	float m_maxAnimeTime = 0.0f;
+
+	std::weak_ptr<BossEnemy> m_bossEnemy;
+
+	Math::Vector3 m_cameraTargetOffset = { 0.0f,1.0f,-2.5f };
+
+	Math::Vector3 m_cameraBossTargetOffset = { 0.0f,1.0f,-5.5f };
+
 
 };

@@ -1,5 +1,6 @@
 ﻿#include "BossEnemyState_WaterAttack_end.h"
 #include"../BossEnemyState_Idle/BossEnemyState_Idle.h"
+#include"../BossEnemyAI.h"
 
 void BossEnemyState_WaterAttack_end::StateStart()
 {
@@ -17,17 +18,17 @@ void BossEnemyState_WaterAttack_end::StateUpdate()
 	// アニメーション再生時間を取得
 	m_animeTime = m_bossEnemy->GetAnimator()->GetPlayProgress();
 
-	// アニメーション時間の35％から100％の間、攻撃判定有効
+	// アニメーション時間の35％から100％の間、攻撃判定有効（必要なら残す）
 	if (m_animeTime >= 0.35f && m_animeTime <= 1.0f)
 	{
 		m_bossEnemy->UpdateAttackCollision(10.0f, 1.0f, 1, 0.3f);
 	}
 
-	// アニメーションが終了したらIdleへ遷移
+	// アニメーションが終了したら必ずIdleへ遷移し、1秒待機
 	if (m_bossEnemy->GetAnimator()->IsAnimationEnd())
 	{
-		auto state = std::make_shared<BossEnemyState_Idle>();
-		m_bossEnemy->ChangeState(state);
+		auto next = std::make_shared<BossEnemyState_Idle>(1.0f);
+		m_bossEnemy->ChangeState(next);
 		return;
 	}
 

@@ -75,6 +75,10 @@
 #include"../GameObject/Field/UpDownField/UpDownField.h"
 #include"../GameObject/Effect/EffekseerEffect/JustAvoidAttackEffect/JustAvoidAttackEffect.h"
 #include"../GameObject/Effect/EffekseerEffect/JustAvoidAttackEffect1/JustAvoidAttackEffect1.h"
+#include"../GameObject/Effect/EffekseerEffect/BossAttack_1stEffect/BossAttack_1stEffect.h"
+#include"../GameObject/Effect/EffekseerEffect/BossEnemyEnterEffect/BossEnemyEnterEffect.h"
+#include"../GameObject/Effect/EffekseerEffect/BossWaterAttackEffect/BossWaterAttackEffect.h"
+#include"../GameObject/Effect/EffekseerEffect/BossWaterFallAttack/BossWaterFallAttack.h"
 
 void SceneManager::Init()
 {
@@ -151,6 +155,10 @@ void SceneManager::Register() const
 	RegisterObject::GetInstance().Register<SpeedAttackEffect>();
 	RegisterObject::GetInstance().Register<JustAvoidAttackEffect>();
 	RegisterObject::GetInstance().Register<JustAvoidAttackEffect1>();
+	RegisterObject::GetInstance().Register<BossAttack_1stEffect>();
+	RegisterObject::GetInstance().Register<BossEnemyEnterEffect>();
+	RegisterObject::GetInstance().Register<BossWaterAttackEffect>();
+	RegisterObject::GetInstance().Register<BossWaterFallAttack>();
 
 	// Fieldのエフェクト系
 	RegisterObject::GetInstance().Register<FieldEffect>();

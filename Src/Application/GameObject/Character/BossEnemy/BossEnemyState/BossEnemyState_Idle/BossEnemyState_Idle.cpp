@@ -1,41 +1,32 @@
 ﻿#include "BossEnemyState_Idle.h"
 #include"../../../Player/Player.h"
 #include"../BossEnemyState_Run/BossEnemyState_Run.h"
+#include"../BossEnemyAI.h"
 
 void BossEnemyState_Idle::StateStart()
 {
 	auto anime = m_bossEnemy->GetAnimeModel()->GetAnimation("Idle");
 	m_bossEnemy->GetAnimator()->SetAnimation(anime, 0.25f, true);
 	BossEnemyStateBase::StateStart();
-	// アニメーション速度を変更
 	m_bossEnemy->SetAnimeSpeed(60.0f);
+
+	m_bossEnemy->SetLastAction(BossEnemy::ActionType::Idle);
 }
 
 void BossEnemyState_Idle::StateUpdate()
 {
-	float deltaTime = Application::Instance().GetDeltaTime();
-
+	const float deltaTime = Application::Instance().GetDeltaTime();
 	m_time += deltaTime;
 
-	// 移動量リセット
+	// 停止
 	m_bossEnemy->SetIsMoving(Math::Vector3::Zero);
 
-	auto player = m_bossEnemy->GetPlayerWeakPtr();
-	Math::Vector3 playerPos = player.lock()->GetPos();
-	Math::Vector3 enemyPos = m_bossEnemy->GetPos();
+	// 最低待機時間まではそのまま
+	if (m_time < m_minWaitSec) return;
 
-	// 距離計算
-	m_distance = (playerPos - enemyPos).Length();
-
-	if (m_distance < 20.0f)
-	{
-		if (m_time <= 3.0f) return;
-
-		// 近ければ追いかける
-		auto chaseState = std::make_shared<BossEnemyState_Run>();
-		m_bossEnemy->ChangeState(chaseState);
-		return;
-	}
+	// 待機後はAIに委譲
+	auto next = BossEnemyAI::DecideNext(m_bossEnemy);
+	m_bossEnemy->ChangeState(next);
 }
 
 void BossEnemyState_Idle::StateEnd()

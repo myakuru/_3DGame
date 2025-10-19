@@ -81,8 +81,6 @@ void Player::PreUpdate()
 
 void Player::PostUpdate()
 {
-	CharaBase::PostUpdate();
-
 	// 残像処理
 	CaptureAfterImage();
 
@@ -244,7 +242,7 @@ void Player::Update()
 
 
 	// 垂直
-	m_position.y += m_gravity;
+	ApplyVerticalMove(m_gravity);
 
 	Math::Matrix scale = Math::Matrix::CreateScale(m_scale);
 	Math::Matrix quaternion = Math::Matrix::CreateFromQuaternion(m_rotation);
@@ -522,74 +520,54 @@ void Player::DrawAfterImages()
 	}
 }
 
-void Player::ApplyHorizontalMove(const Math::Vector3& inputMove, float deltaTime)
+void Player::ApplyHorizontalMove(const Math::Vector3& inputMove, float deltaTime) // 水平移動をスイープ判定で安全に適用する
 {
-	if (inputMove == Math::Vector3::Zero) return;
+	if (inputMove == Math::Vector3::Zero) return; // 入力がゼロなら処理不要
 
-	// ワールドに既にカメラ回転等を反映済み前提で呼ぶならそのまま
-	Math::Vector3 desired = inputMove * m_moveSpeed * m_fixedFrameRate * deltaTime;
-	float desiredLen = desired.Length();
-	if (desiredLen <= FLT_EPSILON) return;
+	Math::Vector3 desired = inputMove * m_moveSpeed * m_fixedFrameRate * deltaTime; // 入力×速度×固定FPS×Δtで希望移動量を算出
+	float desiredLen = desired.Length(); // 希望移動量の長さ（移動距離）
+	if (desiredLen <= FLT_EPSILON) return; // ほぼゼロ距離なら終了
 
-	Math::Vector3 dir = desired / desiredLen;
+	Math::Vector3 dir = desired / desiredLen; // 進行方向の正規化ベクトル
 
-	// レイ(スイープ)を組む
-	KdCollider::RayInfo ray;
-	ray.m_pos = m_prevPosition + Math::Vector3(0.0f, kBumpSphereYOffset, 0.0f);
-	ray.m_dir = dir;
-	ray.m_range = desiredLen + kBumpSphereRadius; // 半径分も伸ばす
-	ray.m_type = KdCollider::TypeBump;
+	KdCollider::RayInfo ray; // スイープ用のレイ情報（実質カプセル/球の移動をレイで近似）
+	ray.m_pos = m_prevPosition + Math::Vector3(0.0f, kBumpSphereYOffset, 0.0f); // 前フレーム位置＋バンプ球のYオフセット
+	ray.m_dir = dir; // レイの方向＝移動方向
+	ray.m_range = desiredLen + kBumpSphereRadius; // 到達距離＋球半径分までスイープ
+	ray.m_type = KdCollider::TypeBump; // 壁・障害物との衝突タイプ
 
-	// デバック
-	m_pDebugWire->AddDebugLine(ray.m_pos, ray.m_dir, ray.m_range, kRedColor);
+	m_pDebugWire->AddDebugLine(ray.m_pos, ray.m_dir, ray.m_range, kRedColor); // デバッグ表示：スイープ可視化
 
-	std::list<KdCollider::CollisionResult> rayHits;
-
-	SceneManager::Instance().GetObjectWeakPtrList(m_collisionList);
-
-	for(auto & weakCol : m_collisionList)
+	std::list<KdCollider::CollisionResult> rayHits; // スイープで当たった結果の蓄積先
+	SceneManager::Instance().GetObjectWeakPtrList(m_collisionList); // 衝突対象リストを取得
+	for (auto& weakCol : m_collisionList) // 各コライダへ問い合わせ
 	{
-		if (auto col = weakCol.lock(); col)
+		if (auto col = weakCol.lock()) { col->Intersects(ray, &rayHits); } // レイと交差判定し、当たりを収集
+	}
+
+	bool blocked = false; // 進行が阻害されるかどうか
+	float bestOverlap = 0.0f; // 最も大きいオーバーラップ量（＝最も手前の衝突基準に利用）
+	Math::Vector3 hitPos{}; // 採用した衝突点
+	for (auto& h : rayHits) // 全ヒットから最大オーバーラップのものを選ぶ
+	{
+		if (bestOverlap < h.m_overlapDistance) // より手前（重なりが大きい）を優先
 		{
-			col->Intersects(ray, &rayHits);
+			bestOverlap = h.m_overlapDistance; // 採用更新
+			hitPos = h.m_hitPos; // 衝突点を記録
+			blocked = true; // 何かにぶつかった
 		}
 	}
 
-	bool blocked = false;
-	float bestOverlap = 0.0f;
-	Math::Vector3 hitPos{};
-	for (auto& h : rayHits)
+	if (blocked) // ぶつかった場合は到達可能距離までに制限
 	{
-		if (bestOverlap < h.m_overlapDistance)
-		{
-			bestOverlap = h.m_overlapDistance;
-			hitPos = h.m_hitPos;
-			blocked = true;
-		}
+		float hitDist = (hitPos - ray.m_pos).Length(); // レイ開始から衝突点までの距離
+		float allow = std::max(0.0f, hitDist - kBumpSphereRadius - kCollisionMargin); // 球半径とマージンを引いた許容移動距離
+		// 入力は殺さず、適用する変位だけクランプ
+		m_position = m_prevPosition + dir * allow; // 前位置＋許容分だけ進める
 	}
-
-	if (blocked)
+	else // ぶつからないなら希望通り進める
 	{
-		// 衝突点までの実距離
-		float hitDist = (hitPos - ray.m_pos).Length();
-
-		// 衝突点手前(球が触れる直前)までの許可距離
-		float allow = std::max(0.0f, hitDist - kBumpSphereRadius - kCollisionMargin);
-
-		// 位置をクランプ
-		m_position = m_prevPosition + dir * allow;
-
-		// これ以上進ませないため入力移動を殺す
-		// (スライドさせたいなら法線成分だけゼロにして再計算する)
-		// 今回は「絶対に止まる」要求なので全停止。
-		// ※ m_movement が他で再利用されるならここでゼロ化
-		m_movement = Math::Vector3::Zero;
-
-	}
-	else
-	{
-		// 衝突なし そのまま移動
-		m_position = m_prevPosition + desired;
+		m_position = m_prevPosition + desired; // 前位置＋希望移動量
 	}
 }
 
@@ -647,5 +625,65 @@ void Player::ApplyPushWithCollision(const Math::Vector3& rawPush)
 	else
 	{
 		m_position += push;
+	}
+}
+
+void Player::ApplyVerticalMove(float deltaY) // 垂直移動をスイープ判定で安全に適用する
+{
+	if (std::abs(deltaY) <= FLT_EPSILON) return; // 垂直移動量がほぼゼロなら処理不要
+
+	Math::Vector3 start = m_position; // スイープ開始位置の基準を作成
+	start.y = m_prevPosition.y; // 垂直は前フレームのYから開始（水平移動分の変化を除外）
+
+	// 両タイプ（地形/壁）を検出するスイープ関数
+	auto sweep = [&](KdCollider::Type type, std::list<KdCollider::CollisionResult>& out)
+		{
+			KdCollider::RayInfo ray; // 垂直方向のスイープレイ
+			ray.m_pos = start + Math::Vector3(0.0f, kBumpSphereYOffset, 0.0f); // バンプ球の中心高に合わせて開始位置を補正
+			ray.m_dir = (deltaY < 0.0f) ? Math::Vector3(0.0f, -1.0f, 0.0f) : Math::Vector3(0.0f, 1.0f, 0.0f); // 下向き/上向き
+			ray.m_range = std::abs(deltaY) + kBumpSphereRadius; // 到達距離＋球半径までスイープ
+			ray.m_type = type; // 検出したいコリジョンタイプ（地形/壁）
+			m_pDebugWire->AddDebugLine(ray.m_pos, ray.m_dir, ray.m_range, kRedColor); // デバッグ可視化
+
+			SceneManager::Instance().GetObjectWeakPtrList(m_collisionList); // 衝突候補の取得
+			for (auto& weakCol : m_collisionList) // 各コライダに問い合わせ
+			{
+				if (auto col = weakCol.lock()) // 実体化に成功したら
+				{
+					col->Intersects(ray, &out); // レイと交差判定し、結果を蓄積
+				}
+			}
+		};
+
+	std::list<KdCollider::CollisionResult> rayHits; // 全スイープ結果の一時バッファ
+	sweep(KdCollider::TypeGround, rayHits); // 床/天井（TypeGround）を検出
+	sweep(KdCollider::TypeBump, rayHits); // 天井や壁（TypeBump）も検出
+
+	bool blocked = false; // 進行が阻害されたか
+	float bestOverlap = 0.0f; // 最大オーバーラップ量
+	Math::Vector3 hitPos{}; // 衝突点
+	for (auto& h : rayHits) // すべてのヒットから最も重なりの大きいものを採用
+	{
+		if (bestOverlap < h.m_overlapDistance) // より手前の衝突（重なり大）を優先
+		{
+			bestOverlap = h.m_overlapDistance; // 更新
+			hitPos = h.m_hitPos; // 衝突点を保存
+			blocked = true; // 何かに当たった
+		}
+	}
+
+	if (blocked) // 当たった場合は許容移動量に制限
+	{
+		float hitDist = (hitPos - (start + Math::Vector3(0.0f, kBumpSphereYOffset, 0.0f))).Length(); // スイープ開始から衝突点までの距離
+		float allow = std::max(0.0f, hitDist - kBumpSphereRadius - kCollisionMargin); // 球半径と安全マージンを差し引いた許容距離
+
+		float dirSign = (deltaY < 0.0f) ? -1.0f : 1.0f; // 下移動は負、上移動は正
+		m_position.y = m_prevPosition.y + dirSign * allow; // 前フレームYから許容分だけ動かす
+
+		m_gravity = 0.0f; // 衝突したので重力速度をリセット（床/天井で停止）
+	}
+	else // 当たらないなら希望通り移動
+	{
+		m_position.y = m_prevPosition.y + deltaY; // 前フレームYに移動量を加算
 	}
 }

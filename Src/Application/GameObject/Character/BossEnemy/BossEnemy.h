@@ -13,6 +13,9 @@ public:
 	BossEnemy() { m_typeID = TypeID; }
 	~BossEnemy() override = default;
 
+	// 追加: 行動種別
+	enum class ActionType { None, Idle, Run, AttackL, AttackR, Water, WaterFall };
+
 	void Init() override;
 	void Update() override;
 	void DrawLit() override;
@@ -31,9 +34,11 @@ public:
 		return m_wpPlayer;
 	}
 
-	// 攻撃の当たり判定(攻撃半径、攻撃距離、攻撃回数、攻撃間隔)
+	// 攻撃の当たり判定(攻撃半径、攻撃距離、攻撃回数、攻撃間隔、当たり判定の開始秒、終了秒)
+	// 開始 > 終了なら入れ替え（クランプはしない）
 	void UpdateAttackCollision(float _radius = 1.f, float _distance = 1.1f,
-		int _attackCount = 5, float _attackTimer = 0.3f);
+		int _attackCount = 5, float _attackTimer = 0.3f,
+		float _activeBeginSec = 0.0f, float _activeEndSec = 3.0f);
 
 	// ダメージを受ける
 	void Damage(int _damage);
@@ -65,13 +70,12 @@ public:
 
 	struct BossEnemyStatus
 	{
-		int hp = 10000;				// 体力
+		int hp = 1000000;				// 体力
 		int attack = 10;			// 攻撃力
-		int maxHp = 10000;			// 最大体力
+		int maxHp = 1000000;			// 最大体力
 	};
 
 	const BossEnemyStatus& GetStatus() { return m_status; }
-
 
 	// 回避成功フラグの取得
 	bool GetJustAvoidSuccess() const { return m_justAvoidSuccess; }
@@ -99,6 +103,26 @@ public:
 	// ステート切り替えフラグの取得
 	void SetStateChange(bool flag) { m_stateChange = flag; }
 
+	// 追加: 行動コンテキストAPI
+	void SetLastAction(ActionType t) { m_lastAction = t; }
+	ActionType GetLastAction() const { return m_lastAction; }
+
+	void SetMeleeCooldown(float sec) { m_meleeCooldown = std::max(m_meleeCooldown, sec); }
+	float GetMeleeCooldown() const { return m_meleeCooldown; }
+
+	void SetWaterCooldown(float sec) { m_waterCooldown = std::max(m_waterCooldown, sec); }
+	float GetWaterCooldown() const { return m_waterCooldown; }
+
+	void SetWaterFallCooldown(float sec) { m_waterFallCooldown = std::max(m_waterFallCooldown, sec); }
+	float GetWaterFallCooldown() const { return m_waterFallCooldown; }
+
+	void TickCooldowns(float dt)
+	{
+		m_meleeCooldown = std::max(0.0f, m_meleeCooldown - dt);
+		m_waterCooldown = std::max(0.0f, m_waterCooldown - dt);
+		m_waterFallCooldown = std::max(0.0f, m_waterFallCooldown - dt);
+	}
+
 private:
 
 	std::weak_ptr<Player> m_wpPlayer;
@@ -111,7 +135,6 @@ private:
 
 	float m_attackRadius = 1.5f;		// 攻撃判定の半径
 	float m_attackFrame = 0.0f;			// 攻撃判定フレーム
-
 
 	std::list<std::weak_ptr<EnemySword>> m_enemySwords; // 敵の剣
 	std::list<std::weak_ptr<EnemyShield>> m_enemyShields; // 敵の盾
@@ -135,4 +158,15 @@ private:
 
 	// ステート切り替えフラグ
 	bool m_stateChange = false;
+
+	// 追加: 行動コンテキスト
+	ActionType m_lastAction = ActionType::None;
+	float m_meleeCooldown = 0.0f;
+	float m_waterCooldown = 0.0f;
+	float m_waterFallCooldown = 0.0f;
+
+	// 攻撃の有効時間ウィンドウ（クランプなし）
+	float m_attackActiveTime = 0.0f;	// 攻撃開始からの経過時間
+	float m_attackActiveBegin = 0.0f;	// 当たり判定が有効になる開始秒
+	float m_attackActiveEnd = 3.0f;		// 当たり判定が無効化される終了秒
 };

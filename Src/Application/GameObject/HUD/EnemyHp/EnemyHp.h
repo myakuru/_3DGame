@@ -13,11 +13,13 @@ public:
 	EnemyHp() = default;
 	~EnemyHp() override = default;
 
+private:
+
 	void Init() override;
 	void Update() override;
 	void DrawSprite() override;
+	void ImGuiInspector() override;
 
-private:
 	std::weak_ptr<PlayerCamera> m_camera;
 
 	// 複数敵のスクリーン座標を保持
@@ -31,7 +33,7 @@ private:
 
 	std::list<std::weak_ptr<Enemy>> m_enemies;
 
-	Math::Rectangle m_srcRect = { 0,0,1500,300 };
+	Math::Rectangle m_srcRect = { 0,0,1600,300 };
 
 	int   m_displayTime = 0;
 	float m_timer = 0.0f;
@@ -51,6 +53,8 @@ private:
 	// 追加: 補間係数（減少時/回復時）
 	float m_dropLerp = 0.20f;  // 小さめ=ゆっくり減る
 	float m_healLerp = 0.50f;  // 大きめ=やや早く戻る
+
+	Math::Vector3 m_blackBarPos = Math::Vector3::Zero;
 
 
 };

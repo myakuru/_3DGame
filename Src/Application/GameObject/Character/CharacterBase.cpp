@@ -106,7 +106,7 @@ void CharaBase::PostUpdate()
 	rayInfo.m_dir = { 0.0f,-1.0f,0.0f };
 
 	// レイの長さを設定
-	rayInfo.m_range = enableStepHigh + m_gravity;
+	rayInfo.m_range = enableStepHigh + std::fabs(m_gravity);
 
 	// アタリ判定したいタイプを設定
 	rayInfo.m_type = KdCollider::TypeGround;
@@ -147,15 +147,8 @@ void CharaBase::PostUpdate()
 	// 当たっていたら
 	if (hit)
 	{
-		m_gravity = 0.0f;	// 重力をリセット
-		m_position = groundPos;
-		m_gravitySpeed = 0.0f; // 落下速度をリセット
-	}
-	else
-	{
-		// 当たっていなかったら
-		// 落下速度を加速させる
-		m_gravitySpeed -= 0.005f;
+		m_gravity = 0.0f;
+		m_position.y = groundPos.y;
 	}
 
 	//=====================================================
@@ -181,7 +174,7 @@ void CharaBase::PostUpdate()
 	{
 		if (auto collisionObj = collision.lock(); collisionObj)
 		{
-			collisionObj->Intersects(rayInfo, &retRayList);
+			collisionObj->Intersects(sphereInfo, &retSpherelist);
 		}
 	}
 

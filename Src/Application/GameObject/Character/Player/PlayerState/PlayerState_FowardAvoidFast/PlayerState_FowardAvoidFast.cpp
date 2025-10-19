@@ -3,6 +3,14 @@
 #include"../PlayerState_RunEnd/PlayerState_RunEnd.h"
 #include"../PlayerState_AvoidAttack/PlayerState_AvoidAttack.h"
 
+#include"../PlayerState_JustAvoidAttack/PlayerState_JustAvoidAttack.h"
+#include"../../../../Camera/PlayerCamera/PlayerCamera.h"
+#include"../../../Enemy/Enemy.h"
+#include"../../../BossEnemy/BossEnemy.h"
+
+#include"../PlayerState_Skill/PlayerState_Skill.h"
+#include"../../../../../Scene/SceneManager.h"
+
 void PlayerState_FowardAvoidFast::StateStart()
 {
 	auto anime = m_player->GetAnimeModel()->GetAnimation("AvoidForward");
@@ -17,22 +25,97 @@ void PlayerState_FowardAvoidFast::StateStart()
 
 	// 敵との当たり判定を無効化
 	m_player->SetAtkPlayer(true);
+
+	m_afterImagePlayed = false;
+	m_justAvoided = false;
 }
 
 void PlayerState_FowardAvoidFast::StateUpdate()
 {
+		// 途中で敵のジャスト回避成功フラグが立ったら残像発生
+	if (!m_afterImagePlayed)
+	{
+		for (const auto& wk : m_player->GetEnemyLike())
+		{
+			if (auto obj = wk.lock())
+			{
+				bool just = false;
+
+				if (obj->GetTypeID() == Enemy::TypeID)
+				{
+					auto e = std::static_pointer_cast<Enemy>(obj);
+					just = e->GetJustAvoidSuccess();
+					if (just) e->SetJustAvoidSuccess(false); // 消費
+				}
+				else if (obj->GetTypeID() == BossEnemy::TypeID)
+				{
+					auto b = std::static_pointer_cast<BossEnemy>(obj);
+					just = b->GetJustAvoidSuccess();
+					if (just) b->SetJustAvoidSuccess(false); // 消費
+				}
+
+				if (just)
+				{
+					// ジャスト回避成功時の残像エフェクト
+					m_player->AddAfterImage(true, 5, 1.0f, Math::Color(0.0f, 1.0f, 1.0f, 0.5f), 0.7f);
+
+					m_justAvoided = true;
+					m_afterImagePlayed = true;
+					m_player->SetJustAvoidSuccess(true);
+
+					// 保険：ここでも演出をON（更新順の揺れ対策）
+					{
+						const auto& justCfg = m_player->GetPlayerConfig().GetJustAvoidParam();
+						Application::Instance().SetFpsScale(justCfg.m_slowMoScale);
+						SceneManager::Instance().SetDrawGrayScale(justCfg.m_useGrayScale);
+					}
+					break; // 多重発火防止
+				}
+			}
+		}
+	}
+
+	// 前方ベクトルを取得
 	Math::Vector3 forward = Math::Vector3::TransformNormal(Math::Vector3::Forward, Math::Matrix::CreateFromQuaternion(m_player->GetRotationQuaternion()));
 	forward.Normalize();
 
-	if (KeyboardManager::GetInstance().IsKeyJustPressed(VK_LBUTTON))
+	if (m_justAvoided)
 	{
-		auto state = std::make_shared<PlayerState_AvoidAttack>();
-		m_player->ChangeState(state);
-		return;
+		if (KeyboardManager::GetInstance().IsKeyJustPressed(VK_LBUTTON))
+		{
+			m_justAvoided = false;
+			auto state = std::make_shared<PlayerState_JustAvoidAttack>();
+			m_player->ChangeState(state);
+			return;
+		}
+	}
+	else
+	{
+		// 回避中に攻撃ボタンが押されたら回避攻撃へ移行
+		if (KeyboardManager::GetInstance().IsKeyJustPressed(VK_LBUTTON))
+		{
+			m_justAvoided = false;
+			auto state = std::make_shared<PlayerState_AvoidAttack>();
+			m_player->ChangeState(state);
+			return;
+		}
+
+		if (KeyboardManager::GetInstance().IsKeyJustPressed('E'))
+		{
+			auto state = std::make_shared<PlayerState_Skill>();
+			m_player->ChangeState(state);
+			return;
+		}
 	}
 
+	// アニメーションが終了したらIdleへ移行
 	if (m_player->GetAnimator()->IsAnimationEnd())
 	{
+		// スローモーション解除（ここを終点にする）
+		Application::Instance().SetFpsScale(1.f);
+		SceneManager::Instance().SetDrawGrayScale(false);
+		m_justAvoided = false;
+
 		auto idleState = std::make_shared<PlayerState_RunEnd>();
 		m_player->ChangeState(idleState);
 		return;
