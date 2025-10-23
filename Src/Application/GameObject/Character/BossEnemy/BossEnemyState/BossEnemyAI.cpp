@@ -8,6 +8,7 @@
 #include "../BossEnemyState/BossEnemyState_Attack_R/BossEnemyState_Attack_R.h"
 #include "../BossEnemyState/BossEnemyState_WaterAttack/BossEnemyState_WaterAttack.h"
 #include"../BossEnemyState/BossEnemyState_WaterFall/BossEnemyState_WaterFall.h"
+#include"../BossEnemyState/BossEnemyState_Dodge/BossEnemyState_Dodge.h"
 #include"../../Player/Player.h"
 
 #include "../../../../main.h"
@@ -36,6 +37,14 @@ std::shared_ptr<BossEnemyStateBase> BossEnemyAI::DecideNext(BossEnemy* boss)
 	// しきい値
 	const float kMeleeRange = 4.0f;   // 近接可能距離(4mに拡張)
 	const float kChaseRange = 20.0f;  // 追尾へ切替距離
+
+	// 特殊条件: 体力半分以下でDodge優先
+	//if (boss->GetStatus().hp <= boss->GetStatus().maxHp / 2)
+	//{
+	//	// 絶対にDodgeする
+	//	boss->SetLastAction(BossEnemy::ActionType::Dodge);
+	//	return std::make_shared<BossEnemyState_Dodge>();
+	//}
 
 	// ジャスト回避に対するカウンター（CD中以外）
 	if (boss->GetJustAvoidSuccess() && boss->GetWaterCooldown() <= 0.0f)

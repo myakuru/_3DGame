@@ -1,4 +1,5 @@
 ﻿#include"../../Application/main.h"
+#include "KdEffekseerManager.h"
 
 
 void KdEffekseerManager::Create(int w, int h)
@@ -178,6 +179,12 @@ void KdEffekseerManager::SetPause(const int handle, const bool isPause)
 	m_efkManager->SetPaused(handle, isPause);
 }
 
+void KdEffekseerManager::SetColor(const int handle, const Math::Vector4& color)
+{
+	m_efkManager->SetAllColor(handle,
+		Effekseer::Color(color.x * 255.0f, color.y * 255.0f, color.z * 255.0f, color.w * 255.0f));
+}
+
 const bool KdEffekseerManager::IsPlaying(const int handle) const
 {
 	return (m_efkManager->GetInstanceCount(handle) != 0);
@@ -236,6 +243,9 @@ std::weak_ptr<KdEffekseerObject> KdEffekseerManager::Play(const PlayEfkInfo& inf
 		Math::Vector3 rotate = ConvertToRadian(info.Rotate);
 		m_efkManager->SetRotation(handle, rotate.x, rotate.y, rotate.z);
 	}
+
+	// エフェクトオブジェクト情報設定
+	spEfkObject->SetColor(info.Color);
 	spEfkObject->SetParentManager(m_efkManager);
 	spEfkObject->SetHandle(handle);
 	spEfkObject->SetPlayEfkInfo(info);
@@ -363,4 +373,9 @@ void KdEffekseerObject::SetSpeed(const float speed)
 void KdEffekseerObject::SetWorldMatrix(const Math::Matrix& mWorld)
 {
 	KdEffekseerManager::GetInstance().SetWorldMatrix(m_handle, mWorld);
+}
+
+void KdEffekseerObject::SetColor(const Math::Vector4& color)
+{
+	KdEffekseerManager::GetInstance().SetColor(m_handle, color);
 }

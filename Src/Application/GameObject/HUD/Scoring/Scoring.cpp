@@ -1,6 +1,8 @@
 ﻿#include "Scoring.h"
 #include"../../Utility/Time.h"
 #include"../../../Scene/SceneManager.h"
+#include"../../../main.h"
+#include"../../../../Framework/Json/Json.h"
 
 const uint32_t Scoring::TypeID = KdGameObject::GenerateTypeID();
 
@@ -14,6 +16,8 @@ void Scoring::Update()
 {
 	// 残り秒数を取得
 	float timeLeft = Time::Instance().GetCountdownTimeLeft();
+
+	float delataTime = Application::Instance().GetUnscaledDeltaTime();
 
 	m_displayTime = static_cast<int>(timeLeft);
 
@@ -39,6 +43,12 @@ void Scoring::Update()
 	{
 		SceneManager::Instance().SetScore(3); //X
 	}
+
+	if (SceneManager::Instance().IsBossAppear())
+	{
+		if (m_position.y > m_dawnPos.y) m_position.y -= m_dawnTimer * delataTime;
+	}
+
 }
 
 void Scoring::DrawSprite()
@@ -69,4 +79,26 @@ void Scoring::DrawSprite()
 		);
 	}
 	KdShaderManager::Instance().m_spriteShader.SetMatrix(Math::Matrix::Identity);
+}
+
+void Scoring::ImGuiInspector()
+{
+	SelectDraw2DTexture::ImGuiInspector();
+
+	ImGui::DragFloat("Dawn Timer", &m_dawnTimer);
+	ImGui::DragFloat3("Dawn Position", &m_dawnPos.x);
+}
+
+void Scoring::JsonSave(nlohmann::json& _json) const
+{
+	SelectDraw2DTexture::JsonSave(_json);
+	_json["DawnTimer"] = m_dawnTimer;
+	_json["DawnPos"] = JSON_MANAGER.VectorToJson(m_dawnPos);
+}
+
+void Scoring::JsonInput(const nlohmann::json& _json)
+{
+	SelectDraw2DTexture::JsonInput(_json);
+	if (_json.contains("DawnTimer")) m_dawnTimer = _json["DawnTimer"].get<float>();
+	if (_json.contains("DawnPos")) m_dawnPos = JSON_MANAGER.JsonToVector(_json["DawnPos"]);
 }

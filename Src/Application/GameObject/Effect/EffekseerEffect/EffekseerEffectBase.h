@@ -59,4 +59,6 @@ protected:
 	float m_distance = 0.0f;
 	float m_effectSpeed = 0.0f;
 
+	Math::Color m_effectColor = Math::Color{ 1,1,1,1 };
+
 };

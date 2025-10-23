@@ -13,6 +13,16 @@ private:
 	void Update() override;
 	void DrawSprite() override;
 
+	void ImGuiInspector() override;
+	void JsonSave(nlohmann::json& _json) const override;
+	void JsonInput(const nlohmann::json& _json) override;
+
+	int m_displayTime = 0;
+	bool m_isIncreasing = false;
+
+	float m_dawnTimer = 0.0f;
+	Math::Vector3 m_dawnPos = Math::Vector3::Zero;
+
 	float m_time = 0;		// -1.0f ~ 1.0fをとる値
 	float m_alpha = 0;
 

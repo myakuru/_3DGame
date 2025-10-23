@@ -85,8 +85,8 @@ void PlayerState_ChargeAttack1::StateUpdate()
 		// =========================
 		// 左ボタン押下 長押し / 短押し判定
 		// =========================
-		const float kShortPressThreshold = 0.5f; // 短押し閾値
-		const float kLongPressThreshold = 1.0f; // 長押し閾値
+		const float kShortPressThreshold = 0.2f; // 短押し閾値
+		const float kLongPressThreshold = 0.1; // 長押し閾値
 
 		// ステート突入前から既に押されていたケースも拾う
 		if (!m_isKeyPressing && duration > 0.0f)
@@ -99,9 +99,10 @@ void PlayerState_ChargeAttack1::StateUpdate()
 		{
 			m_isKeyPressing = false;
 			{
+				if (m_player->GetPlayerStatus().chargeCount > 0) m_player->GetPlayerStatus().chargeCount--;
+
 				auto next = std::make_shared<PlayerState_ChargeAttackMax>();
 				m_player->ChangeState(next);
-				if (m_player->GetPlayerStatus().chargeCount > 0) m_player->GetPlayerStatus().chargeCount--;
 				return;
 			}
 		}

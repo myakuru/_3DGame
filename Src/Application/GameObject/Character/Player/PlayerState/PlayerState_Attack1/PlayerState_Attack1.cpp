@@ -16,6 +16,7 @@
 #include"../PlayerState_FowardAvoid/PlayerState_FowardAvoid.h"
 
 #include"../PlayerState_Skill/PlayerState_Skill.h"
+#include"../PlayerState_SpecialAttackCutIn/PlayerState_SpecialAttackCutIn.h"
 
 void PlayerState_Attack1::StateStart()
 {
@@ -48,11 +49,6 @@ void PlayerState_Attack1::StateStart()
 	m_player->SetAnimeSpeed(70.0f);
 
 	KdAudioManager::Instance().Play("Asset/Sound/Player/Attack1.wav", false)->SetVolume(0.5f);
-
-	if (m_player->GetPlayerStatus().skillPoint <= m_player->GetPlayerStatus().skillPointMax)
-	{
-		m_player->GetPlayerStatus().skillPoint += 2;
-	}
 }
 
 void PlayerState_Attack1::StateUpdate()
@@ -102,6 +98,17 @@ void PlayerState_Attack1::StateUpdate()
 	if (KeyboardManager::GetInstance().IsKeyJustPressed(VK_LBUTTON))
 	{
 		m_LButtonkeyInput = true;
+	}
+
+	if (KeyboardManager::GetInstance().IsKeyJustPressed('Q'))
+	{
+		if (m_player->GetPlayerStatus().specialPoint == m_player->GetPlayerStatus().specialPointMax)
+		{
+			m_player->GetPlayerStatus().specialPoint = 0;
+			auto specialAttackState = std::make_shared<PlayerState_SpecialAttackCutIn>();
+			m_player->ChangeState(specialAttackState);
+			return;
+		}
 	}
 
 	// Eキー先行入力の予約

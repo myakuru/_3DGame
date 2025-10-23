@@ -7,19 +7,19 @@
 
 void PlayerState_SpecialAttackCutIn::StateStart()
 {
-	auto anime = m_player->GetAnimeModel()->GetAnimation("ChargeAttack0");
+	auto anime = m_player->GetAnimeModel()->GetAnimation("CutIn");
 	m_player->GetAnimator()->SetAnimation(anime, 0.25f, false);
-	
-
 
 	PlayerStateBase::StateStart();
 
-	m_player->SetAnimeSpeed(20.0f);
+	m_player->SetAnimeSpeed(60.0f);
 
 	// カメラの位置を変更
 	if (auto camera = m_player->GetPlayerCamera().lock(); camera)
 	{
-		camera->SetTargetLookAt({ 0.f,0.5f,-0.5f });
+		camera->SetTargetLookAt({ 0.0f,0.6f,-1.7f });
+		camera->SetRotationSmooth(5.0f);
+		camera->SetDistanceSmooth(5.0f);
 	}
 
 	// 左手に刀をセットする
@@ -28,12 +28,28 @@ void PlayerState_SpecialAttackCutIn::StateStart()
 		katana->SetNowAttackState(true);
 	}
 
+	// 無敵状態にする
+	m_player->SetInvincible(true);
+
 	m_time = 0.0f;
 
 }
 
 void PlayerState_SpecialAttackCutIn::StateUpdate()
 {
+	// アニメーション時間のデバッグ表示
+	{
+		m_animeTime = m_player->GetAnimator()->GetPlayProgress();
+
+		m_maxAnimeTime = m_player->GetAnimator()->GetMaxAnimationTime();
+
+		if (m_animeTime > m_maxAnimeTime)
+		{
+			KdDebugGUI::Instance().AddLog(U8("Attackアニメ時間: %f"), m_animeTime);
+			KdDebugGUI::Instance().AddLog("\n");
+		}
+	}
+
 	Math::Vector3 moveDir = m_player->GetMovement();
 
 	// 攻撃中の移動方向で回転を更新
@@ -53,11 +69,18 @@ void PlayerState_SpecialAttackCutIn::StateUpdate()
 			moveDir.Normalize();
 			const float yawRad = std::atan2(-moveDir.x, -moveDir.z);
 			const float yawDeg = DirectX::XMConvertToDegrees(yawRad);
-			camera->SetTargetRotation({ -5.0f, yawDeg + -60.0f , 0.0f });
-			camera->SetRotationSmooth(20.0f);
-			camera->SetDistanceSmooth(2.0f);
+			camera->SetTargetRotation({ 10.0f, yawDeg , 5.0f });
 		}
 	}
+
+	if (m_animeTime >= 0.6)
+	{
+		if (auto camera = m_player->GetPlayerCamera().lock(); camera)
+		{
+			camera->SetTargetLookAt({ 0.0f,1.0f,-0.7f });
+		}
+	}
+
 
 	m_player->SetIsMoving(m_attackDirection * 0.01f);
 
@@ -80,5 +103,8 @@ void PlayerState_SpecialAttackCutIn::StateEnd()
 	{
 		camera->SetTargetLookAt({ 0.f,1.f,-4.0f });
 		camera->SetTargetRotation({ 0.0f,90.0f,0.0f });
+
+		camera->SetRotationSmooth(8.0f);
+		camera->SetDistanceSmooth(8.0f);
 	}
 }

@@ -1,6 +1,9 @@
 ﻿#include "ScaleMoving.h"
 #include"../../Utility/Time.h"
 #include"../../../Scene/SceneManager.h"
+#include"../../../main.h"
+#include"../../../../Framework/Json/Json.h"
+
 const uint32_t ScaleMoving::TypeID = KdGameObject::GenerateTypeID();
 
 
@@ -21,6 +24,13 @@ void ScaleMoving::Update()
 	m_rect.x = static_cast<int>(m_fullWidth) - visibleWidth; // 左へスライド
 	m_rect.width = visibleWidth;
 	// m_rect.y, m_rect.height は固定（丸みを保つために高さは不変）
+
+	float deltaTime = Application::Instance().GetUnscaledDeltaTime();
+
+	if (SceneManager::Instance().IsBossAppear())
+	{
+		if (m_position.y > m_dawnPos.y) m_position.y -= m_dawnTimer * deltaTime;
+	}
 
 	// 行列更新
 	m_mWorld = Math::Matrix::CreateScale(m_scale);
@@ -60,4 +70,25 @@ void ScaleMoving::DrawSprite()
 	);
 
 	KdShaderManager::Instance().m_spriteShader.SetMatrix(Math::Matrix::Identity);
+}
+
+void ScaleMoving::ImGuiInspector()
+{
+	SelectDraw2DTexture::ImGuiInspector();
+	ImGui::DragFloat("Dawn Timer", &m_dawnTimer);
+	ImGui::DragFloat3("Dawn Position", &m_dawnPos.x);
+}
+
+void ScaleMoving::JsonSave(nlohmann::json& _json) const
+{
+	SelectDraw2DTexture::JsonSave(_json);
+	_json["DawnTimer"] = m_dawnTimer;
+	_json["DawnPos"] = JSON_MANAGER.VectorToJson(m_dawnPos);
+}
+
+void ScaleMoving::JsonInput(const nlohmann::json& _json)
+{
+	SelectDraw2DTexture::JsonInput(_json);
+	if (_json.contains("DawnTimer")) m_dawnTimer = _json["DawnTimer"].get<float>();
+	if (_json.contains("DawnPos")) m_dawnPos = JSON_MANAGER.JsonToVector(_json["DawnPos"]);
 }

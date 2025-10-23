@@ -13,9 +13,8 @@ void UpDownField::DrawLit()
 void UpDownField::DrawGrayScale()
 {
 	if (!SceneManager::Instance().GetDrawGrayScale()) return;
-	//KdShaderManager::Instance().ChangeRasterizerState(KdRasterizerState::CullNone);
 
-	KdShaderManager::Instance().m_StandardShader.DrawModel(*m_model, m_mWorld, m_color);
+	SelectDraw3dModel::DrawGrayScale();
 }
 
 void UpDownField::Update()

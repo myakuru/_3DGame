@@ -78,6 +78,15 @@ void ImGuiManager::MainMenuBar()
 		}
 		ImGui::Text(m_showEffect ? "ON" : "OFF");
 
+		// ワイヤーフレームの表示切替
+		ImGui::SameLine(450);
+		ImGui::Button(U8("ワイヤーフレーム表示"));
+		if (ImGui::IsItemClicked())
+		{
+			m_showDebugWireFrame = !m_showDebugWireFrame;
+		}
+		ImGui::Text(m_showDebugWireFrame ? "ON" : "OFF");
+
 		ImGui::SameLine(1280 / 2);
 
 		ImGuiSelecetCamera();

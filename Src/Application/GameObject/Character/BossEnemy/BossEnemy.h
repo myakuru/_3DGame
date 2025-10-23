@@ -14,7 +14,7 @@ public:
 	~BossEnemy() override = default;
 
 	// 追加: 行動種別
-	enum class ActionType { None, Idle, Run, AttackL, AttackR, Water, WaterFall };
+	enum class ActionType { None, Idle, Run, AttackL, AttackR, Water, WaterFall,Dodge };
 
 	void Init() override;
 	void Update() override;
@@ -70,9 +70,9 @@ public:
 
 	struct BossEnemyStatus
 	{
-		int hp = 150000;			// 体力
+		int hp = 100000;			// 体力
 		int attack = 10;			// 攻撃力
-		int maxHp = 150000;			// 最大体力
+		int maxHp = 100000;			// 最大体力
 	};
 
 	const BossEnemyStatus& GetStatus() { return m_status; }

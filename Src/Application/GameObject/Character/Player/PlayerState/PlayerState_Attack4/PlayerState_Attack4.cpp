@@ -15,6 +15,7 @@
 
 #include"../PlayerState_Skill/PlayerState_Skill.h"
 #include"../../../BossEnemy/BossEnemy.h"
+#include"../PlayerState_SpecialAttackCutIn/PlayerState_SpecialAttackCutIn.h"
 
 void PlayerState_Attack4::StateStart()
 {
@@ -44,11 +45,6 @@ void PlayerState_Attack4::StateStart()
 	if (m_player->GetPlayerStatus().chargeCount < 3)
 	{
 		m_player->GetPlayerStatus().chargeCount++;
-	}
-
-	if (m_player->GetPlayerStatus().skillPoint <= m_player->GetPlayerStatus().skillPointMax)
-	{
-		m_player->GetPlayerStatus().skillPoint += 5;
 	}
 
 	KdAudioManager::Instance().Play("Asset/Sound/Player/Attack4.WAV", false)->SetVolume(0.5f);
@@ -111,6 +107,17 @@ void PlayerState_Attack4::StateUpdate()
 		{
 			m_EButtonkeyInput = true;
 			m_player->GetPlayerStatus().skillPoint -= 30;
+		}
+	}
+
+	if (KeyboardManager::GetInstance().IsKeyJustPressed('Q'))
+	{
+		if (m_player->GetPlayerStatus().specialPoint == m_player->GetPlayerStatus().specialPointMax)
+		{
+			m_player->GetPlayerStatus().specialPoint = 0;
+			auto specialAttackState = std::make_shared<PlayerState_SpecialAttackCutIn>();
+			m_player->ChangeState(specialAttackState);
+			return;
 		}
 	}
 

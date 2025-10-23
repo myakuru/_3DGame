@@ -15,6 +15,7 @@
 #include"../PlayerState_FowardAvoid/PlayerState_FowardAvoid.h"
 
 #include"../PlayerState_Skill/PlayerState_Skill.h"
+#include"../PlayerState_SpecialAttackCutIn/PlayerState_SpecialAttackCutIn.h"
 
 void PlayerState_Attack::StateStart()
 {
@@ -42,11 +43,6 @@ void PlayerState_Attack::StateStart()
 	m_player->SetAnimeSpeed(70.0f);
 
 	KdAudioManager::Instance().Play("Asset/Sound/Player/Attack.wav", false)->SetVolume(1.0f);
-
-	if (m_player->GetPlayerStatus().skillPoint <= 100)
-	{
-		m_player->GetPlayerStatus().skillPoint++;
-	}
 }
 
 void PlayerState_Attack::StateUpdate()
@@ -105,6 +101,17 @@ void PlayerState_Attack::StateUpdate()
 		m_LButtonkeyInput = true;
 	}
 
+	if (KeyboardManager::GetInstance().IsKeyJustPressed('Q'))
+	{
+		if (m_player->GetPlayerStatus().specialPoint == m_player->GetPlayerStatus().specialPointMax)
+		{
+			m_player->GetPlayerStatus().specialPoint = 0;
+			auto specialAttackState = std::make_shared<PlayerState_SpecialAttackCutIn>();
+			m_player->ChangeState(specialAttackState);
+			return;
+		}
+	}
+
 	// Eキー先行入力の予約
 	if (KeyboardManager::GetInstance().IsKeyJustPressed('E'))
 	{
@@ -146,7 +153,7 @@ void PlayerState_Attack::StateUpdate()
 			// 70%以降で受付
 			if (m_animeTime < 0.7f) return;
 
-			const float kLongPressThreshold = 0.5f; // 長押し閾値
+			const float kLongPressThreshold = 0.1f; // 長押し閾値
 			const bool isPressed = KeyboardManager::GetInstance().IsKeyPressed(VK_LBUTTON);
 			const bool isJustPressed = KeyboardManager::GetInstance().IsKeyJustPressed(VK_LBUTTON);
 			const float lDuration = isPressed ? KeyboardManager::GetInstance().GetKeyPressDuration(VK_LBUTTON) : 0.0f;

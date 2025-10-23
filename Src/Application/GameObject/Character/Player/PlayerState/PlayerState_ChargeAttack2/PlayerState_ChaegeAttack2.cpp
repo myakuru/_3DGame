@@ -17,9 +17,6 @@ void PlayerState_ChaegeAttack2::StateStart()
 	m_player->GetAnimator()->SetAnimation(anime, 0.25f, false);
 	PlayerStateBase::StateStart();
 
-	SceneManager::Instance().GetObjectWeakPtr(m_effect);
-	SceneManager::Instance().GetObjectWeakPtr(m_smokeEffect);
-	SceneManager::Instance().GetObjectWeakPtr(m_shineEffect);
 
 	// 当たり判定リセット
 	m_player->ResetAttackCollision();
@@ -27,6 +24,9 @@ void PlayerState_ChaegeAttack2::StateStart()
 
 void PlayerState_ChaegeAttack2::StateUpdate()
 {
+	SceneManager::Instance().GetObjectWeakPtr(m_effect);
+	SceneManager::Instance().GetObjectWeakPtr(m_smokeEffect);
+	SceneManager::Instance().GetObjectWeakPtr(m_shineEffect);
 	
 	auto smokeEffect = m_smokeEffect.lock();
 	auto shineEffect = m_shineEffect.lock();
@@ -40,6 +40,9 @@ void PlayerState_ChaegeAttack2::StateUpdate()
 		// キラキラエフェクトの再生
 		shineEffect->SetPlayEffect(true);
 	}
+
+	// 当たり判定
+	m_player->UpdateAttackCollision(6.0f, 2.0f, 5, 0.5f, { 0.4f,0.4f }, 0.3f);
 
 	// アニメーション速度を変更
 	m_player->SetAnimeSpeed(60.0f);

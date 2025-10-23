@@ -11,7 +11,6 @@
 #include"../../../../Effect/EffekseerEffect/ShineEffectBlue/ShineEffectBlue.h"
 #include"../../../../Effect/EffekseerEffect/GroundFreezes/GroundFreezes.h"
 
-
 void PlayerState_ChargeAttack::StateStart()
 {
 	auto anime = m_player->GetAnimeModel()->GetAnimation("ChargeAttack0");
@@ -91,8 +90,8 @@ void PlayerState_ChargeAttack::StateUpdate()
 		// =========================
 		// 左ボタン押下 長押し / 短押し判定
 		// =========================
-		const float kShortPressThreshold = 0.5f; // 短押し閾値
-		const float kLongPressThreshold = 1.0f; // 長押し閾値
+		const float kShortPressThreshold = 0.1f; // 短押し閾値
+		const float kLongPressThreshold = 0.2f; // 長押し閾値
 
 		const float duration = KeyboardManager::GetInstance().GetKeyPressDuration(VK_LBUTTON);
 

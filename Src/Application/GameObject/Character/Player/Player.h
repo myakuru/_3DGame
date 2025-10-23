@@ -13,6 +13,8 @@ struct PlayerStatus
 	int chargeCount = 0;		// チャージ攻撃の回数
 	int skillPoint = 0;			// スキルポイント
 	int skillPointMax = 100;	// スキルポイントの最大値
+	int specialPoint = 0;		// スペシャルポイント
+	int specialPointMax = 3000;	// スペシャルポイントの最大値
 };
 class Player :public CharaBase
 {
@@ -140,6 +142,12 @@ public:
 
 	void SetInvincible(bool _flg) { m_invincible = _flg; }
 
+	// Skill使用中かどうか
+	bool GetUseSkill() const { return m_useSkill; }
+
+	// 必殺技が打てるかどうか
+	bool GetUseSpecial() const { return m_useSpecial; }
+
 private:
 
 	void ApplyHorizontalMove(const Math::Vector3& inputMove, float deltaTime);
@@ -198,4 +206,8 @@ private:
 	float m_attackActiveTime = 0.0f;	// 攻撃開始からの経過時間
 	float m_attackActiveBegin = 0.0f;	// 当たり判定が有効になる開始秒
 	float m_attackActiveEnd = 3.0f;		// 当たり判定が無効化される終了秒
+
+	bool m_useSkill = false;			// スキル使用中かどうか
+	bool m_useSpecial = false;			// スペシャル使用中かどうか
+
 };

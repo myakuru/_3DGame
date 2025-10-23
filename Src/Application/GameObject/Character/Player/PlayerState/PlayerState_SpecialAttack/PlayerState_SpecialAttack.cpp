@@ -25,10 +25,31 @@ void PlayerState_SpecialAttack::StateStart()
 	// アニメーション再生速度を変更
 	m_player->SetAnimeSpeed(60.0f);
 
+	if (auto camera = m_player->GetPlayerCamera().lock(); camera)
+	{
+		camera->SetTargetLookAt({ 0.0f,1.0f,-3.5f });
+	}
+
+	// 当たり判定リセット
+	m_player->ResetAttackCollision();
+	m_playSound = false;
 }
 
 void PlayerState_SpecialAttack::StateUpdate()
 {
+
+	// アニメーション時間のデバッグ表示
+	{
+		m_animeTime = m_player->GetAnimator()->GetPlayProgress();
+
+		m_maxAnimeTime = m_player->GetAnimator()->GetMaxAnimationTime();
+
+		if (m_animeTime > m_maxAnimeTime)
+		{
+			KdDebugGUI::Instance().AddLog(U8("Attackアニメ時間: %f"), m_animeTime);
+			KdDebugGUI::Instance().AddLog("\n");
+		}
+	}
 
 	if (m_player->GetAnimator()->IsAnimationEnd())
 	{
@@ -37,13 +58,49 @@ void PlayerState_SpecialAttack::StateUpdate()
 		return;
 	}
 
+	// 当たり判定有効時間: 最初の0.5秒のみ
+
+	if (m_animeTime >= 0.5f)
+	{
+		m_player->UpdateAttackCollision(10.0f, 7.0f, 6, 0.2f, { 0.4f, 0.4f }, 0.5f, 0.0f, 1.2f);
+
+		if (!m_playSound)
+		{
+			KdAudioManager::Instance().Play("Asset/Sound/Player/SpecialAttack.WAV", false)->SetVolume(0.5f);
+			m_playSound = true;
+		}
+
+	}
+
+	Math::Vector3 moveDir = m_player->GetMovement();
+
 	// 攻撃中の移動方向で回転を更新
 	if (m_player->GetMovement() != Math::Vector3::Zero)
 	{
-		Math::Vector3 moveDir = m_player->GetMovement();
 		moveDir.y = 0.0f;
 		moveDir.Normalize();
 		m_player->UpdateQuaternionDirect(moveDir);
+	}
+
+	if (auto camera = m_player->GetPlayerCamera().lock(); camera)
+	{
+		// キャラ前方からヨー角(deg)を計算してカメラ回転に反映
+		if (moveDir != Math::Vector3::Zero)
+		{
+			moveDir.Normalize();
+			m_yawRad = std::atan2(moveDir.x, moveDir.z);
+			m_yawDeg = DirectX::XMConvertToDegrees(m_yawRad);
+			camera->SetTargetRotation({ 10.0f, m_yawDeg , 0.0f });
+		}
+	}
+
+	if (m_animeTime >= 0.9f)
+	{
+		if (auto camera = m_player->GetPlayerCamera().lock(); camera)
+		{
+			camera->SetTargetLookAt({ 0.0f,1.0f,-4.0f });
+			camera->SetTargetRotation({ -10.0f, m_yawDeg , 0.0f });
+		}
 	}
 
 	m_player->SetIsMoving(m_attackDirection);

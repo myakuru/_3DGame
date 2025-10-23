@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include"../Utility/SelectDraw3dModel.h"
+class Enemy;
 class WeaponBase : public SelectDraw3dModel
 {
 public:
@@ -24,10 +25,14 @@ public:
 	virtual void SetEnemyMatrix(const Math::Matrix& _matrix) { m_enemyRightSwordData.m_enemyWorldMatrix = _matrix; }
 	virtual const Math::Matrix& GetEnemyRightHandMatrix() const { return m_enemyRightSwordData.m_weaponMatrix; }
 
+	void SetOwnerEnemy(const std::weak_ptr<Enemy>& owner) { m_ownerEnemy = owner; }
+	const std::weak_ptr<Enemy>& GetOwnerEnemy() const { return m_ownerEnemy; }
+
 protected:
 
 	void Init() override;
 	void DrawToon() override;
+	void DrawLit() override;
 	void Update() override;
 	void ImGuiInspector() override;
 	void JsonSave(nlohmann::json& _json) const override;
@@ -66,5 +71,7 @@ protected:
 
 	Math::Vector3 m_katanaOffset = Math::Vector3::Zero;
 	Math::Vector3 m_katanaHandOffset = Math::Vector3::Zero;				// 手に持つ刀のオフセット
+
+	std::weak_ptr<Enemy> m_ownerEnemy;									// この武器を持っている敵
 
 };

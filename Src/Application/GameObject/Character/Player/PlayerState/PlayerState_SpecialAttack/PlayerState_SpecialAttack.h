@@ -15,4 +15,10 @@ private:
 
 	std::weak_ptr<SpecialAttack> m_specialAttackEffect;
 
+	float m_yawRad = 0.0f;
+
+	float m_yawDeg = 0.0f;
+
+	bool m_playSound = false;
+
 };

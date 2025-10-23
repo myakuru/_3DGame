@@ -17,4 +17,6 @@ private:
 	std::list<std::weak_ptr<EnemyShineBlue>> m_shineEffectBlues;
 	std::weak_ptr<BossEnemyEnterEffect> m_enterEffect;
 
+	bool m_effectPlayed = false;
+
 };

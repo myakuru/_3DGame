@@ -12,7 +12,7 @@
 
 #include"../PlayerState_Skill/PlayerState_Skill.h"
 #include"../../../../../Scene/SceneManager.h"
-
+#include"../PlayerState_SpecialAttackCutIn/PlayerState_SpecialAttackCutIn.h"
 
 void PlayerState_ForwardAvoid::StateStart()
 {
@@ -141,6 +141,17 @@ void PlayerState_ForwardAvoid::StateUpdate()
 				m_player->GetPlayerStatus().skillPoint -= 30;
 				auto state = std::make_shared<PlayerState_Skill>();
 				m_player->ChangeState(state);
+				return;
+			}
+		}
+
+		if (KeyboardManager::GetInstance().IsKeyJustPressed('Q'))
+		{
+			if (m_player->GetPlayerStatus().specialPoint == m_player->GetPlayerStatus().specialPointMax)
+			{
+				m_player->GetPlayerStatus().specialPoint = 0;
+				auto specialAttackState = std::make_shared<PlayerState_SpecialAttackCutIn>();
+				m_player->ChangeState(specialAttackState);
 				return;
 			}
 		}

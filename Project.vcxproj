@@ -305,6 +305,7 @@
     <ClInclude Include="Src\Application\GameObject\Character\Enemy\EnemyState\EnemyState_Attack2\EnemyState_Attack2.h" />
     <ClInclude Include="Src\Application\GameObject\Character\Enemy\EnemyState\EnemyState_Attack3\EnemState_Attack3.h" />
     <ClInclude Include="Src\Application\GameObject\Character\Enemy\EnemyState\EnemyState_Attack\EnemyState_Attack.h" />
+    <ClInclude Include="Src\Application\GameObject\Character\Enemy\EnemyState\EnemyState_Dath\EnemyState_Dath.h" />
     <ClInclude Include="Src\Application\GameObject\Character\Enemy\EnemyState\EnemyState_Hit\EnemyState_Hit.h" />
     <ClInclude Include="Src\Application\GameObject\Character\Enemy\EnemyState\EnemyState_Idle\EnemyState_Idle.h" />
     <ClInclude Include="Src\Application\GameObject\Character\Enemy\EnemyState\EnemyState_Run\EnemyState_Run.h" />
@@ -369,6 +370,7 @@
     <ClInclude Include="Src\Application\GameObject\Effect\EffekseerEffect\SlashEffect\SlashEffect.h" />
     <ClInclude Include="Src\Application\GameObject\Effect\EffekseerEffect\SmokeEffect\SmokeEffect.h" />
     <ClInclude Include="Src\Application\GameObject\Effect\EffekseerEffect\SpecialAttack1\SpecialAttack1.h" />
+    <ClInclude Include="Src\Application\GameObject\Effect\EffekseerEffect\SpecialAttackSmoke\SpecialAttackSmoke.h" />
     <ClInclude Include="Src\Application\GameObject\Effect\EffekseerEffect\SpecialAttack\SpecialAttack.h" />
     <ClInclude Include="Src\Application\GameObject\Effect\EffekseerEffect\SpeedAttackEffect\SpeedAttackEffect.h" />
     <ClInclude Include="Src\Application\GameObject\Effect\EffekseerEffect\SwordFlash\SwordFlash.h" />
@@ -383,6 +385,8 @@
     <ClInclude Include="Src\Application\GameObject\HitDamage\HitDamage.h" />
     <ClInclude Include="Src\Application\GameObject\HUD\AlpfaMoving\AlpfaMoving.h" />
     <ClInclude Include="Src\Application\GameObject\HUD\BlackBanner\BlackBanner.h" />
+    <ClInclude Include="Src\Application\GameObject\HUD\BossEnemyBlackBarUI\BossEnemyBlackBarUI.h" />
+    <ClInclude Include="Src\Application\GameObject\HUD\BossEnemyUI\BossEnemyUI.h" />
     <ClInclude Include="Src\Application\GameObject\HUD\ChallengeResults\ChallengeResults.h" />
     <ClInclude Include="Src\Application\GameObject\HUD\EnemyHp\EnemyHp.h" />
     <ClInclude Include="Src\Application\GameObject\HUD\HpBar\HpBar.h" />
@@ -395,10 +399,14 @@
     <ClInclude Include="Src\Application\GameObject\HUD\PlayerChargeUI\NotCharge2\NotCharge2UI.h" />
     <ClInclude Include="Src\Application\GameObject\HUD\PlayerChargeUI\NotCharge\NotChargeUI.h" />
     <ClInclude Include="Src\Application\GameObject\HUD\ScaleMoving\ScaleMoving.h" />
+    <ClInclude Include="Src\Application\GameObject\HUD\ScoreBackBar\ScoreBackBar.h" />
     <ClInclude Include="Src\Application\GameObject\HUD\Scoring\Scoring.h" />
     <ClInclude Include="Src\Application\GameObject\HUD\SkillBar\SkillBar.h" />
+    <ClInclude Include="Src\Application\GameObject\HUD\SkillUI\SkillUI.h" />
+    <ClInclude Include="Src\Application\GameObject\HUD\SpecialAttackUI\SpecialAttackUI.h" />
     <ClInclude Include="Src\Application\GameObject\HUD\SpecialMove\SpecialMove.h" />
     <ClInclude Include="Src\Application\GameObject\HUD\Timer\Timer.h" />
+    <ClInclude Include="Src\Application\GameObject\HUD\TitleRemoveUI\TitleRemoveUI.h" />
     <ClInclude Include="Src\Application\GameObject\Map\Map.h" />
     <ClInclude Include="Src\Application\GameObject\ResultScore\ResultScore.h" />
     <ClInclude Include="Src\Application\GameObject\SkySphere\SkySphere.h" />
@@ -506,6 +514,7 @@
     <ClCompile Include="Src\Application\GameObject\Character\Enemy\EnemyState\EnemyState_Attack2\EnemyState_Attack2.cpp" />
     <ClCompile Include="Src\Application\GameObject\Character\Enemy\EnemyState\EnemyState_Attack3\EnemState_Attack3.cpp" />
     <ClCompile Include="Src\Application\GameObject\Character\Enemy\EnemyState\EnemyState_Attack\EnemyState_Attack.cpp" />
+    <ClCompile Include="Src\Application\GameObject\Character\Enemy\EnemyState\EnemyState_Dath\EnemyState_Dath.cpp" />
     <ClCompile Include="Src\Application\GameObject\Character\Enemy\EnemyState\EnemyState_Hit\EnemyState_Hit.cpp" />
     <ClCompile Include="Src\Application\GameObject\Character\Enemy\EnemyState\EnemyState_Idle\EnemyState_Idle.cpp" />
     <ClCompile Include="Src\Application\GameObject\Character\Enemy\EnemyState\EnemyState_Run\EnemyState_Run.cpp" />
@@ -569,6 +578,7 @@
     <ClCompile Include="Src\Application\GameObject\Effect\EffekseerEffect\SlashEffect\SlashEffect.cpp" />
     <ClCompile Include="Src\Application\GameObject\Effect\EffekseerEffect\SmokeEffect\SmokeEffect.cpp" />
     <ClCompile Include="Src\Application\GameObject\Effect\EffekseerEffect\SpecialAttack1\SpecialAttack1.cpp" />
+    <ClCompile Include="Src\Application\GameObject\Effect\EffekseerEffect\SpecialAttackSmoke\SpecialAttackSmoke.cpp" />
     <ClCompile Include="Src\Application\GameObject\Effect\EffekseerEffect\SpecialAttack\SpecialAttack.cpp" />
     <ClCompile Include="Src\Application\GameObject\Effect\EffekseerEffect\SpeedAttackEffect\SpeedAttackEffect.cpp" />
     <ClCompile Include="Src\Application\GameObject\Effect\EffekseerEffect\SwordFlash\SwordFlash.cpp" />
@@ -583,6 +593,8 @@
     <ClCompile Include="Src\Application\GameObject\HitDamage\HitDamage.cpp" />
     <ClCompile Include="Src\Application\GameObject\HUD\AlpfaMoving\AlpfaMoving.cpp" />
     <ClCompile Include="Src\Application\GameObject\HUD\BlackBanner\BlackBanner.cpp" />
+    <ClCompile Include="Src\Application\GameObject\HUD\BossEnemyBlackBarUI\BossEnemyBlackBarUI.cpp" />
+    <ClCompile Include="Src\Application\GameObject\HUD\BossEnemyUI\BossEnemyUI.cpp" />
     <ClCompile Include="Src\Application\GameObject\HUD\ChallengeResults\ChallengeResults.cpp" />
     <ClCompile Include="Src\Application\GameObject\HUD\EnemyHp\EnemyHp.cpp" />
     <ClCompile Include="Src\Application\GameObject\HUD\HpBar\HpBar.cpp" />
@@ -595,10 +607,14 @@
     <ClCompile Include="Src\Application\GameObject\HUD\PlayerChargeUI\NotCharge2\NotCharge2UI.cpp" />
     <ClCompile Include="Src\Application\GameObject\HUD\PlayerChargeUI\NotCharge\NotChargeUI.cpp" />
     <ClCompile Include="Src\Application\GameObject\HUD\ScaleMoving\ScaleMoving.cpp" />
+    <ClCompile Include="Src\Application\GameObject\HUD\ScoreBackBar\ScoreBackBar.cpp" />
     <ClCompile Include="Src\Application\GameObject\HUD\Scoring\Scoring.cpp" />
     <ClCompile Include="Src\Application\GameObject\HUD\SkillBar\SkillBar.cpp" />
+    <ClCompile Include="Src\Application\GameObject\HUD\SkillUI\SkillUI.cpp" />
+    <ClCompile Include="Src\Application\GameObject\HUD\SpecialAttackUI\SpecialAttackUI.cpp" />
     <ClCompile Include="Src\Application\GameObject\HUD\SpecialMove\SpecialMove.cpp" />
     <ClCompile Include="Src\Application\GameObject\HUD\Timer\Timer.cpp" />
+    <ClCompile Include="Src\Application\GameObject\HUD\TitleRemoveUI\TitleRemoveUI.cpp" />
     <ClCompile Include="Src\Application\GameObject\Map\Map.cpp" />
     <ClCompile Include="Src\Application\GameObject\ResultScore\ResultScore.cpp" />
     <ClCompile Include="Src\Application\GameObject\SkySphere\SkySphere.cpp" />

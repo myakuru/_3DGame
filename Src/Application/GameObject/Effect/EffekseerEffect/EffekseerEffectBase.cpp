@@ -3,6 +3,7 @@
 #include"../../../Scene/SceneManager.h"
 #include"../../../main.h"
 #include"../../../../Framework/ImGuiManager/ImGuiManager.h"
+#include"../../../../Framework//Json/Json.h"
 
 void EffekseerEffectBase::Init()
 {
@@ -38,6 +39,12 @@ void EffekseerEffectBase::Update()
 	auto player = m_player.lock();
 	if (!player) return;
 
+	if (SceneManager::Instance().m_gameClear)
+	{
+		// プレイヤーがゲームクリアしていたらエフェクトを停止
+		StopEffect();
+	}
+
 	// プレイヤーの前方ベクトル
 	Math::Vector3 forward = Math::Vector3::TransformNormal(Math::Vector3::Forward, Math::Matrix::CreateFromQuaternion(player->GetRotationQuaternion()));
 	forward.Normalize();
@@ -60,7 +67,7 @@ void EffekseerEffectBase::EffectUpdate()
 	// 再生要求が来た瞬間だけ再生開始
 	if (!m_once && m_load)
 	{
-		m_wpEffect = KdEffekseerManager::GetInstance().Play(m_path, m_mWorld, m_effectSpeed / 200).lock();
+		m_wpEffect = KdEffekseerManager::GetInstance().Play(m_path, m_mWorld, m_effectSpeed / 200, false, m_effectColor).lock();
 		m_once = m_load;
 	}
 
@@ -91,6 +98,7 @@ void EffekseerEffectBase::DrawEffect()
 
 void EffekseerEffectBase::DrawToon()
 {
+	if (SceneManager::Instance().m_gameClear) return;
 	if (!IMGUI_MANAGER.GetShowEffect()) return;
 	KdEffekseerManager::GetInstance().Draw();
 }
@@ -111,6 +119,9 @@ void EffekseerEffectBase::ImGuiInspector()
 	{
 		StopEffect();
 	}
+
+	// エフェクトの色設定
+	ImGui::ColorEdit4(U8("エフェクトの色"), &m_effectColor.x);
 }
 
 void EffekseerEffectBase::JsonSave(nlohmann::json& _json) const
@@ -118,6 +129,7 @@ void EffekseerEffectBase::JsonSave(nlohmann::json& _json) const
 	KdGameObject::JsonSave(_json);
 	_json["distance"] = m_distance;
 	_json["EffectSpeed"] = m_effectSpeed;
+	_json["effectColor"] = JSON_MANAGER.Vector4ToJson(m_effectColor);
 }
 
 void EffekseerEffectBase::JsonInput(const nlohmann::json& _json)
@@ -125,6 +137,7 @@ void EffekseerEffectBase::JsonInput(const nlohmann::json& _json)
 	KdGameObject::JsonInput(_json);
 	if (_json.contains("distance")) m_distance = _json["distance"].get<float>();
 	if (_json.contains("EffectSpeed")) m_effectSpeed = _json["EffectSpeed"].get<float>();
+	if (_json.contains("effectColor")) m_effectColor = JSON_MANAGER.JsonToVector4(_json["effectColor"]);
 }
 
 bool EffekseerEffectBase::ModelLoad(std::string _path)

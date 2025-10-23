@@ -3,6 +3,7 @@
 #include"../../Scene/SceneManager.h"
 #include"../Camera/PlayerCamera/PlayerCamera.h"
 #include"../Collition/Collition.h"
+#include"../../Scene/BaseScene/BaseScene.h"
 
 void CharaBase::Init()
 {
@@ -61,6 +62,8 @@ void CharaBase::UpdateQuaternionDirect(const Math::Vector3& direction)
 void CharaBase::Update()
 {
 	KdGameObject::Update();
+
+	if (SceneManager::Instance().GetCurrentScene()->GetSceneName() == "Title") return;
 
 	float deltaTime = Application::Instance().GetDeltaTime();
 

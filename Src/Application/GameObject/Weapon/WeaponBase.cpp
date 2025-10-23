@@ -11,7 +11,12 @@ void WeaponBase::Init()
 
 void WeaponBase::DrawToon()
 {
-	KdShaderManager::Instance().m_StandardShader.DrawModel(*m_model, m_swordData.m_weaponMatrix);
+	if (m_bDrawToon) KdShaderManager::Instance().m_StandardShader.DrawModel(*m_model, m_swordData.m_weaponMatrix);
+}
+
+void WeaponBase::DrawLit()
+{
+	if (m_bDrawLit) KdShaderManager::Instance().m_StandardShader.DrawModel(*m_model, m_swordData.m_weaponMatrix,m_color);
 }
 
 void WeaponBase::Update()

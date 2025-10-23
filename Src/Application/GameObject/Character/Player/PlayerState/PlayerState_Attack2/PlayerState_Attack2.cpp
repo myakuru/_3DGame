@@ -15,6 +15,7 @@
 #include"../../../../Effect/EffekseerEffect/AttacEffect1/AttacEffect1.h"
 
 #include"../PlayerState_Skill/PlayerState_Skill.h"
+#include"../PlayerState_SpecialAttackCutIn/PlayerState_SpecialAttackCutIn.h"
 
 void PlayerState_Attack2::StateStart()
 {
@@ -40,11 +41,6 @@ void PlayerState_Attack2::StateStart()
 	m_player->SetAnimeSpeed(70.0f);
 
 	KdAudioManager::Instance().Play("Asset/Sound/Player/Attack2.WAV", false)->SetVolume(0.5f);
-
-	if (m_player->GetPlayerStatus().skillPoint <= m_player->GetPlayerStatus().skillPointMax)
-	{
-		m_player->GetPlayerStatus().skillPoint += 3;
-	}
 
 }
 
@@ -116,6 +112,17 @@ void PlayerState_Attack2::StateUpdate()
 			{
 				m_EButtonkeyInput = true;
 				m_player->GetPlayerStatus().skillPoint -= 30;
+			}
+		}
+
+		if (KeyboardManager::GetInstance().IsKeyJustPressed('Q'))
+		{
+			if (m_player->GetPlayerStatus().specialPoint == m_player->GetPlayerStatus().specialPointMax)
+			{
+				m_player->GetPlayerStatus().specialPoint = 0;
+				auto specialAttackState = std::make_shared<PlayerState_SpecialAttackCutIn>();
+				m_player->ChangeState(specialAttackState);
+				return;
 			}
 		}
 

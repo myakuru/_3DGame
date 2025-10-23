@@ -83,6 +83,13 @@
 #include"../GameObject/Effect/EffekseerEffect/ChargeAttackEffect_end/ChargeAttackEffect_end.h"
 #include"../GameObject/HUD/SkillBar/SkillBar.h"
 #include"../GameObject/HUD/ChallengeResults/ChallengeResults.h"
+#include"../GameObject/HUD/ScoreBackBar/ScoreBackBar.h"
+#include"../GameObject/HUD/TitleRemoveUI/TitleRemoveUI.h"
+#include"../GameObject/HUD/SkillUI/SkillUI.h"
+#include"../GameObject/HUD/SpecialAttackUI/SpecialAttackUI.h"
+#include"../GameObject/Effect/EffekseerEffect/SpecialAttackSmoke/SpecialAttackSmoke.h"
+#include"../GameObject/HUD/BossEnemyUI/BossEnemyUI.h"
+#include"../GameObject/HUD/BossEnemyBlackBarUI/BossEnemyBlackBarUI.h"
 
 void SceneManager::Init()
 {
@@ -122,6 +129,12 @@ void SceneManager::Register() const
 	RegisterObject::GetInstance().Register<NotCharge2UI>();
 	RegisterObject::GetInstance().Register<SkillBar>();
 	RegisterObject::GetInstance().Register<ChallengeResults>();
+	RegisterObject::GetInstance().Register<ScoreBackBar>();
+	RegisterObject::GetInstance().Register<TitleRemoveUI>();
+	RegisterObject::GetInstance().Register<SkillUI>();
+	RegisterObject::GetInstance().Register<SpecialAttackUI>();
+	RegisterObject::GetInstance().Register<BossEnemyUI>();
+	RegisterObject::GetInstance().Register<BossEnemyBlackBarUI>();
 
 	// Map系
 	RegisterObject::GetInstance().Register<Map>();
@@ -167,6 +180,7 @@ void SceneManager::Register() const
 	RegisterObject::GetInstance().Register<BossWaterFallAttack>();
 	RegisterObject::GetInstance().Register<ChargeAttackEffect>();
 	RegisterObject::GetInstance().Register<ChargeAttackEffect_end>();
+	RegisterObject::GetInstance().Register<SpecialAttackSmoke>();
 
 	// Fieldのエフェクト系
 	RegisterObject::GetInstance().Register<FieldEffect>();
@@ -251,8 +265,6 @@ void SceneManager::AddObject(const std::shared_ptr<KdGameObject>& _obj)
 
 void SceneManager::ChangeScene(SceneType _sceneType)
 {
-
-	KdAudioManager::Instance().StopAllSound();
 
 	// 次のシーンを作成し、現在のシーンにする
 	switch (_sceneType)

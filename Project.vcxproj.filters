@@ -514,6 +514,30 @@
     <Filter Include="Src\Application\GameObject\HUD\ChallengeResults">
       <UniqueIdentifier>{07996a5f-2047-4c6d-b8ed-29e7ba8e7153}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\GameObject\Character\Enemy\EnemyState\EnemyState_Dath">
+      <UniqueIdentifier>{a43fd0ee-ee4d-44fe-b1f3-7514d68c4178}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\HUD\BossEnemyUI">
+      <UniqueIdentifier>{33e43863-1619-4350-a7ff-dd3664fd692e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\HUD\ScoreBackBar">
+      <UniqueIdentifier>{0ee2c250-ab11-462a-b50b-a71a159aa778}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\HUD\TitleRemoveUI">
+      <UniqueIdentifier>{be36d3a4-5625-48b0-99c5-4e12b7aa17dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\HUD\SkillUI">
+      <UniqueIdentifier>{3cb01754-6ab5-413d-ac1f-89b836e007b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\HUD\SpecialAttackUI">
+      <UniqueIdentifier>{26f0e196-aca4-4693-b0f4-b06dff7ce625}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Effect\EffekseerEffect\SpecialAttackSmoke">
+      <UniqueIdentifier>{4f774678-7a30-41f0-a4ab-7424e71a66ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\HUD\BossEnemyBlackBarUI">
+      <UniqueIdentifier>{c2f01b4d-8760-4d4c-802a-36be79abd817}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -1134,6 +1158,30 @@
     <ClInclude Include="Src\Application\GameObject\HUD\ChallengeResults\ChallengeResults.h">
       <Filter>Src\Application\GameObject\HUD\ChallengeResults</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Character\Enemy\EnemyState\EnemyState_Dath\EnemyState_Dath.h">
+      <Filter>Src\Application\GameObject\Character\Enemy\EnemyState\EnemyState_Dath</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\HUD\BossEnemyUI\BossEnemyUI.h">
+      <Filter>Src\Application\GameObject\HUD\BossEnemyUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\HUD\ScoreBackBar\ScoreBackBar.h">
+      <Filter>Src\Application\GameObject\HUD\ScoreBackBar</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\HUD\TitleRemoveUI\TitleRemoveUI.h">
+      <Filter>Src\Application\GameObject\HUD\TitleRemoveUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\HUD\SkillUI\SkillUI.h">
+      <Filter>Src\Application\GameObject\HUD\SkillUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\HUD\SpecialAttackUI\SpecialAttackUI.h">
+      <Filter>Src\Application\GameObject\HUD\SpecialAttackUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Effect\EffekseerEffect\SpecialAttackSmoke\SpecialAttackSmoke.h">
+      <Filter>Src\Application\GameObject\Effect\EffekseerEffect\SpecialAttackSmoke</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\HUD\BossEnemyBlackBarUI\BossEnemyBlackBarUI.h">
+      <Filter>Src\Application\GameObject\HUD\BossEnemyBlackBarUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -1699,6 +1747,30 @@
     </ClCompile>
     <ClCompile Include="Src\Application\GameObject\HUD\ChallengeResults\ChallengeResults.cpp">
       <Filter>Src\Application\GameObject\HUD\ChallengeResults</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Character\Enemy\EnemyState\EnemyState_Dath\EnemyState_Dath.cpp">
+      <Filter>Src\Application\GameObject\Character\Enemy\EnemyState\EnemyState_Dath</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\HUD\BossEnemyUI\BossEnemyUI.cpp">
+      <Filter>Src\Application\GameObject\HUD\BossEnemyUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\HUD\ScoreBackBar\ScoreBackBar.cpp">
+      <Filter>Src\Application\GameObject\HUD\ScoreBackBar</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\HUD\TitleRemoveUI\TitleRemoveUI.cpp">
+      <Filter>Src\Application\GameObject\HUD\TitleRemoveUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\HUD\SkillUI\SkillUI.cpp">
+      <Filter>Src\Application\GameObject\HUD\SkillUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\HUD\SpecialAttackUI\SpecialAttackUI.cpp">
+      <Filter>Src\Application\GameObject\HUD\SpecialAttackUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Effect\EffekseerEffect\SpecialAttackSmoke\SpecialAttackSmoke.cpp">
+      <Filter>Src\Application\GameObject\Effect\EffekseerEffect\SpecialAttackSmoke</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\HUD\BossEnemyBlackBarUI\BossEnemyBlackBarUI.cpp">
+      <Filter>Src\Application\GameObject\HUD\BossEnemyBlackBarUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

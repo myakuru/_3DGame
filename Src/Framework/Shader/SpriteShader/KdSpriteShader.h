@@ -39,7 +39,7 @@ public:
 	// ステートの記憶・変更や、2D描画用の行列の設定、シェーダ切り替えなどを行う
 	// ・linear			… 線形補間モードにする
 	// ・disableZBuffer	… Zバッファを使用しない
-	void Begin(bool linear = false, bool disableZBuffer = true);
+	void Begin(bool linear = true, bool disableZBuffer = true);
 
 	// 描画終了
 	//  Begin()で記憶していたステートを復元 

@@ -4,6 +4,7 @@
 #include"../../GameObject/Camera/PlayerCamera/PlayerCamera.h"
 
 #include"../../../Framework/Json/Json.h"
+#include"../../../Framework/ImGuiManager/ImGuiManager.h"
 #include"../../main.h"
 
 void BaseScene::PreUpdate()
@@ -224,6 +225,7 @@ void BaseScene::DrawDebug()
 {
 	KdShaderManager::Instance().m_StandardShader.BeginUnLit();
 	{
+		if (!IMGUI_MANAGER.GetShowDebugWireFrame()) return;
 		for (auto& obj : m_objList) obj->DrawDebug();
 		for (auto& obj : m_MapObjectList) obj->DrawDebug();
 	}

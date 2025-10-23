@@ -77,6 +77,13 @@ void PlayerState_JustAvoidAttack::StateStart()
 			m_overshootDist = 4.0f;
 		}
 	}
+
+	// 攻撃時はtrueにする
+	if (auto katana = m_player->GetKatana().lock(); katana)
+	{
+		katana->SetNowAttackState(true);
+	}
+
 }
 
 void PlayerState_JustAvoidAttack::StateUpdate()
@@ -91,7 +98,7 @@ void PlayerState_JustAvoidAttack::StateUpdate()
 	PlayerStateBase::StateUpdate();
 
 	// 当たり判定有効時間: 最初の0.5秒のみ
-	m_player->UpdateAttackCollision(8.0f, 1.0f, 3, 0.1f, { 0.2f, 0.0f }, 0.3f, 0.0f, 0.4f);
+	m_player->UpdateAttackCollision(8.0f, 1.0f, 5, 0.1f, { 0.3f, 0.3f }, 0.3f);
 
 	UpdateKatanaPos();
 

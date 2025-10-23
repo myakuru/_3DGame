@@ -1,5 +1,6 @@
 ﻿#include "Player.h"
 #include"../../../Scene/SceneManager.h"
+#include"../../../Scene/BaseScene/BaseScene.h"
 #include"../../Weapon/Katana/Katana.h"
 #include"../../Weapon/WeaponKatanaScabbard/WeaponKatanaScabbard.h"
 #include"../../../main.h"
@@ -54,6 +55,8 @@ void Player::Init()
 	m_dissever = 0.0f;
 
 	m_isHit = false;
+
+	m_status.specialPoint = 1000;
 
 }
 
@@ -171,6 +174,11 @@ void Player::Update()
 	SceneManager::Instance().GetObjectWeakPtr(m_katana);
 	SceneManager::Instance().GetObjectWeakPtr(m_scabbard);
 
+	if (SceneManager::Instance().m_gameClear)
+	{
+		m_movement = Math::Vector3::Zero;
+	}
+
 	// プレイヤーのSkillポイントの表示
 	KdDebugGUI::Instance().AddLog("PlayerSkillPoint: %d\n", m_status.skillPoint);
 
@@ -213,7 +221,30 @@ void Player::Update()
 		return;
 	}
 
-	m_stateManager.Update();
+	if (SceneManager::Instance().GetCurrentScene()->GetSceneName() == "Test")
+	{
+		m_stateManager.Update();
+	}
+
+	if (m_status.skillPoint >= 30.0)
+	{
+		m_useSkill = true;
+	}
+	else
+	{
+		m_useSkill = false;
+	}
+
+	KdDebugGUI::Instance().AddLog("SpecialPoint: %d\n", m_status.specialPoint);
+
+	if (m_status.specialPoint == m_status.specialPointMax)
+	{
+		m_useSpecial = true;
+	}
+	else
+	{
+		m_useSpecial = false;
+	}
 
 	if (m_justAvoid)
 	{
@@ -342,6 +373,18 @@ void Player::UpdateAttackCollision(float _radius, float _distance, int _attackCo
 			{
 				camera->StartShake(_cameraShakePow, _cameraTime);
 			}
+
+			if (m_status.skillPoint <= 100)
+			{
+				m_status.skillPoint += _attackCount / 4;
+			}
+
+			// specialPoint を絶対に 3000 を超えないように飽和加算
+			constexpr int kAbsoluteSpecialMax = 3000;
+			const int upper = std::min(m_status.specialPointMax, kAbsoluteSpecialMax);
+			const int add = _attackCount * 20;
+
+			m_status.specialPoint = std::min(m_status.specialPoint + add, upper);
 		}
 
 		m_chargeAttackCount++;

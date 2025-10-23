@@ -2,6 +2,7 @@
 #include"../../Utility/Time.h"
 #include"../../../Scene/SceneManager.h"
 #include"../../../main.h"
+#include"../../../../Framework/Json/Json.h"
 
 const uint32_t Timer::TypeID = KdGameObject::GenerateTypeID();
 
@@ -22,7 +23,8 @@ void Timer::Init()
 	m_displayTime = 0; // 初期表示時間を0に設定
 	m_lastTime = 0.0f; // 最後の時間を初期化
 
-	m_scale = { 0.35f, 3.5f, 1.0f };
+	m_scale = { 0.015f, 0.15f, 1.0f };
+	m_resultScaleInited = false;
 }
 
 void Timer::Update()
@@ -34,6 +36,13 @@ void Timer::Update()
 	{
 		m_lastTime = timeLeft;
 		return; // ゲームクリア時はタイマーを更新しない
+	}
+
+	float deltaTime = Application::Instance().GetUnscaledDeltaTime();
+
+	if (SceneManager::Instance().IsBossAppear())
+	{
+		if (m_position.y > m_dawnPos.y) m_position.y -= m_dawnTimer * deltaTime;
 	}
 
 	
@@ -49,7 +58,14 @@ void Timer::ResultTimerUpdate()
 	if (SceneManager::Instance().GetResultFlag())
 	{
 		float time = Time::Instance().GetElapsedTime();
-		float deltaTime = Application::Instance().GetDeltaTime();
+		float deltaTime = Application::Instance().GetUnscaledDeltaTime();
+
+		// リザルト開始時に一度だけ初期化
+		if (!m_resultScaleInited)
+		{
+			m_scale = { 0.35f, 3.5f, 1.0f };
+			m_resultScaleInited = true;
+		}
 
 		if (time >= 0.0f && time <= 2.0f)
 		{
@@ -83,39 +99,39 @@ void Timer::DrawSprite()
 {
 	if (SceneManager::Instance().IsIntroCamera()) return;
 
-	if (m_notDraw) return; // 描画しないフラグが立っている場合は何もしない
-
-	// 現在のビューポートサイズ取得
-	Math::Viewport vp;
-	KdDirect3D::Instance().CopyViewportInfo(vp);
-
-	const float sx = vp.width / kRefW;
-	const float sy = vp.height / kRefH;
-
-	Math::Matrix uiScale = Math::Matrix::CreateScale(sx, sy, 1.0f);
-
-	KdShaderManager::Instance().m_spriteShader.SetMatrix(m_mWorld * uiScale);
-
-	int time = std::min(m_displayTime, 99 * 60 * 60 + 99 * 60 + 99); //99:99:99
-
-	int hours = time / 3600;
-	int minutes = (time / 60) % 100;
-	int seconds = time % 60;
-
-	int digits[6] = {
-		hours / 10,
-		hours % 10,
-		minutes / 10,
-		minutes % 10,
-		seconds / 10,
-		seconds % 10
-	};
-
-	int baseX = static_cast<int>(m_position.x);
-	int baseY = static_cast<int>(m_position.y);
-
 	if (SceneManager::Instance().GetResultFlag())
 	{
+		if (m_notDraw) return; // 描画しないフラグが立っている場合は何もしない
+
+		// 現在のビューポートサイズ取得
+		Math::Viewport vp;
+		KdDirect3D::Instance().CopyViewportInfo(vp);
+
+		const float sx = vp.width / kRefW;
+		const float sy = vp.height / kRefH;
+
+		Math::Matrix uiScale = Math::Matrix::CreateScale(sx, sy, 1.0f);
+
+		KdShaderManager::Instance().m_spriteShader.SetMatrix(m_mWorld * uiScale);
+
+		int time = std::min(m_displayTime, 99 * 60 * 60 + 99 * 60 + 99); //99:99:99
+
+		int hours = time / 3600;
+		int minutes = (time / 60) % 100;
+		int seconds = time % 60;
+
+		int digits[6] = {
+			hours / 10,
+			hours % 10,
+			minutes / 10,
+			minutes % 10,
+			seconds / 10,
+			seconds % 10
+		};
+
+		int baseX = static_cast<int>(m_position.x);
+		int baseY = static_cast<int>(m_position.y);
+
 		// コロン無しで数字6桁を連続表示（h, m, sの間に余白を追加）
 		const int digitGap = 750;      // 通常の数字間隔
 		const int extraGap = 200;       // 区切りごとの追加余白
@@ -139,6 +155,35 @@ void Timer::DrawSprite()
 	}
 	else
 	{
+		// 現在のビューポートサイズ取得
+		Math::Viewport vp;
+		KdDirect3D::Instance().CopyViewportInfo(vp);
+
+		const float sx = vp.width / kRefW;
+		const float sy = vp.height / kRefH;
+
+		Math::Matrix uiScale = Math::Matrix::CreateScale(sx, sy, 1.0f);
+
+		KdShaderManager::Instance().m_spriteShader.SetMatrix(m_mWorld * uiScale);
+
+		int time = std::min(m_displayTime, 99 * 60 * 60 + 99 * 60 + 99); //99:99:99
+
+		int hours = time / 3600;
+		int minutes = (time / 60) % 100;
+		int seconds = time % 60;
+
+		int digits[6] = {
+			hours / 10,
+			hours % 10,
+			minutes / 10,
+			minutes % 10,
+			seconds / 10,
+			seconds % 10
+		};
+
+		int baseX = static_cast<int>(m_position.x);
+		int baseY = static_cast<int>(m_position.y);
+
 		// 通常通りコロン含めて表示
 		for (int i = 0; i < 8; ++i)
 		{
@@ -173,4 +218,25 @@ void Timer::DrawSprite()
 	}
 
 	KdShaderManager::Instance().m_spriteShader.SetMatrix(Math::Matrix::Identity);
+}
+
+void Timer::ImGuiInspector()
+{
+	SelectDraw2DTexture::ImGuiInspector();
+	ImGui::DragFloat("Dawn Timer", &m_dawnTimer);
+	ImGui::DragFloat3("Dawn Position", &m_dawnPos.x);
+}
+
+void Timer::JsonSave(nlohmann::json& _json) const
+{
+	SelectDraw2DTexture::JsonSave(_json);
+	_json["DawnTimer"] = m_dawnTimer;
+	_json["DawnPos"] = JSON_MANAGER.VectorToJson(m_dawnPos);
+}
+
+void Timer::JsonInput(const nlohmann::json& _json)
+{
+	SelectDraw2DTexture::JsonInput(_json);
+	if (_json.contains("DawnTimer")) m_dawnTimer = _json["DawnTimer"].get<float>();
+	if (_json.contains("DawnPos")) m_dawnPos = JSON_MANAGER.JsonToVector(_json["DawnPos"]);
 }

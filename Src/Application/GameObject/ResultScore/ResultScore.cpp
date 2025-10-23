@@ -44,7 +44,7 @@ void ResultScore::Update()
 	);
 	forward.Normalize();
 
-	if (m_distance > 0)
+	if (m_distance > 0.0f)
 	{
 		m_distance -= deltatime * 15.0f; // 徐々に近づく
 	}

@@ -21,6 +21,9 @@ void PlayerState_ChargeAttackMax::StateStart()
 
 	// 残像の設定
 	m_player->AddAfterImage(true, 5, 0.1f, Math::Color(0.0f, 1.0f, 1.0f, 1.0f));
+
+	// 当たり判定リセット
+	m_player->ResetAttackCollision();
 }
 
 void PlayerState_ChargeAttackMax::StateUpdate()
@@ -37,7 +40,7 @@ void PlayerState_ChargeAttackMax::StateUpdate()
 	UpdateKatanaPos();
 
 	// 攻撃の当たり判定更新
-	m_player->UpdateAttackCollision(7.0f, 6.0f, 2.0f, m_maxAnimeTime, { 0.0f, 0.0f }, 0.1f);
+	m_player->UpdateAttackCollision(15.0f, 1.0f, 2.0f, m_maxAnimeTime, { 0.0f, 0.0f }, 0.1f);
 
 	// 攻撃中の移動方向で回転を更新
 	if (m_player->GetMovement() != Math::Vector3::Zero)

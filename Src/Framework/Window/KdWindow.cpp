@@ -114,7 +114,8 @@ void KdWindow::SetBorderlessFullscreen(bool enable)
 
 		m_borderless = true;
 	}
-	else if (!enable && m_borderless) {
+	else if (!enable && m_borderless)
+	{
 		// 以前のウィンドウスタイル・位置に戻す
 		SetWindowLong(m_hWnd, GWL_STYLE, m_savedStyle);
 		SetWindowPos(m_hWnd, nullptr,

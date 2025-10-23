@@ -6,6 +6,7 @@
 #include"../../../../../main.h"
 
 #include"../../../Enemy/Enemy.h"
+#include"../PlayerState_SpecialAttackCutIn/PlayerState_SpecialAttackCutIn.h"
 
 void PlayerState_Hit::StateStart()
 {
@@ -43,6 +44,17 @@ void PlayerState_Hit::StateUpdate()
 		auto idleState = std::make_shared<PlayerState_Idle>();
 		m_player->ChangeState(idleState);
 		return;
+	}
+
+	if (KeyboardManager::GetInstance().IsKeyJustPressed('Q'))
+	{
+		if (m_player->GetPlayerStatus().specialPoint == m_player->GetPlayerStatus().specialPointMax)
+		{
+			m_player->GetPlayerStatus().specialPoint = 0;
+			auto specialAttackState = std::make_shared<PlayerState_SpecialAttackCutIn>();
+			m_player->ChangeState(specialAttackState);
+			return;
+		}
 	}
 
 	PlayerStateBase::StateUpdate();

@@ -107,7 +107,7 @@ public:
 		}
 	}
 
-private:
+protected:
 
 	bool m_bGenerateDepthMapFromLight = false;	// ライトからの深度マップを生成するかどうか
 	bool m_bDrawLit = false;					// ライトの影響を受ける描画を行うかどうか

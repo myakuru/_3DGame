@@ -3,6 +3,7 @@
 #include"../PlayerState_Sheathing-of-Katana/PlayerState_Sheathing-of-Katana.h"
 #include"../../../../../Scene/SceneManager.h"
 #include"../../../../Effect/EffekseerEffect/SpeedAttackEffect/SpeedAttackEffect.h"
+#include"../PlayerState_SpecialAttackCutIn/PlayerState_SpecialAttackCutIn.h"
 
 void PlayerState_AvoidAttack::StateStart()
 {
@@ -39,6 +40,17 @@ void PlayerState_AvoidAttack::StateUpdate()
 	if (m_animeTime >= 0.0f && m_animeTime <= 0.1f)
 	{
 		m_player->UpdateAttackCollision(5.0f, 5.0f, 1, m_maxAnimeTime, { 0.3f, 0.0f }, 0.3f);
+	}
+
+	if (KeyboardManager::GetInstance().IsKeyJustPressed('Q'))
+	{
+		if (m_player->GetPlayerStatus().specialPoint == m_player->GetPlayerStatus().specialPointMax)
+		{
+			m_player->GetPlayerStatus().specialPoint = 0;
+			auto specialAttackState = std::make_shared<PlayerState_SpecialAttackCutIn>();
+			m_player->ChangeState(specialAttackState);
+			return;
+		}
 	}
 
 	if (m_player->GetAnimator()->IsAnimationEnd())

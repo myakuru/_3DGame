@@ -27,24 +27,34 @@ void BossEnemyState_Run::StateUpdate()
 	// 距離計算
 	m_distance = (m_playerPos - m_enemyPos).Length();
 
-	// 追いかける
-	Math::Vector3 dir = m_playerPos - m_enemyPos;
-	dir.y = 0.0f;
-	if (dir != Math::Vector3::Zero) dir.Normalize();
-
-	// LookRotationで正しい向きに
-	Math::Quaternion rot = Math::Quaternion::LookRotation(dir, Math::Vector3::Up);
-	m_bossEnemy->SetRotation(rot);
-
-	m_bossEnemy->SetIsMoving(dir);
-
-	// ここをAI委譲に変更（Attack_Lへの直遷移をやめる）
+	// 10m未満になったらAIに委譲
 	if (m_distance < 10.0f)
 	{
 		auto next = BossEnemyAI::DecideNext(m_bossEnemy);
-		m_bossEnemy->ChangeState(next);
-		return;
+
+		// 自分と同じ Run への再遷移は行わない（毎フレームアニメを張り直すのを防ぐ）
+		if (!std::dynamic_pointer_cast<BossEnemyState_Run>(next))
+		{
+			m_bossEnemy->ChangeState(next);
+			return;
+		}
 	}
+
+	// 追いかける（状態維持時のみ適用）
+	Math::Vector3 dir = m_playerPos - m_enemyPos;
+	dir.y = 0.0f;
+
+	// ゼロベクトル対策
+	if (dir.LengthSquared() > 1e-8f)
+	{
+		dir.Normalize();
+
+		// LookRotationで正しい向きに（ゼロベクトルは渡さない）
+		Math::Quaternion rot = Math::Quaternion::LookRotation(dir, Math::Vector3::Up);
+		m_bossEnemy->SetRotation(rot);
+	}
+
+	m_bossEnemy->SetIsMoving(dir);
 }
 
 void BossEnemyState_Run::StateEnd()

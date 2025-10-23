@@ -36,6 +36,8 @@ public:
 
 	bool GetShowEffect() const { return m_showEffect; }
 
+	bool GetShowDebugWireFrame() const { return m_showDebugWireFrame; }
+
 private:
 
 	std::weak_ptr<TPSCamera> m_tpsCamera;
@@ -66,6 +68,9 @@ private:
 	bool m_gameSceneInMouse = true;
 
 	bool m_showEffect = true;
+
+
+	bool m_showDebugWireFrame = false;
 
 	std::string m_modelPath = "Asset/";
 

@@ -15,7 +15,7 @@
 #include"../../../../Weapon/WeaponKatanaScabbard/WeaponKatanaScabbard.h"
 #include"../../../../Camera/PlayerCamera/PlayerCamera.h"
 #include"../../../Enemy/Enemy.h"
-#include"../PlayerState_SpecialAttack/PlayerState_SpecialAttack.h"
+#include"../PlayerState_SpecialAttackCutIn/PlayerState_SpecialAttackCutIn.h"
 #include"../PlayerState_FullCharge/PlayerState_FullCharge.h"
 #include"../../../BossEnemy/BossEnemy.h"
 
@@ -59,9 +59,13 @@ void PlayerState_Idle::StateUpdate()
 
 	if (KeyboardManager::GetInstance().IsKeyJustPressed('Q'))
 	{
-		auto specialAttackState = std::make_shared<PlayerState_SpecialAttack>();
-		m_player->ChangeState(specialAttackState);
-		return;
+		if (m_player->GetPlayerStatus().specialPoint == m_player->GetPlayerStatus().specialPointMax)
+		{
+			m_player->GetPlayerStatus().specialPoint = 0;
+			auto specialAttackState = std::make_shared<PlayerState_SpecialAttackCutIn>();
+			m_player->ChangeState(specialAttackState);
+			return;
+		}
 	}
 
 	// 前方回避

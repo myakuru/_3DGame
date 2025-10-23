@@ -11,18 +11,25 @@ void BossEnemyState_Enter::StateStart()
 	// アニメーション速度を変更
 	m_bossEnemy->SetAnimeSpeed(60.0f);
 
-	SceneManager::Instance().GetObjectWeakPtr(m_enterEffect);
-
-	if (auto effect = m_enterEffect.lock(); effect)
-	{
-		effect->SetPlayEffect(true);
-	}
-
-
+	m_effectPlayed = false;
 }
 
 void BossEnemyState_Enter::StateUpdate()
 {
+	// アニメーションの再生時間を取得
+	m_animeTime = m_bossEnemy->GetAnimator()->GetPlayProgress();
+
+	SceneManager::Instance().GetObjectWeakPtr(m_enterEffect);
+
+	if (m_animeTime >= 0.2f && !m_effectPlayed)
+	{
+		if (auto effect = m_enterEffect.lock(); effect)
+		{
+			effect->SetPlayEffect(true);
+			m_effectPlayed = true;
+		}
+	}
+
 	if (m_bossEnemy->GetAnimator()->IsAnimationEnd())
 	{
 		auto state = std::make_shared<BossEnemyState_Idle>();
@@ -38,6 +45,5 @@ void BossEnemyState_Enter::StateEnd()
 	if (auto effect = m_enterEffect.lock(); effect)
 	{
 		effect->SetPlayEffect(false);
-		effect->StopEffect();
 	}
 }

@@ -8,6 +8,7 @@
 #include"../../../../Weapon/WeaponKatanaScabbard/WeaponKatanaScabbard.h"
 #include"../PlayerState_FowardAvoidFast/PlayerState_FowardAvoidFast.h"
 #include"../PlayerState_Skill/PlayerState_Skill.h"
+#include"../PlayerState_SpecialAttackCutIn/PlayerState_SpecialAttackCutIn.h"
 
 void PlayerState_Run::StateStart()
 {
@@ -48,6 +49,17 @@ void PlayerState_Run::StateUpdate()
 	if (KeyboardManager::GetInstance().IsKeyJustPressed(VK_RBUTTON))
 	{
 		m_isKeyPressing = true; // 判定開始
+	}
+
+	if (KeyboardManager::GetInstance().IsKeyJustPressed('Q'))
+	{
+		if (m_player->GetPlayerStatus().specialPoint == m_player->GetPlayerStatus().specialPointMax)
+		{
+			m_player->GetPlayerStatus().specialPoint = 0;
+			auto specialAttackState = std::make_shared<PlayerState_SpecialAttackCutIn>();
+			m_player->ChangeState(specialAttackState);
+			return;
+		}
 	}
 
 	// Eキー先行入力の予約

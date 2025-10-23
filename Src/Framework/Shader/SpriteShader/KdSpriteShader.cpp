@@ -94,7 +94,8 @@ void KdSpriteShader::Begin(bool linear, bool disableZBuffer)
 	// 使用するステートをセット
 	//---------------------------------------
 	// Z判定、Z書き込み無効のステートをセット
-	if (disableZBuffer) {
+	if (disableZBuffer)
+	{
 		KdShaderManager::Instance().ChangeDepthStencilState(KdDepthStencilState::ZDisable);
 	}
 	// Samplerステートをセット

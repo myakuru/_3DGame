@@ -23,15 +23,20 @@ void PlayerState_FullCharge::StateStart()
 
 	KdAudioManager::Instance().Play("Asset/Sound/Player/Charge.WAV", false)->SetVolume(1.0f);
 
+	// アニメーション速度を変更
+	m_player->SetAnimeSpeed(60.0f);
+
 }
 
 void PlayerState_FullCharge::StateUpdate()
 {
-	// アニメーション速度を変更
-	m_player->SetAnimeSpeed(60.0f);
+	// アニメーション時間のデバッグ表示
+	{
+		m_animeTime = m_player->GetAnimator()->GetPlayProgress();
+	}
 	
 
-	if (m_player->GetAnimator()->IsAnimationEnd())
+	if (m_animeTime >= 0.5f)
 	{
 		auto state = std::make_shared<PlayerState_ChargeAttack>();
 		m_player->ChangeState(state);

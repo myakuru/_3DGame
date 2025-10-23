@@ -51,12 +51,6 @@ void PlayerState_JustAvoidAttack_end::StateStart()
 	{
 		m_player->GetPlayerStatus().chargeCount++;
 	}
-
-	if (m_player->GetPlayerStatus().skillPoint <= m_player->GetPlayerStatus().skillPointMax)
-	{
-		m_player->GetPlayerStatus().skillPoint += 5;
-	}
-
 }
 
 void PlayerState_JustAvoidAttack_end::StateUpdate()
@@ -70,7 +64,7 @@ void PlayerState_JustAvoidAttack_end::StateUpdate()
 	}
 
 	// 当たり判定有効時間: 最初の0.5秒のみ
-	m_player->UpdateAttackCollision(8.0f, 1.0f, 5, 0.1f, { 0.2f, 0.0f }, 0.3f, 0.0f, 0.4f);
+	m_player->UpdateAttackCollision(8.0f, 1.0f, 5, 0.1f, { 0.3f, 0.3f }, 0.3f);
 
 	UpdateKatanaPos();
 

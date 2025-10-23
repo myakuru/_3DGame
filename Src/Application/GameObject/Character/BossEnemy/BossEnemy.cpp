@@ -63,8 +63,14 @@ void BossEnemy::Update()
 
 	float deltaTime = Application::Instance().GetUnscaledDeltaTime();
 
+	if (SceneManager::Instance().m_gameClear == true)
+	{
+		m_isExpired = true;
+	}
+
 	if (m_Expired)
 	{
+
 		if (m_dissever < 1.0f)
 		{
 			m_dissever += 2.0f * deltaTime;
@@ -395,6 +401,7 @@ void BossEnemy::StateInit()
 	auto spIdleState = std::make_shared<BossEnemyState_Enter>();
 	ChangeState(spIdleState);
 }
+
 void BossEnemy::ChangeState(std::shared_ptr<BossEnemyStateBase> _state)
 {
 	_state->SetBossEnemy(this);

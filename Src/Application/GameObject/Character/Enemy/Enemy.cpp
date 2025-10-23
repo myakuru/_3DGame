@@ -9,6 +9,7 @@
 #include"../../Collition/Collition.h"
 #include"../../../main.h"
 #include"../../../../Framework/Json/Json.h"
+#include"EnemyState/EnemyState_Dath/EnemyState_Dath.h"
 
 const uint32_t Enemy::TypeID = KdGameObject::GenerateTypeID();
 
@@ -32,12 +33,47 @@ void Enemy::Init()
 	m_dissever = 0.0f;
 
 	m_invincible = false;
+
+	m_Expired = false;
 }
 
 void Enemy::Update()
 {
-	SceneManager::Instance().GetObjectWeakPtrList(m_enemySwords);
-	SceneManager::Instance().GetObjectWeakPtrList(m_enemyShields);
+	// 自分の武器が未割り当て/消滅なら一度だけ取得して所有者に設定する
+	if (m_wpSword.expired())
+	{
+		std::list<std::weak_ptr<EnemySword>> swords;
+		SceneManager::Instance().GetObjectWeakPtrList(swords);
+		for (auto& w : swords)
+		{
+			if (auto sword = w.lock())
+			{
+				if (sword->GetOwnerEnemy().expired())
+				{
+					sword->SetOwnerEnemy(std::static_pointer_cast<Enemy>(shared_from_this()));
+					m_wpSword = sword;
+					break;
+				}
+			}
+		}
+	}
+	if (m_wpShield.expired())
+	{
+		std::list<std::weak_ptr<EnemyShield>> shields;
+		SceneManager::Instance().GetObjectWeakPtrList(shields);
+		for (auto& w : shields)
+		{
+			if (auto shield = w.lock())
+			{
+				if (shield->GetOwnerEnemy().expired())
+				{
+					shield->SetOwnerEnemy(std::static_pointer_cast<Enemy>(shared_from_this()));
+					m_wpShield = shield;
+					break;
+				}
+			}
+		}
+	}
 
 	// 球の中心座標と半径を設定
 	sphere.Center = m_position + Math::Vector3(0.0f, 0.7f, 0.0f); // 敵の位置＋オフセット
@@ -46,21 +82,6 @@ void Enemy::Update()
 	m_pDebugWire->AddDebugSphere(sphere.Center, sphere.Radius, kBlueColor);
 
 	SceneManager::Instance().GetObjectWeakPtr(m_wpPlayer);
-
-	float deltaTime = Application::Instance().GetUnscaledDeltaTime();
-
-	if (m_Expired)
-	{
-		if (m_dissever < 1.0f)
-		{
-			m_dissever += 2.0f * deltaTime;
-		}
-		else
-		{
-			m_dissever = 1.0f;
-			m_isExpired = true;
-		}
-	}
 
 	CharaBase::Update();
 
@@ -77,7 +98,6 @@ void Enemy::Update()
 
 		m_isHit = false;
 
-
 		if (m_invincible) return;
 
 		// ダメージステートに変更
@@ -86,28 +106,23 @@ void Enemy::Update()
 		return;
 	}
 
-	// 敵の剣の行列を更新
-	for(auto weapons : m_enemySwords)
+	// 自分が所有する剣のみ行列を更新
+	if (auto sword = m_wpSword.lock())
 	{
-		if (auto sword = weapons.lock(); sword)
+		if (auto rightHandNode = m_modelWork->FindWorkNode("weapon_r"); rightHandNode)
 		{
-			if (auto rightHandNode = m_modelWork->FindWorkNode("weapon_r"); rightHandNode)
-			{
-				sword->SetEnemyRightHandMatrix(rightHandNode->m_worldTransform);
-				sword->SetEnemyMatrix(m_mWorld);
-			}
+			sword->SetEnemyRightHandMatrix(rightHandNode->m_worldTransform);
+			sword->SetEnemyMatrix(m_mWorld);
 		}
 	}
 
-	for(auto shields : m_enemyShields)
+	// 自分が所有する盾のみ行列を更新
+	if (auto shield = m_wpShield.lock())
 	{
-		if (auto shield = shields.lock(); shield)
+		if (auto leftHandNode = m_modelWork->FindWorkNode("weapon_l"); leftHandNode)
 		{
-			if (auto leftHandNode = m_modelWork->FindWorkNode("weapon_l"); leftHandNode)
-			{
-				shield->SetEnemyLeftHandMatrix(leftHandNode->m_worldTransform);
-				shield->SetEnemyMatrix(m_mWorld);
-			}
+			shield->SetEnemyLeftHandMatrix(leftHandNode->m_worldTransform);
+			shield->SetEnemyMatrix(m_mWorld);
 		}
 	}
 }
@@ -375,10 +390,38 @@ void Enemy::ChangeState(std::shared_ptr<EnemyStateBase> _state)
 
 void Enemy::Damage(int _damage)
 {
+	if (m_Expired) return;
+
 	m_getDamage = _damage;
 	m_status.hp -= _damage;
-	if (m_status.hp <= 0)
+	if (m_status.hp < 0)
 	{
-		m_Expired = true;
+		m_status.hp = 0;
 	}
+
+	if (m_status.hp == 0)
+	{
+		//　死亡処理
+		m_Expired = true;
+		m_isHit = false;
+		m_invincible = true; // 不要な追加ヒット抑止
+
+		auto spDeathState = std::make_shared<EnemyState_Death>();
+		ChangeState(spDeathState);
+		return;
+	}
+	
+}
+
+void Enemy::SetDissolve(float v)
+{
+	// 0～1にクランプ
+	if (v < 0.0f) v = 0.0f;
+	else if (v > 1.0f) v = 1.0f;
+	m_dissever = v;
+}
+
+float Enemy::GetDissolve() const
+{
+	return m_dissever;
 }

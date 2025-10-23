@@ -77,6 +77,8 @@ void EnemyHp::Update()
 
 void EnemyHp::DrawSprite()
 {
+	if (SceneManager::Instance().IsIntroCamera()) return;
+
 	// 非表示なら描画しない
 	if (!m_bDrawTexture || m_screenPosList.empty()) { return; }
 

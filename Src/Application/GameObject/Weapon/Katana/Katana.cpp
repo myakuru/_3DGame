@@ -121,7 +121,7 @@ void Katana::UpdateHand()
 
 void Katana::ImGuiInspector()
 {
-	KdGameObject::ImGuiInspector();
+	WeaponBase::ImGuiInspector();
 
 	ImGui::Text("Katana Inspector");
 

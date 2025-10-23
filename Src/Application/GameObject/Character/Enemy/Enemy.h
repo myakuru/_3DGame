@@ -66,9 +66,9 @@ public:
 
 	struct EnemyStatus
 	{
-		int hp = 100000;				// 体力
+		int hp = 150000;			// 体力
 		int attack = 100;			// 攻撃力
-		int maxHp = 100000;			// 最大体力
+		int maxHp = 150000;			// 最大体力
 	};
 
 	const EnemyStatus& GetStatus() { return m_status; }
@@ -102,6 +102,9 @@ public:
 	void IncrementHitCount() { ++m_totalHitCount; }
 	void ResetHitCount() { m_totalHitCount = 0; }
 
+	void SetDissolve(float v);
+	float GetDissolve() const;
+
 private:
 
 	std::weak_ptr<Player> m_wpPlayer;
@@ -119,6 +122,9 @@ private:
 
 	std::list<std::weak_ptr<EnemySword>> m_enemySwords; // 敵の剣
 	std::list<std::weak_ptr<EnemyShield>> m_enemyShields; // 敵の盾
+
+	std::weak_ptr<EnemySword>  m_wpSword;
+	std::weak_ptr<EnemyShield> m_wpShield;
 
 	std::shared_ptr<HitDamage> m_spHitDamage;
 

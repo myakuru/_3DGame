@@ -55,6 +55,9 @@ void PlayerState_Skill::StateUpdate()
 
 	UpdateKatanaPos();
 
+	// 当たり判定有効時間: 最初の0.5秒のみ
+	m_player->UpdateAttackCollision(8.0f, 1.0f, 5, 0.1f, { 0.3f, 0.3f }, 0.3f);
+
 	float deltaTime = Application::Instance().GetDeltaTime();
 	if (m_attackParam.m_dashTimer < 0.1f)
 	{

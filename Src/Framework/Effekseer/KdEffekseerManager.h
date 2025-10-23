@@ -21,6 +21,7 @@ public:
 		// 自分で追加
 		Math::Matrix World = Math::Matrix::Identity;
 		bool UseWorldMatrix = false; // ワールド行列を使うかどうか
+		Math::Vector4 Color = Math::Vector4(1.0f, 1.0f, 1.0f, 1.0f);
 	};
 
 	// Effekseerエフェクト再生
@@ -30,7 +31,9 @@ public:
 		const std::string& effName,
 		const Math::Matrix& world,
 		const float speed = 1.0f,
-		bool isLoop = false)
+		bool isLoop = false,
+		Math::Vector4 color = Math::Vector4(1.0f, 1.0f, 1.0f, 0.1f)
+		)
 	{
 		PlayEfkInfo info;
 		info.FileName = effName;
@@ -38,6 +41,7 @@ public:
 		info.Speed = speed;
 		info.UseWorldMatrix = true;
 		info.IsLoop = isLoop;
+		info.Color = color;
 		return Play(info);
 	}
 
@@ -63,6 +67,9 @@ public:
 	void SetSpeed(const int handle, const float speed = 1.0f);
 
 	void SetPause(const int handle, const bool isPause);
+
+	// 色の設定
+	void SetColor(const int handle, const Math::Vector4& color);
 
 	// 再生中かどうか
 	const bool IsPlaying(const int handle) const;
@@ -146,6 +153,9 @@ public:
 	// 座標設定
 	void SetPos(const Math::Vector3& pos);
 
+	// 色設定
+
+
 	// サイズ設定
 	void SetScale(const Math::Vector3 scale = { 1.0f, 1.0f, 1.0f });
 	void SetScale(const float scale = 1.0f);
@@ -161,6 +171,9 @@ public:
 
 	// 再生するエフェクトの各種情報設定
 	void SetPlayEfkInfo(const KdEffekseerManager::PlayEfkInfo& info) { m_info = info; }
+
+	// 色の設定
+	void SetColor(const Math::Vector4& color);
 
 	// エフェクト取得
 	Effekseer::EffectRef& WorkEffect() { return m_effect; }
@@ -180,6 +193,7 @@ public:
 
 	// ループするかどうか
 	const bool IsLoop() const { return m_info.IsLoop; }
+
 
 	// エフェクトの各種情報取得
 	KdEffekseerManager::PlayEfkInfo& WorkPlayEfkInfo()				{ return m_info; }

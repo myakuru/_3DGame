@@ -225,8 +225,13 @@ public :
 	}
 
 	// ゲームサウンドのセット
+	// ゲームサウンドのセット（以前のBGMを停止してから差し替え）
 	void SetGameSound(const std::shared_ptr<KdSoundInstance>& _sound)
 	{
+		if (m_gameSound && m_gameSound != _sound)
+		{
+			m_gameSound->Stop();
+		}
 		m_gameSound = _sound;
 	}
 
