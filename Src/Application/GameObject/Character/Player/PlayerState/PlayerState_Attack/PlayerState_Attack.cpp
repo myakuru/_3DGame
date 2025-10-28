@@ -61,11 +61,6 @@ void PlayerState_Attack::StateUpdate()
 		}
 	}
 
-	if (m_player->GetEnemy().lock())
-	{
-		m_player->GetEnemy().lock()->GetPos();
-	}
-
 	float deltaTime = Application::Instance().GetDeltaTime();
 
 	// 当たり判定有効時間: 最初の0.5秒のみ

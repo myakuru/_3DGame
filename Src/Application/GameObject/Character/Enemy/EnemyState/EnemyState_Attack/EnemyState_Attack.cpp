@@ -13,9 +13,6 @@ void EnemyState_Attack::StateStart()
 	auto anime = m_enemy->GetAnimeModel()->GetAnimation("Attack");
 	m_enemy->GetAnimator()->SetAnimation(anime, 0.25f, false);
 
-	// エフェクトの再生
-	SceneManager::Instance().GetObjectWeakPtrList(m_shineEffectBlues);
-
 	for (const auto& effects : m_shineEffectBlues)
 	{
 		if (auto effect = effects.lock(); effect)

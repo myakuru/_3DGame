@@ -137,11 +137,6 @@ public:
 		Release();
 	}
 
-	// SVGを指定ピクセルサイズにラスタライズして読み込む
-	// targetW/targetH は 0 の場合、SVGの宣言サイズ(無ければフォールバック)を使用
-	bool LoadSvg(std::string_view filename, int targetW, int targetH, bool renderTarget = false, bool generateMipmap = true);
-
-
 
 private:
 

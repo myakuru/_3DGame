@@ -49,4 +49,9 @@ protected:
 	std::shared_ptr<KdSoundInstance> m_runSound = nullptr;
 
 
+	std::weak_ptr<KdGameObject> m_focusTarget;
+	float m_focusRemainSec = 0.0f;
+	const float m_focusDurationSec = 0.1f; // フォーカス継続時間(調整用)
+	const float m_focusMaxDistSq = 50.0f * 50.0f; // 距離制限(離れすぎたら解除) 任意
+
 };

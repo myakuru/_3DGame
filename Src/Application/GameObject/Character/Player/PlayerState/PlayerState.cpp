@@ -8,36 +8,32 @@
 #include"../../../../Scene/SceneManager.h"
 #include"../../../../main.h"
 
-// 追加: フォーカス共有（シングルプレイヤー前提）
-namespace
-{
-	std::weak_ptr<KdGameObject> g_focusTarget;
-	float g_focusRemainSec = 0.0f;
-	constexpr float g_focusDurationSec = 0.1f; // フォーカス継続時間(調整用)
-	constexpr float g_focusMaxDistSq = 50.0f * 50.0f; // 距離制限(離れすぎたら解除) 任意
-}
-
 void PlayerStateBase::StateStart()
 {
-	// プレイヤー位置をキャッシュ（m_mWorld更新タイミングが気になるなら専用アクセサを用意）
+	// プレイヤー位置
 	const Math::Vector3 playerPos = m_player->GetPos();
 
 	std::shared_ptr<KdGameObject> nearestEnemy;
 	Math::Vector3                  nearestEnemyPos = Math::Vector3::Zero;
 	float                          minDistSq = std::numeric_limits<float>::max();
 
-	// まずは既存フォーカスを採用できるか確認
-	if (g_focusRemainSec > 0.0f)
+	// 検索半径（g_focusMaxDistSq と整合）
+	constexpr float kSearchRadius = 50.0f;               // = sqrt(50^2)
+	constexpr float kSearchRadiusSq = kSearchRadius * kSearchRadius;
+
+	// 1) 既存フォーカスが有効なら採用（距離とボス出現状態も考慮）
+	if (m_focusRemainSec > 0.0f)
 	{
-		if (auto f = g_focusTarget.lock())
+		if (auto f = m_focusTarget.lock())
 		{
 			if (!f->IsExpired())
 			{
+				// 未出現ボスは無視
 				if (!(f->GetTypeID() == BossEnemy::TypeID && !SceneManager::Instance().IsBossAppear()))
 				{
 					const Math::Vector3 fpos = f->GetPos();
 					const float distSq = (fpos - playerPos).LengthSquared();
-					if (distSq <= g_focusMaxDistSq)
+					if (distSq <= kSearchRadiusSq)
 					{
 						nearestEnemy = f;
 						nearestEnemyPos = fpos;
@@ -46,49 +42,57 @@ void PlayerStateBase::StateStart()
 				}
 			}
 		}
-		// 無効なら即解除
+		// 無効なら解除
 		if (!nearestEnemy)
 		{
-			g_focusTarget.reset();
-			g_focusRemainSec = 0.0f;
+			m_focusTarget.reset();
+			m_focusRemainSec = 0.0f;
 		}
 	}
 
-	// フォーカス未採用なら通常の最近傍探索
+	// 2) 再取得が必要な場合のみ、近傍限定で Enemy/BossEnemy を取得
 	if (!nearestEnemy)
 	{
-		for (const auto& weakEnemy : m_player->GetEnemyLike())
-		{
-			if (auto enemy = weakEnemy.lock())
-			{
-				if (enemy->IsExpired()) continue;
+		std::list<std::weak_ptr<KdGameObject>> candidates;
+		// 型バケット＋近傍API（SceneManager 側で型別レジストリを使用）
+		SceneManager::Instance().GetObjectWeakPtrListByTagInSphere
+		(
+			ObjTag::EnemyLike, playerPos, kSearchRadius, candidates
+		);
 
-				// ボス敵だった場合
-				if (enemy->GetTypeID() == BossEnemy::TypeID)
+		// 最も近い敵を探索
+		for (auto& w : candidates)
+		{
+			if (auto sp = w.lock())
+			{
+				if (sp->IsExpired()) continue;
+
+				// 未出現ボスは除外
+				if (sp->GetTypeID() == BossEnemy::TypeID && !SceneManager::Instance().IsBossAppear())
 				{
-					if (!SceneManager::Instance().IsBossAppear()) continue;
+					continue;
 				}
 
-				const Math::Vector3 enemyPos = enemy->GetPos();
-				const float distSq = (enemyPos - playerPos).LengthSquared();
-
+				const Math::Vector3 epos = sp->GetPos();
+				const float distSq = (epos - playerPos).LengthSquared();
 				if (distSq < minDistSq)
 				{
 					minDistSq = distSq;
-					nearestEnemyPos = enemyPos;
-					nearestEnemy = std::move(enemy);
+					nearestEnemyPos = epos;
+					nearestEnemy = sp;
 				}
 			}
 		}
 
-		// 新規にロック
+		// 新規フォーカス確定
 		if (nearestEnemy)
 		{
-			g_focusTarget = nearestEnemy;
-			g_focusRemainSec = g_focusDurationSec;
+			m_focusTarget = nearestEnemy;
+			m_focusRemainSec = m_focusDurationSec;
 		}
 	}
 
+	// 3) 攻撃方向を決定（敵がいればその方向、いなければ最後の移動方向）
 	if (nearestEnemy)
 	{
 		m_attackDirection = nearestEnemyPos - playerPos;
@@ -102,7 +106,6 @@ void PlayerStateBase::StateStart()
 	}
 	else
 	{
-		// 敵がいない場合は直前の移動方向
 		m_attackDirection = m_player->GetLastMoveDirection();
 		if (m_attackDirection != Math::Vector3::Zero)
 		{
@@ -110,7 +113,7 @@ void PlayerStateBase::StateStart()
 		}
 	}
 
-	// デフォルトは刀を左手に持たない
+	// 刀の初期フラグ
 	if (auto katana = m_player->GetKatana().lock(); katana)
 	{
 		katana->SetNowAttackState(false);
@@ -127,29 +130,29 @@ void PlayerStateBase::StateUpdate()
 	float deltaTime = Application::Instance().GetUnscaledDeltaTime();
 
 	// フォーカスタイマー更新と自動解除
-	if (g_focusRemainSec > 0.0f)
+	if (m_focusRemainSec > 0.0f)
 	{
-		g_focusRemainSec -= deltaTime;
-		if (g_focusRemainSec <= 0.0f)
+		m_focusRemainSec -= deltaTime;
+		if (m_focusRemainSec <= 0.0f)
 		{
-			g_focusRemainSec = 0.0f;
-			g_focusTarget.reset();
+			m_focusRemainSec = 0.0f;
+			m_focusTarget.reset();
 		}
 		else
 		{
-			if (auto f = g_focusTarget.lock())
+			if (auto f = m_focusTarget.lock())
 			{
 				// 失効条件
 				if (f->IsExpired()
 					|| (f->GetTypeID() == BossEnemy::TypeID && !SceneManager::Instance().IsBossAppear()))
 				{
-					g_focusRemainSec = 0.0f;
-					g_focusTarget.reset();
+					m_focusRemainSec = 0.0f;
+					m_focusTarget.reset();
 				}
 			}
 			else
 			{
-				g_focusRemainSec = 0.0f;
+				m_focusRemainSec = 0.0f;
 			}
 		}
 	}

@@ -97,6 +97,7 @@ class KdSoundInstance : public std::enable_shared_from_this<KdSoundInstance>
 {
 public:
 	KdSoundInstance(const std::shared_ptr<KdSoundEffect>& soundEffect);
+	virtual ~KdSoundInstance(); // 仮想デストラクタ
 
 	virtual bool CreateInstance();
 
@@ -118,11 +119,10 @@ public:
 
 protected:
 
-	// サウンドの再生インスタンス
-	std::unique_ptr<DirectX::SoundEffectInstance>	m_instance;
-
-	// 再生サウンドの元データ
-	std::shared_ptr<KdSoundEffect>					m_soundData;
+	// 先にSoundEffect(元データ)を宣言してから、後にInstanceを宣言する
+	// 破棄順序は逆順になるため、先にInstanceが破棄され、次にEffectが破棄される
+	std::shared_ptr<KdSoundEffect>                    m_soundData;   // 順序を前に
+	std::unique_ptr<DirectX::SoundEffectInstance>     m_instance;
 
 	// コピー禁止用
 	KdSoundInstance(const KdSoundInstance& src) = delete;

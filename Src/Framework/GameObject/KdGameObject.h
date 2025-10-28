@@ -1,4 +1,17 @@
 ﻿#pragma once
+
+enum class ObjTag : uint32_t
+{
+	None = 0,
+	EnemyLike = 1u << 0,
+	PlayerLike = 1u << 1,
+	Collision = 1u << 2,
+	EnemySword = 1u << 3,
+	EnemyShield = 1u << 4,
+};
+
+inline uint32_t ToMask(ObjTag t) { return static_cast<uint32_t>(t); }
+
 // ゲーム上に存在するすべてのオブジェクトの基底となるクラス
 class KdGameObject : public std::enable_shared_from_this<KdGameObject>
 {
@@ -27,6 +40,7 @@ public:
 	KdGameObject() = default;
 	virtual ~KdGameObject() { Release(); }
 
+
 	// 生成される全てに共通するパラメータに対する初期化のみ
 	virtual void Init();
 
@@ -48,6 +62,7 @@ public:
 	virtual void GenerateDepthMapFromLight() {}
 	virtual void PreDraw() {}
 	virtual void DrawLit() {}
+	virtual void DrawRimLight() {}
 	virtual void DrawUnLit() {}
 	virtual void DrawEffect() {}
 	virtual void DrawBright() {}
@@ -74,6 +89,14 @@ public:
 
 	virtual bool IsVisible()	const { return false; }
 	virtual bool IsRideable()	const { return false; }
+
+
+	// タグ操作
+	void AddTag(ObjTag t) { m_tagMask |= ToMask(t); }
+	void RemoveTag(ObjTag t) { m_tagMask &= ~ToMask(t); }
+	bool HasTag(ObjTag t) const { return (m_tagMask & ToMask(t)) != 0; }
+	void SetTagMask(uint32_t mask) { m_tagMask = mask; }
+	uint32_t GetTagMask() const { return m_tagMask; }
 
 	// 視錐台範囲内に入っているかどうか
 	virtual bool CheckInScreen(const DirectX::BoundingFrustum& a_BoundingFrustum)const;
@@ -137,6 +160,8 @@ protected:
 	// デバッグ情報クラス
 	std::unique_ptr<KdDebugWireFrame> m_pDebugWire = nullptr;
 
+	uint32_t m_tagMask = 0; // タグビット
+
 
 	//自分で追加したもの
 
@@ -171,6 +196,6 @@ protected:
 	Math::Color m_color = {1,1,1,1};
 
 	// ゲームの音量を管理する変数
-	float m_gameVolume = 1.0f;
+	float m_gameVolume = 0.0f;
 
 };

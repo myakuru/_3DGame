@@ -1,6 +1,5 @@
 ﻿#pragma once
 #include "../CharacterBase.h"
-#include"../../HitDamage/HitDamage.h"
 class Player;
 class EnemySword;
 class EnemyShield;
@@ -9,7 +8,7 @@ class Enemy :public CharaBase
 public:
 	// クラスごとに一意なTypeIDを持たせる
 	static const uint32_t TypeID;
-	Enemy() { m_typeID = TypeID; }
+	Enemy() { m_typeID = TypeID; AddTag(ObjTag::EnemyLike); } // タグ付与
 	~Enemy() override = default;
 
 	void Init() override;
@@ -126,9 +125,7 @@ private:
 	std::weak_ptr<EnemySword>  m_wpSword;
 	std::weak_ptr<EnemyShield> m_wpShield;
 
-	std::shared_ptr<HitDamage> m_spHitDamage;
-
-	std::list<std::weak_ptr<Player>> m_player;
+	std::list<std::weak_ptr<KdGameObject>> m_player;
 
 	// ジャスト回避成功フラグ
 	bool m_justAvoidSuccess = false;

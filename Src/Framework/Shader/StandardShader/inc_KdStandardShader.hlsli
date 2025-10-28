@@ -17,6 +17,15 @@ cbuffer cbObject : register(b0)
 
 	int g_EnableGradient;
 	float4 g_GradientColor;
+
+	int g_LimLightEnable;
+	float3 g_LimLightColor;
+	float g_LimLightPower;
+
+	float3 g_LitRimLightColor; // リムライトの色
+	float g_LitRimLightEnable; // リムライトの有効化フラグ
+	float g_LitRimLightPower; // リムライトの強さ
+	
 };
 
 // 定数バッファ(メッシュ単位)

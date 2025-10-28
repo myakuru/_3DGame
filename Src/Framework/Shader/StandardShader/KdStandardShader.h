@@ -30,19 +30,27 @@ public:
 		// スキンメッシュオブジェクトかどうか(スキンメッシュ対応)
 		int				IsSkinMeshObj = 0;
 
-		// ディゾルブ関連
+		// ディゾルブ関連（float2 の後に float3 が来るため、HLSL と同じ16B境界に揃える）
 		float			DissolveThreshold = 0.0f;	// 0 ～ 1
 		float			DissolveEdgeRange = 0.03f;	// 0 ～ 1
+		float			_pad0[2] = { 0.0f, 0.0f };   // ← ここで8バイト詰め物（HLSLのレジスタ境界に揃える）
 
 		Math::Vector3	DissolveEmissive = { 0.0f, 1.0f, 1.0f };
 
 		// グラデーション用フラグとカラー
-		int enableGradient = 0;           // グラデーション有効フラグ（0:無効, 1:有効）
+		int             enableGradient = 0;           // 0:無効, 1:有効
+		Math::Color     gradientColor = { 1.0f, 1.0f, 1.0f, 1.0f }; // float4
 
-		Math::Color gradientColor = { 1.0f, 1.0f, 1.0f, 1.0f }; // グラデーションカラー
+		// リムライト
+		int             LimLightEnable = 0;                  // int + float3 で同一レジスタに収まる
+		Math::Vector3   LimLightColor = { 1.0f, 1.0f, 1.0f };
+		float           LimLightPower = 1.0f;
 
-		// パディング
-		float _padding[2] = { 0.0f, 0.0f };
+		Math::Vector3   LitRimLightColor = { 1.0f, 1.0f, 1.0f };
+		float           LitRimLightEnable = 0.0f;
+		float			LitRimLightPow = 4.0f;
+
+		float			_pad1[2] = { 0.0f, 0.0f };   // ← ここで8バイト詰め物（HLSLのレジスタ境界に揃える）
 
 	};
 
@@ -159,6 +167,29 @@ public:
 		m_dirtyCBObj = true;
 	}
 
+	// リムライトの設定
+	void SetRimLightEnable(bool enable)
+	{
+		m_cb0_Obj.Work().LimLightEnable = enable ? 1 : 0;
+		m_dirtyCBObj = true;
+	}
+
+	void SetRimLight(float pow, const Math::Vector3& color)
+	{
+		m_cb0_Obj.Work().LimLightPower = pow;
+		m_cb0_Obj.Work().LimLightColor = color;
+		m_dirtyCBObj = true;
+	}
+
+	// DrawLit用リムライト設定
+	void SetLitRimLight(const Math::Vector3& _color = { 1.0f,1.0f,1.0f }, bool _enable = false, float _ritRimLightPower = 1.0f)
+	{
+		m_cb0_Obj.Work().LitRimLightColor = _color;
+		m_cb0_Obj.Work().LitRimLightEnable = _enable ? 1.0f : 0.0f;
+		m_cb0_Obj.Work().LitRimLightPow = _ritRimLightPower;
+		m_dirtyCBObj = true;
+	}
+
 	//================================================
 	// 各定数バッファの取得
 	//================================================
@@ -201,6 +232,10 @@ public:
 	// エフェクト用
 	void BeginEffect();
 	void EndEffect();
+
+	// RimLight用描画開始・終了
+	void BeginRimLight();
+	void EndRimLight();
 
 	//================================================
 	// 描画関数
@@ -317,6 +352,7 @@ private:
 	ID3D11PixelShader* m_PS_Gradation = nullptr;				// グラーデーション用ピクセルシェーダー
 	ID3D11PixelShader* m_PS_GrayScale = nullptr;				// グレースケール用ピクセルシェーダー
 	ID3D11PixelShader* m_PS_Effect = nullptr;					// エフェクト用ピクセルシェーダー
+	ID3D11PixelShader* m_PS_RimLight = nullptr;				// リムライト用ピクセルシェーダー
 
 	// テクスチャ
 	std::shared_ptr<KdTexture>	m_dissolveTex = nullptr;	// ディゾルブで使用するデフォルトテクスチャ

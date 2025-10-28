@@ -29,14 +29,45 @@ void PlayerState_BackWordAvoid::StateStart()
 
 	m_afterImagePlayed = false;
 
-	for (const auto& enemies : m_player->GetEnemies())
+	// 途中で敵のジャスト回避成功フラグが立ったら残像発生
+	if (!m_afterImagePlayed)
 	{
-		if (auto enemyPtr = enemies.lock(); enemyPtr)
+		std::list<std::weak_ptr<KdGameObject>> nearEnemies;
+		constexpr float kJustCheckRadius = 25.0f;
+		SceneManager::Instance().GetObjectWeakPtrListByTagInSphere(
+			ObjTag::EnemyLike, m_player->GetPos(), kJustCheckRadius, nearEnemies);
+
+		for (const auto& wk : nearEnemies)
 		{
-			// ジャスト回避成功時の残像エフェクト
-			if (enemyPtr->GetJustAvoidSuccess())
+			if (auto obj = wk.lock())
 			{
-				m_player->AddAfterImage(true, 5, 1.0f, Math::Color(0.0f, 1.0f, 1.0f, 0.5f), 0.7f);
+				bool just = false;
+				if (obj->GetTypeID() == Enemy::TypeID)
+				{
+					auto e = std::static_pointer_cast<Enemy>(obj);
+					just = e->GetJustAvoidSuccess();
+					if (just) e->SetJustAvoidSuccess(false);
+				}
+				else if (obj->GetTypeID() == BossEnemy::TypeID)
+				{
+					auto b = std::static_pointer_cast<BossEnemy>(obj);
+					just = b->GetJustAvoidSuccess();
+					if (just) b->SetJustAvoidSuccess(false);
+				}
+				if (just)
+				{
+					// ...以降は既存処理
+					m_player->AddAfterImage(true, 5, 1.0f, Math::Color(0.0f, 1.0f, 1.0f, 0.5f), 0.7f);
+					m_justAvoided = true;
+					m_afterImagePlayed = true;
+					m_player->SetJustAvoidSuccess(true);
+					KdAudioManager::Instance().Play("Asset/Sound/Player/SlowMotion.WAV", false)->SetVolume(1.0f);
+					if (auto bgm = SceneManager::Instance().GetGameSound()) { bgm->SetPitch(-1.0f); }
+					const auto& justCfg = m_player->GetPlayerConfig().GetJustAvoidParam();
+					Application::Instance().SetFpsScale(justCfg.m_slowMoScale);
+					SceneManager::Instance().SetDrawGrayScale(justCfg.m_useGrayScale);
+					break;
+				}
 			}
 		}
 	}

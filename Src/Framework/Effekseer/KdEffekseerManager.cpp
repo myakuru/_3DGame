@@ -181,8 +181,13 @@ void KdEffekseerManager::SetPause(const int handle, const bool isPause)
 
 void KdEffekseerManager::SetColor(const int handle, const Math::Vector4& color)
 {
-	m_efkManager->SetAllColor(handle,
-		Effekseer::Color(color.x * 255.0f, color.y * 255.0f, color.z * 255.0f, color.w * 255.0f));
+	m_efkManager->SetAllColor(
+		handle,
+		Effekseer::Color(
+			static_cast<uint8_t>(color.x * 255.0f),
+			static_cast<uint8_t>(color.y * 255.0f),
+			static_cast<uint8_t>(color.z * 255.0f),
+			static_cast<uint8_t>(color.w * 255.0f)));
 }
 
 const bool KdEffekseerManager::IsPlaying(const int handle) const
@@ -244,11 +249,13 @@ std::weak_ptr<KdEffekseerObject> KdEffekseerManager::Play(const PlayEfkInfo& inf
 		m_efkManager->SetRotation(handle, rotate.x, rotate.y, rotate.z);
 	}
 
-	// エフェクトオブジェクト情報設定
-	spEfkObject->SetColor(info.Color);
+
+	// エフェクトオブジェクト情報設定（ハンドルを先に設定してから色を適用する）
 	spEfkObject->SetParentManager(m_efkManager);
 	spEfkObject->SetHandle(handle);
+	spEfkObject->SetColor(info.Color);
 	spEfkObject->SetPlayEfkInfo(info);
+
 	m_nowEffectPlayList.emplace_back(spEfkObject);
 	return spEfkObject;
 }

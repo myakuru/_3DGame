@@ -6,7 +6,7 @@ public:
 
 	static const uint32_t TypeID;
 
-	EnemyShield() { m_typeID = TypeID; }
+	EnemyShield() { m_typeID = TypeID; AddTag(ObjTag::EnemyShield); }
 	~EnemyShield() override = default;
 
 private:

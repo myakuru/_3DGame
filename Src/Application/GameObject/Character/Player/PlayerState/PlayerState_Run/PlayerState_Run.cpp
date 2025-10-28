@@ -21,7 +21,6 @@ void PlayerState_Run::StateStart()
 	{
 		m_runSound = KdAudioManager::Instance().Play("Asset/Sound/Player/Run.wav", true);
 	}
-
 }
 
 void PlayerState_Run::StateUpdate()

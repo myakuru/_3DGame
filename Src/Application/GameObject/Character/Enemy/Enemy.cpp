@@ -42,34 +42,43 @@ void Enemy::Update()
 	// 自分の武器が未割り当て/消滅なら一度だけ取得して所有者に設定する
 	if (m_wpSword.expired())
 	{
-		std::list<std::weak_ptr<EnemySword>> swords;
-		SceneManager::Instance().GetObjectWeakPtrList(swords);
+		std::list<std::weak_ptr<KdGameObject>> swords;
+		SceneManager::Instance().GetObjectWeakPtrListByTag(ObjTag::EnemySword, swords);
 		for (auto& w : swords)
 		{
 			if (auto sword = w.lock())
 			{
-				if (sword->GetOwnerEnemy().expired())
+				// IdがEnemySwordのものだけ処理
+				if (sword->GetTypeID() == EnemySword::TypeID)
 				{
-					sword->SetOwnerEnemy(std::static_pointer_cast<Enemy>(shared_from_this()));
-					m_wpSword = sword;
-					break;
+					auto castedEnemySword = std::static_pointer_cast<EnemySword>(sword);
+					if (castedEnemySword->GetOwnerEnemy().expired())
+					{
+						castedEnemySword->SetOwnerEnemy(std::static_pointer_cast<Enemy>(shared_from_this()));
+						m_wpSword = castedEnemySword;
+						break;
+					}
 				}
 			}
 		}
 	}
 	if (m_wpShield.expired())
 	{
-		std::list<std::weak_ptr<EnemyShield>> shields;
-		SceneManager::Instance().GetObjectWeakPtrList(shields);
+		std::list<std::weak_ptr<KdGameObject>> shields;
+		SceneManager::Instance().GetObjectWeakPtrListByTag(ObjTag::EnemyShield, shields);
 		for (auto& w : shields)
 		{
 			if (auto shield = w.lock())
 			{
-				if (shield->GetOwnerEnemy().expired())
+				if(shield->GetTypeID() == EnemyShield::TypeID)
 				{
-					shield->SetOwnerEnemy(std::static_pointer_cast<Enemy>(shared_from_this()));
-					m_wpShield = shield;
-					break;
+					auto castedEnemyShield = std::static_pointer_cast<EnemyShield>(shield);
+					if (castedEnemyShield->GetOwnerEnemy().expired())
+					{
+						castedEnemyShield->SetOwnerEnemy(std::static_pointer_cast<Enemy>(shared_from_this()));
+						m_wpShield = castedEnemyShield;
+						break;
+					}
 				}
 			}
 		}
@@ -88,14 +97,6 @@ void Enemy::Update()
 	// ヒット処理。
 	if (m_isHit)
 	{
-
-		// HitDamage生成・初期化
-		m_spHitDamage = std::make_shared<HitDamage>();
-		m_spHitDamage->Init();
-		m_spHitDamage->SetDamage(m_getDamage);
-		m_spHitDamage->SetTrackEnemy(std::static_pointer_cast<Enemy>(shared_from_this()));
-		SceneManager::Instance().AddObject(m_spHitDamage);
-
 		m_isHit = false;
 
 		if (m_invincible) return;
@@ -131,7 +132,7 @@ void Enemy::DrawLit()
 {
 	//ディゾルブ処理
 	KdShaderManager::Instance().m_StandardShader.SetDissolve(m_dissever,&m_dissolvePower, &m_dissolveColor);
-	KdShaderManager::Instance().m_StandardShader.DrawModel(*m_modelWork, m_mWorld, m_color);
+	SelectDraw3dModel::DrawLit();
 }
 
 void Enemy::UpdateAttackCollision(float _radius, float _distance, int _attackCount, float _attackTimer, float _activeBeginSec, float _activeEndSec)
@@ -147,8 +148,6 @@ void Enemy::UpdateAttackCollision(float _radius, float _distance, int _attackCou
 	attackSphere.m_type = KdCollider::TypeDamage;
 
 	m_pDebugWire->AddDebugSphere(attackSphere.m_sphere.Center, attackSphere.m_sphere.Radius);
-
-	SceneManager::Instance().GetObjectWeakPtrList(m_player);
 
 	// 初回セットアップ
 	if (!m_hitOnce)
@@ -195,6 +194,8 @@ void Enemy::UpdateAttackCollision(float _radius, float _distance, int _attackCou
 		return;
 	}
 
+	SceneManager::Instance().GetObjectWeakPtrListByTag(ObjTag::PlayerLike , m_player);
+
 	// ジャスト回避成功チェック（有効時間内のみ）
 	for (const auto& players : m_player)
 	{
@@ -203,20 +204,24 @@ void Enemy::UpdateAttackCollision(float _radius, float _distance, int _attackCou
 			std::list<KdCollider::CollisionResult> results;
 			if (playerPtr->Intersects(attackSphere, &results) && !results.empty())
 			{
+				if (playerPtr->GetTypeID() != Player::TypeID) continue;
+
+				auto castedPlayer = std::static_pointer_cast<Player>(playerPtr);
+
 				// プレイヤーが回避中か判定
-				if (playerPtr->GetAvoidFlg())
+				if (castedPlayer->GetAvoidFlg())
 				{
 					const float kJustAvoidWindowSec = 0.5f; // 30f/60fps
-					const float avoidElapsed = playerPtr->GetAvoidStartTime();
+					const float avoidElapsed = castedPlayer->GetAvoidStartTime();
 					if (avoidElapsed >= 0.0f && avoidElapsed <= kJustAvoidWindowSec)
 					{
 						m_justAvoidSuccess = true;
 
 						// プレイヤーへも成立通知（プレイヤー側の状態遷移/効果に利用）
-						playerPtr->SetJustAvoidSuccess(true);
+						castedPlayer->SetJustAvoidSuccess(true);
 
 						// プレイヤー設定からスローモーション倍率・グレースケール適用を取得
-						auto& justCfg = playerPtr->GetPlayerConfig().GetJustAvoidParam();
+						auto& justCfg = castedPlayer->GetPlayerConfig().GetJustAvoidParam();
 						Application::Instance().SetFpsScale(justCfg.m_slowMoScale);
 						SceneManager::Instance().SetDrawGrayScale(justCfg.m_useGrayScale);
 
@@ -242,8 +247,12 @@ void Enemy::UpdateAttackCollision(float _radius, float _distance, int _attackCou
 				std::list<KdCollider::CollisionResult> results;
 				if (playerPtr->Intersects(attackSphere, &results) && !results.empty())
 				{
-					playerPtr->TakeDamage(m_status.attack);
-					playerPtr->SetHitCheck(true);
+					if (playerPtr->GetTypeID() != Player::TypeID) continue;
+
+					auto castedPlayer = std::static_pointer_cast<Player>(playerPtr);
+
+					castedPlayer->TakeDamage(m_status.attack);
+					castedPlayer->SetHitCheck(true);
 				}
 			}
 		}
@@ -275,7 +284,7 @@ void Enemy::PostUpdate()
 	// 球に当たったオブジェクト情報を格納するリスト
 	std::list<KdCollider::CollisionResult> retSpherelist;
 
-	SceneManager::Instance().GetObjectWeakPtrList(m_collisionList);
+	SceneManager::Instance().GetObjectWeakPtrListByTag(ObjTag::Collision, m_collisionList);
 
 	for(auto & weakCol : m_collisionList)
 	{

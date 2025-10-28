@@ -130,25 +130,24 @@ void TestScene::SearchEnemy()
 	bool enemyExists = false;
 	bool bossExists = false;
 
-	SceneManager::Instance().GetObjectWeakPtrList(m_enemies);
-	SceneManager::Instance().GetObjectWeakPtrList(m_bossEnemies);
+	SceneManager::Instance().GetObjectWeakPtrListByTag(ObjTag::EnemyLike, m_objects);
 
-	for (const auto& we : m_enemies)
+	for (const auto& we : m_objects)
 	{
-		if (we.lock())
+		if (auto enemy = we.lock())
 		{
-			enemyExists = true;
-			break;
-		}
-	}
-	for (const auto& wb : m_bossEnemies)
-	{
-		if (const auto spBoss = wb.lock())
-		{
-			// もしBossEnemy側でHP0でも未破棄の可能性があるなら、ここでhp<=0を見て除外してもOK
-			// if (spBoss->hp <= 0) continue;
-			bossExists = true;
-			break;
+			if (enemy->GetTypeID() == Enemy::TypeID)
+			{
+				enemyExists = true;
+				break;
+			}
+
+			if (enemy->GetTypeID() == BossEnemy::TypeID)
+			{
+				bossExists = true;
+				break;
+			}
+
 		}
 	}
 

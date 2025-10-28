@@ -88,7 +88,10 @@ protected:
 	// カメラへの参照
 	std::weak_ptr<PlayerCamera> m_playerCamera;
 	// 当たり判定オブジェクト
-	std::list<std::weak_ptr<Collision>> m_collisionList;
+	std::list<std::weak_ptr<KdGameObject>> m_collisionList;
+
+	// エフェクト関係
+	std::list<std::shared_ptr<KdGameObject>> m_effectList;
 
 	DirectX::BoundingSphere sphere;
 

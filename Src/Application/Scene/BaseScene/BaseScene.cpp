@@ -40,6 +40,9 @@ void BaseScene::PreUpdate()
 		}
 	}
 
+	// バケットの整理（expired を除去）
+	CompactTypeBuckets();
+
 	// ↑の後には有効なオブジェクトだけのリストになっている
 
 	for (auto& obj : m_objList)
@@ -154,6 +157,14 @@ void BaseScene::Draw()
 	}
 	KdShaderManager::Instance().m_StandardShader.EndUnLit();
 
+	// グレースケール
+	KdShaderManager::Instance().m_StandardShader.BeginGrayscale();
+	{
+		for (auto& obj : m_objList) obj->DrawGrayScale();
+		for (auto& obj : m_drawObjectList) obj->DrawGrayScale();
+	}
+	KdShaderManager::Instance().m_StandardShader.EndGrayscale();
+
 	// 陰影のあるオブジェクト
 	KdShaderManager::Instance().m_StandardShader.BeginLit();
 	{
@@ -161,6 +172,14 @@ void BaseScene::Draw()
 		for (auto& obj : m_drawObjectList) obj->DrawLit();
 	}
 	KdShaderManager::Instance().m_StandardShader.EndLit();
+
+	// リムライトオブジェクトの描画
+	KdShaderManager::Instance().m_StandardShader.BeginRimLight();
+	{
+		for (auto& obj : m_objList) obj->DrawRimLight();
+		for (auto& obj : m_drawObjectList) obj->DrawRimLight();
+	}
+	KdShaderManager::Instance().m_StandardShader.EndRimLight();
 
 	// 陰影のないエフェクト
 	KdShaderManager::Instance().m_StandardShader.BeginUnLit();
@@ -177,14 +196,6 @@ void BaseScene::Draw()
 		for (auto& obj : m_drawObjectList) obj->DrawBright();
 	}
 	KdShaderManager::Instance().m_postProcessShader.EndBright();
-
-	// グレースケール
-	KdShaderManager::Instance().m_StandardShader.BeginGrayscale();
-	{
-		for (auto& obj : m_objList) obj->DrawGrayScale();
-		for (auto& obj : m_drawObjectList) obj->DrawGrayScale();
-	}
-	KdShaderManager::Instance().m_StandardShader.EndGrayscale();
 
 	// Toonシェーダー
 	KdShaderManager::Instance().m_StandardShader.BeginToon();

@@ -34,7 +34,7 @@ protected:
 	void Init() override;
 	void Update() override;
 	void DrawEffect() override;
-	void DrawToon() override;
+	void DrawLit() override;
 
 	virtual void EffectUpdate();
 

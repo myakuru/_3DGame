@@ -1,8 +1,10 @@
 ﻿#pragma once
+#include "BaseScene/BaseScene.h"
+
 class BaseScene;
 class SceneManager
 {
-public :
+public:
 
 	// シーン情報
 	enum class SceneType
@@ -46,19 +48,12 @@ public :
 	// 選択したオブジェクトをセット
 	std::shared_ptr<KdGameObject> m_selectObject = nullptr;
 
-	// 指定した型のオブジェクトを取得
+	// 指定した型のオブジェクトを取得（型バケットから）
 	template<class T>
 	std::shared_ptr<T> FindObjectOfType()
 	{
-		uint32_t typeId = T::TypeID;
-		for (auto& obj : GetObjList())
-		{
-			if (obj->GetTypeID() == typeId)
-			{
-				return std::static_pointer_cast<T>(obj);
-			}
-		}
-		return nullptr;
+		if (!m_currentScene) return nullptr;
+		return m_currentScene->template FindFirstObjectOfTypeFromBuckets<T>();
 	}
 
 	// 単体のオブジェクトのウィークポインタを取得
@@ -74,34 +69,19 @@ public :
 		}
 	}
 
-	// 複数の型をまとめて取得（いずれかの型に一致するオブジェクトを全て返す）
-	template<class... Ts>
-	void GetObjectWeakPtrListAnyOf(std::list<std::weak_ptr<KdGameObject>>& outPtrList)
+	// 追加: タグで近傍取得
+	void GetObjectWeakPtrListByTagInSphere(ObjTag tag, const Math::Vector3& center, float radius,
+		std::list<std::weak_ptr<KdGameObject>>& outPtrList)
 	{
-		outPtrList.clear();
-		for (auto& obj : GetObjList())
-		{
-			const uint32_t id = obj->GetTypeID();
-			if (((id == Ts::TypeID) || ...)) // C++17 fold expression
-			{
-				outPtrList.emplace_back(obj);
-			}
-		}
+		if (!m_currentScene) { outPtrList.clear(); return; }
+		m_currentScene->GetObjectWeakPtrListByTagInSphereFromBuckets(tag, center, radius, outPtrList);
 	}
 
-	// 複数オブジェクトが存在する場合の取得
-	template<class T>
-	void GetObjectWeakPtrList(std::list<std::weak_ptr<T>>& outPtrList)
+	// 追加: タグで全取得
+	void GetObjectWeakPtrListByTag(ObjTag tag, std::list<std::weak_ptr<KdGameObject>>& outPtrList)
 	{
-		outPtrList.clear();
-		uint32_t typeId = T::TypeID;
-		for (auto& obj : GetObjList())
-		{
-			if (obj->GetTypeID() == typeId)
-			{
-				outPtrList.emplace_back(std::static_pointer_cast<T>(obj));
-			}
-		}
+		if (!m_currentScene) { outPtrList.clear(); return; }
+		m_currentScene->GetObjectWeakPtrListByTagFromBuckets(tag, outPtrList);
 	}
 
 	// カメラのオブジェクトを取得
@@ -235,7 +215,7 @@ public :
 		m_gameSound = _sound;
 	}
 
-private :
+private:
 
 	// RegisterObjectからオブジェクトを登録する関数
 	void Register() const;
@@ -248,7 +228,7 @@ private :
 
 	// 現在のシーンの種類を保持している変数
 	SceneType m_currentSceneType = SceneType::Title;
-	
+
 	// 次のシーンの種類を保持している変数
 	SceneType m_nextSceneType = m_currentSceneType;
 
@@ -256,7 +236,7 @@ private :
 	~SceneManager() = default;
 
 	bool m_nowResult = false; // 現在のシーンがResultかどうか
-	
+
 	int m_score = 0; // スコア
 
 	bool m_drawGrayScale = false; // グレースケール描画フラグ

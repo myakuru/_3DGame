@@ -1,6 +1,5 @@
 ﻿#pragma once
 #include "../CharacterBase.h"
-#include"../../HitDamage/HitDamage.h"
 class BossEnemyStateBase;
 class Player;
 class EnemySword;
@@ -10,7 +9,7 @@ class BossEnemy :public CharaBase
 public:
 	// クラスごとに一意なTypeIDを持たせる
 	static const uint32_t TypeID;
-	BossEnemy() { m_typeID = TypeID; }
+	BossEnemy() { m_typeID = TypeID; AddTag(ObjTag::EnemyLike); } // タグ付与
 	~BossEnemy() override = default;
 
 	// 追加: 行動種別
@@ -136,12 +135,10 @@ private:
 	float m_attackRadius = 1.5f;		// 攻撃判定の半径
 	float m_attackFrame = 0.0f;			// 攻撃判定フレーム
 
-	std::list<std::weak_ptr<EnemySword>> m_enemySwords; // 敵の剣
-	std::list<std::weak_ptr<EnemyShield>> m_enemyShields; // 敵の盾
+	std::list<std::weak_ptr<KdGameObject>> m_enemySwords; // 敵の剣
+	std::list<std::weak_ptr<KdGameObject>> m_enemyShields; // 敵の盾
 
-	std::shared_ptr<HitDamage> m_spHitDamage;
-
-	std::list<std::weak_ptr<Player>> m_player;
+	std::list<std::weak_ptr<KdGameObject>> m_player;
 
 	BossEnemyStatus m_status;				// 敵のステータス
 

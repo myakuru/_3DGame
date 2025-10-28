@@ -6,7 +6,7 @@ void Field::DrawLit()
 {
 	//KdShaderManager::Instance().ChangeRasterizerState(KdRasterizerState::CullFrontWireframe);
 	//KdShaderManager::Instance().m_StandardShader.SetDitherEnable(false);
-	KdShaderManager::Instance().m_StandardShader.DrawModel(*m_model, m_mWorld, m_color);
+	SelectDraw3dModel::DrawLit();
 	//KdShaderManager::Instance().UndoRasterizerState();
 }
 

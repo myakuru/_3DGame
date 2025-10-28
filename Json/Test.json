@@ -77,7 +77,7 @@
     "path": "Asset\\Models\\Player\\Perula\\Player\\Perula.gltf",
     "pos": {
       "x": 31.0,
-      "y": 9.850017547607422,
+      "y": 9.850014686584473,
       "z": -75.0
     },
     "rotateSpeed": 30.0,
@@ -92,9 +92,9 @@
     "Name": "class Katana",
     "color": {
       "w": 1.0,
-      "x": 0.0,
-      "y": 0.7985872030258179,
-      "z": 0.936274528503418
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
     },
     "deg": {
       "x": 0.0,
@@ -105,7 +105,7 @@
       "DrawBright": false,
       "DrawGradation": false,
       "DrawGrayScale": false,
-      "DrawLit": true,
+      "DrawLit": false,
       "DrawToon": false,
       "DrawUnLit": false,
       "GenerateDepthMapFromLight": false
@@ -164,15 +164,15 @@
       "z": 1.0
     },
     "deg": {
-      "x": 6.449999809265137,
-      "y": 316.400146484375,
+      "x": 3.9000000953674316,
+      "y": 320.0,
       "z": 0.0
     },
     "fov": 70.0,
     "m_cameraPos": {
-      "x": 31.0,
+      "x": 30.9999942779541,
       "y": 9.850017547607422,
-      "z": -75.0
+      "z": -75.0000228881836
     },
     "moveSpeed": 50.0,
     "path": "Asset/Models/Sky/Sky.gltf",
@@ -191,7 +191,7 @@
     "targetLookAt": {
       "x": 0.0,
       "y": 1.0,
-      "z": -2.5
+      "z": -2.4999992847442627
     },
     "type": 32
   },
@@ -584,10 +584,10 @@
     },
     "distance": 11.0,
     "effectColor": {
-      "w": 1.0,
-      "x": 1.0,
-      "y": 1.0,
-      "z": 1.0
+      "w": 0.0784313753247261,
+      "x": 0.9725490212440491,
+      "y": 0.1921568661928177,
+      "z": 0.1921568661928177
     },
     "path": "Asset\\Data\\Effect\\EVFX_Slash\\VFX\\effects\\Charge0.efkefc",
     "pos": {
@@ -618,10 +618,10 @@
     },
     "distance": 3.5,
     "effectColor": {
-      "w": 1.0,
-      "x": 1.0,
-      "y": 1.0,
-      "z": 1.0
+      "w": 0.03921568766236305,
+      "x": 0.9264705777168274,
+      "y": 0.4540186822414398,
+      "z": 0.3315311670303345
     },
     "path": "Asset\\Data\\Effect\\EVFX_Slash\\VFX\\effects\\EVFX02_13_ArcBlade.efkefc",
     "pos": {
@@ -652,10 +652,10 @@
     },
     "distance": 0.0,
     "effectColor": {
-      "w": 1.0,
-      "x": 1.0,
-      "y": 1.0,
-      "z": 1.0
+      "w": 0.5882353186607361,
+      "x": 0.7254902124404907,
+      "y": 0.7254902124404907,
+      "z": 0.7254902124404907
     },
     "path": "Asset\\Data\\Effect\\EVFX_Slash\\VFX\\Smoke\\EVFXForge01_10_FrostforgeSlash.efkefc",
     "pos": {
@@ -720,10 +720,10 @@
     },
     "distance": 0.0,
     "effectColor": {
-      "w": 1.0,
+      "w": 0.0784313753247261,
       "x": 1.0,
-      "y": 1.0,
-      "z": 1.0
+      "y": 0.0,
+      "z": 0.0
     },
     "path": "Asset\\Data\\Effect\\SampleEffect\\GroundFreezes.efkefc",
     "pos": {
@@ -773,7 +773,7 @@
     "type": 13
   },
   {
-    "EffectSpeed": 20.0,
+    "EffectSpeed": 8.0,
     "Name": "class SwordFlash",
     "color": {
       "w": 1.0,
@@ -788,10 +788,10 @@
     },
     "distance": 0.5,
     "effectColor": {
-      "w": 1.0,
-      "x": 1.0,
-      "y": 1.0,
-      "z": 1.0
+      "w": 0.1568627506494522,
+      "x": 0.9607843160629272,
+      "y": 0.9607843160629272,
+      "z": 0.9607843160629272
     },
     "path": "Asset\\Data\\Effect\\SampleEffect\\SwordFlash.efkefc",
     "pos": {
@@ -807,7 +807,7 @@
     "type": 16
   },
   {
-    "EffectSpeed": 12.0,
+    "EffectSpeed": 10.0,
     "Name": "class Rotation",
     "color": {
       "w": 1.0,
@@ -822,10 +822,10 @@
     },
     "distance": 0.0,
     "effectColor": {
-      "w": 1.0,
-      "x": 1.0,
-      "y": 1.0,
-      "z": 1.0
+      "w": 0.11764705926179886,
+      "x": 0.9754902124404907,
+      "y": 0.22952710092067719,
+      "z": 0.22952710092067719
     },
     "path": "Asset\\Data\\Effect\\EVFX_Slash\\VFX\\effects\\EVFX02_15_SweepBlade.efkefc",
     "pos": {
@@ -841,7 +841,7 @@
     "type": 13
   },
   {
-    "EffectSpeed": 6.0,
+    "EffectSpeed": 5.0,
     "Name": "class SlashAttack2Effect",
     "color": {
       "w": 1.0,
@@ -856,10 +856,10 @@
     },
     "distance": 3.5,
     "effectColor": {
-      "w": 1.0,
+      "w": 0.1568627506494522,
       "x": 1.0,
-      "y": 1.0,
-      "z": 1.0
+      "y": 0.1715686321258545,
+      "z": 0.1715686321258545
     },
     "path": "Asset\\Data\\Effect\\Shine\\VFX\\EVFXForge15_10_ShineforgeSlash.efkefc",
     "pos": {
@@ -1451,7 +1451,7 @@
     },
     "distance": 7.0,
     "effectColor": {
-      "w": 1.0,
+      "w": 0.019607843831181526,
       "x": 1.0,
       "y": 1.0,
       "z": 1.0
@@ -1485,7 +1485,7 @@
     },
     "distance": 2.0,
     "effectColor": {
-      "w": 1.0,
+      "w": 0.03921568766236305,
       "x": 1.0,
       "y": 1.0,
       "z": 1.0
@@ -2886,7 +2886,7 @@
       "DrawBright": false,
       "DrawGradation": false,
       "DrawGrayScale": true,
-      "DrawLit": false,
+      "DrawLit": true,
       "DrawToon": false,
       "DrawUnLit": false,
       "GenerateDepthMapFromLight": false
@@ -2896,7 +2896,7 @@
     "path": "Asset\\Map2\\Map.gltf",
     "pos": {
       "x": -287.70001220703125,
-      "y": -125.37609100341797,
+      "y": -122.69113159179688,
       "z": 315.3999938964844
     },
     "scale": {
@@ -2923,7 +2923,7 @@
     },
     "distance": 2.0,
     "effectColor": {
-      "w": 1.0,
+      "w": 0.11764705926179886,
       "x": 1.0,
       "y": 1.0,
       "z": 1.0
@@ -2942,7 +2942,7 @@
     "type": 32
   },
   {
-    "EffectSpeed": 10.0,
+    "EffectSpeed": 4.099999904632568,
     "Name": "class JustAvoidAttackEffect1",
     "color": {
       "w": 1.0,
@@ -3430,9 +3430,9 @@
     "moveSpeed": 0.05000000074505806,
     "path": "Asset\\Models\\Enemy\\Aetherius\\Aetherius.gltf",
     "pos": {
-      "x": 13.541278839111328,
+      "x": 10.44141960144043,
       "y": 9.699999809265137,
-      "z": -51.124874114990234
+      "z": -46.435081481933594
     },
     "rotationspeed": 10.0,
     "scale": {
@@ -3857,9 +3857,9 @@
     "moveSpeed": 0.05000000074505806,
     "path": "Asset\\Models\\Enemy\\Aetherius\\Aetherius.gltf",
     "pos": {
-      "x": 6.78108549118042,
+      "x": 3.69346022605896,
       "y": 9.699999809265137,
-      "z": -62.404998779296875
+      "z": -60.98736572265625
     },
     "rotationspeed": 10.0,
     "scale": {

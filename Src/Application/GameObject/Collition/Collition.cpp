@@ -7,6 +7,7 @@ const uint32_t Collision::TypeID = KdGameObject::GenerateTypeID();
 Collision::Collision()
 {
 	m_typeID = TypeID;
+	AddTag(ObjTag::Collision);
 }
 
 void Collision::Init()

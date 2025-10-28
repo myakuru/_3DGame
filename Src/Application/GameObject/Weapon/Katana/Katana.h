@@ -23,7 +23,9 @@ private:
 	void Init() override;
 	void Update() override;
 	void UpdateTrailPolygon();								//　軌跡ポリゴンの更新
+	void DrawLit() override;
 	void DrawBright() override;
+	void DrawRimLight() override;
 	void UpdateHand();
 	void ImGuiInspector() override;
 	void JsonSave(nlohmann::json& _json) const override;

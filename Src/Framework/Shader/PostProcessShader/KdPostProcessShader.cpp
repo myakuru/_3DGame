@@ -91,8 +91,8 @@ bool KdPostProcessShader::Init()
 	m_cb0_BrightInfo.Create();
 
 	// 2160pでレンダーターゲット生成
-	const int renderWidth = 3840;
-	const int renderHeight = 2160;
+	const int renderWidth = 1920;
+	const int renderHeight = 1080;
 
 	const int halfW = renderWidth / 2;
 	const int halfH = renderHeight / 2;

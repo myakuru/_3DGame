@@ -118,8 +118,8 @@ void CharaBase::PostUpdate()
 
 	// レイに当たったオブジェクト情報を格納するリスト
 	std::list<KdCollider::CollisionResult> retRayList;
-	
-	SceneManager::Instance().GetObjectWeakPtrList(m_collisionList);
+
+	SceneManager::Instance().GetObjectWeakPtrListByTag(ObjTag::Collision, m_collisionList);
 
 	for (auto& collision : m_collisionList)
 	{

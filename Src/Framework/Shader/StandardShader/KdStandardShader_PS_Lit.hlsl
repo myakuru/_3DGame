@@ -325,7 +325,19 @@ float4 main(VSOutput In) : SV_Target0
 	
 	totalBrightness = saturate(totalBrightness);
 	outColor *= totalBrightness;
-	
+
+	 // ビュー方向
+	float3 V = normalize(g_CamPos - In.wPos);
+
+	// リムライト
+
+	if (g_LitRimLightEnable)
+	{
+		float NdotV = saturate(dot(wN, V));
+		float rim = pow(1.0 - NdotV, 5.0);
+		outColor += g_LitRimLightColor * rim * g_LitRimLightPower;
+	}
+
 	//------------------------------------------
 	// 出力
 	//------------------------------------------

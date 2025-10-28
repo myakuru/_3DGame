@@ -279,6 +279,13 @@ bool KdSoundEffect::Load(std::string_view fileName, const std::unique_ptr<Direct
 KdSoundInstance::KdSoundInstance(const std::shared_ptr<KdSoundEffect>& soundEffect)
 	:m_soundData(soundEffect){}
 
+KdSoundInstance::~KdSoundInstance()
+{
+	// 先に再生インスタンスを破棄してから、元データ(shared_ptr)を解放する
+	m_instance.reset();
+	m_soundData.reset();
+}
+
 bool KdSoundInstance::CreateInstance()
 {
 	if (!m_soundData) { return false; }

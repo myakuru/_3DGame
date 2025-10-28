@@ -45,7 +45,7 @@ void Katana::Update()
 	Math::Matrix transOffset = Math::Matrix::CreateTranslation(m_katanaHandOffset);
 	m_swordData.m_weaponMatrix = transOffset * m_swordData.m_weaponScaleMatrix * m_swordData.m_weaponRotationMatrix * m_swordHandData.m_weaponBonesMatrix * m_swordHandData.m_playerWorldMatrix;
 
-	UpdateTrailPolygon();
+	// UpdateTrailPolygon();
 
 }
 
@@ -96,10 +96,30 @@ void Katana::UpdateTrailPolygon()
 	}
 }
 
+void Katana::DrawLit()
+{
+	KdShaderManager::Instance().m_StandardShader.DrawPolygon(*m_trailPolygon, Math::Matrix::Identity, m_trailColor);
+}
+
 void Katana::DrawBright()
 {
 	if (!IMGUI_MANAGER.GetShowEffect()) return;
-	KdShaderManager::Instance().m_StandardShader.DrawPolygon(*m_trailPolygon, Math::Matrix::Identity, m_trailColor);
+}
+
+void Katana::DrawRimLight()
+{
+	KdShaderManager::Instance().ChangeBlendState(KdBlendState::Add);
+
+	KdShaderManager::Instance().m_StandardShader.SetRimLightEnable(true);
+
+	KdShaderManager::Instance().m_StandardShader.SetRimLight(1.0f, { 0.0f, 1.0f, 1.0f });
+
+	KdShaderManager::Instance().m_StandardShader.DrawModel(*m_model, m_swordData.m_weaponMatrix, m_color);
+
+	KdShaderManager::Instance().m_StandardShader.SetRimLightEnable(false);
+
+	KdShaderManager::Instance().UndoBlendState();
+
 }
 
 void Katana::UpdateHand()

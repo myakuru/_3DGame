@@ -1,8 +1,13 @@
 ﻿#pragma once
+#include <unordered_map>
+#include <vector>
+#include <algorithm>
+
 class PlayerCamera;
+class KdGameObject;
 class BaseScene
 {
-public :
+public:
 
 	BaseScene() { Init(); }
 	virtual ~BaseScene() {}
@@ -28,22 +33,24 @@ public :
 	{
 		return m_objList;
 	}
-	
+
 	std::list<std::shared_ptr<KdGameObject>>& WorkObjList()
 	{
 		return m_objList;
 	}
 
-	// オブジェクトリストに追加
+	// オブジェクトリストに追加（バケットにも登録）
 	void AddObject(const std::shared_ptr<KdGameObject>& _obj)
 	{
 		m_objList.push_back(_obj);
+		IndexObject(_obj);
 	}
-	
+
 	// カメラオブジェクトリストを取得
 	void AddCameraObject(const std::shared_ptr<KdGameObject>& _obj)
 	{
 		m_CameraObjList.push_back(_obj);
+		// 必要に応じてインデックスするならここで IndexObject(_obj);
 	}
 	// カメラオブジェクトリストを取得
 	std::list<std::shared_ptr<KdGameObject>>& GetCameraObjList()
@@ -54,6 +61,7 @@ public :
 	void AddMapObject(const std::shared_ptr<KdGameObject>& _obj)
 	{
 		m_MapObjectList.push_back(_obj);
+		// 必要に応じてインデックスするならここで IndexObject(_obj);
 	}
 
 	std::list<std::shared_ptr<KdGameObject>>& GetMapObjectList()
@@ -73,7 +81,105 @@ public :
 		return m_renderTargetUIPack;
 	}
 
-protected :
+	// ----- 型バケット経由の検索API（SceneManagerから呼び出される） -----
+
+	 // 追加: タグ経由の取得（全件）
+	void GetObjectWeakPtrListByTagFromBuckets(ObjTag tag, std::list<std::weak_ptr<KdGameObject>>& outPtrList)
+	{
+		outPtrList.clear();
+		auto it = m_tagBuckets.find(ToMask(tag));
+		if (it == m_tagBuckets.end()) return;
+		for (auto& w : it->second) if (!w.expired()) outPtrList.emplace_back(w);
+	}
+
+	// 追加: タグ経由の取得（球範囲）
+	void GetObjectWeakPtrListByTagInSphereFromBuckets(ObjTag tag, const Math::Vector3& center, float radius,
+		std::list<std::weak_ptr<KdGameObject>>& outPtrList)
+	{
+		outPtrList.clear();
+		const float r2 = radius * radius;
+		auto it = m_tagBuckets.find(ToMask(tag));
+		if (it == m_tagBuckets.end()) return;
+		for (auto& w : it->second)
+		{
+			if (auto sp = w.lock())
+			{
+				const auto d = sp->GetPos() - center;
+				if (d.LengthSquared() <= r2) outPtrList.emplace_back(sp);
+			}
+		}
+	}
+
+	// いずれかの型に一致するオブジェクトを全て返す（全スキャン無し）
+	template<class... Ts>
+	void GetObjectWeakPtrListAnyOfFromBuckets(std::list<std::weak_ptr<KdGameObject>>& outPtrList)
+	{
+		outPtrList.clear();
+		auto addBucket = [&](uint32_t typeId)
+			{
+				auto it = m_typeBuckets.find(typeId);
+				if (it == m_typeBuckets.end()) return;
+				for (auto& w : it->second)
+				{
+					if (!w.expired()) outPtrList.emplace_back(w);
+				}
+			};
+		(addBucket(Ts::TypeID), ...);
+	}
+
+	// いずれかの型に一致 かつ 球範囲内のみ返す（攻撃などの近傍限定取得）
+	template<class... Ts>
+	void GetObjectWeakPtrListAnyOfInSphereFromBuckets(const Math::Vector3& center, float radius,
+		std::list<std::weak_ptr<KdGameObject>>& outPtrList)
+	{
+		outPtrList.clear();
+		const float r2 = radius * radius;
+		auto addBucket = [&](uint32_t typeId)
+			{
+				auto it = m_typeBuckets.find(typeId);
+				if (it == m_typeBuckets.end()) return;
+				for (auto& w : it->second)
+				{
+					if (auto sp = w.lock())
+					{
+						Math::Vector3 d = sp->GetPos() - center;
+						if (d.LengthSquared() <= r2)
+						{
+							outPtrList.emplace_back(sp);
+						}
+					}
+				}
+			};
+		(addBucket(Ts::TypeID), ...);
+	}
+
+	// 単一型の先頭1件取得（従来の FindObjectOfType の高速版）
+	template<class T>
+	std::shared_ptr<T> FindFirstObjectOfTypeFromBuckets()
+	{
+		auto it = m_typeBuckets.find(T::TypeID);
+		if (it == m_typeBuckets.end()) return nullptr;
+		for (auto& w : it->second)
+		{
+			if (auto sp = w.lock()) return std::static_pointer_cast<T>(sp);
+		}
+		return nullptr;
+	}
+
+	// 単一型の全取得（従来の GetObjectWeakPtrList の高速版）
+	template<class T>
+	void GetObjectWeakPtrListFromBuckets(std::list<std::weak_ptr<T>>& outPtrList)
+	{
+		outPtrList.clear();
+		auto it = m_typeBuckets.find(T::TypeID);
+		if (it == m_typeBuckets.end()) return;
+		for (auto& w : it->second)
+		{
+			if (auto sp = w.lock()) outPtrList.emplace_back(std::static_pointer_cast<T>(sp));
+		}
+	}
+
+protected:
 
 	// 継承先シーンで必要ならオーバーライドする
 	virtual void Event();
@@ -90,7 +196,7 @@ protected :
 	float m_highFogDistance = 0.0f;
 	Math::Vector3 m_directionalLightDir = { 1,1,1 };
 	Math::Vector3 m_directionalLightColor = { 1.0f,1.0f,1.0f };
-	Math::Vector4 m_anviLightColor = { 0.2f,0.2f,0.2f,0.2f };
+	Math::Vector4 m_anviLightColor = { 0.2f, 0.2f, 0.2f, 0.2f };
 
 	Math::Vector2 m_lightingArea = { 1.0f, 1.0f };
 	float m_dirLightHeight = 1.0f;
@@ -117,4 +223,39 @@ protected :
 	std::list<std::shared_ptr<KdGameObject>> m_MapObjectList;
 	std::list<std::shared_ptr<KdGameObject>> m_CollisionList;
 	std::list<std::shared_ptr<KdGameObject>> m_drawObjectList;
+
+	// ----- 型ごとのレジストリ（TypeID → バケット） -----
+	std::unordered_map<uint32_t, std::vector<std::weak_ptr<KdGameObject>>> m_typeBuckets;
+
+	std::unordered_map<uint32_t, std::vector<std::weak_ptr<KdGameObject>>> m_tagBuckets;
+
+
+	// 既存: 追加時にバケットへ登録
+	inline void IndexObject(const std::shared_ptr<KdGameObject>& obj)
+	{
+		if (!obj) return;
+		// 型バケット
+		m_typeBuckets[obj->GetTypeID()].emplace_back(obj);
+		// タグバケット（セットされた全ビットを展開）
+		uint32_t mask = obj->GetTagMask();
+		while (mask)
+		{
+			uint32_t bit = mask & (~mask + 1); // 最下位セットビット
+			mask ^= bit;
+			m_tagBuckets[bit].emplace_back(obj);
+		}
+	}
+
+	// 既存: PreUpdateでのコンパクション
+	inline void CompactTypeBuckets()
+	{
+		auto comp = [](auto& vec)
+			{
+				vec.erase(std::remove_if(vec.begin(), vec.end(),
+					[](const std::weak_ptr<KdGameObject>& w) { return w.expired(); }),
+					vec.end());
+			};
+		for (auto& kv : m_typeBuckets) comp(kv.second);
+		for (auto& kv : m_tagBuckets)  comp(kv.second); // 追加: タグ側も整理
+	}
 };

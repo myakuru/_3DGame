@@ -20,7 +20,7 @@ void PlayerState_FowardAvoidFast::StateStart()
 	m_player->SetAvoidFlg(true);
 	m_player->SetAvoidStartTime(Application::Instance().GetDeltaTime()); // 現在の時間を記録
 
-	m_player->AddAfterImage(true, 5, 2.0f, Math::Color(0.0f, 1.0f, 1.0f, 0.3f));
+	m_player->AddAfterImage(true, 5, 4.0f, Math::Color(0.0f, 1.0f, 1.0f, 0.3f));
 
 	m_player->SetAnimeSpeed(120.0f);
 
@@ -36,52 +36,43 @@ void PlayerState_FowardAvoidFast::StateStart()
 
 void PlayerState_FowardAvoidFast::StateUpdate()
 {
-		// 途中で敵のジャスト回避成功フラグが立ったら残像発生
+	// 途中で敵のジャスト回避成功フラグが立ったら残像発生
 	if (!m_afterImagePlayed)
 	{
-		for (const auto& wk : m_player->GetEnemyLike())
+		std::list<std::weak_ptr<KdGameObject>> nearEnemies;
+
+		SceneManager::Instance().GetObjectWeakPtrListByTag(ObjTag::EnemyLike, nearEnemies);
+
+		for (const auto& wk : nearEnemies)
 		{
 			if (auto obj = wk.lock())
 			{
 				bool just = false;
-
 				if (obj->GetTypeID() == Enemy::TypeID)
 				{
 					auto e = std::static_pointer_cast<Enemy>(obj);
 					just = e->GetJustAvoidSuccess();
-					if (just) e->SetJustAvoidSuccess(false); // 消費
+					if (just) e->SetJustAvoidSuccess(false);
 				}
 				else if (obj->GetTypeID() == BossEnemy::TypeID)
 				{
 					auto b = std::static_pointer_cast<BossEnemy>(obj);
 					just = b->GetJustAvoidSuccess();
-					if (just) b->SetJustAvoidSuccess(false); // 消費
+					if (just) b->SetJustAvoidSuccess(false);
 				}
-
 				if (just)
 				{
-					// ジャスト回避成功時の残像エフェクト
+					// ...以降は既存処理
 					m_player->AddAfterImage(true, 5, 1.0f, Math::Color(0.0f, 1.0f, 1.0f, 0.5f), 0.7f);
-
 					m_justAvoided = true;
 					m_afterImagePlayed = true;
 					m_player->SetJustAvoidSuccess(true);
-
 					KdAudioManager::Instance().Play("Asset/Sound/Player/SlowMotion.WAV", false)->SetVolume(1.0f);
-
-					// ゲームのメインサウンドのピッチを下げる
-					if (auto bgm = SceneManager::Instance().GetGameSound())
-					{
-						bgm->SetPitch(-1.0f);
-					}
-
-					// 保険：ここでも演出をON（更新順の揺れ対策）
-					{
-						const auto& justCfg = m_player->GetPlayerConfig().GetJustAvoidParam();
-						Application::Instance().SetFpsScale(justCfg.m_slowMoScale);
-						SceneManager::Instance().SetDrawGrayScale(justCfg.m_useGrayScale);
-					}
-					break; // 多重発火防止
+					if (auto bgm = SceneManager::Instance().GetGameSound()) { bgm->SetPitch(-1.0f); }
+					const auto& justCfg = m_player->GetPlayerConfig().GetJustAvoidParam();
+					Application::Instance().SetFpsScale(justCfg.m_slowMoScale);
+					SceneManager::Instance().SetDrawGrayScale(justCfg.m_useGrayScale);
+					break;
 				}
 			}
 		}
@@ -169,10 +160,10 @@ void PlayerState_FowardAvoidFast::StateEnd()
 {
 	PlayerStateBase::StateEnd();
 
+	m_player->AddAfterImage();
+
 	m_player->SetAvoidFlg(false);
 	m_player->SetAvoidStartTime(0.0f); // 現在の時間を記録
-
-	m_player->AddAfterImage();
 
 	// 敵との当たり判定を有効化
 	m_player->SetAtkPlayer(false);

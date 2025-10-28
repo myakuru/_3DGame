@@ -50,8 +50,8 @@ void BossEnemy::Init()
 
 void BossEnemy::Update()
 {
-	SceneManager::Instance().GetObjectWeakPtrList(m_enemySwords);
-	SceneManager::Instance().GetObjectWeakPtrList(m_enemyShields);
+	SceneManager::Instance().GetObjectWeakPtrListByTag(ObjTag::EnemySword, m_enemySwords);
+	SceneManager::Instance().GetObjectWeakPtrListByTag(ObjTag::EnemyShield, m_enemyShields);
 
 	// 球の中心座標と半径を設定
 	sphere.Center = m_position + Math::Vector3(0.0f, 0.7f, 0.0f); // 敵の位置＋オフセット
@@ -90,14 +90,6 @@ void BossEnemy::Update()
 	// ヒット処理。
 	if (m_isHit)
 	{
-
-		// HitDamage生成・初期化
-		m_spHitDamage = std::make_shared<HitDamage>();
-		m_spHitDamage->Init();
-		m_spHitDamage->SetDamage(m_getDamage);
-		m_spHitDamage->SetTrackBossEnemy(std::static_pointer_cast<BossEnemy>(shared_from_this()));
-		SceneManager::Instance().AddObject(m_spHitDamage);
-
 		m_isHit = false;
 
 		if (m_invincible) return;
@@ -114,31 +106,6 @@ void BossEnemy::Update()
 		auto state = std::make_shared<BossEnemyState_Dodge>();
 		ChangeState(state);
 		return;
-	}
-
-	// 敵の剣の行列を更新
-	for (auto weapons : m_enemySwords)
-	{
-		if (auto sword = weapons.lock(); sword)
-		{
-			if (auto rightHandNode = m_modelWork->FindWorkNode("weapon_r"); rightHandNode)
-			{
-				sword->SetEnemyRightHandMatrix(rightHandNode->m_worldTransform);
-				sword->SetEnemyMatrix(m_mWorld);
-			}
-		}
-	}
-
-	for (auto shields : m_enemyShields)
-	{
-		if (auto shield = shields.lock(); shield)
-		{
-			if (auto leftHandNode = m_modelWork->FindWorkNode("weapon_l"); leftHandNode)
-			{
-				shield->SetEnemyLeftHandMatrix(leftHandNode->m_worldTransform);
-				shield->SetEnemyMatrix(m_mWorld);
-			}
-		}
 	}
 }
 
@@ -163,7 +130,7 @@ void BossEnemy::UpdateAttackCollision(float _radius, float _distance, int _attac
 
 	m_pDebugWire->AddDebugSphere(attackSphere.m_sphere.Center, attackSphere.m_sphere.Radius);
 
-	SceneManager::Instance().GetObjectWeakPtrList(m_player);
+	SceneManager::Instance().GetObjectWeakPtrListByTag(ObjTag::PlayerLike, m_player);
 
 	// 初回セットアップ
 	if (!m_hitOnce)
@@ -218,20 +185,24 @@ void BossEnemy::UpdateAttackCollision(float _radius, float _distance, int _attac
 			std::list<KdCollider::CollisionResult> results;
 			if (playerPtr->Intersects(attackSphere, &results) && !results.empty())
 			{
+				if (playerPtr->GetTypeID() != Player::TypeID) continue;
+
+				auto castedPlayer = std::static_pointer_cast<Player>(playerPtr);
+
 				// プレイヤーが回避中か判定
-				if (playerPtr->GetAvoidFlg())
+				if (castedPlayer->GetAvoidFlg())
 				{
 					const float kJustAvoidWindowSec = 0.5f; // 30f/60fps
-					const float avoidElapsed = playerPtr->GetAvoidStartTime();
+					const float avoidElapsed = castedPlayer->GetAvoidStartTime();
 					if (avoidElapsed >= 0.0f && avoidElapsed <= kJustAvoidWindowSec)
 					{
 						m_justAvoidSuccess = true;
 
 						// プレイヤーへも成立通知（プレイヤー側の状態遷移/効果に利用）
-						playerPtr->SetJustAvoidSuccess(true);
+						castedPlayer->SetJustAvoidSuccess(true);
 
 						// プレイヤー設定からスローモーション倍率・グレースケール適用を取得
-						auto& justCfg = playerPtr->GetPlayerConfig().GetJustAvoidParam();
+						auto& justCfg = castedPlayer->GetPlayerConfig().GetJustAvoidParam();
 						Application::Instance().SetFpsScale(justCfg.m_slowMoScale);
 						SceneManager::Instance().SetDrawGrayScale(justCfg.m_useGrayScale);
 
@@ -257,8 +228,12 @@ void BossEnemy::UpdateAttackCollision(float _radius, float _distance, int _attac
 				std::list<KdCollider::CollisionResult> results;
 				if (playerPtr->Intersects(attackSphere, &results) && !results.empty())
 				{
-					playerPtr->TakeDamage(m_status.attack);
-					playerPtr->SetHitCheck(true);
+					if (playerPtr->GetTypeID() != Player::TypeID) continue;
+
+					auto castedPlayer = std::static_pointer_cast<Player>(playerPtr);
+
+					castedPlayer->TakeDamage(m_status.attack);
+					castedPlayer->SetHitCheck(true);
 				}
 			}
 		}
@@ -290,7 +265,7 @@ void BossEnemy::PostUpdate()
 	// 球に当たったオブジェクト情報を格納するリスト
 	std::list<KdCollider::CollisionResult> retSpherelist;
 
-	SceneManager::Instance().GetObjectWeakPtrList(m_collisionList);
+	SceneManager::Instance().GetObjectWeakPtrListByTag(ObjTag::Collision, m_collisionList);
 
 	for (auto& weakCol : m_collisionList)
 	{

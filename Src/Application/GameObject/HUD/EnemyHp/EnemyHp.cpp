@@ -24,7 +24,7 @@ void EnemyHp::Update()
 	if (auto camera = m_camera.lock(); camera)
 	{
 		// このフレームで参照可能な敵を列挙
-		SceneManager::Instance().GetObjectWeakPtrList(m_enemies);
+		SceneManager::Instance().GetObjectWeakPtrListByTag(ObjTag::EnemyLike, m_enemies);
 
 		// ビューポート取得（中心原点の±半分で画面内判定）
 		Math::Viewport vp;
@@ -38,12 +38,18 @@ void EnemyHp::Update()
 			{
 				if (auto enemyPtr = enemy.lock())
 				{
+					// 敵以外はスキップ
+					if(enemyPtr->GetTypeID() != Enemy::TypeID) continue;
+
+					// 敵を一時的にキャスト
+					auto castedEnemy = std::static_pointer_cast<Enemy>(enemyPtr);
+
 					Math::Vector3 screenPos;
-					cam->ConvertWorldToScreenDetail(enemyPtr->GetPos() + m_offsetPos, screenPos);
+					cam->ConvertWorldToScreenDetail(castedEnemy->GetPos() + m_offsetPos, screenPos);
 
 					// Hpバーの表示割合を計算
 					float hpRate = 0.0f;
-					const auto& enemyStatus = enemyPtr->GetStatus();
+					const auto& enemyStatus = castedEnemy->GetStatus();
 					if (enemyStatus.maxHp > 0)
 					{
 						hpRate = static_cast<float>(enemyStatus.hp) / static_cast<float>(enemyStatus.maxHp);

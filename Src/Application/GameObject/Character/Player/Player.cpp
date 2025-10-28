@@ -57,7 +57,6 @@ void Player::Init()
 	m_isHit = false;
 
 	m_status.specialPoint = 1000;
-
 }
 
 void Player::PreUpdate()
@@ -106,7 +105,7 @@ void Player::PostUpdate()
 	std::list<KdCollider::CollisionResult> retSpherelist;
 
 	// 敵の取得（雑魚＋ボス）
-	SceneManager::Instance().GetObjectWeakPtrListAnyOf<Enemy, BossEnemy>(m_enemyLike);
+	SceneManager::Instance().GetObjectWeakPtrListByTag(ObjTag::EnemyLike, m_enemyLike);
 
 	// 球と敵の当たり判定をチェック
 	for(const auto& enemyWeakPtr : m_enemyLike)
@@ -153,14 +152,21 @@ void Player::PostUpdate()
 void Player::DrawLit()
 {
 	KdShaderManager::Instance().m_StandardShader.SetDitherEnable(false);
+	KdShaderManager::Instance().m_StandardShader.SetLitRimLight({ 0.5f, 1.0f, 1.0f }, true, 1.2f);
 	KdShaderManager::Instance().m_StandardShader.DrawModel(*m_modelWork, m_mWorld, m_color);
+	KdShaderManager::Instance().m_StandardShader.SetLitRimLight();
 }
 
-void Player::DrawUnLit()
+void Player::DrawRimLight()
 {
+
 	if (m_afterImageEnable)
 	{
+
 		DrawAfterImages();
+
+		KdShaderManager::Instance().m_StandardShader.SetRimLightEnable(false);
+
 	}
 }
 
@@ -169,8 +175,6 @@ void Player::Update()
 	KdGameObject::Update();
 
 	SceneManager::Instance().GetObjectWeakPtr(m_playerCamera);
-	SceneManager::Instance().GetObjectWeakPtr(m_enemy);
-	SceneManager::Instance().GetObjectWeakPtrList(m_enemies);
 	SceneManager::Instance().GetObjectWeakPtr(m_katana);
 	SceneManager::Instance().GetObjectWeakPtr(m_scabbard);
 
@@ -183,9 +187,11 @@ void Player::Update()
 	KdDebugGUI::Instance().AddLog("PlayerSkillPoint: %d\n", m_status.skillPoint);
 
 	// 雑魚・ボスをまとめてチェック
-	SceneManager::Instance().GetObjectWeakPtrListAnyOf<Enemy, BossEnemy>(m_enemyLike);
+	std::list<std::weak_ptr<KdGameObject>> nearEnemies;
 
-	for (const auto& wk : m_enemyLike)
+	SceneManager::Instance().GetObjectWeakPtrListByTag(ObjTag::EnemyLike, nearEnemies);
+
+	for (const auto& wk : nearEnemies)
 	{
 		if (auto obj = wk.lock())
 		{
@@ -299,9 +305,6 @@ void Player::UpdateAttackCollision(float _radius, float _distance, int _attackCo
 
 	m_pDebugWire->AddDebugSphere(attackSphere.m_sphere.Center, attackSphere.m_sphere.Radius);
 
-	// 敵の取得（雑魚＋ボス）
-	SceneManager::Instance().GetObjectWeakPtrListAnyOf<Enemy, BossEnemy>(m_enemyLike);
-
 	// 初回セットアップ
 	if (!m_onceEffect)
 	{
@@ -343,7 +346,11 @@ void Player::UpdateAttackCollision(float _radius, float _distance, int _attackCo
 	{
 		bool hitAny = false;
 
-		for (const auto& wk : m_enemyLike)
+		std::list<std::weak_ptr<KdGameObject>> nearEnemies;
+
+		SceneManager::Instance().GetObjectWeakPtrListByTag(ObjTag::EnemyLike, nearEnemies);
+
+		for (const auto& wk : nearEnemies)
 		{
 			if (auto obj = wk.lock())
 			{
@@ -489,8 +496,6 @@ void Player::UpdateMoveDirectionFromInput()
 
 void Player::CaptureAfterImage()
 {
-
-
 	if (!m_afterImageEnable)
 	{
 		// 残像無効ならクリアして終了
@@ -504,7 +509,8 @@ void Player::CaptureAfterImage()
 	if (!work || !work->IsEnable()) return;
 
 	// m_afterImageIntervalを超えるまでカウンタを進める
-	if (m_afterImageCounter++ < m_afterImageInterval) return;
+	m_afterImageCounter += 100.0f * Application::Instance().GetDeltaTime();
+	if (m_afterImageCounter < m_afterImageInterval) return;
 	m_afterImageCounter = 0.0f;
 
 	// ノード worldTransform をスナップショット
@@ -535,8 +541,6 @@ void Player::CaptureAfterImage()
 void Player::DrawAfterImages()
 {
 	if (!m_afterImageEnable) return;
-	if (!m_afterImageWork) return;
-	if (m_afterImages.empty()) return;
 
 	auto& stdShader = KdShaderManager::Instance().m_StandardShader;
 
@@ -562,7 +566,20 @@ void Player::DrawAfterImages()
 		float a = 1.0f;
 		Math::Vector3 color = {0,1,1};
 		KdShaderManager::Instance().m_StandardShader.SetDissolve(m_dissever, &a, &color);
-		stdShader.DrawModel(*m_afterImageWork, frameData.ownerWorld, m_afterImageColor);
+
+		KdShaderManager::Instance().ChangeBlendState(KdBlendState::Add);
+
+		KdShaderManager::Instance().m_StandardShader.SetRimLightEnable(true);
+
+		KdShaderManager::Instance().m_StandardShader.SetRimLight(5.0f, { 0.2f, 1.0f, 1.0f });
+
+		Math::Matrix scale = Math::Matrix::CreateScale({ 1.009f,1.009f,1.009f });
+
+		Math::Matrix ownerWorld = scale * frameData.ownerWorld;
+
+		stdShader.DrawModel(*m_afterImageWork, ownerWorld, m_afterImageColor);
+
+		KdShaderManager::Instance().UndoBlendState();
 	}
 }
 
@@ -585,7 +602,9 @@ void Player::ApplyHorizontalMove(const Math::Vector3& inputMove, float deltaTime
 	m_pDebugWire->AddDebugLine(ray.m_pos, ray.m_dir, ray.m_range, kRedColor); // デバッグ表示：スイープ可視化
 
 	std::list<KdCollider::CollisionResult> rayHits; // スイープで当たった結果の蓄積先
-	SceneManager::Instance().GetObjectWeakPtrList(m_collisionList); // 衝突対象リストを取得
+
+	SceneManager::Instance().GetObjectWeakPtrListByTag(ObjTag::Collision, m_collisionList); // 衝突対象リストを取得
+
 	for (auto& weakCol : m_collisionList) // 各コライダへ問い合わせ
 	{
 		if (auto col = weakCol.lock()) { col->Intersects(ray, &rayHits); } // レイと交差判定し、当たりを収集
@@ -636,7 +655,9 @@ void Player::ApplyPushWithCollision(const Math::Vector3& rawPush)
 	ray.m_type = KdCollider::TypeBump;
 
 	std::list<KdCollider::CollisionResult> rayHits;
-	SceneManager::Instance().GetObjectWeakPtrList(m_collisionList);
+	
+	SceneManager::Instance().GetObjectWeakPtrListByTag(ObjTag::Collision, m_collisionList);
+	
 	for (auto& wk : m_collisionList)
 	{
 		if (auto col = wk.lock())
@@ -691,7 +712,9 @@ void Player::ApplyVerticalMove(float deltaY) // 垂直移動をスイープ判�
 			ray.m_type = type; // 検出したいコリジョンタイプ（地形/壁）
 			m_pDebugWire->AddDebugLine(ray.m_pos, ray.m_dir, ray.m_range, kRedColor); // デバッグ可視化
 
-			SceneManager::Instance().GetObjectWeakPtrList(m_collisionList); // 衝突候補の取得
+			
+			SceneManager::Instance().GetObjectWeakPtrListByTag(ObjTag::Collision , m_collisionList); // 衝突対象リストを取得
+
 			for (auto& weakCol : m_collisionList) // 各コライダに問い合わせ
 			{
 				if (auto col = weakCol.lock()) // 実体化に成功したら

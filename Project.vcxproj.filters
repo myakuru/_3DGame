@@ -232,9 +232,6 @@
     <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_Hit">
       <UniqueIdentifier>{5082ce6d-0c5c-42c2-b8fa-4fca27b673f9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Src\Application\GameObject\HitDamage">
-      <UniqueIdentifier>{1e15bba8-23a0-4640-b284-bbb04a645eef}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Src\Application\GameObject\HUD\EnemyHp">
       <UniqueIdentifier>{4060fbd0-7e96-414a-a854-f29f1f041b59}</UniqueIdentifier>
     </Filter>
@@ -879,9 +876,6 @@
     <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_Hit\PlayerState_Hit.h">
       <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_Hit</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Application\GameObject\HitDamage\HitDamage.h">
-      <Filter>Src\Application\GameObject\HitDamage</Filter>
-    </ClInclude>
     <ClInclude Include="Src\Application\GameObject\HUD\EnemyHp\EnemyHp.h">
       <Filter>Src\Application\GameObject\HUD\EnemyHp</Filter>
     </ClInclude>
@@ -1463,9 +1457,6 @@
     <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_Hit\PlayerState_Hit.cpp">
       <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_Hit</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Application\GameObject\HitDamage\HitDamage.cpp">
-      <Filter>Src\Application\GameObject\HitDamage</Filter>
-    </ClCompile>
     <ClCompile Include="Src\Application\GameObject\HUD\EnemyHp\EnemyHp.cpp">
       <Filter>Src\Application\GameObject\HUD\EnemyHp</Filter>
     </ClCompile>
@@ -1837,6 +1828,9 @@
       <Filter>Src\Framework\Shader\StandardShader</Filter>
     </FxCompile>
     <FxCompile Include="Src\Framework\Shader\StandardShader\PS_Effect.hlsl">
+      <Filter>Src\Framework\Shader\StandardShader</Filter>
+    </FxCompile>
+    <FxCompile Include="Src\Framework\Shader\StandardShader\PS_RimLight.hlsl">
       <Filter>Src\Framework\Shader\StandardShader</Filter>
     </FxCompile>
   </ItemGroup>
