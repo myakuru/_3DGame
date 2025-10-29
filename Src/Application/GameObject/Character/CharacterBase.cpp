@@ -119,13 +119,16 @@ void CharaBase::PostUpdate()
 	// レイに当たったオブジェクト情報を格納するリスト
 	std::list<KdCollider::CollisionResult> retRayList;
 
-	SceneManager::Instance().GetObjectWeakPtrListByTag(ObjTag::Collision, m_collisionList);
+	if (m_collision.expired()) return;
 
-	for (auto& collision : m_collisionList)
+	SceneManager::Instance().GetObjectWeakPtrListByTag(ObjTag::Collision, m_object);
+
+	for (auto& collision : m_object)
 	{
 		if (auto collisionObj = collision.lock(); collisionObj)
 		{
 			collisionObj->Intersects(rayInfo, &retRayList);
+			m_object.clear();
 		}
 	}
 
@@ -173,11 +176,12 @@ void CharaBase::PostUpdate()
 	// 球に当たったオブジェクト情報を格納するリスト
 	std::list<KdCollider::CollisionResult> retSpherelist;
 
-	for (auto& collision : m_collisionList)
+	for (auto& collision : m_object)
 	{
 		if (auto collisionObj = collision.lock(); collisionObj)
 		{
 			collisionObj->Intersects(sphereInfo, &retSpherelist);
+			m_object.clear();
 		}
 	}
 

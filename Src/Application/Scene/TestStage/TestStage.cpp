@@ -89,20 +89,6 @@ void TestScene::Init()
 
 	m_isCountDown = false;	// カウントダウンフラグを初期化
 
-	// イントロBGM
-	{
-		auto intro = KdAudioManager::Instance().Play(
-			"Asset/Sound/FieldBGM/ToDo_game_bgm.wav",
-			true  // ループ再生
-		);
-		SceneManager::Instance().SetGameSound(intro);
-
-		if (intro)
-		{
-			intro->SetVolume(1.0f);
-		}
-	}
-
 	m_countDownTimer = 200.0f; // カウントダウンタイマーを200秒に設定
 
 	SceneManager::Instance().SetIntroCamera(true); // カメラのイントロを開始

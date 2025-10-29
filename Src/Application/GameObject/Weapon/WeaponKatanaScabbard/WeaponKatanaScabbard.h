@@ -13,7 +13,10 @@ private:
 
 	void Init() override;
 	void Update() override;
+	void DrawRimLight() override;
 	void UpdateMatrix();
 	void ImGuiInspector() override;
+	void JsonSave(nlohmann::json& _json) const override;
+	void JsonInput(const nlohmann::json& _json) override;
 
 };

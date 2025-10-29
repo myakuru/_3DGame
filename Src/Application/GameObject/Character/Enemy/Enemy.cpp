@@ -40,18 +40,18 @@ void Enemy::Init()
 void Enemy::Update()
 {
 	// 自分の武器が未割り当て/消滅なら一度だけ取得して所有者に設定する
+
+	// reuse m_object as a temporary container: query swords first, process, then shields
 	if (m_wpSword.expired())
 	{
-		std::list<std::weak_ptr<KdGameObject>> swords;
-		SceneManager::Instance().GetObjectWeakPtrListByTag(ObjTag::EnemySword, swords);
-		for (auto& w : swords)
+		SceneManager::Instance().GetObjectWeakPtrListByTag(ObjTag::EnemySword, m_object);
+		for (auto& w : m_object)
 		{
-			if (auto sword = w.lock())
+			if (auto weapon = w.lock())
 			{
-				// IdがEnemySwordのものだけ処理
-				if (sword->GetTypeID() == EnemySword::TypeID)
+				if (weapon->GetTypeID() == EnemySword::TypeID)
 				{
-					auto castedEnemySword = std::static_pointer_cast<EnemySword>(sword);
+					auto castedEnemySword = std::static_pointer_cast<EnemySword>(weapon);
 					if (castedEnemySword->GetOwnerEnemy().expired())
 					{
 						castedEnemySword->SetOwnerEnemy(std::static_pointer_cast<Enemy>(shared_from_this()));
@@ -61,18 +61,19 @@ void Enemy::Update()
 				}
 			}
 		}
+		m_object.clear();
 	}
+
 	if (m_wpShield.expired())
 	{
-		std::list<std::weak_ptr<KdGameObject>> shields;
-		SceneManager::Instance().GetObjectWeakPtrListByTag(ObjTag::EnemyShield, shields);
-		for (auto& w : shields)
+		SceneManager::Instance().GetObjectWeakPtrListByTag(ObjTag::EnemyShield, m_object);
+		for (auto& w : m_object)
 		{
-			if (auto shield = w.lock())
+			if (auto weapon = w.lock())
 			{
-				if(shield->GetTypeID() == EnemyShield::TypeID)
+				if (weapon->GetTypeID() == EnemyShield::TypeID)
 				{
-					auto castedEnemyShield = std::static_pointer_cast<EnemyShield>(shield);
+					auto castedEnemyShield = std::static_pointer_cast<EnemyShield>(weapon);
 					if (castedEnemyShield->GetOwnerEnemy().expired())
 					{
 						castedEnemyShield->SetOwnerEnemy(std::static_pointer_cast<Enemy>(shared_from_this()));
@@ -82,6 +83,7 @@ void Enemy::Update()
 				}
 			}
 		}
+		m_object.clear();
 	}
 
 	// 球の中心座標と半径を設定
@@ -194,19 +196,27 @@ void Enemy::UpdateAttackCollision(float _radius, float _distance, int _attackCou
 		return;
 	}
 
-	SceneManager::Instance().GetObjectWeakPtrListByTag(ObjTag::PlayerLike , m_player);
+	// プレイヤーが存在しない場合は処理しない
+	if (m_wpPlayer.expired()) return;
+
+	{
+		constexpr float kBroadPhaseMargin = 0.5f;
+		const float searchRadius = attackSphere.m_sphere.Radius + kBroadPhaseMargin;
+		SceneManager::Instance().GetObjectWeakPtrListByTagInSphere(ObjTag::PlayerLike, attackSphere.m_sphere.Center, searchRadius, m_object);
+	}
 
 	// ジャスト回避成功チェック（有効時間内のみ）
-	for (const auto& players : m_player)
+	for (const auto& players : m_object)
 	{
 		if (auto playerPtr = players.lock())
 		{
-			std::list<KdCollider::CollisionResult> results;
-			if (playerPtr->Intersects(attackSphere, &results) && !results.empty())
-			{
-				if (playerPtr->GetTypeID() != Player::TypeID) continue;
+			if(playerPtr->GetTypeID() != Player::TypeID) continue;
 
-				auto castedPlayer = std::static_pointer_cast<Player>(playerPtr);
+			auto castedPlayer = std::static_pointer_cast<Player>(playerPtr);
+
+			std::list<KdCollider::CollisionResult> results;
+			if (castedPlayer->Intersects(attackSphere, &results) && !results.empty())
+			{
 
 				// プレイヤーが回避中か判定
 				if (castedPlayer->GetAvoidFlg())
@@ -240,17 +250,18 @@ void Enemy::UpdateAttackCollision(float _radius, float _distance, int _attackCou
 
 	if (m_chargeAttackCount < _attackCount && m_chargeAttackTimer >= _attackTimer)
 	{
-		for (const auto& players : m_player)
+		for (const auto& players : m_object)
 		{
 			if (auto playerPtr = players.lock())
 			{
+				if (playerPtr->GetTypeID() != Player::TypeID) continue;
+
+				auto castedPlayer = std::static_pointer_cast<Player>(playerPtr);
+
 				std::list<KdCollider::CollisionResult> results;
-				if (playerPtr->Intersects(attackSphere, &results) && !results.empty())
+
+				if (castedPlayer->Intersects(attackSphere, &results) && !results.empty())
 				{
-					if (playerPtr->GetTypeID() != Player::TypeID) continue;
-
-					auto castedPlayer = std::static_pointer_cast<Player>(playerPtr);
-
 					castedPlayer->TakeDamage(m_status.attack);
 					castedPlayer->SetHitCheck(true);
 				}
@@ -265,6 +276,9 @@ void Enemy::UpdateAttackCollision(float _radius, float _distance, int _attackCou
 			m_isChargeAttackActive = false;
 		}
 	}
+
+	m_object.clear();
+
 }
 
 void Enemy::PostUpdate()
@@ -284,15 +298,19 @@ void Enemy::PostUpdate()
 	// 球に当たったオブジェクト情報を格納するリスト
 	std::list<KdCollider::CollisionResult> retSpherelist;
 
-	SceneManager::Instance().GetObjectWeakPtrListByTag(ObjTag::Collision, m_collisionList);
+	if (m_collision.expired()) return;
 
-	for(auto & weakCol : m_collisionList)
+	SceneManager::Instance().GetObjectWeakPtrListByTag(ObjTag::Collision, m_object);
+
+	for(auto & weakCol : m_object)
 	{
 		if (auto col = weakCol.lock(); col)
 		{
 			col->Intersects(sphereInfo, &retSpherelist);
 		}
 	}
+
+	m_object.clear();
 
 	// 球にあたったリストから一番近いオブジェクトを探す
 	// オーバーした長さが1番長いものを探す。

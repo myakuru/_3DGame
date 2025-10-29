@@ -106,8 +106,6 @@ public:
 
 private:
 
-	std::weak_ptr<Player> m_wpPlayer;
-
 	bool m_Expired = false;				// 敵を消滅させるかどうか
 	bool m_isHit = false;				// ヒット判定
 	bool m_isAtkPlayer = false;
@@ -119,13 +117,9 @@ private:
 
 	EnemyStatus m_status;				// 敵のステータス
 
-	std::list<std::weak_ptr<EnemySword>> m_enemySwords; // 敵の剣
-	std::list<std::weak_ptr<EnemyShield>> m_enemyShields; // 敵の盾
-
 	std::weak_ptr<EnemySword>  m_wpSword;
 	std::weak_ptr<EnemyShield> m_wpShield;
-
-	std::list<std::weak_ptr<KdGameObject>> m_player;
+	std::weak_ptr<Player> m_wpPlayer;
 
 	// ジャスト回避成功フラグ
 	bool m_justAvoidSuccess = false;

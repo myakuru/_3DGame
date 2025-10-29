@@ -14,6 +14,8 @@ public:
 
 	void Draw();
 
+	void Clear() { m_debugVertices.clear(); }
+
 private:
 	void Release();
 

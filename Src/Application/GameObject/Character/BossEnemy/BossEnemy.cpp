@@ -265,13 +265,16 @@ void BossEnemy::PostUpdate()
 	// 球に当たったオブジェクト情報を格納するリスト
 	std::list<KdCollider::CollisionResult> retSpherelist;
 
-	SceneManager::Instance().GetObjectWeakPtrListByTag(ObjTag::Collision, m_collisionList);
+	if (m_collision.expired()) return;
 
-	for (auto& weakCol : m_collisionList)
+	SceneManager::Instance().GetObjectWeakPtrListByTag(ObjTag::Collision, m_object); // 衝突対象リストを取得
+
+	for (auto& weakCol : m_object)
 	{
 		if (auto col = weakCol.lock(); col)
 		{
 			col->Intersects(sphereInfo, &retSpherelist);
+			m_object.clear();
 		}
 	}
 

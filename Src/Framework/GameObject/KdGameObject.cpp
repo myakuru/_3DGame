@@ -21,8 +21,10 @@ void KdGameObject::Init()
 
 void KdGameObject::DrawDebug()
 {
-	// 早期リターン
+	//早期リターン
 	if (!m_pDebugWire)return;
+	// デバッグ表示が無効の場合は描画せずに蓄積をクリア
+	if (!IMGUI_MANAGER.GetShowDebugWireFrame()) { m_pDebugWire->Clear(); return; }
 	m_pDebugWire->Draw();
 
 }
@@ -71,7 +73,7 @@ bool KdGameObject::CheckInScreen(const DirectX::BoundingFrustum& _BoundingFrustu
 		if (_BoundingFrustum.Intersects(combinedBox)) return true;
 	}
 
-	m_pDebugWire->AddDebugSphere(combinedBox.Center, 2, kRedColor);
+	m_pDebugWire->AddDebugSphere(combinedBox.Center,2, kRedColor);
 
 	return false;
 }
@@ -152,7 +154,7 @@ bool KdGameObject::ModelLoad(std::string _path)
 		return true;
 	}
 
-    return false;
+ return false;
 }
 
 void KdGameObject::ImGuiInspector()
@@ -163,9 +165,9 @@ void KdGameObject::ImGuiInspector()
 
 	// ImGuiのコンボボックスを作成
 	
-	ImGui::DragFloat3(U8("位置"), &m_position.x, 0.1f);
-	ImGui::DragFloat3(U8("拡大、縮小"), &m_scale.x, 0.01f);
-	ImGui::DragFloat3(U8("回転"), &m_degree.x, 0.001f);
+	ImGui::DragFloat3(U8("位置"), &m_position.x,0.1f);
+	ImGui::DragFloat3(U8("拡大、縮小"), &m_scale.x,0.01f);
+	ImGui::DragFloat3(U8("回転"), &m_degree.x,0.001f);
 
 
 	ImGui::ColorEdit4("color", &m_color.x);
@@ -206,12 +208,12 @@ void KdGameObject::SetCollider()
 	if (ImGui::BeginCombo("##Collider", currentName.data()))
 	{
 
-		CheckBoxBit("Ground", m_type, (UINT)KdCollider::TypeGround);
-		CheckBoxBit("Bump", m_type, (UINT)KdCollider::TypeBump);
-		CheckBoxBit("Damage", m_type, (UINT)KdCollider::TypeDamage);
-		CheckBoxBit("TypeDamageLine", m_type, (UINT)KdCollider::TypeDamageLine);
-		CheckBoxBit("TypeSight", m_type, (UINT)KdCollider::TypeSight);
-		CheckBoxBit("TypeEvent", m_type, (UINT)KdCollider::TypeEvent);
+		CheckBoxBit("Ground", m_type,(UINT)KdCollider::TypeGround);
+		CheckBoxBit("Bump", m_type,(UINT)KdCollider::TypeBump);
+		CheckBoxBit("Damage", m_type,(UINT)KdCollider::TypeDamage);
+		CheckBoxBit("TypeDamageLine", m_type,(UINT)KdCollider::TypeDamageLine);
+		CheckBoxBit("TypeSight", m_type,(UINT)KdCollider::TypeSight);
+		CheckBoxBit("TypeEvent", m_type,(UINT)KdCollider::TypeEvent);
 
 		ImGui::EndCombo();
 	}

@@ -22,7 +22,7 @@ public:
 
 	// クラスごとに一意なTypeIDを持たせる
 	static const uint32_t TypeID;
-	Player() { m_typeID = TypeID; }
+	Player() { m_typeID = TypeID; AddTag(ObjTag::PlayerLike); }
 	~Player() override = default;
 
 	void Init() override;
@@ -206,5 +206,10 @@ private:
 
 	bool m_useSkill = false;			// スキル使用中かどうか
 	bool m_useSpecial = false;			// スペシャル使用中かどうか
+
+	Math::Vector3 m_pointLightColor = { 0.4f, 0.5f, 0.5f }; // プレイヤーのポイントライトの色
+	float m_pointLightRadius = 2.0f;                     // プレイヤーのポイントライトの半径
+	Math::Vector3 m_pointLightOffset = { 0.0f, 1.5f, 0.0f }; // プレイヤーのポイントライトのオフセット位置
+	bool m_pointLightOn = true;                            // プレイヤーのポイントライトのオンオフ
 
 };

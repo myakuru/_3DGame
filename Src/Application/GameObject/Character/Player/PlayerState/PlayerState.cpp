@@ -13,10 +13,6 @@ void PlayerStateBase::StateStart()
 	// プレイヤー位置
 	const Math::Vector3 playerPos = m_player->GetPos();
 
-	std::shared_ptr<KdGameObject> nearestEnemy;
-	Math::Vector3                  nearestEnemyPos = Math::Vector3::Zero;
-	float                          minDistSq = std::numeric_limits<float>::max();
-
 	// 検索半径（g_focusMaxDistSq と整合）
 	constexpr float kSearchRadius = 50.0f;               // = sqrt(50^2)
 	constexpr float kSearchRadiusSq = kSearchRadius * kSearchRadius;
@@ -35,15 +31,15 @@ void PlayerStateBase::StateStart()
 					const float distSq = (fpos - playerPos).LengthSquared();
 					if (distSq <= kSearchRadiusSq)
 					{
-						nearestEnemy = f;
-						nearestEnemyPos = fpos;
-						minDistSq = distSq;
+						m_nearestEnemy = f;
+						m_nearestEnemyPos = fpos;
+						m_minDistSq = distSq;
 					}
 				}
 			}
 		}
 		// 無効なら解除
-		if (!nearestEnemy)
+		if (!m_nearestEnemy)
 		{
 			m_focusTarget.reset();
 			m_focusRemainSec = 0.0f;
@@ -51,7 +47,7 @@ void PlayerStateBase::StateStart()
 	}
 
 	// 2) 再取得が必要な場合のみ、近傍限定で Enemy/BossEnemy を取得
-	if (!nearestEnemy)
+	if (!m_nearestEnemy)
 	{
 		std::list<std::weak_ptr<KdGameObject>> candidates;
 		// 型バケット＋近傍API（SceneManager 側で型別レジストリを使用）
@@ -75,27 +71,27 @@ void PlayerStateBase::StateStart()
 
 				const Math::Vector3 epos = sp->GetPos();
 				const float distSq = (epos - playerPos).LengthSquared();
-				if (distSq < minDistSq)
+				if (distSq < m_minDistSq)
 				{
-					minDistSq = distSq;
-					nearestEnemyPos = epos;
-					nearestEnemy = sp;
+					m_minDistSq = distSq;
+					m_nearestEnemyPos = epos;
+					m_nearestEnemy = sp;
 				}
 			}
 		}
 
 		// 新規フォーカス確定
-		if (nearestEnemy)
+		if (m_nearestEnemy)
 		{
-			m_focusTarget = nearestEnemy;
+			m_focusTarget = m_nearestEnemy;
 			m_focusRemainSec = m_focusDurationSec;
 		}
 	}
 
 	// 3) 攻撃方向を決定（敵がいればその方向、いなければ最後の移動方向）
-	if (nearestEnemy)
+	if (m_nearestEnemy)
 	{
-		m_attackDirection = nearestEnemyPos - playerPos;
+		m_attackDirection = m_nearestEnemyPos - playerPos;
 		m_attackDirection.y = 0.0f;
 
 		if (m_attackDirection != Math::Vector3::Zero)
@@ -173,7 +169,7 @@ void PlayerStateBase::UpdateKatanaPos()
 	// 右手のワークノードを取得
 	auto rightHandNode = m_player->GetModelWork()->FindWorkNode("Katana");
 	// 左手のワークノードを取得
-	auto leftHandNode = m_player->GetModelWork()->FindWorkNode("VSB_9");
+	auto leftHandNode = m_player->GetModelWork()->FindWorkNode("Sheath");
 
 	if (!rightHandNode) return;
 	if (!leftHandNode) return;
@@ -194,7 +190,7 @@ void PlayerStateBase::UpdateKatanaPos()
 void PlayerStateBase::UpdateUnsheathed()
 {
 	// 左手のワークノードを取得
-	auto leftHandNode = m_player->GetModelWork()->FindWorkNode("VSB_9");
+	auto leftHandNode = m_player->GetModelWork()->FindWorkNode("Sheath");
 
 	if (!leftHandNode) return;
 

@@ -11,14 +11,8 @@ void Katana::Init()
 {
 	WeaponBase::Init();
 	m_trailPolygon = std::make_shared<KdTrailPolygon>();
-
 	m_trailPolygon->ClearPoints();
-	m_trailPolygon->SetLength(50);
-	//m_trailTex = KdAssets::Instance().m_textures.GetData("Asset/Textures/trajectory.png");
-
-	m_scale = { 0.004f,0.004f,0.004f };
-
-	//m_trailPolygon->SetMaterial(m_trailTex);
+	m_trailPolygon->SetMaterial(m_trailTex);
 	m_showTrail = false;
 }
 
@@ -45,7 +39,7 @@ void Katana::Update()
 	Math::Matrix transOffset = Math::Matrix::CreateTranslation(m_katanaHandOffset);
 	m_swordData.m_weaponMatrix = transOffset * m_swordData.m_weaponScaleMatrix * m_swordData.m_weaponRotationMatrix * m_swordHandData.m_weaponBonesMatrix * m_swordHandData.m_playerWorldMatrix;
 
-	// UpdateTrailPolygon();
+	UpdateTrailPolygon();
 
 }
 
@@ -96,29 +90,24 @@ void Katana::UpdateTrailPolygon()
 	}
 }
 
-void Katana::DrawLit()
-{
-	KdShaderManager::Instance().m_StandardShader.DrawPolygon(*m_trailPolygon, Math::Matrix::Identity, m_trailColor);
-}
-
-void Katana::DrawBright()
-{
-	if (!IMGUI_MANAGER.GetShowEffect()) return;
-}
-
 void Katana::DrawRimLight()
 {
 	KdShaderManager::Instance().ChangeBlendState(KdBlendState::Add);
-
 	KdShaderManager::Instance().m_StandardShader.SetRimLightEnable(true);
+	{
+		m_rimLightUVOffset += m_rimLightUVOffsetSpeed * Application::Instance().GetUnscaledDeltaTime();
 
-	KdShaderManager::Instance().m_StandardShader.SetRimLight(1.0f, { 0.0f, 1.0f, 1.0f });
+		auto& stdSh = KdShaderManager::Instance().m_StandardShader;
+		// 青い武器風
+		stdSh.SetRimLight(m_rimLightPower, m_rimLightColor);
+		// スパークル用の時間オフセット
+		stdSh.SetUVOffset({ m_rimLightUVOffset, -m_rimLightUVOffset });
 
-	KdShaderManager::Instance().m_StandardShader.DrawModel(*m_model, m_swordData.m_weaponMatrix, m_color);
+		stdSh.DrawModel(*m_model, m_swordData.m_weaponMatrix, m_color);
 
-	KdShaderManager::Instance().m_StandardShader.SetRimLightEnable(false);
-
+	}
 	KdShaderManager::Instance().UndoBlendState();
+	KdShaderManager::Instance().m_StandardShader.SetRimLightEnable(false);
 
 }
 
@@ -156,6 +145,18 @@ void Katana::ImGuiInspector()
 
 	ImGui::Separator();
 
+	if (ImGui::CollapsingHeader(U8("リムライトの設定")))
+	{
+		ImGui::Text(U8("リムライトの強さを変更"));
+		ImGui::DragFloat("RimLightPower", &m_rimLightPower);
+		ImGui::Text(U8("リムライトの色を変更"));
+		ImGui::ColorEdit3("RimLightColor", &m_rimLightColor.x);
+		ImGui::Text(U8("リムライトのUVスクロール速度"));
+		ImGui::DragFloat("RimLightUVOffsetSpeed", &m_rimLightUVOffsetSpeed, 0.01f);
+	}
+
+	ImGui::Separator();
+
 	if (ImGui::CollapsingHeader("Sheathing of Katana"))
 	{
 		ImGui::Text(U8("納刀時の角度を変更"));
@@ -177,6 +178,20 @@ void Katana::ImGuiInspector()
 		ImGui::Text(U8("軌跡のスケールを変更"));
 		ImGui::DragFloat3("trailScale", &m_trailScale.x, 0.1f);
 	}
+
+	m_swordData.m_weaponRotationMatrix = m_swordData.m_weaponBonesMatrix.CreateFromYawPitchRoll
+	(
+		DirectX::XMConvertToRadians(m_swordData.m_weaponDeg.y),
+		DirectX::XMConvertToRadians(m_swordData.m_weaponDeg.x),
+		DirectX::XMConvertToRadians(m_swordData.m_weaponDeg.z)
+	);
+
+	m_swordData.m_weaponScaleMatrix = Math::Matrix::CreateScale(m_swordData.m_scale);
+
+	m_swordData.m_weaponBonesMatrix.Translation(m_swordData.m_weaponBonesMatrix.Translation());
+	Math::Matrix transOffset = Math::Matrix::CreateTranslation(m_katanaHandOffset);
+	m_swordData.m_weaponMatrix = transOffset * m_swordData.m_weaponScaleMatrix * m_swordData.m_weaponRotationMatrix * m_swordData.m_weaponBonesMatrix * m_swordData.m_playerWorldMatrix;
+
 }
 
 void Katana::JsonSave(nlohmann::json& _json) const
@@ -185,6 +200,9 @@ void Katana::JsonSave(nlohmann::json& _json) const
 	_json["trailColor"] = JSON_MANAGER.Vector4ToJson(m_trailColor);
 	_json["trailKatanaPoint"] = m_trailKatanaPoint;
 	_json["trailScale"] = JSON_MANAGER.VectorToJson(m_trailScale);
+	_json["rimLightPower"] = m_rimLightPower;
+	_json["rimLightColor"] = JSON_MANAGER.VectorToJson(m_rimLightColor);
+	_json["rimLightUVOffsetSpeed"] = m_rimLightUVOffsetSpeed;
 }
 
 void Katana::JsonInput(const nlohmann::json& _json)
@@ -193,4 +211,7 @@ void Katana::JsonInput(const nlohmann::json& _json)
 	if (_json.contains("trailColor")) m_trailColor = JSON_MANAGER.JsonToVector4(_json["trailColor"]);
 	if (_json.contains("trailKatanaPoint")) m_trailKatanaPoint = _json["trailKatanaPoint"].get<float>();
 	if (_json.contains("trailScale")) m_trailScale = JSON_MANAGER.JsonToVector(_json["trailScale"]);
+	if (_json.contains("rimLightPower")) m_rimLightPower = _json["rimLightPower"].get<float>();
+	if (_json.contains("rimLightColor")) m_rimLightColor = JSON_MANAGER.JsonToVector(_json["rimLightColor"]);
+	if (_json.contains("rimLightUVOffsetSpeed")) m_rimLightUVOffsetSpeed = _json["rimLightUVOffsetSpeed"].get<float>();
 }

@@ -72,6 +72,14 @@ protected:
 	Math::Vector3 m_katanaOffset = Math::Vector3::Zero;
 	Math::Vector3 m_katanaHandOffset = Math::Vector3::Zero;				// 手に持つ刀のオフセット
 
+	/// <summary>
+	/// リムライト関連
+	/// </summary>
+	float m_rimLightPower = 2.0f; // リムライトの強さ
+	Math::Vector3 m_rimLightColor = { 20.0f,30.0f,30.0f }; // リムライトの色
+	float m_rimLightUVOffsetSpeed = 0.5f; // リムライトのUVスクロール速度
+	float m_rimLightUVOffset = 0.0f; // リムライトのUVオフセット
+
 	std::weak_ptr<Enemy> m_ownerEnemy;									// この武器を持っている敵
 
 };

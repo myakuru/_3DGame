@@ -42,14 +42,14 @@ public:
 	// オブジェクトリストに追加（バケットにも登録）
 	void AddObject(const std::shared_ptr<KdGameObject>& _obj)
 	{
-		m_objList.push_back(_obj);
+		m_objList.emplace_back(_obj);
 		IndexObject(_obj);
 	}
 
 	// カメラオブジェクトリストを取得
 	void AddCameraObject(const std::shared_ptr<KdGameObject>& _obj)
 	{
-		m_CameraObjList.push_back(_obj);
+		m_CameraObjList.emplace_back(_obj);
 		// 必要に応じてインデックスするならここで IndexObject(_obj);
 	}
 	// カメラオブジェクトリストを取得
@@ -60,7 +60,7 @@ public:
 
 	void AddMapObject(const std::shared_ptr<KdGameObject>& _obj)
 	{
-		m_MapObjectList.push_back(_obj);
+		m_MapObjectList.emplace_back(_obj);
 		// 必要に応じてインデックスするならここで IndexObject(_obj);
 	}
 
@@ -83,7 +83,7 @@ public:
 
 	// ----- 型バケット経由の検索API（SceneManagerから呼び出される） -----
 
-	 // 追加: タグ経由の取得（全件）
+	 // タグ経由の取得（全件）
 	void GetObjectWeakPtrListByTagFromBuckets(ObjTag tag, std::list<std::weak_ptr<KdGameObject>>& outPtrList)
 	{
 		outPtrList.clear();
@@ -92,7 +92,7 @@ public:
 		for (auto& w : it->second) if (!w.expired()) outPtrList.emplace_back(w);
 	}
 
-	// 追加: タグ経由の取得（球範囲）
+	// タグ経由の取得（球範囲）
 	void GetObjectWeakPtrListByTagInSphereFromBuckets(ObjTag tag, const Math::Vector3& center, float radius,
 		std::list<std::weak_ptr<KdGameObject>>& outPtrList)
 	{
@@ -110,49 +110,6 @@ public:
 		}
 	}
 
-	// いずれかの型に一致するオブジェクトを全て返す（全スキャン無し）
-	template<class... Ts>
-	void GetObjectWeakPtrListAnyOfFromBuckets(std::list<std::weak_ptr<KdGameObject>>& outPtrList)
-	{
-		outPtrList.clear();
-		auto addBucket = [&](uint32_t typeId)
-			{
-				auto it = m_typeBuckets.find(typeId);
-				if (it == m_typeBuckets.end()) return;
-				for (auto& w : it->second)
-				{
-					if (!w.expired()) outPtrList.emplace_back(w);
-				}
-			};
-		(addBucket(Ts::TypeID), ...);
-	}
-
-	// いずれかの型に一致 かつ 球範囲内のみ返す（攻撃などの近傍限定取得）
-	template<class... Ts>
-	void GetObjectWeakPtrListAnyOfInSphereFromBuckets(const Math::Vector3& center, float radius,
-		std::list<std::weak_ptr<KdGameObject>>& outPtrList)
-	{
-		outPtrList.clear();
-		const float r2 = radius * radius;
-		auto addBucket = [&](uint32_t typeId)
-			{
-				auto it = m_typeBuckets.find(typeId);
-				if (it == m_typeBuckets.end()) return;
-				for (auto& w : it->second)
-				{
-					if (auto sp = w.lock())
-					{
-						Math::Vector3 d = sp->GetPos() - center;
-						if (d.LengthSquared() <= r2)
-						{
-							outPtrList.emplace_back(sp);
-						}
-					}
-				}
-			};
-		(addBucket(Ts::TypeID), ...);
-	}
-
 	// 単一型の先頭1件取得（従来の FindObjectOfType の高速版）
 	template<class T>
 	std::shared_ptr<T> FindFirstObjectOfTypeFromBuckets()
@@ -164,19 +121,6 @@ public:
 			if (auto sp = w.lock()) return std::static_pointer_cast<T>(sp);
 		}
 		return nullptr;
-	}
-
-	// 単一型の全取得（従来の GetObjectWeakPtrList の高速版）
-	template<class T>
-	void GetObjectWeakPtrListFromBuckets(std::list<std::weak_ptr<T>>& outPtrList)
-	{
-		outPtrList.clear();
-		auto it = m_typeBuckets.find(T::TypeID);
-		if (it == m_typeBuckets.end()) return;
-		for (auto& w : it->second)
-		{
-			if (auto sp = w.lock()) outPtrList.emplace_back(std::static_pointer_cast<T>(sp));
-		}
 	}
 
 protected:

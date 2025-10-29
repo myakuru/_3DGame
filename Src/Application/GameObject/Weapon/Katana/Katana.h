@@ -23,8 +23,6 @@ private:
 	void Init() override;
 	void Update() override;
 	void UpdateTrailPolygon();								//　軌跡ポリゴンの更新
-	void DrawLit() override;
-	void DrawBright() override;
 	void DrawRimLight() override;
 	void UpdateHand();
 	void ImGuiInspector() override;
@@ -51,4 +49,5 @@ private:
 	Math::Vector3 m_trailScale = { 1.0f,1.0f,1.0f }; // 軌跡の拡大縮小
 
 	bool m_showTrail = false;
+
 };

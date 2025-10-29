@@ -10,12 +10,12 @@
 void BaseScene::PreUpdate()
 {
 	// Updateの前の更新処理
-	// オブジェクトリストの整理 ・・・ 無効なオブジェクトを削除
+	// オブジェクトリストの整理・・・ 無効なオブジェクトを削除
 	auto it = m_objList.begin();
 
 	while (it != m_objList.end())
 	{
-		if ((*it)->IsExpired())	// IsExpired() ・・・ 無効ならtrue
+		if ((*it)->IsExpired())	// IsExpired()・・・ 無効ならtrue
 		{
 			// 無効なオブジェクトをリストから削除
 			it = m_objList.erase(it);
@@ -29,7 +29,7 @@ void BaseScene::PreUpdate()
 	auto mapIt = m_MapObjectList.begin();
 	while (mapIt != m_MapObjectList.end())
 	{
-		if ((*mapIt)->IsExpired())	// IsExpired() ・・・ 無効ならtrue
+		if ((*mapIt)->IsExpired())	// IsExpired()・・・ 無効ならtrue
 		{
 			// 無効なオブジェクトをリストから削除
 			mapIt = m_MapObjectList.erase(mapIt);
@@ -116,7 +116,7 @@ void BaseScene::PreDraw()
 		// カメラからフラスタム生成
 		DirectX::BoundingFrustum frustum = playerCamera->CreateFrustum();
 
-		int cunter = 0;
+		int cunter =0;
 
 		// Mapリストからカリング
 		for (auto& obj : m_MapObjectList)
@@ -157,14 +157,6 @@ void BaseScene::Draw()
 	}
 	KdShaderManager::Instance().m_StandardShader.EndUnLit();
 
-	// グレースケール
-	KdShaderManager::Instance().m_StandardShader.BeginGrayscale();
-	{
-		for (auto& obj : m_objList) obj->DrawGrayScale();
-		for (auto& obj : m_drawObjectList) obj->DrawGrayScale();
-	}
-	KdShaderManager::Instance().m_StandardShader.EndGrayscale();
-
 	// 陰影のあるオブジェクト
 	KdShaderManager::Instance().m_StandardShader.BeginLit();
 	{
@@ -172,6 +164,14 @@ void BaseScene::Draw()
 		for (auto& obj : m_drawObjectList) obj->DrawLit();
 	}
 	KdShaderManager::Instance().m_StandardShader.EndLit();
+
+	// グレースケール
+	KdShaderManager::Instance().m_StandardShader.BeginGrayscale();
+	{
+		for (auto& obj : m_objList) obj->DrawGrayScale();
+		for (auto& obj : m_drawObjectList) obj->DrawGrayScale();
+	}
+	KdShaderManager::Instance().m_StandardShader.EndGrayscale();
 
 	// リムライトオブジェクトの描画
 	KdShaderManager::Instance().m_StandardShader.BeginRimLight();
@@ -221,12 +221,14 @@ void BaseScene::Draw()
 	}
 	KdShaderManager::Instance().m_StandardShader.EndEffect();
 
+	KdEffekseerManager::GetInstance().Draw();
+
 	m_drawObjectList.clear();
 }
 
 void BaseScene::DrawSprite()
 {
-	// 2D描画
+	//2D描画
 	KdShaderManager::Instance().m_spriteShader.Begin();
 	for (auto& obj : m_objList) obj->DrawSprite();
 	KdShaderManager::Instance().m_spriteShader.End();
@@ -236,7 +238,7 @@ void BaseScene::DrawDebug()
 {
 	KdShaderManager::Instance().m_StandardShader.BeginUnLit();
 	{
-		if (!IMGUI_MANAGER.GetShowDebugWireFrame()) return;
+		// デバッグ表示がOFFでも、各オブジェクトにFlushさせてバッファをクリアするため常に呼ぶ
 		for (auto& obj : m_objList) obj->DrawDebug();
 		for (auto& obj : m_MapObjectList) obj->DrawDebug();
 	}
@@ -256,20 +258,20 @@ void BaseScene::DrawImGui()
 	ImGui::Begin("PostProcess");
 	{
 		ImGui::Text(U8("光の調整"));
-		ImGui::DragFloat(U8("ブライトの調整"), &m_brightThreshold, 0.1f);
+		ImGui::DragFloat(U8("ブライトの調整"), &m_brightThreshold,0.1f);
 		ImGui::ColorEdit3(U8("霧の色"), &m_fogColor.x);
-		ImGui::DragFloat(U8("霧の濃さ"), &m_fogDensity, 0.0001f, 0.0f, 0.1f);
+		ImGui::DragFloat(U8("霧の濃さ"), &m_fogDensity,0.0001f,0.0f,0.1f);
 
 		ImGui::Separator();
 		ImGui::Text(U8("高さFOGの調整"));
 		ImGui::ColorEdit3(U8("高い位置の霧の色"), &m_highFogColor.x);
-		ImGui::DragFloat(U8("Fogの最大値"), &m_highFogHeight, 0.1f);
-		ImGui::DragFloat(U8("Fogの最小値"), &m_lowFogHeight, 0.1f);
-		ImGui::DragFloat(U8("Fogの開始距離"), &m_highFogDistance, 0.1f);
+		ImGui::DragFloat(U8("Fogの最大値"), &m_highFogHeight,0.1f);
+		ImGui::DragFloat(U8("Fogの最小値"), &m_lowFogHeight,0.1f);
+		ImGui::DragFloat(U8("Fogの開始距離"), &m_highFogDistance,0.1f);
 
 		ImGui::Separator();
 		ImGui::Text(U8("平行光の調整"));
-		ImGui::DragFloat3(U8("平行光の方向"), &m_directionalLightDir.x, 0.1f);
+		ImGui::DragFloat3(U8("平行光の方向"), &m_directionalLightDir.x,0.1f);
 		ImGui::ColorEdit3(U8("平行光の色"), &m_directionalLightColor.x);
 
 		ImGui::Separator();
@@ -282,8 +284,8 @@ void BaseScene::DrawImGui()
 		ImGui::Checkbox(U8("距離で霧を使う"), &m_fogUseRange);
 
 		ImGui::Separator();
-		ImGui::DragFloat2(U8("影の射影行列"), &m_lightingArea.x, 0.1f, 0.1f);
-		ImGui::DragFloat(U8("影の高さ"), &m_dirLightHeight, 1.0f, 0.1f);
+		ImGui::DragFloat2(U8("影の射影行列"), &m_lightingArea.x,0.1f,0.1f);
+		ImGui::DragFloat(U8("影の高さ"), &m_dirLightHeight,1.0f,0.1f);
 	}
 	ImGui::End();
 

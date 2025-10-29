@@ -50,8 +50,12 @@ protected:
 
 
 	std::weak_ptr<KdGameObject> m_focusTarget;
-	float m_focusRemainSec = 0.0f;
+	float m_focusRemainSec = 0.0f;	//	フォーカスタイマー
 	const float m_focusDurationSec = 0.1f; // フォーカス継続時間(調整用)
 	const float m_focusMaxDistSq = 50.0f * 50.0f; // 距離制限(離れすぎたら解除) 任意
+
+	std::shared_ptr<KdGameObject> m_nearestEnemy;
+	Math::Vector3                  m_nearestEnemyPos = Math::Vector3::Zero;
+	float                          m_minDistSq = std::numeric_limits<float>::max();
 
 };

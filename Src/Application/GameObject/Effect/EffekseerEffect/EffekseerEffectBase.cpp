@@ -100,7 +100,6 @@ void EffekseerEffectBase::DrawLit()
 {
 	if (SceneManager::Instance().m_gameClear) return;
 	if (!IMGUI_MANAGER.GetShowEffect()) return;
-	KdEffekseerManager::GetInstance().Draw();
 }
 
 void EffekseerEffectBase::ImGuiInspector()
