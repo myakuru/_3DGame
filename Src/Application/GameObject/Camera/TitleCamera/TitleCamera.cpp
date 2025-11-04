@@ -1,7 +1,7 @@
 ﻿#include "TitleCamera.h"
 #include"../../../Scene/SceneManager.h"
 #include"../../../main.h"
-#include"../../../../Framework/Json/Json.h"
+#include"../../../../MyFramework/Manager/JsonManager/JsonManager.h"
 
 const uint32_t TitleCamera::TypeID = KdGameObject::GenerateTypeID();
 

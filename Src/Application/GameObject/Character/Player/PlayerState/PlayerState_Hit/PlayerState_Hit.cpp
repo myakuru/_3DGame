@@ -48,9 +48,9 @@ void PlayerState_Hit::StateUpdate()
 
 	if (KeyboardManager::GetInstance().IsKeyJustPressed('Q'))
 	{
-		if (m_player->GetPlayerStatus().specialPoint == m_player->GetPlayerStatus().specialPointMax)
+		if (CharacterData::Instance().GetPlayerStatus().specialPoint == CharacterData::Instance().GetPlayerStatus().specialPointMax)
 		{
-			m_player->GetPlayerStatus().specialPoint = 0;
+			CharacterData::Instance().SetPlayerStatus().specialPoint = 0;
 			auto specialAttackState = std::make_shared<PlayerState_SpecialAttackCutIn>();
 			m_player->ChangeState(specialAttackState);
 			return;

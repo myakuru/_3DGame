@@ -3,6 +3,7 @@
 #include"../PlayerConfig.h"
 #include"../Player.h"
 #include"../../Enemy/Enemy.h"
+#include"../../../../Data/CharacterData/CharacterData.h"
 class BossEnemy;
 class PlayerStateBase : public StateBase
 {

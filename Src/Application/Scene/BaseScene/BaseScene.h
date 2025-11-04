@@ -116,7 +116,7 @@ public:
 	{
 		auto it = m_typeBuckets.find(T::TypeID);
 		if (it == m_typeBuckets.end()) return nullptr;
-		for (auto& w : it->second)
+		for (const auto& w : it->second)
 		{
 			if (auto sp = w.lock()) return std::static_pointer_cast<T>(sp);
 		}

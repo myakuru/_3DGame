@@ -1,5 +1,5 @@
 ﻿#include "NotCharge2UI.h"
-#include"../../../Character/Player/Player.h"
+#include"../../../../Data/CharacterData/CharacterData.h"
 #include"../../../../Scene/SceneManager.h"
 
 const uint32_t NotCharge2UI::TypeID = KdGameObject::GenerateTypeID();
@@ -9,7 +9,6 @@ void NotCharge2UI::Init()
 	SelectDraw2DTexture::Init();
 	m_texture = KdAssets::Instance().m_textures.GetData("Asset/Textures/GameUI/NotCharge.png");
 	m_ChargeTexture = KdAssets::Instance().m_textures.GetData("Asset/Textures/GameUI/Charge.png");
-	SceneManager::Instance().GetObjectWeakPtr(m_player);
 	m_showUI = true;
 }
 
@@ -17,16 +16,13 @@ void NotCharge2UI::Update()
 {
 	SelectDraw2DTexture::Update();
 
-	if (auto player = m_player.lock(); player)
+	if (CharacterData::Instance().GetPlayerStatus().chargeCount >= 3)
 	{
-		if (player->GetPlayerStatus().chargeCount >= 3)
-		{
-			m_showUI = false;
-		}
-		else
-		{
-			m_showUI = true;
-		}
+		m_showUI = false;
+	}
+	else
+	{
+		m_showUI = true;
 	}
 
 	m_mWorld = Math::Matrix::CreateScale(m_scale);

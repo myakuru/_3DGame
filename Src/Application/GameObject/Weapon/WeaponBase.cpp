@@ -1,6 +1,6 @@
 ﻿#include "WeaponBase.h"
 #include"../../main.h"
-#include"../../../Framework/Json/Json.h"
+#include"../../../MyFramework/Manager/JsonManager/JsonManager.h"
 
 const uint32_t WeaponBase::TypeID = KdGameObject::GenerateTypeID();
 

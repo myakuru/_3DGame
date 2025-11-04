@@ -1,6 +1,5 @@
 ﻿#include "PlayerState_Idle.h"
 #include"../../../CharacterBase.h"
-#include"../../../../../../MyFramework/Manager/KeyboardManager.h"
 #include"../../../../../main.h"
 
 #include"../../../../../Scene/SceneManager.h"
@@ -59,9 +58,9 @@ void PlayerState_Idle::StateUpdate()
 
 	if (KeyboardManager::GetInstance().IsKeyJustPressed('Q'))
 	{
-		if (m_player->GetPlayerStatus().specialPoint == m_player->GetPlayerStatus().specialPointMax)
+		if (CharacterData::Instance().GetPlayerStatus().specialPoint == CharacterData::Instance().GetPlayerStatus().specialPointMax)
 		{
-			m_player->GetPlayerStatus().specialPoint = 0;
+			CharacterData::Instance().SetPlayerStatus().specialPoint = 0;
 			auto specialAttackState = std::make_shared<PlayerState_SpecialAttackCutIn>();
 			m_player->ChangeState(specialAttackState);
 			return;
@@ -80,9 +79,9 @@ void PlayerState_Idle::StateUpdate()
 	// Eキー先行入力の予約
 	if (KeyboardManager::GetInstance().IsKeyJustPressed('E'))
 	{
-		if (m_player->GetPlayerStatus().skillPoint >= 30)
+		if (CharacterData::Instance().GetPlayerStatus().skillPoint >= 30)
 		{
-			m_player->GetPlayerStatus().skillPoint -= 30;
+			CharacterData::Instance().SetPlayerStatus().skillPoint -= 30;
 			auto state = std::make_shared<PlayerState_Skill>();
 			m_player->ChangeState(state);
 			return;
@@ -115,11 +114,11 @@ void PlayerState_Idle::StateUpdate()
 		}
 
 		// Chargeカウントがあり、長押し状態へ移行
-		if (m_player->GetPlayerStatus().chargeCount > 0 && m_isKeyPressing && lDuration >= kLongPressThreshold)
+		if (CharacterData::Instance().GetPlayerStatus().chargeCount > 0 && m_isKeyPressing && lDuration >= kLongPressThreshold)
 		{
 			m_isKeyPressing = false;
 
-			m_player->GetPlayerStatus().chargeCount--;
+			CharacterData::Instance().SetPlayerStatus().chargeCount--;
 
 			auto avoidFast = std::make_shared<PlayerState_FullCharge>();
 			m_player->ChangeState(avoidFast);

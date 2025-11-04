@@ -9,7 +9,6 @@ void CharaBase::Init()
 {
 	KdGameObject::Init();
 	m_pDebugWire = std::make_unique<KdDebugWireFrame>();
-
 	ModelLoad(m_path);
 }
 

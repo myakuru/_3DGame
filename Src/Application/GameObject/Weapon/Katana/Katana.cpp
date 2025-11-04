@@ -1,8 +1,8 @@
 ﻿#include "Katana.h"
 #include"../../../main.h"
 #include"../../../Scene/SceneManager.h"
-#include"../../../../Framework/Json/Json.h"
-#include"../../../../Framework/ImGuiManager/ImGuiManager.h"
+#include"../../../../MyFramework/Manager/JsonManager/JsonManager.h"
+#include"../../../../MyFramework/Manager/ImGuiManager/ImGuiManager.h"
 
 // TypeIDの定義と初期化
 const uint32_t Katana::TypeID = KdGameObject::GenerateTypeID();

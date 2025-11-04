@@ -3,8 +3,8 @@
 #include"../../GameObject/Camera/CameraBase.h"
 #include"../../GameObject/Camera/PlayerCamera/PlayerCamera.h"
 
-#include"../../../Framework/Json/Json.h"
-#include"../../../Framework/ImGuiManager/ImGuiManager.h"
+#include"../../../MyFramework/Manager/JsonManager/JsonManager.h"
+#include"../../../MyFramework/Manager/ImGuiManager/ImGuiManager.h"
 #include"../../main.h"
 
 void BaseScene::PreUpdate()

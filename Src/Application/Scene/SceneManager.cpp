@@ -6,11 +6,12 @@
 #include "TitleScene/TitleScene.h"
 #include "ResultScene/ResultScene.h"
 #include "TestStage/TestStage.h"
+#include "ConstructionSiteStage/ConstructionSiteStage.h"
 
 // フレームワークのインクルード
-#include"../../Framework/RegisterObject/RegisterObject.h"
+#include"../../MyFramework/RegisterObject/RegisterObject.h"
 #include"../main.h"
-#include"../../Framework/Json/Json.h"
+#include"../../MyFramework/Manager/JsonManager/JsonManager.h"
 #include"../GameObject/Utility/Time.h"
 
 // ゲームオブジェクトのインクルード
@@ -38,14 +39,8 @@
 #include"../GameObject/HUD/BlackBanner/BlackBanner.h"
 #include"../GameObject/ResultScore/ResultScore.h"
 #include"../GameObject/Collition/Collition.h"
-#include"../GameObject/Effect/FowardEffect/ForwardEffect.h"
-#include"../GameObject/Effect/CurvesEffect/CurvesEffect.h"
-#include"../GameObject/Effect/MeshEffect/AttackEffect/AttackEffect.h"
 #include"../GameObject/Effect/BillBoardEffect/FieldEffect/FieldEffect.h"
 #include"../GameObject/Weapon/WeaponKatanaScabbard/WeaponKatanaScabbard.h"
-#include"../GameObject/Effect/MeshEffect/AttackEffect_second/AttackEffect_second.h"
-#include"../GameObject/Effect/TrailEffect/TrailEffect.h"
-#include"../GameObject/Effect/MeshEffect/Attack4Effect/Attack4Effect.h"
 #include"../GameObject/Effect/EffekseerEffect/EffectPlay/EffectPlay.h"
 #include"../GameObject//Effect/EffekseerEffect/AttacEffect1/AttacEffect1.h"
 #include"../GameObject/Effect/EffekseerEffect/CloudEffect/CloudEffect.h"
@@ -58,7 +53,6 @@
 #include"../GameObject/Effect/EffekseerEffect/SlashEffect/SlashEffect.h"
 #include "../GameObject/Effect/EffekseerEffect/AvoidAttackSlashEffect/AvoidAttackSlashEffect.h"
 #include"../GameObject/Effect/EffekseerEffect/ESkillEffect/ESkillEffect.h"
-#include"../GameObject/CutInCube/CutInCube.h"
 #include"../GameObject/Effect/EffekseerEffect/SpecialAttack/SpecialAttack.h"
 #include"../GameObject/Weapon/EnemySword/EnemySword.h"
 #include"../GameObject/Weapon/EnemyShield/EnemyShield.h"
@@ -185,16 +179,6 @@ void SceneManager::Register() const
 	// Fieldのエフェクト系
 	RegisterObject::GetInstance().Register<FieldEffect>();
 	RegisterObject::GetInstance().Register<MapGard>();
-
-
-	// 使われてないけど一応登録しとく系
-	RegisterObject::GetInstance().Register<ForwardEffect>();
-	RegisterObject::GetInstance().Register<CurvesEffect>();
-	RegisterObject::GetInstance().Register<AttackEffect>();
-	RegisterObject::GetInstance().Register<AttackEffect_second>();
-	RegisterObject::GetInstance().Register<TrailEffect>();
-	RegisterObject::GetInstance().Register<Attack4Effect>();
-	RegisterObject::GetInstance().Register<CutInCube>();
 }
 
 void SceneManager::PreUpdate()
@@ -280,6 +264,9 @@ void SceneManager::ChangeScene(SceneType _sceneType)
 		break;
 	case SceneType::Test:
 		m_currentScene = std::make_shared<TestScene>();
+		break;
+	case SceneType::ConstructionSiteStage:
+		m_currentScene = std::make_shared<ConstructionSiteStage>();
 		break;
 	}
 

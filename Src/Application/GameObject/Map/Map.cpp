@@ -10,9 +10,7 @@ Map::Map()
 
 void Map::DrawLit()
 {
-	KdShaderManager::Instance().ChangeRasterizerState(KdRasterizerState::CullFrontWireframe);
 	SelectDraw3dModel::DrawLit();
-	KdShaderManager::Instance().UndoRasterizerState();
 }
 
 void Map::DrawGrayScale()

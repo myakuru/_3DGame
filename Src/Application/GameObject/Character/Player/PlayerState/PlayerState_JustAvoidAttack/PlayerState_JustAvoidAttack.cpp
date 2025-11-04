@@ -6,8 +6,6 @@
 #include"../../../../Weapon/Katana/Katana.h"
 #include"../../../../Weapon/WeaponKatanaScabbard/WeaponKatanaScabbard.h"
 #include"../../../../../Scene/SceneManager.h"
-#include"../../../../Effect/MeshEffect/AttackEffect/AttackEffect.h"
-#include"../../../../Effect/TrailEffect/TrailEffect.h"
 #include"../../../../Effect/EffekseerEffect/SwordFlash/SwordFlash.h"
 
 #include"../PlayerState_BackWordAvoid/PlayerState_BackWordAvoid.h"

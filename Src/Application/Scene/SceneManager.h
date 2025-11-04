@@ -13,6 +13,7 @@ public:
 		Game,
 		Result,
 		Test, // テストシーン
+		ConstructionSiteStage, // 建設現場ステージ
 	};
 
 	// シーンの初期化
@@ -47,6 +48,7 @@ public:
 
 	// 選択したオブジェクトをセット
 	std::shared_ptr<KdGameObject> m_selectObject = nullptr;
+
 
 	// 指定した型のオブジェクトを取得（型バケットから）
 	template<class T>

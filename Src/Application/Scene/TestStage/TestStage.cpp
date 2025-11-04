@@ -5,7 +5,7 @@
 #include"../../GameObject/Character/Enemy/Enemy.h"
 #include"../../GameObject/Character/BossEnemy/BossEnemy.h"
 
-#include"../../../Framework/Json/Json.h"
+#include"../../../MyFramework/Manager/JsonManager/JsonManager.h"
 #include"../../main.h"
 
 void TestScene::Event()

@@ -4,7 +4,7 @@
 #include"../../Weapon/Katana/Katana.h"
 #include"../../Weapon/WeaponKatanaScabbard/WeaponKatanaScabbard.h"
 #include"../../../main.h"
-#include"../../../../Framework/Json/Json.h"
+#include"../../../../MyFramework/Manager/JsonManager/JsonManager.h"
 #include"../../Camera/PlayerCamera/PlayerCamera.h"
 #include"PlayerState/PlayerState_Idle/PlayerState_Idle.h"
 
@@ -13,6 +13,8 @@
 #include"../Enemy/Enemy.h"
 #include"../BossEnemy/BossEnemy.h"
 #include"../../Collition/Collition.h"
+
+#include"../../../Data/CharacterData/CharacterData.h"
 
 const uint32_t Player::TypeID = KdGameObject::GenerateTypeID();
 
@@ -53,8 +55,6 @@ void Player::Init()
 	m_dissever =0.0f;
 
 	m_isHit = false;
-
-	m_status.specialPoint =1000;
 }
 
 void Player::PreUpdate()
@@ -224,16 +224,13 @@ void Player::Update()
 		m_isHit = false; // ダメージフラグをリセット
 		return;
 	}
-
-	if (SceneManager::Instance().GetCurrentScene()->GetSceneName() == "Test")
-	{
-		m_stateManager.Update();
-	}
+	
+	m_stateManager.Update();
 
 	// スキル・スペシャル使用可能判定
 	{
-		m_useSkill = (m_status.skillPoint >= 30.0);
-		m_useSpecial = (m_status.specialPoint == m_status.specialPointMax);
+		m_useSkill = (CharacterData::Instance().GetPlayerStatus().skillPoint >= 30.0);
+		m_useSpecial = (CharacterData::Instance().SetPlayerStatus().specialPoint == CharacterData::Instance().GetPlayerStatus().specialPointMax);
 	}
 
 	if (m_justAvoid)
@@ -242,7 +239,7 @@ void Player::Update()
 		float deltaTime = Application::Instance().GetUnscaledDeltaTime();
 		m_animator->AdvanceTime(m_modelWork->WorkNodes(), m_fixedFrameRate * deltaTime);
 		m_modelWork->CalcNodeMatrices();
-		m_isMoving = m_movement.LengthSquared() >0;
+		m_isMoving = m_movement.LengthSquared() > 0;
 		// 移動前位置を保存
 		m_prevPosition = m_position;
 		// 重力更新
@@ -348,13 +345,13 @@ void Player::UpdateAttackCollision(float _radius, float _distance, int _attackCo
 					if (obj->GetTypeID() == Enemy::TypeID)
 					{
 						auto e = std::static_pointer_cast<Enemy>(obj);
-						e->Damage(m_status.attack);
+						e->Damage(CharacterData::Instance().GetCharacterData().attack);
 						e->SetEnemyHit(true);
 					}
 					else if (obj->GetTypeID() == BossEnemy::TypeID)
 					{
 						auto b = std::static_pointer_cast<BossEnemy>(obj);
-						b->Damage(m_status.attack);
+						b->Damage(CharacterData::Instance().GetCharacterData().attack);
 						b->SetEnemyHit(true);
 					}
 					hitAny = true;
@@ -369,17 +366,17 @@ void Player::UpdateAttackCollision(float _radius, float _distance, int _attackCo
 				camera->StartShake(_cameraShakePow, _cameraTime);
 			}
 
-			if (m_status.skillPoint <=100)
+			if (CharacterData::Instance().GetPlayerStatus().skillPoint <= 100)
 			{
-				m_status.skillPoint += _attackCount /4;
+				CharacterData::Instance().SetPlayerStatus().skillPoint += _attackCount / 4;
 			}
 
 			// specialPoint を絶対に3000 を超えないように飽和加算
-			constexpr int kAbsoluteSpecialMax =3000;
-			const int upper = std::min(m_status.specialPointMax, kAbsoluteSpecialMax);
-			const int add = _attackCount *20;
+			constexpr int kAbsoluteSpecialMax = 3000;
+			const int upper = std::min(CharacterData::Instance().GetPlayerStatus().specialPointMax, kAbsoluteSpecialMax);
+			const int add = _attackCount * 20;
 
-			m_status.specialPoint = std::min(m_status.specialPoint + add, upper);
+			CharacterData::Instance().SetPlayerStatus().specialPoint = std::min(CharacterData::Instance().GetPlayerStatus().specialPoint + add, upper);
 		}
 
 		m_chargeAttackCount++;
@@ -501,6 +498,12 @@ void Player::UpdateMoveDirectionFromInput()
 		m_moveDirection.Normalize();
 		m_lastMoveDirection = m_moveDirection; // 入力があった時だけ更新
 	}
+}
+
+void Player::TakeDamage(int damage)
+{
+	CharacterData::Instance().SetCharacterData().hp -= damage;
+	if (CharacterData::Instance().GetCharacterData().hp < 0) CharacterData::Instance().SetCharacterData().hp = 0;
 }
 
 void Player::CaptureAfterImage()

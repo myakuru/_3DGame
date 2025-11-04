@@ -1,6 +1,6 @@
 ﻿#include "NumBer.h"
 #include"../../../Scene/SceneManager.h"
-#include"../../Character/Player/Player.h"
+#include"../../../Data/CharacterData/CharacterData.h"
 
 const uint32_t NumBer::TypeID = KdGameObject::GenerateTypeID();
 
@@ -15,13 +15,8 @@ void NumBer::Init()
 
 void NumBer::Update()
 {
-	SceneManager::Instance().GetObjectWeakPtr(m_player);
 
-	auto player = m_player.lock();
-
-	if (!player) return;
-
-	int hp = player->GetPlayerStatus().hpMax;
+	int hp = CharacterData::Instance().GetCharacterData().hp;
 
 	m_displayTime = hp;
 }

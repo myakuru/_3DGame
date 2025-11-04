@@ -22,8 +22,7 @@ public:
 
 	const bool & GetMoving() const { return m_isMoving; }
 	void SetPosition(const Math::Vector3& position) { m_position = position; }
-	//const Math::Vector3& GetPosition() const { return m_position; }
-
+	
 	/// <summary>
 	/// ステートで変更するアニメーションモデルを取得する関数
 	/// </summary>
@@ -98,18 +97,18 @@ protected:
 
 	DirectX::BoundingSphere sphere;
 
-	Math::Vector3 m_dissolveColor = Math::Vector3::Zero; // 溶解エフェクトの色
-	float m_dissolvePower = 1.0f; // 溶解エフェクトの進行度合い
+	Math::Vector3 m_dissolveColor = Math::Vector3::Zero;	// 溶解エフェクトの色
+	float m_dissolvePower = 1.0f;							// 溶解エフェクトの進行度合い
 
 
 	// レイ関係
-	Math::Vector3 m_prevPosition{};          // 前フレームのワールド位置
-	float         m_forwardRayYOffset = 0.35f; // プレイヤー中心(腰程度)の高さ
-	float         m_forwardRayMargin = 0.02f; // 壁手前で残すマージン
-	float         m_forwardRayExtra = 0.05f; // 余剰距離(浮動小数ヒット安定用)
+	Math::Vector3 m_prevPosition{};					// 前フレームのワールド位置
+	float         m_forwardRayYOffset = 0.35f;		// プレイヤー中心(腰程度)の高さ
+	float         m_forwardRayMargin = 0.02f;		// 壁手前で残すマージン
+	float         m_forwardRayExtra = 0.05f;		// 余剰距離(浮動小数ヒット安定用)
 
-	float kBumpSphereRadius = 0.2f; // 壁にめり込むのを防ぐための球の半径
-	float kBumpSphereYOffset = 0.3f; // プレイヤー中心(腰程度)の高さ	
-	float kCollisionMargin = 0.01f; // 壁にめり込まないための余白
+	float kBumpSphereRadius = 0.2f;					// 壁にめり込むのを防ぐための球の半径
+	float kBumpSphereYOffset = 0.3f;				// プレイヤー中心(腰程度)の高さ
+	float kCollisionMargin = 0.01f;					// 壁にめり込まないための余白
 
 };

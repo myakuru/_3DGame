@@ -8,7 +8,7 @@
 #include"../../Weapon/EnemyShield/EnemyShield.h"
 #include"../../Collition/Collition.h"
 #include"../../../main.h"
-#include"../../../../Framework/Json/Json.h"
+#include"../../../../MyFramework/Manager/JsonManager/JsonManager.h"
 #include"EnemyState/EnemyState_Dath/EnemyState_Dath.h"
 
 const uint32_t Enemy::TypeID = KdGameObject::GenerateTypeID();

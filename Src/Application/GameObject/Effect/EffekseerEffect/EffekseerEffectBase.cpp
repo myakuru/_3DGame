@@ -2,8 +2,8 @@
 #include"../../Character/Player/Player.h"
 #include"../../../Scene/SceneManager.h"
 #include"../../../main.h"
-#include"../../../../Framework/ImGuiManager/ImGuiManager.h"
-#include"../../../../Framework//Json/Json.h"
+#include"../../../../MyFramework/Manager/ImGuiManager/ImGuiManager.h"
+#include"../../../../MyFramework/Manager/JsonManager/JsonManager.h"
 
 void EffekseerEffectBase::Init()
 {

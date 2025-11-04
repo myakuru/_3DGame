@@ -138,6 +138,32 @@ public:
 	// 当たり判定の仕組み
 	bool CheckBoxBit(std::string _name, UINT& _ID, UINT _checkID);
 
+	// クラス名を取得する関数
+	const std::string &GetNameClass() const { return m_className; }
+
+	// 親子関係の作成
+	virtual void AddChild(std::weak_ptr<KdGameObject> a_child)
+	{
+		std::shared_ptr<KdGameObject> _child = a_child.lock();
+		if (!_child)return;
+
+		// 自分の子には入れれないようにする(子の子も同様)
+		//if (!SearchChild(_child->GetNameClass(), a_child).expired())return;
+
+		// すでに親がいる場合は親の子リストから削除
+		//if (_child->GetParent().lock())EraceChild(a_child);
+
+		_child->SetParent(GetMyAdls());                        // 子に親のアドレスを渡す
+
+		m_childObjects.push_back(_child->GetMyAdls());        // 自分の子リストに追加
+	}
+
+	// 自分のアドレスを返す
+	virtual std::shared_ptr<KdGameObject> GetMyAdls() { return shared_from_this(); }
+	virtual void SetParent(const std::weak_ptr<KdGameObject>& a_obj) { m_parentObjects = a_obj; }
+	virtual std::weak_ptr<KdGameObject>& GetParent() { return m_parentObjects; }
+	virtual std::list<std::weak_ptr<KdGameObject>>& GetChild() { return m_childObjects; }
+
 protected:
 
 	void Release() {}
@@ -182,6 +208,9 @@ protected:
 	std::shared_ptr <KdTexture> m_texture = std::make_shared<KdTexture>();
 
 	float m_dissever = 0.0f;			// ディゾルブ値
+
+	std::list<std::weak_ptr<KdGameObject>> m_childObjects; // 子オブジェクトを格納するリスト
+	std::weak_ptr<KdGameObject> m_parentObjects; // 親オブジェクトを格納するリスト
 
 	// 位置
 	Math::Vector3 m_position = Math::Vector3::Zero;

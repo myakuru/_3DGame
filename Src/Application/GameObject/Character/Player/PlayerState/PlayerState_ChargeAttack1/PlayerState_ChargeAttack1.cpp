@@ -95,11 +95,11 @@ void PlayerState_ChargeAttack1::StateUpdate()
 		}
 
 		// しきい値到達した瞬間に即 Max へ遷移
-		if (m_player->GetPlayerStatus().chargeCount > 0 && duration >= kLongPressThreshold)
+		if (CharacterData::Instance().GetPlayerStatus().chargeCount > 0 && duration >= kLongPressThreshold)
 		{
 			m_isKeyPressing = false;
 			{
-				if (m_player->GetPlayerStatus().chargeCount > 0) m_player->GetPlayerStatus().chargeCount--;
+				if (CharacterData::Instance().GetPlayerStatus().chargeCount > 0) CharacterData::Instance().SetPlayerStatus().chargeCount--;
 
 				auto next = std::make_shared<PlayerState_ChargeAttackMax>();
 				m_player->ChangeState(next);

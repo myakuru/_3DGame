@@ -277,6 +277,7 @@
     <ClInclude Include="..\Library\tinygltf\stb_image.h" />
     <ClInclude Include="..\Library\tinygltf\stb_image_write.h" />
     <ClInclude Include="..\Library\tinygltf\tiny_gltf.h" />
+    <ClInclude Include="Src\Application\Data\CharacterData\CharacterData.h" />
     <ClInclude Include="Src\Application\GameObject\Camera\CameraBase.h" />
     <ClInclude Include="Src\Application\GameObject\Camera\FPSCamera\FPSCamera.h" />
     <ClInclude Include="Src\Application\GameObject\Camera\PlayerCamera\PlayerCamera.h" />
@@ -348,10 +349,8 @@
     <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_SpecialAttackCutIn\PlayerState_SpecialAttackCutIn.h" />
     <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_SpecialAttack\PlayerState_SpecialAttack.h" />
     <ClInclude Include="Src\Application\GameObject\Collition\Collition.h" />
-    <ClInclude Include="Src\Application\GameObject\CutInCube\CutInCube.h" />
     <ClInclude Include="Src\Application\GameObject\Effect\BillBoardEffect\FieldEffect\FieldEffect.h" />
     <ClInclude Include="Src\Application\GameObject\Effect\BillBoardEffect\MapGard\MapGard.h" />
-    <ClInclude Include="Src\Application\GameObject\Effect\CurvesEffect\CurvesEffect.h" />
     <ClInclude Include="Src\Application\GameObject\Effect\EffekseerEffect\AttacEffect1\AttacEffect1.h" />
     <ClInclude Include="Src\Application\GameObject\Effect\EffekseerEffect\AvoidAttackSlashEffect\AvoidAttackSlashEffect.h" />
     <ClInclude Include="Src\Application\GameObject\Effect\EffekseerEffect\BossAttack_1stEffect\BossAttack_1stEffect.h" />
@@ -378,12 +377,6 @@
     <ClInclude Include="Src\Application\GameObject\Effect\EffekseerEffect\SpecialAttack\SpecialAttack.h" />
     <ClInclude Include="Src\Application\GameObject\Effect\EffekseerEffect\SpeedAttackEffect\SpeedAttackEffect.h" />
     <ClInclude Include="Src\Application\GameObject\Effect\EffekseerEffect\SwordFlash\SwordFlash.h" />
-    <ClInclude Include="Src\Application\GameObject\Effect\FowardEffect\ForwardEffect.h" />
-    <ClInclude Include="Src\Application\GameObject\Effect\MeshEffect\Attack4Effect\Attack4Effect.h" />
-    <ClInclude Include="Src\Application\GameObject\Effect\MeshEffect\AttackEffect\AttackEffect.h" />
-    <ClInclude Include="Src\Application\GameObject\Effect\MeshEffect\AttackEffect_second\AttackEffect_second.h" />
-    <ClInclude Include="Src\Application\GameObject\Effect\MeshEffect\MeshEffectBase.h" />
-    <ClInclude Include="Src\Application\GameObject\Effect\TrailEffect\TrailEffect.h" />
     <ClInclude Include="Src\Application\GameObject\Field\Field.h" />
     <ClInclude Include="Src\Application\GameObject\Field\UpDownField\UpDownField.h" />
     <ClInclude Include="Src\Application\GameObject\HUD\AlpfaMoving\AlpfaMoving.h" />
@@ -425,6 +418,7 @@
     <ClInclude Include="Src\Application\GameObject\Winner\Winner.h" />
     <ClInclude Include="Src\Application\main.h" />
     <ClInclude Include="Src\Application\Scene\BaseScene\BaseScene.h" />
+    <ClInclude Include="Src\Application\Scene\ConstructionSiteStage\ConstructionSiteStage.h" />
     <ClInclude Include="Src\Application\Scene\GameScene\GameScene.h" />
     <ClInclude Include="Src\Application\Scene\ResultScene\ResultScene.h" />
     <ClInclude Include="Src\Application\Scene\SceneManager.h" />
@@ -437,9 +431,7 @@
     <ClInclude Include="Src\Framework\Effekseer\KdEffekseerManager.h" />
     <ClInclude Include="Src\Framework\GameObject\KdGameObject.h" />
     <ClInclude Include="Src\Framework\GameObject\KdGameObjectFactory.h" />
-    <ClInclude Include="Src\Framework\ImGuiManager\ImGuiManager.h" />
     <ClInclude Include="Src\Framework\Input\KdInput.h" />
-    <ClInclude Include="Src\Framework\Json\Json.h" />
     <ClInclude Include="Src\Framework\Math\KdCollider.h" />
     <ClInclude Include="Src\Framework\Math\KdEasing.h" />
     <ClInclude Include="Src\Framework\KdFramework.h" />
@@ -452,7 +444,6 @@
     <ClInclude Include="Src\Framework\Direct3D\KdModel.h" />
     <ClInclude Include="src\Framework\Direct3D\KdTexture.h" />
     <ClInclude Include="Src\Framework\Math\KdUVAnimation.h" />
-    <ClInclude Include="Src\Framework\RegisterObject\RegisterObject.h" />
     <ClInclude Include="Src\Framework\Shader\KdAmbientController.h" />
     <ClInclude Include="Src\Framework\Shader\KdRenderTargetChange.h" />
     <ClInclude Include="Src\Framework\Shader\StandardShader\KdStandardShader.h" />
@@ -463,8 +454,11 @@
     <ClInclude Include="Src\Framework\Utility\KdFPSController.h" />
     <ClInclude Include="Src\Framework\Utility\KdFrameTimer.h" />
     <ClInclude Include="Src\Framework\Utility\KdRandom.h" />
-    <ClInclude Include="Src\MyFramework\Manager\KeyboardManager.h" />
-    <ClInclude Include="Src\MyFramework\Manager\XInputManager.h" />
+    <ClInclude Include="Src\MyFramework\Manager\ImGuiManager\ImGuiManager.h" />
+    <ClInclude Include="Src\MyFramework\Manager\JsonManager\JsonManager.h" />
+    <ClInclude Include="Src\MyFramework\Manager\KeyboardManager\KeyboardManager.h" />
+    <ClInclude Include="Src\MyFramework\Manager\XInputManager\XInputManager.h" />
+    <ClInclude Include="Src\MyFramework\RegisterObject\RegisterObject.h" />
     <ClInclude Include="Src\MyFramework\State\StateBase\StateBase.h" />
     <ClInclude Include="Src\MyFramework\State\StateManager\StateManager.h" />
     <ClInclude Include="src\Pch.h" />
@@ -485,6 +479,7 @@
     <ClCompile Include="..\Library\imgui\imgui_stdlib.cpp" />
     <ClCompile Include="..\Library\imgui\imgui_tables.cpp" />
     <ClCompile Include="..\Library\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="Src\Application\Data\CharacterData\CharacterData.cpp" />
     <ClCompile Include="Src\Application\GameObject\Camera\CameraBase.cpp" />
     <ClCompile Include="Src\Application\GameObject\Camera\FPSCamera\FPSCamera.cpp" />
     <ClCompile Include="Src\Application\GameObject\Camera\PlayerCamera\PlayerCamera.cpp" />
@@ -555,10 +550,8 @@
     <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_SpecialAttackCutIn\PlayerState_SpecialAttackCutIn.cpp" />
     <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_SpecialAttack\PlayerState_SpecialAttack.cpp" />
     <ClCompile Include="Src\Application\GameObject\Collition\Collition.cpp" />
-    <ClCompile Include="Src\Application\GameObject\CutInCube\CutInCube.cpp" />
     <ClCompile Include="Src\Application\GameObject\Effect\BillBoardEffect\FieldEffect\FieldEffect.cpp" />
     <ClCompile Include="Src\Application\GameObject\Effect\BillBoardEffect\MapGard\MapGard.cpp" />
-    <ClCompile Include="Src\Application\GameObject\Effect\CurvesEffect\CurvesEffect.cpp" />
     <ClCompile Include="Src\Application\GameObject\Effect\EffekseerEffect\AttacEffect1\AttacEffect1.cpp" />
     <ClCompile Include="Src\Application\GameObject\Effect\EffekseerEffect\AvoidAttackSlashEffect\AvoidAttackSlashEffect.cpp" />
     <ClCompile Include="Src\Application\GameObject\Effect\EffekseerEffect\BossAttack_1stEffect\BossAttack_1stEffect.cpp" />
@@ -585,12 +578,6 @@
     <ClCompile Include="Src\Application\GameObject\Effect\EffekseerEffect\SpecialAttack\SpecialAttack.cpp" />
     <ClCompile Include="Src\Application\GameObject\Effect\EffekseerEffect\SpeedAttackEffect\SpeedAttackEffect.cpp" />
     <ClCompile Include="Src\Application\GameObject\Effect\EffekseerEffect\SwordFlash\SwordFlash.cpp" />
-    <ClCompile Include="Src\Application\GameObject\Effect\FowardEffect\ForwardEffect.cpp" />
-    <ClCompile Include="Src\Application\GameObject\Effect\MeshEffect\Attack4Effect\Attack4Effect.cpp" />
-    <ClCompile Include="Src\Application\GameObject\Effect\MeshEffect\AttackEffect\AttackEffect.cpp" />
-    <ClCompile Include="Src\Application\GameObject\Effect\MeshEffect\AttackEffect_second\AttackEffect_second.cpp" />
-    <ClCompile Include="Src\Application\GameObject\Effect\MeshEffect\MeshEffectBase.cpp" />
-    <ClCompile Include="Src\Application\GameObject\Effect\TrailEffect\TrailEffect.cpp" />
     <ClCompile Include="Src\Application\GameObject\Field\Field.cpp" />
     <ClCompile Include="Src\Application\GameObject\Field\UpDownField\UpDownField.cpp" />
     <ClCompile Include="Src\Application\GameObject\HUD\AlpfaMoving\AlpfaMoving.cpp" />
@@ -628,6 +615,7 @@
     <ClCompile Include="Src\Application\GameObject\Winner\Winner.cpp" />
     <ClCompile Include="Src\Application\main.cpp" />
     <ClCompile Include="Src\Application\Scene\BaseScene\BaseScene.cpp" />
+    <ClCompile Include="Src\Application\Scene\ConstructionSiteStage\ConstructionSiteStage.cpp" />
     <ClCompile Include="Src\Application\Scene\GameScene\GameScene.cpp" />
     <ClCompile Include="Src\Application\Scene\ResultScene\ResultScene.cpp" />
     <ClCompile Include="Src\Application\Scene\SceneManager.cpp" />
@@ -643,9 +631,7 @@
     <ClCompile Include="Src\Framework\Effekseer\KdEffekseerManager.cpp" />
     <ClCompile Include="Src\Framework\GameObject\KdGameObject.cpp" />
     <ClCompile Include="Src\Framework\GameObject\KdGameObjectFactory.cpp" />
-    <ClCompile Include="Src\Framework\ImGuiManager\ImGuiManager.cpp" />
     <ClCompile Include="Src\Framework\Input\KdInput.cpp" />
-    <ClCompile Include="Src\Framework\Json\Json.cpp" />
     <ClCompile Include="Src\Framework\Math\KdCollider.cpp" />
     <ClCompile Include="Src\Framework\Math\KdEasing.cpp" />
     <ClCompile Include="Src\Framework\Audio\KdAudio.cpp" />
@@ -665,7 +651,9 @@
     <ClCompile Include="Src\Framework\Utility\KdDebugWireFrame.cpp" />
     <ClCompile Include="Src\Framework\Utility\KdFPSController.cpp" />
     <ClCompile Include="Src\Framework\Utility\KdFrameTimer.cpp" />
-    <ClCompile Include="Src\MyFramework\Manager\KeyboardManager.cpp" />
+    <ClCompile Include="Src\MyFramework\Manager\ImGuiManager\ImGuiManager.cpp" />
+    <ClCompile Include="Src\MyFramework\Manager\JsonManager\JsonManager.cpp" />
+    <ClCompile Include="Src\MyFramework\Manager\KeyboardManager\KeyboardManager.cpp" />
     <ClCompile Include="Src\MyFramework\State\StateManager\StateManager.cpp" />
     <ClCompile Include="src\Pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

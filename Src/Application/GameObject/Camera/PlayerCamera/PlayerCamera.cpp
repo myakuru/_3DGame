@@ -1,9 +1,8 @@
 ﻿#include "PlayerCamera.h"
 #include"../../../main.h"
-#include"../../../../MyFramework/Manager/KeyboardManager.h"
 #include"../../../Scene/SceneManager.h"
 #include"../../Character/Player/Player.h"
-#include"../../../../Framework/Json/Json.h"
+#include"../../../../MyFramework/Manager/JsonManager/JsonManager.h"
 #include"../../Utility/Time.h"
 #include"PlayerCameraState\PlayerCameraState.h"
 

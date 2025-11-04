@@ -5,17 +5,7 @@ class Enemy;
 class Katana;
 class WeaponKatanaScabbard;
 class PlayerStateBase;
-struct PlayerStatus
-{
-	int hp = 1000;				// ヒットポイント
-	int attack = 3000;			// 攻撃力
-	int hpMax = 1000;			// 最大ヒットポイント
-	int chargeCount = 0;		// チャージ攻撃の回数
-	int skillPoint = 0;			// スキルポイント
-	int skillPointMax = 100;	// スキルポイントの最大値
-	int specialPoint = 0;		// スペシャルポイント
-	int specialPointMax = 3000;	// スペシャルポイントの最大値
-};
+
 class Player :public CharaBase
 {
 public:
@@ -76,11 +66,7 @@ public:
 	PlayerConfig& GetPlayerConfig() { return m_playerConfig; }
 
 	// ダメージを受けた時の処理
-	void TakeDamage(int damage)
-	{
-		m_status.hp -= damage;
-		if (m_status.hp < 0) m_status.hp = 0;
-	}
+	void TakeDamage(int damage);
 
 	bool m_onceEffect = false;
 
@@ -90,8 +76,6 @@ public:
 	void SetAvoidStartTime(float time) { m_avoidStartTime = time; }
 	float GetAvoidStartTime() const { return m_avoidStartTime; }
 
-
-	PlayerStatus& GetPlayerStatus() { return m_status; }
 
 	const Math::Vector2& GetCameraShakePower() const { return m_cameraShakePower; }
 	float GetCameraShakeTime() const { return m_cameraShakeTime; }
@@ -155,7 +139,6 @@ private:
 
 	Math::Vector3 m_moveDirection = Math::Vector3::Zero;		// 移動方向
 	Math::Vector3 m_lastMoveDirection = Math::Vector3::Zero;	// 最後に移動した方向
-	PlayerStatus m_status;										// プレイヤーのステータス
 	bool m_nowAvoid = false;									// 回避中かどうか
 	float m_attackBossEnemyRadius = 2.0f;						// ボスに攻撃する時の当たり判定の半径
 	float m_avoidStartTime = 0.0f;								// 回避開始タイム

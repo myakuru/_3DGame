@@ -6,7 +6,7 @@
 #include"../../Weapon/EnemyShield/EnemyShield.h"
 #include"../../Collition/Collition.h"
 #include"../../../main.h"
-#include"../../../../Framework/Json/Json.h"
+#include"../../../../MyFramework/Manager/JsonManager/JsonManager.h"
 #include"BossEnemyState/BossEnemyState_Enter/BossEnemyState_Enter.h"
 #include"BossEnemyState/BossEnemyState_Hit/BossEnemyState_Hit.h"
 #include"../BossEnemy/BossEnemyState/BossEnemyState_Dodge/BossEnemyState_Dodge.h"

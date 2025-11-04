@@ -102,11 +102,11 @@ void PlayerState_ChargeAttack::StateUpdate()
 		}
 
 		// Chargeカウントが2つ以上溜まっている。
-		if (m_player->GetPlayerStatus().chargeCount > 1 && duration >= kLongPressThreshold)
+		if (CharacterData::Instance().GetPlayerStatus().chargeCount > 1 && duration >= kLongPressThreshold)
 		{
 			m_isKeyPressing = false;
 			// 先に消費してからステート遷移
-			m_player->GetPlayerStatus().chargeCount--;
+			CharacterData::Instance().SetPlayerStatus().chargeCount--;
 			auto next = std::make_shared<PlayerState_ChargeAttack1>();
 			m_player->ChangeState(next);
 			return;
@@ -117,7 +117,7 @@ void PlayerState_ChargeAttack::StateUpdate()
 		{
 			m_isKeyPressing = false; // 判定終了
 
-			if (m_player->GetPlayerStatus().chargeCount >= 0)
+			if (CharacterData::Instance().GetPlayerStatus().chargeCount >= 0)
 			{
 				auto next = std::make_shared<PlayerState_ChaegeAttack2>();
 				m_player->ChangeState(next);

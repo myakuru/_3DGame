@@ -1,6 +1,6 @@
 ﻿#include "main.h"
-#include"../Framework/Json/Json.h"
-#include"../Framework/ImGuiManager/ImGuiManager.h"
+#include"../MyFramework/Manager/JsonManager/JsonManager.h"
+#include"../MyFramework/Manager/ImGuiManager/ImGuiManager.h"
 #include "Scene/SceneManager.h"
 
 // ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// /////

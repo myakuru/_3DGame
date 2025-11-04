@@ -102,9 +102,9 @@ void PlayerState_Attack1::StateUpdate()
 
 	if (KeyboardManager::GetInstance().IsKeyJustPressed('Q'))
 	{
-		if (m_player->GetPlayerStatus().specialPoint == m_player->GetPlayerStatus().specialPointMax)
+		if (CharacterData::Instance().GetPlayerStatus().specialPoint == CharacterData::Instance().GetPlayerStatus().specialPointMax)
 		{
-			m_player->GetPlayerStatus().specialPoint = 0;
+			CharacterData::Instance().SetPlayerStatus().specialPoint = 0;
 			auto specialAttackState = std::make_shared<PlayerState_SpecialAttackCutIn>();
 			m_player->ChangeState(specialAttackState);
 			return;
@@ -114,10 +114,10 @@ void PlayerState_Attack1::StateUpdate()
 	// Eキー先行入力の予約
 	if (KeyboardManager::GetInstance().IsKeyJustPressed('E'))
 	{
-		if (m_player->GetPlayerStatus().skillPoint >= 30)
+		if (CharacterData::Instance().GetPlayerStatus().skillPoint >= 30)
 		{
 			m_EButtonkeyInput = true;
-			m_player->GetPlayerStatus().skillPoint -= 30;
+			CharacterData::Instance().SetPlayerStatus().skillPoint -= 30;
 		}
 	}
 
@@ -172,7 +172,7 @@ void PlayerState_Attack1::StateUpdate()
 			const float lDuration = isPressed ? KeyboardManager::GetInstance().GetKeyPressDuration(VK_LBUTTON) : 0.0f;
 
 			// 現在のチャージ残数
-			int& chargeCount = m_player->GetPlayerStatus().chargeCount;
+			int& chargeCount = CharacterData::Instance().SetPlayerStatus().chargeCount;
 
 			// 1) 先行入力を最優先で消費してAttack1へ
 			if (m_LButtonkeyInput)

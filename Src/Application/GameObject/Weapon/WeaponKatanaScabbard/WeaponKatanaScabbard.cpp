@@ -1,6 +1,6 @@
 ﻿#include "WeaponKatanaScabbard.h"
 #include"../../../main.h"
-#include"../../../../Framework/Json/Json.h"
+#include"../../../../MyFramework/Manager/JsonManager/JsonManager.h"
 
 const uint32_t WeaponKatanaScabbard::TypeID = KdGameObject::GenerateTypeID();
 

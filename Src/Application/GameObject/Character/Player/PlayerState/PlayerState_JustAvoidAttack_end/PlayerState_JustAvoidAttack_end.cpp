@@ -6,8 +6,6 @@
 #include"../../../../Weapon/Katana/Katana.h"
 #include"../../../../Weapon/WeaponKatanaScabbard/WeaponKatanaScabbard.h"
 #include"../../../../../Scene/SceneManager.h"
-#include"../../../../Effect/MeshEffect/AttackEffect/AttackEffect.h"
-#include"../../../../Effect/TrailEffect/TrailEffect.h"
 #include"../../../../Effect/EffekseerEffect/SwordFlash/SwordFlash.h"
 
 #include"../PlayerState_BackWordAvoid/PlayerState_BackWordAvoid.h"
@@ -47,9 +45,9 @@ void PlayerState_JustAvoidAttack_end::StateStart()
 	SceneManager::Instance().GetObjectWeakPtr(m_bossEnemy);
 
 	// Chargeカウントを1増やす（最大3まで）
-	if (m_player->GetPlayerStatus().chargeCount < 3)
+	if (CharacterData::Instance().GetPlayerStatus().chargeCount < 3)
 	{
-		m_player->GetPlayerStatus().chargeCount++;
+		CharacterData::Instance().SetPlayerStatus().chargeCount++;
 	}
 }
 

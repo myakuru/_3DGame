@@ -1,6 +1,5 @@
 ﻿#include"../../Application/main.h"
-#include"../ImGuiManager/ImGuiManager.h"
-#include"../../MyFramework/Manager/KeyboardManager.h"
+#include"../../MyFramework/Manager/ImGuiManager/ImGuiManager.h"
 
 #include "KdDebugGUI.h"
 

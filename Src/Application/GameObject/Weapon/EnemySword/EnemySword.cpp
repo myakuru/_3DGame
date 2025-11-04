@@ -1,6 +1,6 @@
 ﻿#include "EnemySword.h"
 #include"../../../main.h"
-#include"../../../../Framework/ImGuiManager/ImGuiManager.h"
+#include"../../../../MyFramework/Manager/ImGuiManager/ImGuiManager.h"
 
 const uint32_t EnemySword::TypeID = KdGameObject::GenerateTypeID();
 

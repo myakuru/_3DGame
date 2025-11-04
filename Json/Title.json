@@ -29,7 +29,7 @@
   {
     "Name": "class AlpfaMoving",
     "color": {
-      "w": 0.9992762804031372,
+      "w": 0.201269268989563,
       "x": 1.0,
       "y": 1.0,
       "z": 1.0
@@ -109,7 +109,7 @@
     "pos": {
       "x": 0.0,
       "y": 0.0,
-      "z": -0.011580205522477627
+      "z": -0.05673215538263321
     },
     "scale": {
       "x": 1.0,
@@ -159,6 +159,18 @@
     "fixedFps": 60.0,
     "moveSpeed": 0.0,
     "path": "Asset/Models/Sky/Sky.gltf",
+    "pointLightColor": {
+      "x": 0.4000000059604645,
+      "y": 0.5,
+      "z": 0.5
+    },
+    "pointLightOffset": {
+      "x": 0.0,
+      "y": 1.5,
+      "z": 0.0
+    },
+    "pointLightOn": true,
+    "pointLightRadius": 2.0,
     "pos": {
       "x": 31.0,
       "y": 9.85999870300293,
@@ -321,9 +333,21 @@
     "fixedFps": 60.0,
     "moveSpeed": 0.14000000059604645,
     "path": "Asset\\Models\\Player\\Perula\\Player\\Perula.gltf",
+    "pointLightColor": {
+      "x": 0.4000000059604645,
+      "y": 0.5,
+      "z": 0.5
+    },
+    "pointLightOffset": {
+      "x": 0.0,
+      "y": 1.5,
+      "z": 0.0
+    },
+    "pointLightOn": true,
+    "pointLightRadius": 2.0,
     "pos": {
       "x": 31.0,
-      "y": 9.850011825561523,
+      "y": 9.84999942779541,
       "z": -75.0
     },
     "rotateSpeed": 30.0,
@@ -377,6 +401,13 @@
       "y": 0.0,
       "z": 0.0
     },
+    "rimLightColor": {
+      "x": 20.0,
+      "y": 30.0,
+      "z": 30.0
+    },
+    "rimLightPower": 2.0,
+    "rimLightUVOffsetSpeed": 0.5,
     "scale": {
       "x": 0.004000000189989805,
       "y": 0.004000000189989805,
@@ -478,6 +509,13 @@
       "y": 0.0,
       "z": 0.0
     },
+    "rimLightColor": {
+      "x": 20.0,
+      "y": 30.0,
+      "z": 30.0
+    },
+    "rimLightPower": 2.0,
+    "rimLightUVOffsetSpeed": 0.5,
     "scale": {
       "x": 0.004100000020116568,
       "y": 0.004100000020116568,
@@ -505,6 +543,12 @@
       "z": 0.0
     },
     "distance": 10.0,
+    "effectColor": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
     "path": "Asset\\Data\\Effect\\EVFX_Slash\\VFX\\effects\\Charge0.efkefc",
     "pos": {
       "x": 0.0,
@@ -533,6 +577,12 @@
       "z": 0.0
     },
     "distance": 2.0,
+    "effectColor": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
     "path": "Asset\\Data\\Effect\\EVFX_Slash\\VFX\\effects\\EVFX02_13_ArcBlade.efkefc",
     "pos": {
       "x": 0.0,
@@ -561,6 +611,12 @@
       "z": 0.0
     },
     "distance": 0.0,
+    "effectColor": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
     "path": "Asset\\Data\\Effect\\EVFX_Slash\\VFX\\Smoke\\EVFXForge01_10_FrostforgeSlash.efkefc",
     "pos": {
       "x": 0.0,
@@ -589,6 +645,12 @@
       "z": 0.0
     },
     "distance": 0.0,
+    "effectColor": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
     "path": "Asset\\Data\\Effect\\SampleEffect\\ZZZshine.efkefc",
     "pos": {
       "x": 0.0,
@@ -617,6 +679,12 @@
       "z": 0.0
     },
     "distance": 0.0,
+    "effectColor": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
     "path": "Asset\\Data\\Effect\\SampleEffect\\GroundFreezes.efkefc",
     "pos": {
       "x": 0.0,
@@ -645,6 +713,12 @@
       "z": 0.0
     },
     "distance": -0.10000000149011612,
+    "effectColor": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
     "path": "Asset\\Data\\Effect\\SampleEffect\\ZZZshine2.efkefc",
     "pos": {
       "x": 0.0,
@@ -673,6 +747,12 @@
       "z": 0.0
     },
     "distance": 0.5,
+    "effectColor": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
     "path": "Asset\\Data\\Effect\\SampleEffect\\SwordFlash.efkefc",
     "pos": {
       "x": 0.0,
@@ -701,6 +781,12 @@
       "z": 0.0
     },
     "distance": 0.0,
+    "effectColor": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
     "path": "Asset\\Data\\Effect\\EVFX_Slash\\VFX\\effects\\EVFX02_15_SweepBlade.efkefc",
     "pos": {
       "x": 0.0,
@@ -729,6 +815,12 @@
       "z": 0.0
     },
     "distance": 3.5,
+    "effectColor": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
     "path": "Asset\\Data\\Effect\\Shine\\VFX\\EVFXForge15_10_ShineforgeSlash.efkefc",
     "pos": {
       "x": 0.0,
@@ -757,6 +849,12 @@
       "z": 0.0
     },
     "distance": 0.0,
+    "effectColor": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
     "path": "Asset\\Data\\Effect\\SampleEffect\\SwordFlash.efkefc",
     "pos": {
       "x": 0.0,
@@ -785,6 +883,12 @@
       "z": 0.0
     },
     "distance": 0.0,
+    "effectColor": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
     "path": "Asset\\Data\\Effect\\Storm\\EVFXForge05_10_StormforgeSlash.efkefc",
     "pos": {
       "x": 0.0,
@@ -813,6 +917,12 @@
       "z": 0.0
     },
     "distance": 0.0,
+    "effectColor": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
     "path": "Asset\\Data\\Effect\\EVFX_Slash\\VFX\\effects\\SLASH.efkefc",
     "pos": {
       "x": 0.0,
@@ -951,6 +1061,12 @@
       "z": 0.0
     },
     "distance": 0.0,
+    "effectColor": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
     "path": "Asset\\Data\\Effect\\SampleEffect\\ZZZshineEnemy.efkefc",
     "pos": {
       "x": 0.0,
@@ -1294,6 +1410,12 @@
       "z": 0.0
     },
     "distance": 7.0,
+    "effectColor": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
     "path": "Asset\\Data\\Effect\\Spellblade\\Last.efkefc",
     "pos": {
       "x": 0.0,
@@ -1322,6 +1444,12 @@
       "z": 0.0
     },
     "distance": 2.0,
+    "effectColor": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
     "path": "Asset\\Data\\Effect\\Spellblade\\EVFXParagon01_02_FleetingBlade.efkefc",
     "pos": {
       "x": 0.0,
@@ -2757,7 +2885,7 @@
     "path": "Asset\\Map2\\Map.gltf",
     "pos": {
       "x": -287.70001220703125,
-      "y": -122.84073638916016,
+      "y": -120.08464813232422,
       "z": 315.3999938964844
     },
     "scale": {
@@ -2783,6 +2911,12 @@
       "z": 0.0
     },
     "distance": 2.0,
+    "effectColor": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
     "path": "Asset\\Data\\Effect\\Spellblade\\SlashAll.efkefc",
     "pos": {
       "x": 0.0,
@@ -2811,6 +2945,12 @@
       "z": 0.0
     },
     "distance": 3.0,
+    "effectColor": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
     "path": "Asset\\Data\\Effect\\Shine\\VFX\\EVFXForge15_10_ShineforgeSlash.efkefc",
     "pos": {
       "x": 0.0,
@@ -2839,6 +2979,12 @@
       "z": 0.0
     },
     "distance": 2.0,
+    "effectColor": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
     "path": "Asset\\Data\\Effect\\Spellblade\\EVFXParagon01_07_FloodwovenBlade.efkefc",
     "pos": {
       "x": 0.0,
@@ -2867,6 +3013,12 @@
       "z": 0.0
     },
     "distance": 0.0,
+    "effectColor": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
     "path": "Asset\\Data\\Effect\\Flood\\EVFXForge09_06_FountainSurge.efkefc",
     "pos": {
       "x": 0.0,
@@ -2895,6 +3047,12 @@
       "z": 0.0
     },
     "distance": 10.0,
+    "effectColor": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
     "path": "Asset\\Data\\Effect\\Flood\\EVFXForge09_07_1TidalCurrent.efkefc",
     "pos": {
       "x": 0.0,
@@ -2923,6 +3081,12 @@
       "z": 0.0
     },
     "distance": 3.0,
+    "effectColor": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
     "path": "Asset\\Data\\Effect\\Flood\\EVFXForge09_15_DrowningCataract.efkefc",
     "pos": {
       "x": 0.0,
@@ -2951,6 +3115,12 @@
       "z": 0.0
     },
     "distance": 0.0,
+    "effectColor": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
     "path": "Asset\\Data\\Effect\\Spellblade\\SlashAll.efkefc",
     "pos": {
       "x": 0.0,
@@ -2979,6 +3149,12 @@
       "z": 0.0
     },
     "distance": 0.0,
+    "effectColor": {
+      "w": 1.0,
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
     "path": "Asset\\Data\\Effect\\Spellblade\\SlashAll.efkefc",
     "pos": {
       "x": 0.0,
@@ -3070,9 +3246,9 @@
     "moveSpeed": 0.10000000149011612,
     "path": "Asset/Models/Sky/Sky.gltf",
     "pos": {
-      "x": 22.48017120361328,
+      "x": 15.0,
       "y": 9.800000190734863,
-      "z": -65.94764709472656
+      "z": -58.0
     },
     "rotationspeed": 10.0,
     "scale": {
@@ -3193,7 +3369,7 @@
       "DrawUnLit": false,
       "GenerateDepthMapFromLight": false
     },
-    "path": "Asset\\3DAssets\\Buildong7\\Building7.gltf",
+    "path": "Asset\\Models\\BuildingMap\\ResultBuiding\\Building7.gltf",
     "pos": {
       "x": 0.0,
       "y": 0.0,

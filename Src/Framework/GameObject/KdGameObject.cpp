@@ -1,7 +1,7 @@
 ﻿#include "KdGameObject.h"
 #include"../../Application/main.h"
-#include"../../Framework/Json/Json.h"
-#include"../../Framework/ImGuiManager/ImGuiManager.h"
+#include"../../MyFramework/Manager/JsonManager/JsonManager.h"
+#include"../../MyFramework/Manager/ImGuiManager/ImGuiManager.h"
 #include"../../Application/Scene/SceneManager.h"
 #include"../../Application/Scene/BaseScene/BaseScene.h"
 
@@ -17,6 +17,13 @@ void KdGameObject::Init()
 		DirectX::XMConvertToRadians(m_degree.z)
 	);
 	m_mWorld.Translation(m_position);
+
+
+	if (m_className.empty() || m_className == "Name")
+	{
+		m_className = typeid(*this).name();
+	}
+
 }
 
 void KdGameObject::DrawDebug()
@@ -120,6 +127,7 @@ bool KdGameObject::SelectObjectIntersects(const KdCollider::RayInfo& targetShape
 
 void KdGameObject::JsonInput(const nlohmann::json& _json)
 {
+	if (_json.contains("Name")) m_className = _json["Name"].get<std::string>();
 	if (_json.contains("path")) m_path = _json["path"];
 	if (_json.contains("pos")) m_position = JSON_MANAGER.JsonToVector(_json["pos"]);
 	if (_json.contains("scale")) m_scale = JSON_MANAGER.JsonToVector(_json["scale"]);

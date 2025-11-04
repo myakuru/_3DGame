@@ -1,8 +1,8 @@
 ﻿#include "SpecialMove.h"
 #include"../../../Scene/SceneManager.h"
 #include"../../../main.h"
-#include"../../../../Framework/Json/Json.h"
-#include"../../Character/Player/Player.h"
+#include"../../../../MyFramework/Manager/JsonManager/JsonManager.h"
+#include"../../../Data/CharacterData/CharacterData.h"
 
 const uint32_t SpecialMove::TypeID = KdGameObject::GenerateTypeID();
 
@@ -10,8 +10,6 @@ void SpecialMove::Init()
 {
 	m_displayTime = 1000;
 	m_texture = KdAssets::Instance().m_textures.GetData("Asset/Textures/Time/SpecialMovePTR.png");
-
-	SceneManager::Instance().GetObjectWeakPtr(m_player);
 
 	m_limitPointFlag = false;
 
@@ -22,30 +20,28 @@ void SpecialMove::Update()
 	float deltaTime = Application::Instance().GetUnscaledDeltaTime();
 	m_timer += deltaTime;
 
-	if (auto player = m_player.lock(); player)
+	const auto& status = CharacterData::Instance().GetPlayerStatus();
+
+	m_displayTime = status.specialPoint;
+
+	// 満タン演出は >= にして上限超えでも演出を維持
+	if (status.specialPoint >= status.specialPointMax)
 	{
-		const auto& status = player->GetPlayerStatus();
-
-		m_displayTime = status.specialPoint;
-
-		// 満タン演出は >= にして上限超えでも演出を維持
-		if (status.specialPoint >= status.specialPointMax)
+		if (m_timer >= 0.1f)
 		{
-			if (m_timer >= 0.1f)
-			{
-				const float r = KdRandom::GetFloat(0.95f, 1.0f);
-				const float g = KdRandom::GetFloat(0.65f, 1.0f);
-				const float b = KdRandom::GetFloat(0.00f, 0.15f);
+			const float r = KdRandom::GetFloat(0.95f, 1.0f);
+			const float g = KdRandom::GetFloat(0.65f, 1.0f);
+			const float b = KdRandom::GetFloat(0.00f, 0.15f);
 
-				m_color = { r, g, b, 1.0f };
-				m_timer = 0.0f;
-			}
-		}
-		else
-		{
-			m_color = { 1.0f, 1.0f, 1.0f, 1.0f };
+			m_color = { r, g, b, 1.0f };
+			m_timer = 0.0f;
 		}
 	}
+	else
+	{
+		m_color = { 1.0f, 1.0f, 1.0f, 1.0f };
+	}
+
 }
 
 void SpecialMove::DrawSprite()

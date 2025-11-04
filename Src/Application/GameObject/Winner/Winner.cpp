@@ -1,5 +1,5 @@
 ﻿#include "Winner.h"
-#include"../../../Framework/Json/Json.h"
+#include"../../../MyFramework/Manager/JsonManager/JsonManager.h"
 #include"../../main.h"
 #include"../../Scene/SceneManager.h"
 #include"../Camera/PlayerCamera/PlayerCamera.h"

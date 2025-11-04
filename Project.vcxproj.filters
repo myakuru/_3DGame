@@ -67,15 +67,6 @@
     <Filter Include="Src\Application\GameObject\Camera\FPSCamera">
       <UniqueIdentifier>{d0d23d7d-5e27-4301-b41e-72bedc1202bc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Src\Framework\RegisterObject">
-      <UniqueIdentifier>{fe917327-d2f4-465f-b2ef-ad69671ef908}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\Framework\Json">
-      <UniqueIdentifier>{2efb35e7-5792-43d9-9aca-f51d3d4076bd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\Framework\ImGuiManager">
-      <UniqueIdentifier>{3cecc1d9-10ab-40ac-800d-799e54011217}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Src\Application\GameObject\HUD">
       <UniqueIdentifier>{d12fd14d-8dc5-485c-933f-da047cc3281e}</UniqueIdentifier>
     </Filter>
@@ -90,12 +81,6 @@
     </Filter>
     <Filter Include="Src\MyFramework\Manager">
       <UniqueIdentifier>{78667a11-c1fa-4099-91e6-548842cd84d3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\Application\GameObject\Character">
-      <UniqueIdentifier>{25ed2d0a-2c8c-45f6-add7-447f17fe4783}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\Application\GameObject\Character\Player">
-      <UniqueIdentifier>{049c6f6c-17fe-4e63-841d-174adb8bc797}</UniqueIdentifier>
     </Filter>
     <Filter Include="Src\Application\GameObject\Weapon">
       <UniqueIdentifier>{8fcb7635-df4d-4884-9a74-5118c6dad539}</UniqueIdentifier>
@@ -124,59 +109,11 @@
     <Filter Include="Src\MyFramework\State\StateManager">
       <UniqueIdentifier>{e526b26d-2baf-4794-afca-5fb5c583a186}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Src\Application\GameObject\Character\Player\State">
-      <UniqueIdentifier>{1cd19184-ee19-44b7-be0d-6ddb404adcf9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_Idle">
-      <UniqueIdentifier>{db560bc2-bbf7-4b9d-9bce-4e2238cbfc73}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_Run">
-      <UniqueIdentifier>{324d331c-5567-4c7f-b182-41c4d1405302}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Src\Application\GameObject\Camera\PlayerCamera">
       <UniqueIdentifier>{e3d2c73d-a38e-455a-9646-97e7d4a449cb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_Attack">
-      <UniqueIdentifier>{3b166324-03ae-4787-8c16-39e458eadddf}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_Attack1">
-      <UniqueIdentifier>{325f0f44-f5f5-496c-b6f8-37cd8589507f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_Attack2">
-      <UniqueIdentifier>{9d332d6f-b02f-4a7a-a761-c9fcb3b741ab}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\Application\GameObject\Character\Enemy">
-      <UniqueIdentifier>{1bc54b83-466c-46e1-985b-1198dd537aff}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\Application\GameObject\Character\Enemy\EnemyState">
-      <UniqueIdentifier>{f8859f0e-6a0c-4aeb-a901-35a705ee7dbe}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\Application\GameObject\Character\Enemy\EnemyState\EnemyState_Idle">
-      <UniqueIdentifier>{885fb9fc-6972-4db1-99a2-7a9a428fbf36}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\Application\GameObject\Character\Enemy\EnemyState\EnemyState_Run">
-      <UniqueIdentifier>{5a1d9140-24ea-41bc-857b-985ca6a811c2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\Application\GameObject\Character\Enemy\EnemyState\EnemyState_Attack">
-      <UniqueIdentifier>{c4684d08-58df-454e-8031-f79511d87077}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\Application\GameObject\Character\Enemy\EnemyState\EnemyState_Attack1">
-      <UniqueIdentifier>{fa981701-a6af-4246-ae90-163495cf7847}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\Application\GameObject\Character\Enemy\EnemyState\EnemyState_Attack2">
-      <UniqueIdentifier>{4eef2391-179b-4f67-abce-f736af089c8c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Src\Application\GameObject\HUD\AlpfaMoving">
       <UniqueIdentifier>{afdd8912-e1a0-46ab-8c52-2335a72a5f83}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_ChargeAttack">
-      <UniqueIdentifier>{ee914cbf-0f9d-4e4e-8dea-00441697583b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_BackWordAvoid">
-      <UniqueIdentifier>{732548b6-5c25-4155-8fe7-06844cb41e02}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_FowardAvoid">
-      <UniqueIdentifier>{9a24f795-5465-4cbb-b8c2-2ee2f1ad9067}</UniqueIdentifier>
     </Filter>
     <Filter Include="Src\Application\GameObject\HUD\ScaleMoving">
       <UniqueIdentifier>{1cde9a39-cb43-4e47-ab92-eaadbcf4bea8}</UniqueIdentifier>
@@ -223,29 +160,11 @@
     <Filter Include="Src\Application\GameObject\Collition">
       <UniqueIdentifier>{9f81d21b-842f-45bb-8b68-fb4a35802cbc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_Skill">
-      <UniqueIdentifier>{96eb8903-ac9b-4f8e-9ed3-d1d9d5409cfa}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\Application\GameObject\Character\Enemy\EnemyState\EnemyState_Hit">
-      <UniqueIdentifier>{2eb56152-91d7-456d-bb91-ccc365a466ed}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_Hit">
-      <UniqueIdentifier>{5082ce6d-0c5c-42c2-b8fa-4fca27b673f9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Src\Application\GameObject\HUD\EnemyHp">
       <UniqueIdentifier>{4060fbd0-7e96-414a-a854-f29f1f041b59}</UniqueIdentifier>
     </Filter>
     <Filter Include="Src\Application\GameObject\Effect">
       <UniqueIdentifier>{6c9d97b4-333a-407b-bd2e-96652aac3477}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\Application\GameObject\Effect\FowardEffect">
-      <UniqueIdentifier>{12560ba8-29c4-4c50-ab46-6d27db4fb2b9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\Application\GameObject\Effect\CurvesEffect">
-      <UniqueIdentifier>{72ca1ba5-d553-4d33-a865-5a7321a1fa93}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_ChargeAttack2">
-      <UniqueIdentifier>{65260c95-3cbf-4c16-94fb-310ee8c7d9a8}</UniqueIdentifier>
     </Filter>
     <Filter Include="Src\Application\GameObject\Effect\BillBoardEffect">
       <UniqueIdentifier>{c1007d80-d993-4632-962f-eb6f41d9a883}</UniqueIdentifier>
@@ -255,30 +174,6 @@
     </Filter>
     <Filter Include="Src\Application\GameObject\Weapon\WeaponKatanaScabbard">
       <UniqueIdentifier>{28aeaa5b-8dd3-4316-8eda-58de5e5912e0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_Sheathing-of-Katana">
-      <UniqueIdentifier>{e5e40de1-e20d-47c9-9c5d-327a39fef0e3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\Application\GameObject\Effect\TrailEffect">
-      <UniqueIdentifier>{389b04b0-5ad9-46d0-804e-348ca6ad3e45}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_Attack4">
-      <UniqueIdentifier>{99fec502-20b9-4942-a6ac-2e45417a022d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_Attack3">
-      <UniqueIdentifier>{691e9d26-5bb9-4a70-8524-46c5ef4774b1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\Application\GameObject\Effect\MeshEffect">
-      <UniqueIdentifier>{3dc7c37a-1cc5-41c6-9833-93bf1fcf2c76}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\Application\GameObject\Effect\MeshEffect\AttackEffect">
-      <UniqueIdentifier>{4d42841d-94d8-4aed-a6a4-3dcae3eb8128}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\Application\GameObject\Effect\MeshEffect\AttackEffect_second">
-      <UniqueIdentifier>{d21d4134-2dbd-4ff0-b16a-dd0fa6a1e6ef}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\Application\GameObject\Effect\MeshEffect\Attack4Effect">
-      <UniqueIdentifier>{e2d8fe0b-dd74-4342-b4d3-8ae51dffa12f}</UniqueIdentifier>
     </Filter>
     <Filter Include="Src\Application\GameObject\Effect\EffekseerEffect">
       <UniqueIdentifier>{b20c0b6a-3f77-40b8-97f6-24726054b39f}</UniqueIdentifier>
@@ -313,47 +208,14 @@
     <Filter Include="Src\Application\GameObject\Effect\EffekseerEffect\SlashEffect">
       <UniqueIdentifier>{c230a218-9e85-4b8b-b727-c1b8fa59585d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_AvoidAttack">
-      <UniqueIdentifier>{81d92776-12ab-4dd6-bb5c-5377408da1be}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_SpecialAttack">
-      <UniqueIdentifier>{59008110-b006-4169-a131-d3bcf00edf77}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_SpecialAttackCutIn">
-      <UniqueIdentifier>{c34bd41a-f23c-408a-ad48-64f22c123383}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_RunStart">
-      <UniqueIdentifier>{f45ac0e4-3fc5-443d-938a-aa94f0bb669c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_RunEnd">
-      <UniqueIdentifier>{4ab2ac0b-f325-40e5-aabc-3dfcfc3724d4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Src\Application\GameObject\Effect\EffekseerEffect\AvoidAttackSlashEffect">
       <UniqueIdentifier>{d606f49a-254a-4eaf-8d0a-a0202dac7fb4}</UniqueIdentifier>
     </Filter>
     <Filter Include="Src\Application\GameObject\Effect\EffekseerEffect\ESkillEffect">
       <UniqueIdentifier>{d9593dfb-37b1-40b4-aae2-5d5049d97cd2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_ChargeAttackMax">
-      <UniqueIdentifier>{6c68bc13-bf81-42d9-8c9a-32d5d0e81962}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_FullCharge">
-      <UniqueIdentifier>{dd76955b-d077-4b4b-ada7-c8408942223d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_ChargeAttackMax1">
-      <UniqueIdentifier>{39275c22-6887-4c34-9c98-295b07fec0f4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_ChargeAttackMax2">
-      <UniqueIdentifier>{24e37e07-a611-43d4-a5e1-29edcc8a790f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_ChargeAttackMax3">
-      <UniqueIdentifier>{1ba911da-1f87-4212-8c3c-6d9cc33a2ee7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Src\Framework\Utility">
       <UniqueIdentifier>{f5d733b1-5031-4659-a9d4-0dd3add1e5fb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\Application\GameObject\CutInCube">
-      <UniqueIdentifier>{d7638287-757d-481a-8970-1df57062321d}</UniqueIdentifier>
     </Filter>
     <Filter Include="Src\Application\GameObject\Effect\EffekseerEffect\SpecialAttack">
       <UniqueIdentifier>{2ebb3b70-3590-49e6-a97d-85f7796f15e1}</UniqueIdentifier>
@@ -367,26 +229,11 @@
     <Filter Include="Src\Application\GameObject\Weapon\EnemyShield">
       <UniqueIdentifier>{74c9622f-922c-4354-8536-7eaddf2af641}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Src\Application\GameObject\Character\Enemy\EnemyState\EnemState_Attack3">
-      <UniqueIdentifier>{70d5936f-e347-4fef-83f3-1d969ac6d5b2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\Application\GameObject\Character\Enemy\EnemyState\EnemyState_Walk_Right">
-      <UniqueIdentifier>{90fbbbe7-612f-4906-89cc-361fa09827ca}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_FowardAvoidFast">
-      <UniqueIdentifier>{f6c06f2d-6ec1-4d34-8d33-f1e152b1013d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\Application\GameObject\Character\Enemy\EnemyState\EnemyState_Walk_Left">
-      <UniqueIdentifier>{33e1bce7-e0c1-451e-8993-8cb271d30d74}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Src\Application\GameObject\Effect\EffekseerEffect\EnemyShineBlue">
       <UniqueIdentifier>{89f9fe6b-67cd-46b5-b7d6-1f2d37a6cd7a}</UniqueIdentifier>
     </Filter>
     <Filter Include="Src\Application\GameObject\Field">
       <UniqueIdentifier>{48e67031-5f77-4eda-ad03-d092f050c6a7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_SpecialAttack1">
-      <UniqueIdentifier>{de27f75c-fa70-4bbd-94fc-8397638a6aee}</UniqueIdentifier>
     </Filter>
     <Filter Include="Src\Application\GameObject\Effect\EffekseerEffect\SpecialAttack1">
       <UniqueIdentifier>{117c2922-7c99-4482-984e-5301cf713807}</UniqueIdentifier>
@@ -418,11 +265,218 @@
     <Filter Include="Src\Application\GameObject\HUD\PlayerChargeUI\NotCharge2">
       <UniqueIdentifier>{038b7fd5-a6af-4e73-a9fb-35c23f629dd4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\GameObject\Effect\BillBoardEffect\MapGard">
+      <UniqueIdentifier>{c193f2f4-8991-47cb-9655-cc875a1151a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Field\UpDownField">
+      <UniqueIdentifier>{1f938a68-93d8-4518-a447-598533479b02}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Effect\EffekseerEffect\JustAvoidAttackEffect">
+      <UniqueIdentifier>{d945845a-86f5-4dc8-b614-88b2de401a64}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Effect\EffekseerEffect\JustAvoidAttackEffect1">
+      <UniqueIdentifier>{4fdf60fc-eaa2-4168-8d69-c9332f4242c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Camera\PlayerCamera\PlayerCameraState\PlayerCameraState_IntroCamera">
+      <UniqueIdentifier>{55946ce5-bd31-4fbd-abce-e4c1b3a9d3e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Effect\EffekseerEffect\BossAttack_1stEffect">
+      <UniqueIdentifier>{9f65f227-0746-42a4-a3f0-e5c5f2778240}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Effect\EffekseerEffect\BossEnemyEnterEffect">
+      <UniqueIdentifier>{bd615a45-e8dd-47ef-a4b6-68fcacb68f7a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Effect\EffekseerEffect\BossWaterAttackEffect">
+      <UniqueIdentifier>{b1f0e108-720f-4995-b1f8-00429ba15d3e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Effect\EffekseerEffect\BossWaterFallAttack">
+      <UniqueIdentifier>{c189cb03-a157-4263-a24b-b33784a9d369}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Effect\EffekseerEffect\ChargeAttackEffect">
+      <UniqueIdentifier>{606b6cd2-610b-4f5b-a38e-a8736f429b24}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Effect\EffekseerEffect\ChargeAttackEffect_end">
+      <UniqueIdentifier>{540fe7d3-2586-4ee0-8bfb-10bc8352b8e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\HUD\SkillBar">
+      <UniqueIdentifier>{44dfd8a7-2bd6-4535-b0fc-2ad4710b0b65}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\HUD\ChallengeResults">
+      <UniqueIdentifier>{07996a5f-2047-4c6d-b8ed-29e7ba8e7153}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\HUD\BossEnemyUI">
+      <UniqueIdentifier>{33e43863-1619-4350-a7ff-dd3664fd692e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\HUD\ScoreBackBar">
+      <UniqueIdentifier>{0ee2c250-ab11-462a-b50b-a71a159aa778}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\HUD\TitleRemoveUI">
+      <UniqueIdentifier>{be36d3a4-5625-48b0-99c5-4e12b7aa17dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\HUD\SkillUI">
+      <UniqueIdentifier>{3cb01754-6ab5-413d-ac1f-89b836e007b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\HUD\SpecialAttackUI">
+      <UniqueIdentifier>{26f0e196-aca4-4693-b0f4-b06dff7ce625}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Effect\EffekseerEffect\SpecialAttackSmoke">
+      <UniqueIdentifier>{4f774678-7a30-41f0-a4ab-7424e71a66ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\HUD\BossEnemyBlackBarUI">
+      <UniqueIdentifier>{c2f01b4d-8760-4d4c-802a-36be79abd817}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\Data">
+      <UniqueIdentifier>{e1558390-20cb-4893-8a37-40c58a64ead2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\Data\CharacterData">
+      <UniqueIdentifier>{06786fee-bdd7-4ac1-b0cb-fe28434042d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\MyFramework\Manager\KeyboardManager">
+      <UniqueIdentifier>{1e67f373-176f-4c95-b644-3a513391448d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\MyFramework\Manager\XInputManager">
+      <UniqueIdentifier>{2aac5682-9266-4ac8-a5d3-d7855c008013}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\MyFramework\Manager\JsonManager">
+      <UniqueIdentifier>{14d0cd72-eec5-49ef-b00e-4414b74f5140}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\MyFramework\RegisterObject">
+      <UniqueIdentifier>{7ee7aac8-f4d5-4d75-8dbd-7532ec2bbc87}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\Scene\ConstructionSiteStage">
+      <UniqueIdentifier>{51cbabc9-3839-42ea-9a72-3aec80705ad9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Character">
+      <UniqueIdentifier>{25ed2d0a-2c8c-45f6-add7-447f17fe4783}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Character\Player">
+      <UniqueIdentifier>{049c6f6c-17fe-4e63-841d-174adb8bc797}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Character\Player\State">
+      <UniqueIdentifier>{1cd19184-ee19-44b7-be0d-6ddb404adcf9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_Idle">
+      <UniqueIdentifier>{db560bc2-bbf7-4b9d-9bce-4e2238cbfc73}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_Run">
+      <UniqueIdentifier>{324d331c-5567-4c7f-b182-41c4d1405302}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_Attack">
+      <UniqueIdentifier>{3b166324-03ae-4787-8c16-39e458eadddf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_Attack1">
+      <UniqueIdentifier>{325f0f44-f5f5-496c-b6f8-37cd8589507f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_Attack2">
+      <UniqueIdentifier>{9d332d6f-b02f-4a7a-a761-c9fcb3b741ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_ChargeAttack">
+      <UniqueIdentifier>{ee914cbf-0f9d-4e4e-8dea-00441697583b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_BackWordAvoid">
+      <UniqueIdentifier>{732548b6-5c25-4155-8fe7-06844cb41e02}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_FowardAvoid">
+      <UniqueIdentifier>{9a24f795-5465-4cbb-b8c2-2ee2f1ad9067}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_Skill">
+      <UniqueIdentifier>{96eb8903-ac9b-4f8e-9ed3-d1d9d5409cfa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_Hit">
+      <UniqueIdentifier>{5082ce6d-0c5c-42c2-b8fa-4fca27b673f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_ChargeAttack2">
+      <UniqueIdentifier>{65260c95-3cbf-4c16-94fb-310ee8c7d9a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_Sheathing-of-Katana">
+      <UniqueIdentifier>{e5e40de1-e20d-47c9-9c5d-327a39fef0e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_Attack4">
+      <UniqueIdentifier>{99fec502-20b9-4942-a6ac-2e45417a022d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_Attack3">
+      <UniqueIdentifier>{691e9d26-5bb9-4a70-8524-46c5ef4774b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_AvoidAttack">
+      <UniqueIdentifier>{81d92776-12ab-4dd6-bb5c-5377408da1be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_SpecialAttack">
+      <UniqueIdentifier>{59008110-b006-4169-a131-d3bcf00edf77}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_SpecialAttackCutIn">
+      <UniqueIdentifier>{c34bd41a-f23c-408a-ad48-64f22c123383}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_RunStart">
+      <UniqueIdentifier>{f45ac0e4-3fc5-443d-938a-aa94f0bb669c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_RunEnd">
+      <UniqueIdentifier>{4ab2ac0b-f325-40e5-aabc-3dfcfc3724d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_ChargeAttackMax">
+      <UniqueIdentifier>{6c68bc13-bf81-42d9-8c9a-32d5d0e81962}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_FullCharge">
+      <UniqueIdentifier>{dd76955b-d077-4b4b-ada7-c8408942223d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_ChargeAttackMax1">
+      <UniqueIdentifier>{39275c22-6887-4c34-9c98-295b07fec0f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_ChargeAttackMax2">
+      <UniqueIdentifier>{24e37e07-a611-43d4-a5e1-29edcc8a790f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_ChargeAttackMax3">
+      <UniqueIdentifier>{1ba911da-1f87-4212-8c3c-6d9cc33a2ee7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_FowardAvoidFast">
+      <UniqueIdentifier>{f6c06f2d-6ec1-4d34-8d33-f1e152b1013d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_SpecialAttack1">
+      <UniqueIdentifier>{de27f75c-fa70-4bbd-94fc-8397638a6aee}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_ChargeAttack1">
       <UniqueIdentifier>{931652be-60b3-4187-a5cf-d9389ab54aa6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Src\Application\GameObject\Effect\BillBoardEffect\MapGard">
-      <UniqueIdentifier>{c193f2f4-8991-47cb-9655-cc875a1151a3}</UniqueIdentifier>
+    <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_JustAvoidAttack">
+      <UniqueIdentifier>{59054334-7fc8-4be8-b1b3-63dbdf00a95a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_JustAvoidAttack_end">
+      <UniqueIdentifier>{59d7c162-c61d-46b8-a84c-40306da30baf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Character\Enemy">
+      <UniqueIdentifier>{1bc54b83-466c-46e1-985b-1198dd537aff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Character\Enemy\EnemyState">
+      <UniqueIdentifier>{f8859f0e-6a0c-4aeb-a901-35a705ee7dbe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Character\Enemy\EnemyState\EnemyState_Idle">
+      <UniqueIdentifier>{885fb9fc-6972-4db1-99a2-7a9a428fbf36}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Character\Enemy\EnemyState\EnemyState_Run">
+      <UniqueIdentifier>{5a1d9140-24ea-41bc-857b-985ca6a811c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Character\Enemy\EnemyState\EnemyState_Attack">
+      <UniqueIdentifier>{c4684d08-58df-454e-8031-f79511d87077}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Character\Enemy\EnemyState\EnemyState_Attack1">
+      <UniqueIdentifier>{fa981701-a6af-4246-ae90-163495cf7847}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Character\Enemy\EnemyState\EnemyState_Attack2">
+      <UniqueIdentifier>{4eef2391-179b-4f67-abce-f736af089c8c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Character\Enemy\EnemyState\EnemyState_Hit">
+      <UniqueIdentifier>{2eb56152-91d7-456d-bb91-ccc365a466ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Character\Enemy\EnemyState\EnemState_Attack3">
+      <UniqueIdentifier>{70d5936f-e347-4fef-83f3-1d969ac6d5b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Character\Enemy\EnemyState\EnemyState_Walk_Right">
+      <UniqueIdentifier>{90fbbbe7-612f-4906-89cc-361fa09827ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Character\Enemy\EnemyState\EnemyState_Walk_Left">
+      <UniqueIdentifier>{33e1bce7-e0c1-451e-8993-8cb271d30d74}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Character\Enemy\EnemyState\EnemyState_Dath">
+      <UniqueIdentifier>{a43fd0ee-ee4d-44fe-b1f3-7514d68c4178}</UniqueIdentifier>
     </Filter>
     <Filter Include="Src\Application\GameObject\Character\BossEnemy">
       <UniqueIdentifier>{84b7be7c-fb3e-4756-85a4-ccea07961e6a}</UniqueIdentifier>
@@ -445,9 +499,6 @@
     <Filter Include="Src\Application\GameObject\Character\BossEnemy\BossEnemyState\BossEnemyState_Enter">
       <UniqueIdentifier>{f96437f1-7dd2-4de2-932a-d0a547e465bc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Src\Application\GameObject\Field\UpDownField">
-      <UniqueIdentifier>{1f938a68-93d8-4518-a447-598533479b02}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Src\Application\GameObject\Character\BossEnemy\BossEnemyState\BossEnemyState_Attack_R">
       <UniqueIdentifier>{41dfd3d9-ffeb-405a-9a95-ab3f11844da8}</UniqueIdentifier>
     </Filter>
@@ -469,71 +520,11 @@
     <Filter Include="Src\Application\GameObject\Character\BossEnemy\BossEnemyState\BossEnemyState_WaterAttack_end">
       <UniqueIdentifier>{29a7cb1a-38fa-440d-a01b-bc5ae7accd01}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_JustAvoidAttack">
-      <UniqueIdentifier>{59054334-7fc8-4be8-b1b3-63dbdf00a95a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\Application\GameObject\Character\Player\State\PlayerState_JustAvoidAttack_end">
-      <UniqueIdentifier>{59d7c162-c61d-46b8-a84c-40306da30baf}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\Application\GameObject\Effect\EffekseerEffect\JustAvoidAttackEffect">
-      <UniqueIdentifier>{d945845a-86f5-4dc8-b614-88b2de401a64}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\Application\GameObject\Effect\EffekseerEffect\JustAvoidAttackEffect1">
-      <UniqueIdentifier>{4fdf60fc-eaa2-4168-8d69-c9332f4242c7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\Application\GameObject\Camera\PlayerCamera\PlayerCameraState\PlayerCameraState_IntroCamera">
-      <UniqueIdentifier>{55946ce5-bd31-4fbd-abce-e4c1b3a9d3e2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\Application\GameObject\Effect\EffekseerEffect\BossAttack_1stEffect">
-      <UniqueIdentifier>{9f65f227-0746-42a4-a3f0-e5c5f2778240}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\Application\GameObject\Effect\EffekseerEffect\BossEnemyEnterEffect">
-      <UniqueIdentifier>{bd615a45-e8dd-47ef-a4b6-68fcacb68f7a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\Application\GameObject\Effect\EffekseerEffect\BossWaterAttackEffect">
-      <UniqueIdentifier>{b1f0e108-720f-4995-b1f8-00429ba15d3e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Src\Application\GameObject\Character\BossEnemy\BossEnemyState\BossEnemyState_WaterFall">
       <UniqueIdentifier>{0b1dcd2a-1f6c-477e-a59f-288b4467b122}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Src\Application\GameObject\Effect\EffekseerEffect\BossWaterFallAttack">
-      <UniqueIdentifier>{c189cb03-a157-4263-a24b-b33784a9d369}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\Application\GameObject\Effect\EffekseerEffect\ChargeAttackEffect">
-      <UniqueIdentifier>{606b6cd2-610b-4f5b-a38e-a8736f429b24}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\Application\GameObject\Effect\EffekseerEffect\ChargeAttackEffect_end">
-      <UniqueIdentifier>{540fe7d3-2586-4ee0-8bfb-10bc8352b8e9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\Application\GameObject\HUD\SkillBar">
-      <UniqueIdentifier>{44dfd8a7-2bd6-4535-b0fc-2ad4710b0b65}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\Application\GameObject\HUD\ChallengeResults">
-      <UniqueIdentifier>{07996a5f-2047-4c6d-b8ed-29e7ba8e7153}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\Application\GameObject\Character\Enemy\EnemyState\EnemyState_Dath">
-      <UniqueIdentifier>{a43fd0ee-ee4d-44fe-b1f3-7514d68c4178}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\Application\GameObject\HUD\BossEnemyUI">
-      <UniqueIdentifier>{33e43863-1619-4350-a7ff-dd3664fd692e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\Application\GameObject\HUD\ScoreBackBar">
-      <UniqueIdentifier>{0ee2c250-ab11-462a-b50b-a71a159aa778}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\Application\GameObject\HUD\TitleRemoveUI">
-      <UniqueIdentifier>{be36d3a4-5625-48b0-99c5-4e12b7aa17dd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\Application\GameObject\HUD\SkillUI">
-      <UniqueIdentifier>{3cb01754-6ab5-413d-ac1f-89b836e007b8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\Application\GameObject\HUD\SpecialAttackUI">
-      <UniqueIdentifier>{26f0e196-aca4-4693-b0f4-b06dff7ce625}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\Application\GameObject\Effect\EffekseerEffect\SpecialAttackSmoke">
-      <UniqueIdentifier>{4f774678-7a30-41f0-a4ab-7424e71a66ec}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\Application\GameObject\HUD\BossEnemyBlackBarUI">
-      <UniqueIdentifier>{c2f01b4d-8760-4d4c-802a-36be79abd817}</UniqueIdentifier>
+    <Filter Include="Src\MyFramework\Manager\ImGuiManager">
+      <UniqueIdentifier>{879c7b19-c6b0-4933-a569-763119b37800}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -711,17 +702,8 @@
     <ClInclude Include="Src\Application\Scene\BaseScene\BaseScene.h">
       <Filter>Src\Application\Scene\BaseScene</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Framework\RegisterObject\RegisterObject.h">
-      <Filter>Src\Framework\RegisterObject</Filter>
-    </ClInclude>
     <ClInclude Include="Src\Framework\Utility\KdDebugGUI.h">
       <Filter>Src\Framework\Utility</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\Framework\Json\Json.h">
-      <Filter>Src\Framework\Json</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\Framework\ImGuiManager\ImGuiManager.h">
-      <Filter>Src\Framework\ImGuiManager</Filter>
     </ClInclude>
     <ClInclude Include="Src\Framework\Utility\KdDebugWireFrame.h">
       <Filter>Src\Framework\Utility</Filter>
@@ -737,12 +719,6 @@
     </ClInclude>
     <ClInclude Include="Src\Application\GameObject\Utility\SelectDraw2DTexture.h">
       <Filter>Src\Application\GameObject\Utility</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\MyFramework\Manager\KeyboardManager.h">
-      <Filter>Src\MyFramework\Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\MyFramework\Manager\XInputManager.h">
-      <Filter>Src\MyFramework\Manager</Filter>
     </ClInclude>
     <ClInclude Include="Src\Application\GameObject\Character\Player\Player.h">
       <Filter>Src\Application\GameObject\Character\Player</Filter>
@@ -879,20 +855,8 @@
     <ClInclude Include="Src\Application\GameObject\HUD\EnemyHp\EnemyHp.h">
       <Filter>Src\Application\GameObject\HUD\EnemyHp</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Application\GameObject\Effect\FowardEffect\ForwardEffect.h">
-      <Filter>Src\Application\GameObject\Effect\FowardEffect</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\Application\GameObject\Effect\CurvesEffect\CurvesEffect.h">
-      <Filter>Src\Application\GameObject\Effect\CurvesEffect</Filter>
-    </ClInclude>
     <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_ChargeAttack2\PlayerState_ChaegeAttack2.h">
       <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_ChargeAttack2</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\Application\GameObject\Effect\MeshEffect\AttackEffect\AttackEffect.h">
-      <Filter>Src\Application\GameObject\Effect\MeshEffect\AttackEffect</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\Application\GameObject\Effect\MeshEffect\MeshEffectBase.h">
-      <Filter>Src\Application\GameObject\Effect\MeshEffect</Filter>
     </ClInclude>
     <ClInclude Include="Src\Application\GameObject\Effect\BillBoardEffect\FieldEffect\FieldEffect.h">
       <Filter>Src\Application\GameObject\Effect\BillBoardEffect\FieldEffect</Filter>
@@ -903,12 +867,6 @@
     <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_Sheathing-of-Katana\PlayerState_Sheathing-of-Katana.h">
       <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_Sheathing-of-Katana</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Application\GameObject\Effect\MeshEffect\AttackEffect_second\AttackEffect_second.h">
-      <Filter>Src\Application\GameObject\Effect\MeshEffect\AttackEffect_second</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\Application\GameObject\Effect\TrailEffect\TrailEffect.h">
-      <Filter>Src\Application\GameObject\Effect\TrailEffect</Filter>
-    </ClInclude>
     <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState.h">
       <Filter>Src\Application\GameObject\Character\Player\State</Filter>
     </ClInclude>
@@ -917,9 +875,6 @@
     </ClInclude>
     <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_Attack4\PlayerState_Attack4.h">
       <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_Attack4</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\Application\GameObject\Effect\MeshEffect\Attack4Effect\Attack4Effect.h">
-      <Filter>Src\Application\GameObject\Effect\MeshEffect\Attack4Effect</Filter>
     </ClInclude>
     <ClInclude Include="Src\Application\GameObject\Effect\EffekseerEffect\EffekseerEffectBase.h">
       <Filter>Src\Application\GameObject\Effect\EffekseerEffect</Filter>
@@ -995,9 +950,6 @@
     </ClInclude>
     <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_ChargeAttackMax3\PlayerState_ChargeAttackMax3.h">
       <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_ChargeAttackMax3</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\Application\GameObject\CutInCube\CutInCube.h">
-      <Filter>Src\Application\GameObject\CutInCube</Filter>
     </ClInclude>
     <ClInclude Include="Src\Application\GameObject\Effect\EffekseerEffect\SpecialAttack\SpecialAttack.h">
       <Filter>Src\Application\GameObject\Effect\EffekseerEffect\SpecialAttack</Filter>
@@ -1176,6 +1128,27 @@
     <ClInclude Include="Src\Application\GameObject\HUD\BossEnemyBlackBarUI\BossEnemyBlackBarUI.h">
       <Filter>Src\Application\GameObject\HUD\BossEnemyBlackBarUI</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\Data\CharacterData\CharacterData.h">
+      <Filter>Src\Application\Data\CharacterData</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\MyFramework\Manager\KeyboardManager\KeyboardManager.h">
+      <Filter>Src\MyFramework\Manager\KeyboardManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\MyFramework\Manager\XInputManager\XInputManager.h">
+      <Filter>Src\MyFramework\Manager\XInputManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\MyFramework\Manager\JsonManager\JsonManager.h">
+      <Filter>Src\MyFramework\Manager\JsonManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\MyFramework\RegisterObject\RegisterObject.h">
+      <Filter>Src\MyFramework\RegisterObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\MyFramework\Manager\ImGuiManager\ImGuiManager.h">
+      <Filter>Src\MyFramework\Manager\ImGuiManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\Scene\ConstructionSiteStage\ConstructionSiteStage.h">
+      <Filter>Src\Application\Scene\ConstructionSiteStage</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -1325,12 +1298,6 @@
     <ClCompile Include="Src\Framework\Utility\KdDebugGUI.cpp">
       <Filter>Src\Framework\Utility</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Framework\Json\Json.cpp">
-      <Filter>Src\Framework\Json</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Framework\ImGuiManager\ImGuiManager.cpp">
-      <Filter>Src\Framework\ImGuiManager</Filter>
-    </ClCompile>
     <ClCompile Include="Src\Framework\Utility\KdDebugWireFrame.cpp">
       <Filter>Src\Framework\Utility</Filter>
     </ClCompile>
@@ -1460,23 +1427,8 @@
     <ClCompile Include="Src\Application\GameObject\HUD\EnemyHp\EnemyHp.cpp">
       <Filter>Src\Application\GameObject\HUD\EnemyHp</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Application\GameObject\Effect\FowardEffect\ForwardEffect.cpp">
-      <Filter>Src\Application\GameObject\Effect\FowardEffect</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Application\GameObject\Effect\CurvesEffect\CurvesEffect.cpp">
-      <Filter>Src\Application\GameObject\Effect\CurvesEffect</Filter>
-    </ClCompile>
     <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_ChargeAttack2\PlayerState_ChaegeAttack2.cpp">
       <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_ChargeAttack2</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\MyFramework\Manager\KeyboardManager.cpp">
-      <Filter>Src\MyFramework\Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Application\GameObject\Effect\MeshEffect\AttackEffect\AttackEffect.cpp">
-      <Filter>Src\Application\GameObject\Effect\MeshEffect\AttackEffect</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Application\GameObject\Effect\MeshEffect\MeshEffectBase.cpp">
-      <Filter>Src\Application\GameObject\Effect\MeshEffect</Filter>
     </ClCompile>
     <ClCompile Include="Src\Application\GameObject\Effect\BillBoardEffect\FieldEffect\FieldEffect.cpp">
       <Filter>Src\Application\GameObject\Effect\BillBoardEffect\FieldEffect</Filter>
@@ -1490,20 +1442,11 @@
     <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_Sheathing-of-Katana\PlayerState_Sheathing-of-Katana.cpp">
       <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_Sheathing-of-Katana</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Application\GameObject\Effect\MeshEffect\AttackEffect_second\AttackEffect_second.cpp">
-      <Filter>Src\Application\GameObject\Effect\MeshEffect\AttackEffect_second</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Application\GameObject\Effect\TrailEffect\TrailEffect.cpp">
-      <Filter>Src\Application\GameObject\Effect\TrailEffect</Filter>
-    </ClCompile>
     <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_Attack3\PlayerState_Attack3.cpp">
       <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_Attack3</Filter>
     </ClCompile>
     <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_Attack4\PlayerState_Attack4.cpp">
       <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_Attack4</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Application\GameObject\Effect\MeshEffect\Attack4Effect\Attack4Effect.cpp">
-      <Filter>Src\Application\GameObject\Effect\MeshEffect\Attack4Effect</Filter>
     </ClCompile>
     <ClCompile Include="Src\Application\GameObject\Effect\EffekseerEffect\EffekseerEffectBase.cpp">
       <Filter>Src\Application\GameObject\Effect\EffekseerEffect</Filter>
@@ -1579,9 +1522,6 @@
     </ClCompile>
     <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerState\PlayerState_ChargeAttackMax3\PlayerState_ChargeAttackMax3.cpp">
       <Filter>Src\Application\GameObject\Character\Player\State\PlayerState_ChargeAttackMax3</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Application\GameObject\CutInCube\CutInCube.cpp">
-      <Filter>Src\Application\GameObject\CutInCube</Filter>
     </ClCompile>
     <ClCompile Include="Src\Application\GameObject\Effect\EffekseerEffect\SpecialAttack\SpecialAttack.cpp">
       <Filter>Src\Application\GameObject\Effect\EffekseerEffect\SpecialAttack</Filter>
@@ -1762,6 +1702,21 @@
     </ClCompile>
     <ClCompile Include="Src\Application\GameObject\HUD\BossEnemyBlackBarUI\BossEnemyBlackBarUI.cpp">
       <Filter>Src\Application\GameObject\HUD\BossEnemyBlackBarUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Data\CharacterData\CharacterData.cpp">
+      <Filter>Src\Application\Data\CharacterData</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\MyFramework\Manager\KeyboardManager\KeyboardManager.cpp">
+      <Filter>Src\MyFramework\Manager\KeyboardManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\MyFramework\Manager\JsonManager\JsonManager.cpp">
+      <Filter>Src\MyFramework\Manager\JsonManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\MyFramework\Manager\ImGuiManager\ImGuiManager.cpp">
+      <Filter>Src\MyFramework\Manager\ImGuiManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Scene\ConstructionSiteStage\ConstructionSiteStage.cpp">
+      <Filter>Src\Application\Scene\ConstructionSiteStage</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
